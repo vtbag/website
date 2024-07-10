@@ -1,0 +1,35 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: npm
+          cache-dependency-path: ./package-lock.json
+
+      - name: Cache .astro
+        uses: actions/cache@v4
+        with:
+          path: ./node_modules
+          key: astro-cache-${{ github.run_id }}
+          restore-keys: astro-cache
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build with Astro
+        run: npm run build
+
