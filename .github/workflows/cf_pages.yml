@@ -15,7 +15,7 @@ on:
 jobs:
   build:
     name: Build
-    if: ${{ github.repository_owner == 'martrapp' }}
+    if: ${{ github.repository_owner == 'vtbag' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
