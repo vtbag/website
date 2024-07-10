@@ -4,15 +4,16 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro check && astro build",
+    "build": "./bin/build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.25.0",
-    "astro": "^4.10.2",
-    "sharp": "^0.32.5",
     "@astrojs/check": "^0.8.1",
+    "@astrojs/starlight": "^0.25.1",
+    "astro": "^4.10.2",
+    "astro-vtbot": "^1.7.26",
+    "sharp": "^0.33.4",
     "typescript": "^5.5.3"
   }
 }

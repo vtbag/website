@@ -1,0 +1,15 @@
+#! /bin/sh
+
+sed -i 's/showSubResults: true,/showSubResults:true,excerptLength:40,/' node_modules/@astrojs/starlight/components/Search.astro
+sed -i 's/slug: PAGE_TITLE_ID/slug: "top"/' node_modules/@astrojs/starlight/utils/generateToC.ts
+astro check && astro build
+if [ "$?" -ne "0" ]; then
+	exit 1
+fi
+./bin/check_links.sh
+[ -n "$GS" ] && echo -n "google-site-verification: ${GS}" > ./dist/${GS}
+if [ ! -f ./dist/_astro/ec.s8bdm.css ]
+then
+		echo "Missing EC-CSS file"
+		exit 1
+fi
