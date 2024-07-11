@@ -1,0 +1,39 @@
+---
+import { spawnSync } from 'child_process';
+import { basename, dirname } from 'path';
+
+const { labels, lang, lastUpdated } = Astro.props;
+const file = `src/content/${Astro.props.entry.collection}/${Astro.props.entry.id}`;
+
+const firstPublished = new Date(
+	Number(
+		spawnSync(
+			'git',
+			['log', '--format=%ct', '--follow', '--diff-filter=A', '--max-count=1', basename(file)],
+			{
+				cwd: dirname(file),
+				encoding: 'utf-8',
+			}
+		).stdout.trim() + '000'
+	)
+);
+---
+
+{
+	lastUpdated && (
+		<p style="display: flex; justify-content: space-between;">
+			<span>
+				{labels['page.lastUpdated']}{' '}
+				<time datetime={lastUpdated.toISOString()}>
+					{lastUpdated.toLocaleDateString(lang, { dateStyle: 'medium', timeZone: 'UTC' })}
+				</time>
+			</span>
+			<span>
+				{'First published:'}{' '}
+				<time datetime={firstPublished.toISOString()}>
+					{firstPublished.toLocaleDateString(lang, { dateStyle: 'medium', timeZone: 'UTC' })}
+				</time>
+			</span>
+		</p>
+	)
+}

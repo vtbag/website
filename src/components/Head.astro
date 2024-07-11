@@ -1,0 +1,40 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import StarlightHead from '@astrojs/starlight/components/Head.astro';
+import VtbotStarlight from 'astro-vtbot/components/starlight/Base.astro';
+import ProgressBar from 'astro-vtbot/components/ProgressBar.astro';
+import PageOffset from 'astro-vtbot/components/PageOffset.astro';
+import PageOrder from 'astro-vtbot/components/starlight/PageOrder.astro';
+import AutoNameSelected from 'astro-vtbot/components/AutoNameSelected.astro';
+---
+
+{/* Define a view transition animation for `<main>`*/}
+<VtbotStarlight {...Astro.props} transition:name="main" transition:animate="fade">
+	<StarlightHead {...Astro.props}><slot /></StarlightHead>
+</VtbotStarlight>
+
+{/* As an alterative to the LoadingIndicator: */}
+<ProgressBar />
+<style is:global>
+	.swup-progress-bar {
+		background: linear-gradient(
+			to bottom,
+			var(--sl-color-accent),
+			var(--sl-color-accent-high),
+			var(--sl-color-accent)
+		);
+		height: 5px;
+	}
+</style>
+
+{/* Decent transitions for scrolled down pages */}
+<PageOffset name="main" />
+
+{/* Make animation direction based on the order of the pages in the sidebar */}
+<PageOrder />
+
+{
+	/* Without further configuration, make headings stand out during view transitions.
+    Can be used to declaratively add view transition names which open a door to all kinds of funny thing. */
+}
+<AutoNameSelected />
