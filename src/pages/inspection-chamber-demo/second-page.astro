@@ -1,0 +1,28 @@
+---
+import Layout from "./_ChamberLayout.astro";
+import chamber from "../../assets/chamber.png?url";
+---
+
+<Layout title="Inspection Chamber Demo">
+  <main>
+    <img
+      style="view-transition-name: image; width:40%; height:auto; top: 10vh; left: 10vw; position: fixed"
+      src={chamber}
+      alt="The Bag's Inspection Chamber"
+    />
+    <div
+      style="view-transition-name: frame; position:fixed; top:10vh;left:50vw;padding:20px;background-color:rgba(50, 25, 13, 0.8)"
+    >
+    <h1 style="view-transition-name: heading2; font-size: min(6vw,48px)">
+      Take control!
+    </h1>
+      <h1 style="view-transition-name: heading; font-size: min(5vw,32px)">
+        Use the controls in the panel to examine the details of the view transitions on this page.
+      </h1>
+
+      <p style="view-transition-name: para;">To navigate back to the previous page, click <a  style="view-transition-name: anchor2" href="/inspection-chamber-demo/first-page/">here</a>.</p>
+      <a style="view-transition-name: anchor" href="javascript:top.location.href='/inspection-chamber/'">Quit demo.</a>
+    </div>
+  </main>
+
+</Layout>

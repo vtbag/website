@@ -1,0 +1,20 @@
+---
+export interface Props {
+	title: string;
+	pageFindIgnore?: boolean;
+}
+const { title, pageFindIgnore = false } = Astro.props;
+
+---
+
+<html style="color-scheme: dark;">
+	<head>
+		<slot name="head" />
+		<meta charset="UTF-8" />
+		<title>{title + ' | @vtbag'}</title>
+		<slot name="head2" />
+	</head>
+	<body data-pagefind-body={!pageFindIgnore}>
+		<slot />
+	</body>
+</html>

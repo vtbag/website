@@ -10,6 +10,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://vtbag.pages.dev',
+	prefetch: false,
 	markdown: {
 		rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, {
 			behavior: "wrap"
@@ -22,7 +23,7 @@ export default defineConfig({
 		}]],
 		//		remarkPlugins: [remarkHeadingID]
 	},
-	trailingSlash: 'ignore',
+	trailingSlash: 'always',
 	integrations: [starlight({
 		title: '@vtbag',
 		components: {
@@ -57,8 +58,12 @@ export default defineConfig({
 		sidebar: [
 			{
 				label: 'Overview',
-				link: '/Overview',
+				link: '/overview/',
 			},
+			{
+				label: 'Inspection Chamber',
+				link: "/inspection-chamber/",
+			}
 		],
 	}),
 	],

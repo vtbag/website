@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import chamber from "@vtbag/inspection-chamber?url";
+
+export interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<Layout {title}>
+  <slot name="head" slot="head"/>
+  <slot />
+  <script is:inline src={chamber} slot="head2"/>
+</Layout>
+
+<style is:global>
+  :root,
+  body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  :root {
+    color-scheme: dark;
+    font-family: sans-serif;
+    view-transition-name: none;
+  }
+  @view-transition {
+    navigation: auto;
+  }
+</style>

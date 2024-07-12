@@ -1,0 +1,97 @@
+---
+title: The Inspection Chamber
+description: "@vtbag/inspection-chamber allows you to examine, judge & optimize all aspects of your view transitions"
+---
+
+import { Steps } from "@astrojs/starlight/components";
+
+Place your pages in the inspection chamber and put the view transitions through their paces.
+You can thoroughly examine each transition: play it in slow motion, examine timings step-by-step, disable transitions or highlight the pseudo elements &mdash; everything is easily achievable here.
+
+<div style="padding: 10px 20px 20px; border:12px dotted orange; width: max-content; border-radius:20px;font-size:32px;transform:rotate(3deg) translateY(20px) translateX(40px)">
+  [See it in action!](/inspection-chamber-demo/first-page/)
+</div>
+:::danger[Bleeding Edge]
+The inspection chamber requires a current Chrome browser and yet you must also manually activate chrome://flags/#view-transition-on-navigation-iframe.
+:::
+
+## Installation
+
+:::tip
+If you want to use the Inspection Chamber with an Astro project, see astro-vtbot for instructions.
+:::
+
+<Steps>
+
+1. Install `@vtbag/inspection-chamber@latest` from npm
+2. In your project, add `@vtbag/inspection-chamber/lib/index.js` as an inline script to all pages that use view transitions. (Details depend on your project setup)
+
+</Steps>
+
+## Examination Modes
+
+Choose a transition mode from Bypass, Slow Motion or Full Control.
+
+Then start a view transition by clicking a trigger like a link or button in the page.
+
+In Bypass and Slow Motion mode the view transition is played once and then exits. Choosing another mode, clicking the [Play Indicator](#play-indicator), or _resizing the window_ exits a current view transition.
+
+### Bypass
+
+Can show frames around the pseudo elements but just shows the normal view transition.
+
+### Slow Motion
+
+Use the slider to set a time stretch factor and see the view transition in slow motion.
+
+### Full Control
+
+Here you got two sliders: The lower slider animates the initially empty set of selected transition groups. The upper slider controls all other groups. Thus if you do not select groups, the upper slider controls all groups.
+
+Use the [Name List](#name-list) to select one or more transition groups to be controlled by the lower slider. In Full Control mode, clicking a selected name unselects it. You can reset all names by pressing the reset button of the name list.
+
+To exit Full Control mode, click the exit button on the full control panel or click the [Play Indicator](#play-indicator) in the upper left corner of the page.
+
+## Name List
+
+The list show the names of elements with view transition names and as soon as a view transition starts, it shows the names of the view transition groups. Clicking in the list highlights (pseudo) elements in the page. Clicking (pseudo) elements in the page, highlights the name in the list.
+
+It also sets a selector in the clipboard that can be used to select the element in the browser's development tools by pasting it into the console window.
+
+During view transitions, the name list shows a purpleish square to the left and/or a greenish square to the right of a name if the group has a old-image (purpleish) and/or a new-image (greenish). If the images are outside of the viewport, the color changes to a shade of orange. You can click those squares to hide/unhide the images on the page. This might come in handy when you want to examine details of crowded ares of the page.
+
+## Filter Panel
+
+You can restrict the entries in the [Name List](#name-list) by specifying a fragment of their name. During active view transition, you can also filter the entries depending on the presence or absence of their old- and new-images.
+
+## Toggles
+
+### Highlight Group Toggle
+
+Check the toggle to view frames around a) elements with view transition names (when no view transition is active) or b) around the pseudo elements (when a view transition is active)
+
+### In Viewport Toggle
+
+If this toggle is checked, the [Name List](#name-list) only shows groups that are inside the viewport. Other entries are collapsed to a thin dotted line.
+
+## Resizing the Panel
+
+You can grab the border of th panel to make it change its size.
+
+## Panel Controls
+
+### Play Indicator (⯈)
+
+The play indicator in the upper left corner indicates that a view transition is currently active. Click it to stop the view transition. You will also notice that the headings of the panels change color while the indicator is visible.
+
+### Dark / Light mode toggle (◑)
+
+What you expect.
+
+### Move Panel Button (⇲)
+
+Choose your favorite celestial direction.
+
+### Close Button (🗙)
+
+Collapses the panel and shows a small bag indicator instead. The bag can be freely positioned on the screen. Click it to reopen the panel.
