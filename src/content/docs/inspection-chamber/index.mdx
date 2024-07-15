@@ -28,17 +28,32 @@ If you want to use the Inspection Chamber with an Astro project, see astro-vtbot
 
 </Steps>
 
-## Examination Modes
+## Inspection Modes
 
-Choose a transition mode from Bypass, Slow Motion or Full Control.
+The Inspection Chamber supports different modes of inspection. Common to all modes is the ability to examine the pages before and after the view transition and the requirement to explicitly start the view transition under examination.
 
-Then start a view transition by clicking a trigger like a link or button in the page.
+<Steps>
 
-In Bypass and Slow Motion mode the view transition is played once and then exits. Choosing another mode, clicking the [Play Indicator](#play-indicator), or _resizing the window_ exits a current view transition.
+1. <b>Choose an inspection mode</b> from Bypass, Slow Motion or Full Control.
+
+2. <b>Highlight elements with view transition names</b> by selecting the [frame elements toggle](#frame-elements).
+
+3. While no transition is active: <b>Identify elements with view transition names</b> by clicking on them on the screen or in the [name list](#name-list). To prevent links from starting a navigation, hold both, the <kbd>ctrl</kbd> and <kbd>shift</kbd> while clicking the link.
+
+4. <b>Start a view transition</b>  by clicking a trigger such as a link or a button on the page.
+
+5. While a transition is active:  <b>Identify pseudo elements</b> by clicking on them on the screen or on a name in the name list.
+
+6. <b>End the current view transition:</b> In Bypass and Slow Motion modes, the view transition will play once and then end automatically. Full Control mode must be ended explicitly. To do this, either click the "Exit" button in the Full Control panel, click on the [Play Indicator](#play-indicator), or select another inspection mode.
+
+</Steps>
+
+Note: View transitions are automatically skipped by the browser if the window is resized or its orientation is changed.
+
 
 ### Bypass
 
-Can show frames around the pseudo elements but just shows the normal view transition.
+Bypass mode does not intercept the transition but just shows the normal animations.
 
 ### Slow Motion
 
@@ -46,52 +61,67 @@ Use the slider to set a time stretch factor and see the view transition in slow 
 
 ### Full Control
 
-Here you got two sliders: The lower slider animates the initially empty set of selected transition groups. The upper slider controls all other groups. Thus if you do not select groups, the upper slider controls all groups.
+Here you got two sliders: The lower slider animates the initially empty set of selected transition groups. The upper slider controls all other elements. Thus if you do not select transition groups, the upper slider controls all groups.
 
 Use the [Name List](#name-list) to select one or more transition groups to be controlled by the lower slider. In Full Control mode, clicking a selected name unselects it. You can reset all names by pressing the reset button of the name list.
 
-To exit Full Control mode, click the exit button on the full control panel or click the [Play Indicator](#play-indicator) in the upper left corner of the page.
+To exit Full Control mode, click the exit button in the full control panel or click the [Play Indicator](#play-indicator) in the upper left corner of the page.
 
 ## Name List
 
-The list show the names of elements with view transition names and as soon as a view transition starts, it shows the names of the view transition groups. Clicking in the list highlights (pseudo) elements in the page. Clicking (pseudo) elements in the page, highlights the name in the list.
+The list shows the names of elements with view transition names and as soon as a view transition starts, it shows the names of the view transition groups. Clicking in the list highlights (pseudo) elements in the page. Clicking (pseudo) elements in the page, highlights the name in the list.
 
-It also sets a selector in the clipboard that can be used to select the element in the browser's development tools by pasting it into the console window.
+Identifying elements this way also copies a selector to the clipboard that can be used to select the element in the browser's development tools. To do this, paste the selector into the console window and hit return.
 
-During view transitions, the name list shows a purpleish square to the left and/or a greenish square to the right of a name if the group has a old-image (purpleish) and/or a new-image (greenish). If the images are outside of the viewport, the color changes to a shade of orange. You can click those squares to hide/unhide the images on the page. This might come in handy when you want to examine details of crowded ares of the page.
+During view transitions, the name list shows a purpleish square to the left and/or a greenish square to the right of a name if the group has a old-image (purpleish) and/or a new-image (greenish). If the images are outside of the viewport, the color changes to a shade of orange. You can click those squares to hide/unhide the images on the page. This can be particularly useful when you want to examine details of crowded areas of the page.
+
+Extra: click the <kbd>new</kbd> and <kbd>old</kbd> buttons above the name list to toggle the visibility for all names at once. This is handy if you want to hide all but one image, for example.
 
 ## Filter Panel
 
-You can restrict the entries in the [Name List](#name-list) by specifying a fragment of their name. During active view transition, you can also filter the entries depending on the presence or absence of their old- and new-images.
+You can restrict the entries in the [Name List](#name-list) by specifying a fragment of their name. During an active view transition, you can also filter the entries based on the presence or absence of their old and new images.
 
 ## Toggles
 
-### Highlight Group Toggle
+### Frame Elements
 
-Check the toggle to view frames around a) elements with view transition names (when no view transition is active) or b) around the pseudo elements (when a view transition is active)
+Toggle the option to add a frame to specific elements:
 
-### In Viewport Toggle
+When no view transition is active: frame elements with a view transition name.
+When a view transition is active: frame the pseudo elements.
 
-If this toggle is checked, the [Name List](#name-list) only shows groups that are inside the viewport. Other entries are collapsed to a thin dotted line.
+### In Viewport
 
-## Resizing the Panel
+If this toggle is checked, the [Name List](#name-list) only displays groups that are within the viewport. Other entries are collapsed into a thin dotted line.
 
-You can grab the border of th panel to make it change its size.
 
 ## Panel Controls
 
 ### Play Indicator (⯈)
 
-The play indicator in the upper left corner indicates that a view transition is currently active. Click it to stop the view transition. You will also notice that the headings of the panels change color while the indicator is visible.
+The play indicator in the upper left corner shows that a view transition is currently active. Click it to stop the view transition. You'll also notice that the headings of the panels change color while the indicator is visible.
 
-### Dark / Light mode toggle (◑)
+### Dark / Light mode (◑)
 
-What you expect.
+What you would expect.
 
-### Move Panel Button (⇲)
+### Panel Side (⤪)
 
-Choose your favorite celestial direction.
+Select your preferred celestial direction.
 
-### Close Button (🗙)
+### Standby (🗕)
 
-Collapses the panel and shows a small bag indicator instead. The bag can be freely positioned on the screen. Click it to reopen the panel.
+Collapses the panel and shows a small standby indicator instead. The indicator can be freely positioned on the screen. Click it to reactivate the panel.
+
+### Resizing the Panel (⭥)
+
+You can grab the border of the panel to resize it.
+
+## Additional Notes
+
+### Sporadically appearing red headings
+With a large number of view transition names on a page, the Inspection Chamber can overheat. If you see some dark red headings, be patient and give it a moment to cool down.
+
+
+### Stability
+The implementation depends on Chrome's ability to The implementation relies on Chrome's experimental ability to support cross-document view transitions in iframes. There may still be many flaws, possibly due to my understanding of the new technology. Changes to the underlying browser implementation are likely to impact the functionality of the Inspection Chamber. Please keep me informed of any malfunctions you observe.
