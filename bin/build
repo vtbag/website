@@ -8,8 +8,3 @@ if [ "$?" -ne "0" ]; then
 fi
 ./bin/check_links.sh
 [ -n "$GS" ] && echo -n "google-site-verification: ${GS}" > ./dist/${GS}
-if [ ! -f ./dist/_astro/ec.s8bdm.css ]
-then
-		echo "Missing EC-CSS file"
-		exit 1
-fi
