@@ -16,3 +16,7 @@ node_modules/
 
 # rollup-plugin-visualizer
 stats.html
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

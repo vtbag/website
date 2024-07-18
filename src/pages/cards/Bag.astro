@@ -1,0 +1,55 @@
+---
+import bag from "../../assets/bag.png?url"
+---
+<html lang="en">
+  <body>
+    <div style="background-color: #181008; width:42vw">
+      <img src={bag} alt="bag" />
+    </div>
+    <div style="width:57vw">
+      <h2><hr>Tools, Tips, and Tricks<br>to Enhance your Development Skills<br>with View Transitions!<hr>
+      </h2>
+    </div>
+    <h1>The Bag of Tricks for View Transitions</h1>
+  </body>
+  <style is:global>
+    h1,
+    h2,
+    :root,
+    body {
+      padding: 0;
+      margin: 0;
+    }
+    h1 {
+      padding: 3vh 3vw;
+      color: #f5e3d5;
+      font-size: 66px;
+      font-family: Arial, Helvetica, sans-serif;
+      transform: translate(0, -140vh)
+    }
+    h2 {
+      color:#c5b3a5;
+      font-size: 56px;
+      font-family: Arial, Helvetica, sans-serif;
+      transform: translate(-4vw, -15vh);
+      text-align: right;
+    }
+    body {
+      background: linear-gradient(to left, #642, #181008, #181008);
+    }
+    img {
+      display: block;
+      margin: auto;
+      transform: rotate(-10deg) translate(0vw, 19vh);
+      mask-image: radial-gradient(
+        ellipse at center,
+        white 35%,
+        transparent 71%
+      );
+    }
+    body div {
+      display: inline-block;
+      height: 100vh;
+    }
+  </style>
+</html>

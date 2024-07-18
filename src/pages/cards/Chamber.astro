@@ -1,0 +1,48 @@
+---
+import chamber from "@vtbag/inspection-chamber?url";
+---
+
+<html lang="en" style="color-scheme:dark">
+  <head>
+    <title>Chamber</title>
+    <script is:inline src={chamber} slot="head2"></script>
+  </head>
+  <body>
+    <img width="640" src="/chamber.png" />
+    <h1><a href="/cards/Chamber/">The Inspection Chamber</a></h1>
+    <h2>Put your View Transitions through their paces!</h2>
+  </body>
+</html>
+<style is:global>
+  :root,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  img {
+    display: block;
+    float: right;
+  }
+  h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 72px;
+    padding: 20px;
+    color: aqua;
+    transform: translate(20px, -30px);
+  }
+  h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 48px;
+    padding: 30px;
+    color: lightblue;
+    transform: translate(15px, -60px);
+  }
+  a {
+    text-decoration: none;
+    color: aqua;
+  }
+
+  @view-transition {
+    navigation: auto;
+  }
+</style>
