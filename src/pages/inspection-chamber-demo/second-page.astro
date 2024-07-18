@@ -1,11 +1,12 @@
 ---
 import Layout from "./_ChamberLayout.astro";
-import chamber from "../../assets/chamber.png?url";
+import chamber from "../../assets/chamber.png";
+import { Image } from 'astro:assets';
 ---
 
 <Layout title="Inspection Chamber Demo">
   <main>
-    <img
+    <Image
       style="view-transition-name: image; width:40%; height:auto; top: 10vh; left: 10vw; position: fixed"
       src={chamber}
       alt="The Bag's Inspection Chamber"
