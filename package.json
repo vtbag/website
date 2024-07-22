@@ -14,7 +14,7 @@
     "@playwright/test": "^1.45.2",
     "@types/node": "^20.14.11",
     "@vtbag/inspection-chamber": "^1.0.2",
-    "astro": "^4.10.2",
+    "astro": "^4.12.2",
     "astro-vtbot": "^1.8.2",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
