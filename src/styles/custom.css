@@ -174,3 +174,13 @@ li a[aria-current="page"] {
 main h1 {
   view-transition-name: title-heading;
 }
+
+:root {
+  font-size: 12px;
+}
+
+@media (min-width: 50em) {
+  :root {
+    font-size: 16px;
+  }
+}
