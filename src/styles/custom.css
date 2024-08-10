@@ -11,8 +11,7 @@
 
 :root {
   transition:
-    all 2s,
-    --vtbag-bg-color 0.5s;
+    --sl-color-text 2s;
 }
 :root[loading] * {
   cursor: progress;
