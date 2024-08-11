@@ -5,17 +5,24 @@ description: "@vtbag/inspection-chamber allows you to examine, judge & optimize 
 
 import { Steps } from "@astrojs/starlight/components";
 
-Place your pages in the inspection chamber and put the view transitions through their paces.
+The Inspection Chamber allows you to examine the details of view transitions. It’s designed for use during development and supports both same-document and cross-document view transitions.
+
+Place your pages in the Inspection Chamber and put the view transitions through their paces.
 You can thoroughly examine each transition: play it in slow motion, examine timings step-by-step, disable transitions or highlight the pseudo elements &mdash; everything is easily achievable here.
 
 <div style="padding: 10px 20px 20px; border:12px dotted orange; width: max-content; border-radius:20px;font-size:32px;transform:rotate(3deg) translateY(20px) translateX(40px)">
   [See it in action!](/inspection-chamber-demo/first-page/)
 </div>
 
+## PREREQUISITE
+
 :::danger[Bleeding Edge]
-The inspection chamber requires a current Chrome browser
-and yet you must also manually activate chrome://flags/#view-transition-on-navigation-iframe.
+The Inspection Chamber requires a current **Chrome browser version 126 or higher**, and you must also manually activate **chrome://flags/#view-transition-on-navigation-iframe**  .
 :::
+
+The Inspection Chamber currently only works with the **Chrome browser, starting from version 126**. Additionally, you **must enable Chrome's _"viewTransition API for sub-frame navigations"_ feature**.
+Otherwise, Chrome will not support view transitions inside iframes, and the Chamber will not work. To enable this feature, enter `chrome://flags/#view-transition-on-navigation-iframe` into Chrome's address bar and select `Enabled` from the drop-down menu.
+
 
 ## Installation
 
