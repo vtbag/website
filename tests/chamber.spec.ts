@@ -2,9 +2,64 @@ import { test, expect, type Page } from '@playwright/test';
 
 test('has title', async ({ page }) => {
   await page.goto('http://localhost:4321/inspection-chamber-demo/first-page/');
-
-  // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle('🔬 Inspection Chamber Demo | @vtbag');
+});
+
+test.describe("devToolbar", () => {
+  async function openClose(page: Page) {
+    const app = page.locator('#bar-container > button[data-app-id="vtbot"]');
+    await expect(app).toBeVisible();
+    await app.click();
+  }
+  async function toolbarAction(page: Page, status: string) {
+    await openClose(page);
+    const button = page.locator('#inspection-chamber-button button');
+    await expect(button).toBeVisible();
+    await expect(page.locator("#inspection-chamber-status")).toContainText(status);
+    return button;
+  }
+
+  test('can open and close', async ({ page }) => {
+    await page.goto('http://localhost:4321/');
+    await expect(page.locator('#inspection-chamber-button')).toBeHidden();
+    await toolbarAction(page, "There is an Inspection Chamber here");
+    await expect(page.locator('#inspection-chamber-button')).toBeVisible();
+    await openClose(page);
+    await expect(page.locator('#inspection-chamber-button')).toBeHidden();
+  });
+
+  test('can use', async ({ page }) => {
+    await page.goto('http://localhost:4321/');
+    let button = await toolbarAction(page, "There is an Inspection Chamber here");
+    await button.click();
+    await expect(page.locator('#vtbag-ui-panel')).toBeVisible();
+    await expect(page.locator('#vtbag-ui-reopen')).toBeHidden();
+    await page.click('#vtbag-ui-standby');
+    await expect(page.locator('#vtbag-ui-reopen')).toBeVisible();
+    await expect(page.locator('#vtbag-ui-panel')).toBeHidden();
+    await page.click("a[class*='primary']");
+    await page.waitForURL('http://localhost:4321/vtbag/');
+    await expect(page.locator('#vtbag-ui-reopen')).toBeVisible();
+    await expect(page.locator('#vtbag-ui-panel')).toBeHidden();
+    await page.click('#vtbag-ui-reopen');
+    await expect(page.locator('#vtbag-ui-reopen')).toBeHidden();
+    await expect(page.locator('#vtbag-ui-panel')).toBeVisible();
+  });
+
+
+
+  test('can detect standby', async ({ page }) => {
+    await page.goto('http://localhost:4321/');
+
+    let button = await toolbarAction(page, "There is an Inspection Chamber here");
+    await button.click();
+    await expect(page.locator('#vtbag-ui-panel')).toBeVisible();
+    await page.click('#vtbag-ui-standby');
+    await expect(page.locator('#vtbag-ui-reopen')).toBeVisible();
+    button = await toolbarAction(page, "The Chamber is currently in standby mode.");
+    await button.click();
+    await expect(page.locator('#vtbag-ui-panel')).toBeVisible();
+  });
 });
 
 test.describe("controls", () => {
@@ -14,8 +69,7 @@ test.describe("controls", () => {
     await expect(page.locator('#vtbag-ui-reopen')).toBeHidden();
     await page.click('#vtbag-ui-standby');
     await expect(page.locator('#vtbag-ui-reopen')).toBeVisible();
-
-  });
+  })
 
   test('can reopen', async ({ page }) => {
     await page.goto('http://localhost:4321/inspection-chamber-demo/first-page/');
@@ -33,11 +87,8 @@ test.describe("controls", () => {
 
     await page.click('#vtbag-ui-standby');
     await expect(page.locator('#vtbag-ui-panel')).toBeHidden();
-
     await page.click("main div p a");
-
     await page.waitForURL('http://localhost:4321/inspection-chamber-demo/second-page/');
-
     await page.click('#vtbag-ui-reopen');
     await expect(page.locator('#vtbag-ui-reopen')).toBeHidden();
     await expect(page.locator('#vtbag-ui-panel')).toBeVisible();
