@@ -1,0 +1,65 @@
+body {
+  font-family: sans-serif;
+  margin: auto;
+  padding: 16px;
+  max-width: min(50em, 100%);
+}
+h1 {
+  background-color: #8888;
+  padding: 1em;
+  margin: 0;
+  text-align: right;
+}
+p {
+  margin: 1em 0;
+  padding: 0em;
+}
+code {
+  font-size: 0.97rem;
+  background-color: #ffc4;
+}
+kbd {
+  display: inline-block;
+  font-size: 0.85em;
+  color: #333;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-family: 'Courier New', Courier, monospace;
+}
+:root[data-theme="dark"] kbd {
+  color: #fff;
+  background-color: #333;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+button {
+  padding: 1em;
+  margin: 1em;
+  border-radius: 8px;
+}
+#back {
+  display: inline-block;
+  color: black;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem;
+  background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+  box-shadow: 0 4px 6px #8888;
+  transition: background 0.3s ease;
+}
+.starlight-image-zoom-control {
+  display: none;
+}
+section img {
+  display: none;
+  width: max(67%, 320px);
+  height: auto;
+  margin: auto;
+  border: 1px solid #8888;
+  box-shadow: 0 4px 6px #8888;
+  }
+[data-theme='dark'] section img[src*='-dark'],
+[data-theme='light'] section img[src*='-light'] {
+  display: block;
+}

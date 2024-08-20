@@ -1,0 +1,65 @@
+---
+layout: "@/layouts/ExplainerLayout.astro"
+---
+
+
+This example features a display with two tabs. Selecting a tab switches the content.
+
+### HTML
+
+The HTML part for this example just defines two tab headings and two alternative tab contents. The CSS class `active` is used to highlight the current heading and to select the tab-content to be shown.
+
+```html
+<div class="tabs">
+  <div class="tab active" data-tab="tab1">Dad Jokes</div>
+  <div class="tab" data-tab="tab2">Punny Puns</div>
+</div>
+<div class="tab-content active" id="tab1">
+  <p>Why don't skeletons fight each other? They don't have the guts.</p>
+  <p>I'm reading a book on anti-gravity. It's impossible to put down!</p>
+</div>
+<div class="tab-content" id="tab2">
+  <p>I'm on a seafood diet. I see food and I eat it.</p>
+  <p>Why don't some couples go to the gym? Because some relationships don't work out.</p>
+</div>
+```
+
+### Script Part
+
+The script part adds listeners for the click event to the tab headings.
+
+```html
+<script>
+  const mayViewTransition = (fun) =>
+    document.startViewTransition
+      ? document.startViewTransition(fun)
+      : fun();
+  document.querySelectorAll(".tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      mayViewTransition(() => {
+        document
+          .querySelectorAll(".tab, .tab-content")
+          .forEach((el) => el.classList.remove("active"));
+        tab.classList.add("active");
+        document
+          .getElementById(tab.getAttribute("data-tab"))
+          .classList.add("active");
+      });
+    });
+  });
+</script>
+```
+This script includes a function that modifies the DOM when a tab header is clicked, utilizing `document.startViewTransition` to create a smooth transition from the state before the click to the state afterward.
+
+To ensure compatibility across different browsers, the script uses a wrapper function called `mayViewTransition`. This wrapper checks if the native view transition API is supported. If it is, `document.startViewTransition` is called; if not, the DOM-changing code is called directly. This approach is a best practice for using `document.startViewTransition`, as it prevents errors in browsers that lack native support for view transitions.
+
+### View Transition specific CSS
+In this example, no specific view-transition-name properties are defined. Instead, the example relies on the default view transition name, `root`, which the browser automatically applies to the `<html>` element. This means that the old and new images are those of the viewport before and after the transition. To enhance the visual effect, a simple CSS adjustment is made to slow down the fade-out and fade-in animations of the old and the new image:
+
+```css
+::view-transition-image-pair(root) {
+  animation-duration: 0.75s;
+}
+```
+
+Although there is no explicit animation defined for the `image-pair` pseudo-element, the duration defined here will be inherited by the  browser defined animations for `::view-transition-old(root)` and `::view-transition-new(root)`.

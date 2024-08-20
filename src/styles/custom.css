@@ -152,7 +152,8 @@ starlight-menu-button button {
   font-size: large;
 }
 
-.hero .action.primary {
+.hero .actions .primary {
+  border: none;
   background-color: var(--sl-color-accent-low, rgb(85, 45, 25));
   color: var(--sl-color-accent-high);
   box-shadow:
@@ -172,6 +173,25 @@ li a[aria-current="page"] {
 
 main h1 {
   view-transition-name: title-heading;
+}
+
+main kbd {
+  display: inline-block;
+  padding: 0.1em 0.4em;
+  margin: 0 0.1em;
+  font-size: 0.85em;
+  color: #333;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  font-family: 'Courier New', Courier, monospace;
+}
+:root[data-theme="dark"] main kbd {
+  color: #fff;
+  background-color: #333;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 :root {

@@ -1,0 +1,36 @@
+---
+export interface Props {
+  href: string;
+}
+const { href } = Astro.props;
+const id = "vtbag-" + Math.random().toString(36).substring(7);
+---
+
+<a data-vtbag-demo-link {id} {href}><slot /></a>
+<script>
+  import { navigate } from "astro:transitions/client";
+  // @ts-ignore
+  const supportsViewTransitions = document.startViewTransition
+    ? "true"
+    : "false";
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll("a[data-vtbag-demo-link]").forEach((a) =>
+      a.addEventListener("click", (e) => {
+        e.preventDefault();
+        sessionStorage.setItem(
+          "vtbot-inspection-chamber",
+          "false"
+        );
+        sessionStorage.setItem("vtbag-ui-standby", supportsViewTransitions);
+        sessionStorage.setItem(
+          "vtbag-ui-reopener-position",
+          JSON.stringify({
+            reopenerLeft: "16px",
+            reopenerTop: "16px",
+          })
+        );
+        navigate((e.target as HTMLElement).getAttribute("href")!);
+      })
+    );
+  });
+</script>

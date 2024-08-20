@@ -1,0 +1,34 @@
+---
+title: Where to Place CSS for Cross-Document View Transitions?
+---
+
+You're aware that enabling cross-document view transitions is as simple as adding the view transition at-rule to your pages.
+
+```css
+@view-transition{navigation: auto}
+```
+You also know that both pages, the old one and the new one, must opt in by including this at-rule. Additionally, you might know that this only works if both pages share the same origin, meaning the same protocol, host, and port.
+
+However, when you start adding more CSS to introduce additional view-transition names or customize the animations, you might wonder: Do I need this CSS on both pages?
+
+## View Transition Names
+View transition names are tied to the DOM, whether they're set directly on elements or added via CSS rules. You must define the names for the old images on the old page and for the new images on the new page.
+
+The last chance to set these names on the old page using JavaScript is during the pageswap event, which occurs right before the screenshots for the old images are taken and navigation leaves the page.
+
+For the new images, your last opportunity to define names using JavaScript is the pagereveal event, triggered after the new page is loaded and just before screenshots of the new images are taken.
+
+## Animations
+This might come as a surprise, but it's simple to explain: Besides defining view transition names and taking screenshots of the old images, the old page has no control over how the view transition is styled. Any pseudo-element related CSS defined on the old page will be ignored, unless the old page is also the new one.
+
+The reason for this is that the animations are triggered by the appearance of the view transition pseudo-elements on the `:root` element of the new page. At that moment, only the styles from the new page are available.
+
+While it seems logical, it’s still somewhat counterintuitive that the CSS for an exit animation for an element that only exists on the old page needs to be defined on the new page.
+
+If you’re accustomed to building with components, it might not always be clear which page a component will end up on and where the corresponding CSS should be placed. Additionally, the requirement that view transition names must be unique on a page makes you reconsider whether it’s wise to hardcode view transition names inside reusable components.
+
+## Conclusion
+I'm still exploring paths and alternatives but this would be my current recommendations:
+1. For complex pages, ensuring the uniqueness of view transition names might be easier if you assign them dynamically using JavaScript.
+2. Placing your view transition animation definitions in a global CSS file can be effective. This way, both the old and new pages share the same definitions, eliminating the need to worry about where to place them.
+3. Utilizing view transition types and classes can help decouple usage from definitions, making your code more flexible."

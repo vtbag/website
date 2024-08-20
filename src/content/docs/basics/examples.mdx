@@ -1,0 +1,31 @@
+---
+title: View Transition Examples
+description: Basic examples on how to use the View Transition API for same-document and cross-document view transitions.
+---
+
+import DemoReset from 'src/components/DemoReset.astro'
+import DemoLink from 'src/components/DemoLink.astro'
+import { Code } from '@astrojs/starlight/components';
+import examples from 'src/pages/demo/SimpleVT2.html?raw'
+
+<DemoReset />
+
+This section lists examples of view transitions, starting with the most basic settings and gradually adding more features. The table provides a brief description of what makes each example unique and includes links to the actual demo and its code.
+
+|Name|Description|
+|---|---|
+|<DemoLink href="/demo/BasicS/">Basic Same-Document</DemoLink>|Switching tabs with the default transition|
+|<DemoLink href="/demo/BasicC1/">Basic Cross-Document</DemoLink>|Switching pages with the default transition|
+|<DemoLink href="/demo/BasicAS/">Animated Same-Document</DemoLink>|Switching tabs with a custom animation|
+|<DemoLink href="/demo/BasicAC1/">Animated Cross-Document</DemoLink>|Switching pages with a custom animation|
+
+More to come. Especially morph animations.
+
+import { Card } from '@astrojs/starlight/components'
+
+<Card title="Side note">
+Creating these example pages was a blast! They bring together a mix of Astro components, MDX partials, and endpoints. Best of all, with each example, you can simply hit <kbd>Ctrl-U</kbd> (or "view page source") to explore readable source code, free from all the typical clutter! And yes, these are still static pages generated with SSG.
+</Card>
+
+
+

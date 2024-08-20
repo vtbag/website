@@ -1,0 +1,29 @@
+---
+title: Avoid Changing Pointers on view Transitions
+---
+When I was asked how to avoid changing pointers on view transition navigation, I was first puzzled: I have to admit, I never really considered that effect before. But once you notice it, it's hard to unsee — and it definitely becomes a bit irritating every time you encounter it.
+
+## What happens?
+When you click a link in a sidebar, your pointer cursor turns into the default arrow cursor and even after the page changed it takes quite a while until the pointer cursor comes back.
+
+Even stranger: the browser's built-in stylesheet defines `cursor: pointer`, your projects CSS does so and nevertheless there is a noticeable period with a arrow cursor.
+
+**Don't get me wrong**: Seeing an arrow instead of the expected pointer during view transitions isn't entirely a bad thing. It signals the user that the page is temporarily non-interactive. Even if you force the pointer to remain, clicking links won't work while the animations are playing.
+
+Not being able to control this when you want may be upsetting.  While investigating this issue, I picked up a few new insights, I'm happy to share here.
+
+## Why does it happen?
+This effect is inherent to the View Transition API. The default arrow cursor appears as soon as the transition starts and remains until the final animation ends. During view transitions, the screen may look like your HTML, but what you're actually seeing are the pseudo-elements inserted by the view transition API: the screenshots of the old and new images. As a result, normal styling doesn't work. Even the browser's built-in stylesheets, which know to apply a pointer cursor to buttons and links, fails here because what you see only looks like buttons and links, but they aren't.
+
+Setting the cursor on the pseudo-elements doesn't seem to work either. However, one approach to minimize the cursor switching and drastically reduce flickering is to set the cursor on the `:root` element just before the transition starts and remove it immediately after the animations end. The timing here is crucial because this approach will make the cursor a pointer across the entire page. But for the brief 100 milliseconds of the view transition, this should be acceptable.
+
+Admittedly, this approach works much better with same-document view transitions than with cross-document ones, where there still seems to be a brief moment where the default cursor appears.
+
+One implementation might involve using an event like pageswap and the viewTransition.finished promise to get the timing right. For Level 2 compliant browsers, however, there’s a simpler solution:
+```css
+:active-view-transition {
+  cursor: pointer;
+}
+```
+The `:active-view-transition` pseudo-class targets the `:root` element while a view transition is in progress.
+

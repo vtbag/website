@@ -1,0 +1,68 @@
+---
+import Demo from '@/layouts/DemoLayout.astro';
+---
+
+<Demo title="Basic Same-Document">
+  <p>
+    This example uses the View Transition API to animate the switching of tabs
+    with the default cross-over effect.
+  </p>
+  <div class="tabs">
+    <div class="tab active" data-tab="tab1">Dad Jokes</div>
+    <div class="tab" data-tab="tab2">Punny Puns</div>
+  </div>
+  <div class="tab-content active" id="tab1">
+    <p>Why don't skeletons fight each other? They don't have the guts.</p>
+    <p>I'm reading a book on anti-gravity. It's impossible to put down!</p>
+  </div>
+  <div class="tab-content" id="tab2">
+    <p>I'm on a seafood diet. I see food and I eat it.</p>
+    <p>
+      Why don't some couples go to the gym? Because some relationships don't
+      work out.
+    </p>
+  </div>
+  <script is:inline>
+    const mayViewTransition = (fun) =>
+      document.startViewTransition ? document.startViewTransition(fun) : fun();
+
+    document.querySelectorAll(".tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        mayViewTransition(() => {
+          document
+            .querySelectorAll(".tab, .tab-content")
+            .forEach((el) => el.classList.remove("active"));
+          tab.classList.add("active");
+          document
+            .getElementById(tab.getAttribute("data-tab"))
+            .classList.add("active");
+        });
+      });
+    });
+  </script>
+  <style is:inline slot="late-head">
+    ::view-transition-image-pair(root) {
+      animation-duration: 0.75s;
+    }
+    .tab {
+      display: inline-block;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #777;
+      border: 1px solid #999;
+      border-bottom: none;
+    }
+    .tab.active {
+      background-color: #999;
+      border-bottom: 1px solid #999;
+    }
+    .tab-content {
+      display: none;
+      padding: 20px;
+      border: 1px solid #888;
+    }
+    .tab-content.active {
+      display: block;
+    }
+  </style></Demo
+>

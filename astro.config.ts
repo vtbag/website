@@ -8,11 +8,14 @@ import starlightImageZoom from 'starlight-image-zoom';
 import { visualizer } from "rollup-plugin-visualizer";
 
 import vtbot from "astro-vtbot";
-import sidebar from "./sidebar";
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://vtbag.pages.dev',
+  compressHTML: false,
+  redirects: {
+    '/inspection-chamber/': '/tools/inspection-chamber/'
+  },
   prefetch: false,
   markdown: {
     rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, {
@@ -58,7 +61,7 @@ export default defineConfig({
     editLink: {
       baseUrl: "https://github.com/vtbag/website/edit/main/"
     },
-    sidebar,
+    sidebar: sidebar(),
   }), vtbot()],
   vite: {
     server: {
@@ -71,3 +74,29 @@ export default defineConfig({
     })]
   }
 });
+
+
+function sidebar() {
+  return [{
+    label: '@vtbag',
+    link: '/vtbag/'
+  }, {
+    label: 'Tools',
+    items: [
+      { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" }
+    ],
+  }, {
+    label: 'Basics',
+    items: [
+      { label: 'View Transition API', link: "/basics/api/" }, {
+        label: 'Examples', link: "/basics/examples/"
+      }
+    ]
+  }, {
+    label: 'Tips & Tricks',
+    items: [
+      { label: 'Where to place the CSS', link: "/tips/css/" },
+      { label: "Cursor switch on navigation?", link: "tips/pointer/" }
+    ]
+  }];
+}

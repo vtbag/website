@@ -1,0 +1,12 @@
+---
+
+---
+<head>
+<script is:inline>
+  sessionStorage.setItem("vtbot-inspection-chamber", "false");
+  sessionStorage.setItem("vtbag-ui-standby", "false");
+  if (self !== top) {
+    top.location.href = self.location.href;
+  }
+</script>
+</head>

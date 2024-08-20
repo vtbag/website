@@ -1,0 +1,73 @@
+---
+import Demo from "@/layouts/DemoLayout.astro";
+---
+
+<Demo title="Animated Cross-Document 1/2">
+  <link rel="preload" href="/bag.webp" as="image" slot="early-head" />
+  <p>This example uses cross-document view transitions and a custom zoom effect to switch web pages.</p>
+  <h2>My lovely picture</h2>
+  <img style="view-transition-name: img"
+    id="image"
+    width="200"
+    height="200"
+    src="/bag.webp"
+    alt="The Bag of Tricks"
+  />
+  <a class="nav-button left" href="/demo/BasicAC2/">Previous</a>
+  <a class="nav-button right" href="/demo/BasicAC2/">Next</a>
+
+  <style is:inline slot="late-head">
+    @view-transition {
+      navigation: auto;
+    }
+    ::view-transition-old(img) {
+      animation: 1s zoom-out forwards;
+    }
+    ::view-transition-new(img) {
+      animation: 1s reverse zoom-out;
+    }
+    @keyframes zoom-out {
+      40% {
+        transform: scale(0.5);
+        opacity: 0.5;
+      }
+      60% {
+        transform: scale(0.5);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+    .nav-button {
+      position: fixed;
+      transform: translateY(-150px);
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    .nav-button.left {
+      left: 20px;
+    }
+    .nav-button.right {
+      right: 20px;
+    }
+    #image {
+      display: block;
+      margin: 0 auto;
+      mask-image: radial-gradient(
+        ellipse at center,
+        white 35%,
+        transparent 71%
+      );
+    }
+    :active-view-transition {
+      cursor: pointer;
+    }
+  </style>
+</Demo>

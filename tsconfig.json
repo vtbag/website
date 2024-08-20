@@ -2,6 +2,7 @@
   "extends": "astro/tsconfigs/strictest",
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": { "@/*": ["./src/*"] }
   }
 }

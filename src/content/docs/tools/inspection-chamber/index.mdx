@@ -17,11 +17,10 @@ You can thoroughly examine each transition: play it in slow motion, examine timi
 ## PREREQUISITE
 
 :::danger[Bleeding Edge]
-The Inspection Chamber requires a current **Chrome browser version 126 or higher**, and you must also manually activate **chrome://flags/#view-transition-on-navigation-iframe**  .
+The Inspection Chamber requires a current **Chrome browser version 126 or higher**, and on some versions you must also manually activate **chrome://flags/#view-transition-on-navigation-iframe**  .
 :::
 
-The Inspection Chamber currently only works with the **Chrome browser, starting from version 126**. Additionally, you **must enable Chrome's _"viewTransition API for sub-frame navigations"_ feature**.
-Otherwise, Chrome will not support view transitions inside iframes, and the Chamber will not work. To enable this feature, enter `chrome://flags/#view-transition-on-navigation-iframe` into Chrome's address bar and select `Enabled` from the drop-down menu.
+The Inspection Chamber currently only works with **Chromium browser (Chrome, Edge, \hellip;), starting from version 126**. Additionally, you **might need to enable the _"viewTransition API for sub-frame navigations"_ feature**, because the Chamber will only work if cross-document view transitions are also supported inside iframes. If you have to enable this feature manually, enter `chrome://flags/#view-transition-on-navigation-iframe` into the browser's address bar and select `Enabled` from the drop-down menu.
 
 
 ## Installation
@@ -110,7 +109,7 @@ Hint: If selected, Tutorial mode prominently displays usage instructions!
 2. <b>Highlight elements with view transition names</b> by selecting the [frame elements
    toggle](#frame-elements).
 
-3. While no transition is active: <b>Identify elements with view transition names</b> by clicking on them on the screen or in the [name list](#name-list). To prevent active elements like links from starting a navigation during examination, hold both, the <kbd>ctrl</kbd> and <kbd>shift</kbd> while clicking them.
+3. While no transition is active: <b>Identify elements with view transition names</b> by clicking on them on the screen or in the [name list](#name-list). To prevent active elements like links from starting a navigation during examination, hold both, the <kbd>Ctrl</kbd> and <kbd>Shift</kbd> while clicking them.
 
 4. <b>Start a view transition</b> by clicking its trigger such as a link or a button
    on the page.
@@ -180,6 +179,7 @@ Each of the pseudo-elements introduced by the view transition API may feature mu
 </div><div class="dark:sl-hidden">
 ![Animation panel](light-animation.png)
 </div>
+You may see entries that do not have a checkmark but show a red dot instead. This means that the key frames of the animation could not be found. For details see the error message in the browser console.
 
 ## Filter Panel
 

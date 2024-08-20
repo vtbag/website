@@ -1,0 +1,35 @@
+---
+import chamber from "@vtbag/inspection-chamber?url";
+
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const script =
+  'const _=document.documentElement;_.dataset.theme=_.style.colorScheme=localStorage.getItem("starlight-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches? "dark":"light");addEventListener("DOMContentLoaded",async()=>document.getElementById("vtbag-spacer").insertAdjacentHTML("beforeend",(await (await fetch(location.pathname.replace("/demo/","/demo-explainer/"))).text())))';
+---
+
+<html lang="de">
+  <head>
+    <slot name="early-head" />
+    <link href="/demo-explainer/styles.css" rel="stylesheet" />
+    <script is:inline set:html={script} />
+    <script is:inline src={chamber}></script>
+    <title>View transition example: {title}</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/bag3.png" type="image/png" />
+    <slot name="late-head" />
+  </head>
+  <body>
+    <h1>View Transition Example<br />{title}</h1>
+    <a
+      id="back"
+      href="javascript:sessionStorage.setItem('vtbot-inspection-chamber', 'false'),sessionStorage.setItem('vtbag-ui-standby', 'false'),top.location.href='/basics/examples/'"
+      >Back to list of examples</a
+    >
+    <slot />
+    <div id="vtbag-spacer" style="min-height:100vh"></div>
+  </body>
+</html>
