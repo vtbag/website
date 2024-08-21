@@ -3,11 +3,12 @@ import chamber from "@vtbag/inspection-chamber?url";
 
 export interface Props {
   title: string;
+  backlink: string;
 }
 
-const { title } = Astro.props;
+const { title, backlink } = Astro.props;
 const script =
-  'const _=document.documentElement;_.dataset.theme=_.style.colorScheme=localStorage.getItem("starlight-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches? "dark":"light");addEventListener("DOMContentLoaded",async()=>document.getElementById("vtbag-spacer").insertAdjacentHTML("beforeend",(await (await fetch(location.pathname.replace("/demo/","/demo-explainer/"))).text())))';
+  'const _=document.documentElement;_.dataset.theme=_.style.colorScheme=localStorage.getItem("starlight-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches? "dark":"light");setTimeout(async()=>document.getElementById("vtbag-spacer").insertAdjacentHTML("beforeend",(await (await fetch(location.pathname.replace("/demo/","/demo-explainer/"))).text())),2000)';
 ---
 
 <html lang="de">
@@ -26,7 +27,7 @@ const script =
     <h1>View Transition Example<br />{title}</h1>
     <a
       id="back"
-      href="javascript:sessionStorage.setItem('vtbot-inspection-chamber', 'false'),sessionStorage.setItem('vtbag-ui-standby', 'false'),top.location.href='/basics/examples/'"
+      href={backlink}
       >Back to list of examples</a
     >
     <slot />

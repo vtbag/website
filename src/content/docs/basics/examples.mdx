@@ -1,30 +1,133 @@
 ---
 title: View Transition Examples
 description: Basic examples on how to use the View Transition API for same-document and cross-document view transitions.
+head:
+  - tag: script
+    content: "self !== top && (top.location.href = self.location.href)"
 ---
 
-import DemoReset from 'src/components/DemoReset.astro'
-import DemoLink from 'src/components/DemoLink.astro'
-import { Code } from '@astrojs/starlight/components';
+import DemoLink from "src/components/DemoLink.astro";
 
-<DemoReset />
+This page lists examples of view transitions, starting with the most basic settings and gradually adding more features. The tables provides a brief description of what makes each example unique and includes a link to the actual demo with its code and detailed description.
 
-This section lists examples of view transitions, starting with the most basic settings and gradually adding more features. The table provides a brief description of what makes each example unique and includes links to the actual demo and its code.
+## Same-Document View Transition Examples
 
-|Name|Description|
-|---|---|
-|<DemoLink href="/demo/BasicS/">Basic Same-Document</DemoLink>|Switching tabs with the default transition|
-|<DemoLink href="/demo/BasicC1/">Basic Cross-Document</DemoLink>|Switching pages with the default transition|
-|<DemoLink href="/demo/BasicAS/">Animated Same-Document</DemoLink>|Switching tabs with a custom animation|
-|<DemoLink href="/demo/BasicAC1/">Animated Cross-Document</DemoLink>|Switching pages with a custom animation|
+These examples revolve around a tab component where you can switch between different contents.
+
+<div title="Select a link from the table below">
+<Card title="Same-Document 'Tabs' Example">
+<style is:inline>{`
+    .tabs {
+      pointer-events: none;
+    }
+    .tab {
+      display: inline-block;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #887;
+      border: 1px solid #887;
+      border-bottom: none;
+    }
+    .tab.active {
+      background-color: #797;
+      border-bottom: 1px solid #797;
+    }
+    .tab-content {
+      transform: translateY(-16px);
+      display: none;
+      padding: 20px;
+      border: 1px solid #888;
+    }
+    .tab-content.active {
+      display: block;
+    }
+`}</style>
+  <div class="tabs" id="sd-example">
+    <div class="tab active" data-tab="tab1">
+      Dad Jokes
+    </div>
+    <div class="tab" data-tab="tab2">
+      Punny Puns
+    </div>
+  </div>
+  <div class="tab-content active" id="tab1">
+    <p>Why don't skeletons fight each other? They don't have the guts.</p>
+    <p>I'm reading a book on anti-gravity. It's impossible to put down!</p>
+  </div>
+</Card>
+</div>
+
+| Name                                                                | Description                                 |
+| ------------------------------------------------------------------- | ------------------------------------------- |
+| <DemoLink id="basics" href="/demo/BasicS/">Basic</DemoLink>       | Just the default cross-fade transition of the whole document |
+| <DemoLink id="basicas" href="/demo/BasicAS/">Custom Animation</DemoLink>   | With a custom animation that shrinks the old content to a line before revealing the new one      |
+| <DemoLink id="basicms" href="/demo/BasicMS/">Multiple Transitions</DemoLink>   | This animates the content area and headers with two independent animations |
+
+## Cross-Document View Transition Examples
+
+These examples revolve around an image component where you switch through different images.
+
+<div title="Select a link from the table below">
+<Card title="Cross-Document 'Image' Example">
+<style is:inline>{`
+   .nav-button {
+      position: relative;
+      transform: translateY(-150px);
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      top: -120px;
+    }
+    .nav-button.left {
+      left: 0px;
+    }
+    .nav-button.right {
+      right: -460px;
+    }
+    #image {
+      display: block;
+      margin: 0 auto;
+      mask-image: radial-gradient(
+        ellipse at center,
+        white 35%,
+        transparent 71%
+      );
+    }
+    #images {
+      pointer-events: none;
+    }
+ `}</style>
+ <div id="images">
+  <img
+    id="image"
+    width="200"
+    height="200"
+    src="/bag.webp"
+    alt="The Bag of Tricks"
+  />
+  <a class="nav-button left" href="/demo/BasicC2/">Previous</a>
+  <a class="nav-button right" href="/demo/BasicC2/">Next</a>
+</div>
+</Card>
+</div>
+
+| Name                                                                | Description                                 |
+| ------------------------------------------------------------------- | ------------------------------------------- |
+| <DemoLink id="basicc" href="/demo/BasicC1/">Basic</DemoLink>     | Just the default cross-fade transition of the whole page|
+| <DemoLink id="basicac" href="/demo/BasicAC1/">Custom Animation</DemoLink> | With a custom animation that shrinks the current image to a point before revealing the next image  |
 
 More to come. Especially morph animations.
 
-import { Card } from '@astrojs/starlight/components'
+import { Card } from "@astrojs/starlight/components";
 
 <Card title="Side note">
-Creating these example pages was a blast! They bring together a mix of Astro components, MDX partials, and endpoints. Best of all, with each example, you can simply hit <kbd>Ctrl-U</kbd> (or "view page source") to explore readable source code, free from all the typical clutter! And yes, these are still static pages generated with SSG.
+  Creating these example pages was a blast! They bring together a mix of Astro
+  components, MDX partials, and endpoints. Best of all, with each example, you
+  can simply hit <kbd>Ctrl-U</kbd> (or "view page source") to explore readable
+  source code, free from all the typical clutter! And yes, these are still
+  static pages generated with SSG.
 </Card>
-
-
-

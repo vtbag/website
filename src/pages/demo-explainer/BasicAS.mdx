@@ -4,10 +4,10 @@ layout: "@/layouts/ExplainerLayout.astro"
 
 ### Goal
 
-This example features a display with two tabs. Clicking a tab slides in the content. The height of the active content area shrinks to zero and after that the new content expands starting from zero to its full height.
+We want to animate the content area. When the view transition starts, the current content should shrink to a thin line and then the new content should come in expanding from zero to its full height.
 
 ### Changes
-The code of this example is mainly identical with the [example using default animations](/demo/BasicS/). The extensions are pure CSS.
+The HTML code of this example is identical with the [example using default animations](/demo/BasicS/). The extensions are pure CSS.
 
 #### View Transition Names
 
@@ -22,16 +22,13 @@ Because we do not want to animate the whole viewport in a single animation but r
 }
 ```
 
-However, the default name "root" has not been removed: the page around the tabs will continue to change with the standard transition effect.
+However, the default name "root" has not been removed: the headers will continue to change with the standard transition effect.
 
 #### Custom Animations
 
 Next thing is to define the animations: We shrink the old images until they are gone and after that we let the new images grow in. Note that shrinking and growing have a duration of 0.2s and 0.8s respectively, but growing only starts after a 0.2s delay. This way growing happens after shrinking.
 
-```css del={1-3} ins={4-13}
-::view-transition-image-pair(root) {
-  animation-duration: 0.75s;
-}
+```css ins={1-10}
 ::view-transition-old(tab1),
 ::view-transition-old(tab2) {
   animation: shrink 0.2s forwards;

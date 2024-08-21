@@ -2,11 +2,13 @@
 import Demo from "@/layouts/DemoLayout.astro";
 ---
 
-<Demo title="Animated Cross-Document 1/2">
+<Demo title="Custom Animation (Cross-Document) 1/2"  backlink='/basics/examples/#basicac'>
   <link rel="preload" href="/bag.webp" as="image" slot="early-head" />
-  <p>This example uses cross-document view transitions and a custom zoom effect to switch web pages.</p>
+  <p>
+    We want to spiff up the image component example with a custom shrink and grow animation.
+  </p>
   <h2>My lovely picture</h2>
-  <img style="view-transition-name: img"
+  <img
     id="image"
     width="200"
     height="200"
@@ -19,6 +21,9 @@ import Demo from "@/layouts/DemoLayout.astro";
   <style is:inline slot="late-head">
     @view-transition {
       navigation: auto;
+    }
+    h2 + img {
+      view-transition-name: img
     }
     ::view-transition-old(img) {
       animation: 1s zoom-out forwards;

@@ -2,13 +2,13 @@
 import Demo from "@/layouts/DemoLayout.astro";
 ---
 
-<Demo title="Animatied Cross-Document 2/2">
+<Demo title="Custom Animation (Cross-Document) 2/2"  backlink='/basics/examples/#basicac'>
   <link rel="preload" href="/chamber.webp" as="image" slot="early-head" />
   <p>
     You now see page two of this example. Press Ctrl-U to view the source code of this page.
   </p>
   <h2>My other lovely picture</h2>
-  <img style="view-transition-name: img"
+  <img
     id="image"
     width="200"
     height="200"
@@ -22,7 +22,9 @@ import Demo from "@/layouts/DemoLayout.astro";
     @view-transition {
       navigation: auto;
     }
-
+    h2 + img {
+      view-transition-name: img
+    }
     ::view-transition-old(img) {
       animation: 1s zoom-out forwards;
     }

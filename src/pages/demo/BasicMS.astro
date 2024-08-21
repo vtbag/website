@@ -2,9 +2,9 @@
 import Demo from '@/layouts/DemoLayout.astro';
 import Tabs from './_Tabs.astro';
 ---
-<Demo title="Custom Animation (Same-Document)" backlink='/basics/examples/#basicas'>
+<Demo title="Multiple Transitions (Same-Document)" backlink='/basics/examples/#basicms'>
     <p>
-      This example defines a custom animation to transition between tabs.
+      This example adds a second custom animation.
     </p>
 <Tabs />
 <style is:inline slot="late-head">
@@ -13,6 +13,21 @@ import Tabs from './_Tabs.astro';
   }
   #tab2 {
     view-transition-name: tab2;
+  }
+  .tabs {
+    view-transition-name: head;
+  }
+
+  ::view-transition-new(head) {
+      animation: shake 0.75s ease-out ;
+      transform-origin: 120px 20px;
+  }
+  @keyframes shake {
+  10% { transform: rotateZ(10deg); }
+  30% { transform: rotateZ(-10deg); }
+  50% { transform: rotateZ(10deg); }
+  70% { transform: rotateZ(-10deg); }
+  90% { transform: rotateZ(10deg); }
   }
   ::view-transition-old(tab1),
   ::view-transition-old(tab2) {
@@ -30,13 +45,13 @@ import Tabs from './_Tabs.astro';
     display: inline-block;
     padding: 10px 20px;
     cursor: pointer;
-    background-color: #887;
-    border: 1px solid #887;
+    background-color: #777;
+    border: 1px solid #999;
     border-bottom: none;
   }
   .tab.active {
-    background-color: #797;
-    border-bottom: 1px solid #797;
+    background-color: #999;
+    border-bottom: 1px solid #999;
   }
   .tab-content {
     display: none;

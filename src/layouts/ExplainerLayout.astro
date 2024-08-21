@@ -6,9 +6,9 @@ export const partial = true;
   <h2 id="how"><a href="#how">How does it work?</a></h2>
   <p>
     <i
-      >To explore this example in more detail, select the "View Page Source"
+      >To explore this example in more detail, press <kbd>Ctrl-U</kbd> or select the "View Page Source"
       option in your browser where available. If you see the Inspection Chamber
-      logo in the upper left corner, powering up could unlock even more
+      logo in the upper left corner, powering it up could unlock even more
       insights! The description below references terms of the view transition
       API like "old" and "new" images or "pseudo-elements". Background
       information about those terms can be found <a href="/basics/api/"
@@ -16,3 +16,8 @@ export const partial = true;
       >.</i>
   </p><section><slot/></section>
 </body>
+<style>
+  p > i {
+    font-size: 0.8rem;
+  }
+</style>
