@@ -16,7 +16,7 @@ These examples revolve around a tab component where you can switch between diffe
 
 <div title="Select a link from the table below">
 <Card title="Same-Document 'Tabs' Example">
-<style is:inline>{`
+<style>{`
     .tabs {
       pointer-events: none;
     }
@@ -33,7 +33,7 @@ These examples revolve around a tab component where you can switch between diffe
       border-bottom: 1px solid #797;
     }
     .tab-content {
-      transform: translateY(-16px);
+      transform: translateY(-1rem);
       display: none;
       padding: 20px;
       border: 1px solid #888;
@@ -51,8 +51,8 @@ These examples revolve around a tab component where you can switch between diffe
     </div>
   </div>
   <div class="tab-content active" id="tab1">
-    <p>Why don't skeletons fight each other? They don't have the guts.</p>
-    <p>I'm reading a book on anti-gravity. It's impossible to put down!</p>
+    <p>Why don't skeletons fight each other?<br/>They don't have the guts.</p>
+    <p>I'm reading a book on anti-gravity.<br/>It's impossible to put down!</p>
   </div>
 </Card>
 </div>
@@ -69,25 +69,7 @@ These examples revolve around an image component where you switch through differ
 
 <div title="Select a link from the table below">
 <Card title="Cross-Document 'Image' Example">
-<style is:inline>{`
-   .nav-button {
-      position: relative;
-      transform: translateY(-150px);
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-      border-radius: 5px;
-      top: -120px;
-    }
-    .nav-button.left {
-      left: 0px;
-    }
-    .nav-button.right {
-      right: -460px;
-    }
+<style>{`
     #image {
       display: block;
       margin: 0 auto;
@@ -107,10 +89,7 @@ These examples revolve around an image component where you switch through differ
     width="200"
     height="200"
     src="/bag.webp"
-    alt="The Bag of Tricks"
-  />
-  <a class="nav-button left" href="/demo/BasicC2/">Previous</a>
-  <a class="nav-button right" href="/demo/BasicC2/">Next</a>
+    alt="The Bag of Tricks"/>
 </div>
 </Card>
 </div>
