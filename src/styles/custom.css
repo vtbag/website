@@ -160,7 +160,9 @@ starlight-menu-button button {
     var(--sl-color-accent-low) 2px 2px 5px 2px,
     var(--sl-color-text-accent) 0px 0px 5px 2px;
 }
-
+.hero .actions .primary:hover {
+  color: var(--sl-color-white)
+}
 h1 {
   display: inline-block;
 }

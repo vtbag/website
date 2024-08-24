@@ -17,10 +17,6 @@ const {id, href } = Astro.props;
     document.querySelectorAll("a[data-vtbag-demo-link]").forEach((a) =>
       a.addEventListener("click", (e) => {
         e.preventDefault();
-        sessionStorage.setItem(
-          "vtbot-inspection-chamber",
-          "false"
-        );
         sessionStorage.setItem("vtbag-ui-standby", supportsViewTransitions);
         sessionStorage.setItem(
           "vtbag-ui-reopener-position",
