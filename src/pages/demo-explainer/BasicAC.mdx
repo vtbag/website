@@ -8,7 +8,7 @@ We want to shrink the current image as the new one grows in. The smaller the ima
 
 ### Changes
 
-We built on the [former example using default animations](/demo/BasicC1/). The extensions are CSS only.
+We built on the [former example showing default animations](/demo/BasicC1/). The extensions are CSS only.
 
 #### View Transition Names
 We do not want to shrink the whole viewport but only the image. Therefore the first thing is to assign a transition name to the image. We could add the property using inline styling to the `<img>` element, but with a new rule like this
@@ -32,6 +32,7 @@ For the shrining and growing, we use the same `zoom-out` keyframes, but for the 
 }
 ```
 
+#### Keyframes
 The effect gradually decreases the opacity and scale of the old image from 1 to 0, while simultaneously increasing the opacity and scale of the new image from 0 to 1. There’s a plateau between 0.4s and 0.6s where all values are halfway.
 
 ```css ins={1-14}
@@ -52,9 +53,9 @@ The effect gradually decreases the opacity and scale of the old image from 1 to 
 ```
 ## Inspection Chamber Insights
 
-When we select the Full Control Mode of the chamber we can check the definitions of the animations and have a closer look on how the animations behave.
+When we select the Full Control Mode of the Chamber we can check the definitions of the animations and have a closer look on how the animations behave.
 
-<div style="display:flex; flex-wrap:wrap; justify-content: space-around;"><div class="item" style="min-width: 300px;">
+<div style="display:flex; flex-wrap:wrap; justify-content: space-;"><div class="item" style="min-width: 300px;">
 
 ### Animations
 First we take a look at the animations of the `img` view transition. There is an auto-generated animation for the group and our two animations for the exit and enter animations.

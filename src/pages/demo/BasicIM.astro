@@ -1,0 +1,94 @@
+---
+import Demo from "@/layouts/DemoLayout.astro";
+---
+
+<Demo
+  title="View Transition Example: Basic Image Morph"
+  backlink="/basics/examples/#basicim"
+>
+  <p>
+    This example demonstrates the default morph transition between two images.
+  </p>
+
+  <div id="DOM1" class="active">
+    <div class="card">
+      <img src="/portrait.webp" />
+      <div>
+        <h4>Teaser Heading</h4>
+        <p>This is a teaser text for the card.</p>
+      </div>
+    </div>
+  </div>
+  <div id="DOM2">
+    <article>
+      <div>
+        <h3>Details</h3>
+        <p>
+          Some text that describes the details of what the card teases in more
+          detail. Click &gt;here&lt; to return to teaser view.
+        </p>
+      </div>
+      <img src="/portrait.webp" />
+    </article>
+  </div>
+  <style is:inline slot="late-head">
+    .card img,
+    article img {
+      view-transition-name: img;
+    }
+    #DOM1,
+    #DOM2 {
+      display: none;
+      cursor: pointer;
+    }
+    #DOM1.active,
+    #DOM2.active {
+      display: block;
+    }
+    #DOM1 {
+      margin: auto;
+      width: max(50%, 300px);
+    }
+    .card {
+      display: flex;
+      border: 2px solid gray;
+      border-radius: 6px;
+    }
+    .card img {
+      width: 30%;
+    }
+    .card div {
+      padding: 1rem;
+    }
+    article {
+      max-width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    article div {
+      padding: 1rem;
+      max-width: 50%;
+    }
+    article img {
+      margin: auto;
+      height: min(512px, 66vh);
+      border-radius: 8px;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+  <script is:inline>
+    document.querySelectorAll("#DOM1, #DOM2").forEach((elem) =>
+      elem.addEventListener("click", (e) => {
+        mayViewTransition(() => {
+          elem.classList.remove("active");
+          elem.parentElement
+            .querySelector(elem.id === "DOM1" ? "#DOM2" : "#DOM1")
+            ?.classList.add("active");
+        });
+      })
+    );
+    function mayViewTransition(fun) {
+      document.startViewTransition ? document.startViewTransition(fun) : fun();
+    }
+  </script>
+</Demo>

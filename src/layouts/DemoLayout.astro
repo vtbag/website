@@ -8,23 +8,23 @@ export interface Props {
 
 const { title, backlink } = Astro.props;
 const script =
-  'const _=document.documentElement;_.dataset.theme=_.style.colorScheme=localStorage.getItem("starlight-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches? "dark":"light");setTimeout(async()=>document.getElementById("vtbag-spacer").insertAdjacentHTML("beforeend",(await (await fetch(location.pathname.replace("/demo/","/demo-explainer/"))).text())),2000)';
+  'const _=document.documentElement;_.dataset.theme=_.style.colorScheme=localStorage.getItem("starlight-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches? "dark":"light");setTimeout(async()=>{const s=document.getElementById("vtbag-spacer");s&&s.insertAdjacentHTML("beforeend",(await (await fetch(location.pathname.replace("/demo/","/demo-explainer/"))).text()))},2000)';
 ---
 
-<html lang="de">
+<html lang="en">
   <head>
     <slot name="early-head" />
     <link href="/demo-explainer/styles.css" rel="stylesheet" />
     <script is:inline set:html={script} />
     <script is:inline src={chamber}></script>
-    <title>View transition example: {title}</title>
+    <title>{title}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/bag3.png" type="image/png" />
     <slot name="late-head" />
   </head>
   <body>
-    <h1>View Transition Example<br />{title}</h1>
+    <h1>{title}</h1>
     <a
       id="back"
       href={backlink}

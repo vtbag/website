@@ -89,7 +89,7 @@ function sidebar() {
     label: 'Basics',
     items: [
       { label: 'View Transition API', link: "/basics/api/" }, {
-        label: 'Examples', link: "/basics/examples/"
+        label: 'View Transition Examples', link: "/basics/examples/"
       }
     ]
   }, {

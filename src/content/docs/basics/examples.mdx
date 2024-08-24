@@ -15,8 +15,8 @@ This page lists examples of view transitions, starting with the most basic setti
 These examples revolve around a tab component where you can switch between different contents.
 
 <div title="Select a link from the table below">
-<Card title="Same-Document 'Tabs' Example">
-<style>{`
+  <Card title="Same-Document 'Tabs' Example">
+    <style>{`
     .tabs {
       pointer-events: none;
     }
@@ -42,34 +42,42 @@ These examples revolve around a tab component where you can switch between diffe
       display: block;
     }
 `}</style>
-  <div class="tabs" id="sd-example">
-    <div class="tab active" data-tab="tab1">
-      Dad Jokes
+    <div class="tabs" id="sd-example">
+      <div class="tab active" data-tab="tab1">
+        Dad Jokes
+      </div>
+      <div class="tab" data-tab="tab2">
+        Punny Puns
+      </div>
     </div>
-    <div class="tab" data-tab="tab2">
-      Punny Puns
+    <div class="tab-content active" id="tab1">
+      <p>
+        Why don't skeletons fight each other?
+        <br />
+        They don't have the guts.
+      </p>
+      <p>
+        I'm reading a book on anti-gravity.
+        <br />
+        It's impossible to put down!
+      </p>
     </div>
-  </div>
-  <div class="tab-content active" id="tab1">
-    <p>Why don't skeletons fight each other?<br/>They don't have the guts.</p>
-    <p>I'm reading a book on anti-gravity.<br/>It's impossible to put down!</p>
-  </div>
-</Card>
+  </Card>
 </div>
 
-| Name                                                                | Description                                 |
-| ------------------------------------------------------------------- | ------------------------------------------- |
-| <DemoLink id="basics" href="/demo/BasicS/">Basic</DemoLink>       | Just the default cross-fade transition of the whole document |
-| <DemoLink id="basicas" href="/demo/BasicAS/">Custom Animation</DemoLink>   | With a custom animation that shrinks the old content to a line before revealing the new one      |
-| <DemoLink id="basicms" href="/demo/BasicMS/">Multiple Transitions</DemoLink>   | This animates the content area and headers with two independent animations |
+| Name                                                                         | Description                                                                                 |
+| ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| <DemoLink id="basics" href="/demo/BasicS/">Basic</DemoLink>                  | Just the default cross-fade transition of the whole document                                |
+| <DemoLink id="basicas" href="/demo/BasicAS/">Custom Animation</DemoLink>     | With a custom animation that shrinks the old content to a line before revealing the new one |
+| <DemoLink id="basicms" href="/demo/BasicMS/">Multiple Transitions</DemoLink> | This animates the content area and headers with two independent animations                  |
 
 ## Cross-Document View Transition Examples
 
 These examples revolve around an image component where you switch through different images.
 
 <div title="Select a link from the table below">
-<Card title="Cross-Document 'Image' Example">
-<style>{`
+  <Card title="Cross-Document 'Picture' Example">
+    <style>{`
     #image {
       display: block;
       margin: 0 auto;
@@ -83,21 +91,65 @@ These examples revolve around an image component where you switch through differ
       pointer-events: none;
     }
  `}</style>
- <div id="images">
-  <img
-    id="image"
-    width="200"
-    height="200"
-    src="/bag.webp"
-    alt="The Bag of Tricks"/>
-</div>
-</Card>
+    <div id="images">
+      <img
+        id="image"
+        width="200"
+        height="200"
+        src="/bag.webp"
+        alt="The Bag of Tricks"
+      />
+    </div>
+  </Card>
 </div>
 
-| Name                                                                | Description                                 |
-| ------------------------------------------------------------------- | ------------------------------------------- |
-| <DemoLink id="basicc" href="/demo/BasicC1/">Basic</DemoLink>     | Just the default cross-fade transition of the whole page|
-| <DemoLink id="basicac" href="/demo/BasicAC1/">Custom Animation</DemoLink> | With a custom animation that shrinks the current image to a point before revealing the next image  |
+| Name                                                                          | Description                                                                                       |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| <DemoLink id="basicc" href="/demo/BasicC1/">Basic</DemoLink>                  | Just the default cross-fade transition of the whole page                                          |
+| <DemoLink id="basicac" href="/demo/BasicAC1/">Custom Animation</DemoLink>     | With a custom animation that shrinks the current image to a point before revealing the next image |
+| <DemoLink id="basicmc" href="/demo/BasicMC1/">Multiple Transitions</DemoLink> | Adds a second animation that slides the navigation button                                         |
+
+## Image Morph Examples
+
+Morphing thumbnails into hero images is one of the classical use cases for view transition. The transition shows that the small thingy is a placeholder for the bigger one that now expands for you.
+
+{" "}
+<div title="Select a link from the table below">
+  <Card title="Thumbnail to Detail Morphs">
+    <style>{`
+#one img{
+  width: 30%;
+  height: auto;
+}
+#two img {
+  width: 100%;
+  height: auto;
+}
+@media (orientation: landscape) {
+  #one {
+    width: 40%;
+    height: auto;
+  }
+  #two {
+    width: 40%;
+    height: auto;
+  }
+}
+`}</style>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-around">
+      <div id="one">
+        <div class="portrait">![A Portrait](/portrait.webp)</div>
+      </div>
+      <div id="two">
+        <div class="portrait">![A Portrait](/portrait.webp)</div>
+      </div>
+    </div>
+  </Card>
+</div>
+
+| Name                                                                          | Description                                                                                       |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| <DemoLink id="basicim" href="/demo/BasicIM/">Basic</DemoLink>                  | The default morph transition with same aspect-ratio images |
 
 More to come. Especially morph animations.
 

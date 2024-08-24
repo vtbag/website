@@ -31,10 +31,6 @@ The script part adds listeners for the click event to the tab headings.
 
 ```html
 <script>
-  const mayViewTransition = (fun) =>
-    document.startViewTransition
-      ? document.startViewTransition(fun)
-      : fun();
   document.querySelectorAll(".tab").forEach((tab) => {
     tab.addEventListener("click", () => {
       mayViewTransition(() => {
@@ -48,11 +44,15 @@ The script part adds listeners for the click event to the tab headings.
       });
     });
   });
+  const mayViewTransition = (fun) =>
+    document.startViewTransition ? document.startViewTransition(fun) : fun();
 </script>
 ```
-This script includes a function that modifies the DOM when a tab header is clicked, utilizing `document.startViewTransition` to create a smooth transition from the state before the click to the state afterward.
+When clicked, the listener first removes all `active` classes from headings and content areas and then sets the clicked heading to active as well as the corresponding content area. CSS does the rest and highlights and hides the elements accordingly.
+
+To get a smooth transition effect, we run those DOM updates inside `document.startViewTransition()`.
 
 To ensure compatibility across different browsers, the script uses a wrapper function called `mayViewTransition`. This wrapper checks if the native view transition API is supported. If it is, `document.startViewTransition` is called; if not, the DOM-changing code is called directly. This approach is a best practice for using `document.startViewTransition`, as it prevents errors in browsers that lack native support for view transitions.
 
 ### View Transition specific CSS
-In this example, no specific view-transition-name properties are defined. Instead, the example relies on the default view transition name, `root`, which the browser automatically applies to the `<html>` element. This means that the old and new images are those of the viewport before and after the transition and the default effect is a cross-fade between the two images.
+In this example, no specific view transition names are defined. Instead, the example relies on the default view transition name, `root`, which the browser automatically applies to the `<html>` element. This means that the old and new images are those of the viewport before and after the transition and the default effect is a cross-fade between the two images.

@@ -14,7 +14,6 @@ The HTML structure is straight forward:
   <p>...</p>
   <h2>My lovely picture</h2>
   <img id=image width=400 height=400 src="/chamber.webp" alt="The Inspection Chamber">
-  <a class="nav-button left" href="/demo/BasicC2/">Previous</a>
   <a class="nav-button right" href="/demo/BasicC2/">Next</a>
 </body>
 ```
@@ -28,12 +27,4 @@ The only code to enbale view transitions for this example consists of a single `
   navigation: auto;
 }
 ```
-It instructs the browser to do a cross-document transition. The @-rule has to be present on the old and the new page. In this example, no specific view-transition-name properties are defined. Instead, the example relies on the default view transition name, `root`, which the browser automatically applies to the `<html>` element. This means that the old and new images are those of the viewport before and after the transition. To enhance the visual effect, a simple CSS adjustment is made to slow down the fade-out and fade-in animations of the old and the new image:
-
-```css
-::view-transition-image-pair(root) {
-  animation-duration: 0.75s;
-}
-```
-
-Although there is no explicit animation defined for the `image-pair` pseudo-element, the duration defined here will be inherited by the browser defined animations for `::view-transition-old(root)` and `::view-transition-new(root)`.
+It instructs the browser to do a cross-document transition. The @-rule has to be present on the old and the new page. In this example, no specific view-transition-name properties are defined. Instead, the example relies on the default view transition name, `root`, which the browser automatically applies to the `<html>` element. This means that the old and new images are those of the viewport before and after the transition.

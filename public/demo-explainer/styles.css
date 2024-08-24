@@ -9,6 +9,7 @@ h1 {
   padding: 1em;
   margin: 0;
   text-align: right;
+  text-wrap: balance;
 }
 p {
   margin: 1em 0;
@@ -20,7 +21,9 @@ code {
 }
 kbd {
   display: inline-block;
+  padding: 2px 8px;
   font-size: 0.85em;
+  font-weight: 800;
   color: #333;
   background-color: #f7f7f7;
   border-radius: 3px;
@@ -37,6 +40,9 @@ button {
   padding: 1em;
   margin: 1em;
   border-radius: 8px;
+}
+li {
+  margin-bottom: 0.5rem;
 }
 #back {
   display: inline-block;

@@ -1,65 +1,87 @@
 ---
-import Demo from '@/layouts/DemoLayout.astro';
-import Tabs from './_Tabs.astro';
+import Demo from "@/layouts/DemoLayout.astro";
+import Tabs from "./_Tabs.astro";
 ---
-<Demo title="Multiple Transitions (Same-Document)" backlink='/basics/examples/#basicms'>
-    <p>
-      This example adds a second custom animation.
-    </p>
-<Tabs />
-<style is:inline slot="late-head">
-  #tab1 {
-    view-transition-name: tab1;
-  }
-  #tab2 {
-    view-transition-name: tab2;
-  }
-  .tabs {
-    view-transition-name: head;
-  }
 
-  ::view-transition-new(head) {
-      animation: shake 0.75s ease-out ;
+<Demo
+  title="View Transition Example: Multiple Transitions (Same-Document)"
+  backlink="/basics/examples/#basicms"
+>
+  <p>This example adds a second custom animation.</p>
+  <Tabs />
+  <style is:inline slot="late-head">
+    #tab1 {
+      view-transition-name: tab1;
+    }
+    #tab2 {
+      view-transition-name: tab2;
+    }
+    .tabs {
+      view-transition-name: head;
+    }
+    ::view-transition-old(head) {
+      display: none;
+    }
+    ::view-transition-new(head) {
+      animation: shake 0.75s ease-out;
       transform-origin: 120px 20px;
-  }
-  @keyframes shake {
-  10% { transform: rotateZ(10deg); }
-  30% { transform: rotateZ(-10deg); }
-  50% { transform: rotateZ(10deg); }
-  70% { transform: rotateZ(-10deg); }
-  90% { transform: rotateZ(10deg); }
-  }
-  ::view-transition-old(tab1),
-  ::view-transition-old(tab2) {
-    animation: shrink 0.2s forwards;
-    transform-origin: top;
-  }
-  ::view-transition-new(tab1),
-  ::view-transition-new(tab2) {
-    animation: grow 0.8s 0.2s backwards;
-    transform-origin: top;
-  }
-  @keyframes shrink {to {transform: scaleY(0)}}
-  @keyframes grow {from {transform: scaleY(0)}}
-  .tab {
-    display: inline-block;
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #777;
-    border: 1px solid #999;
-    border-bottom: none;
-  }
-  .tab.active {
-    background-color: #999;
-    border-bottom: 1px solid #999;
-  }
-  .tab-content {
-    display: none;
-    padding: 20px;
-    border: 1px solid #888;
-  }
-  .tab-content.active {
-    display: block;
-  }
-</style>
+    }
+    @keyframes shake {
+      10% {
+        transform: rotateZ(10deg);
+      }
+      30% {
+        transform: rotateZ(-10deg);
+      }
+      50% {
+        transform: rotateZ(10deg);
+      }
+      70% {
+        transform: rotateZ(-10deg);
+      }
+      90% {
+        transform: rotateZ(10deg);
+      }
+    }
+    ::view-transition-old(tab1),
+    ::view-transition-old(tab2) {
+      animation: shrink 0.2s forwards;
+      transform-origin: top;
+    }
+    ::view-transition-new(tab1),
+    ::view-transition-new(tab2) {
+      animation: grow 0.8s 0.2s backwards;
+      transform-origin: top;
+    }
+    @keyframes shrink {
+      to {
+        transform: scaleY(0);
+      }
+    }
+    @keyframes grow {
+      from {
+        transform: scaleY(0);
+      }
+    }
+    .tab {
+      display: inline-block;
+      padding: 10px 20px;
+      cursor: pointer;
+      background-color: #777;
+      border: 1px solid #999;
+      border-bottom: none;
+    }
+    .tab.active {
+      background-color: #999;
+      border-bottom: 1px solid #999;
+    }
+    .tab-content {
+      display: none;
+      padding: 20px;
+      border: 1px solid #888;
+    }
+    .tab-content.active {
+      display: block;
+    }
+  </style>
 </Demo>

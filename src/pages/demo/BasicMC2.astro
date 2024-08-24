@@ -2,11 +2,12 @@
 import Demo from "@/layouts/DemoLayout.astro";
 ---
 
-<Demo title="View Transition Example: Custom Animation, Page 2 of 2"  backlink='/basics/examples/#basicac'>
+<Demo
+  title="View Transition Example: Multiple View Transitions, Page 2 of 2"
+  backlink="/basics/examples/#basicac"
+>
   <link rel="preload" href="/chamber.webp" as="image" slot="early-head" />
-  <p>
-    You now see page two of this example. For details see below.
-  </p>
+  <p>You now see page two of this example.</p>
   <h2>My other lovely picture</h2>
   <img
     id="image"
@@ -15,14 +16,36 @@ import Demo from "@/layouts/DemoLayout.astro";
     src="/chamber.webp"
     alt="The Inspection Chamber"
   />
-  <a class="nav-button right" href="/demo/BasicAC1/">Next</a>
+  <a class="nav-button right" href="/demo/BasicMC1/">Next</a>
 
   <style is:inline slot="late-head">
     @view-transition {
       navigation: auto;
     }
     h2 + img {
-      view-transition-name: img
+      view-transition-name: img;
+    }
+    .nav-button {
+      view-transition-name: nav;
+    }
+    ::view-transition-old(nav) {
+      animation: 1s ease-in-out slideOut;
+    }
+    ::view-transition-new(nav) {
+      animation: 1s ease-in-out slideIn;
+    }
+    @keyframes slideOut {
+      to {
+        transform: translateX(-100vw);
+      }
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(100vw);
+      }
+    }
+    ::view-transition-group(img) {
+      z-index: 1;
     }
     ::view-transition-old(img) {
       animation: 1s zoom-out forwards;
@@ -46,7 +69,7 @@ import Demo from "@/layouts/DemoLayout.astro";
     }
     .nav-button {
       position: fixed;
-      transform: translateY(-150px);
+      transform: translateY(-120px);
       padding: 10px 20px;
       background-color: #007bff;
       color: white;
