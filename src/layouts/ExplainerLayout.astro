@@ -6,20 +6,26 @@ export const partial = true;
   <h2 id="how"><a href="#how">How does it work?</a></h2>
   <p>
     <i
-      >To explore this example in more detail, press <kbd>Ctrl-U</kbd> or select the "View Page Source"
-      option in your browser where available. If you see the Inspection Chamber
-      logo in the upper left corner, powering it up could unlock even more
-      insights!</i></p><p><i>The description below references terms of the view transition
-      API like "old" and "new" images or "pseudo-elements". Background
-      information about those terms can be found <a href="/basics/api/"
-        >in the API section</a
-      >.</i>
+      >To explore this example in more detail, press <kbd>Ctrl-U</kbd> or select
+      the "View Page Source" option in your browser where available. If you see
+      the Inspection Chamber logo in the upper left corner, powering it up could
+      unlock even more insights!</i>
+  </p><p>
+    <i
+      >The description below references terms of the view transition API like
+      "old" and "new" images or "pseudo-elements". Background information about
+      those terms and on how view transitions work can be found <a
+        href="/basics/api/">in the API section</a
+      >.</i
+    >
   </p>
-  <hr/>
-  <section><slot/></section>
+  <hr />
+  <section><slot /></section>
 </body>
 <style>
-  p > i {
+  p {
     font-size: 0.8rem;
+    margin-left: 2em;
+    color: #888;
   }
 </style>

@@ -3,13 +3,12 @@ import Demo from "@/layouts/DemoLayout.astro";
 ---
 
 <Demo
-  title="View Transition Example: Basic Image Morph"
-  backlink="/basics/examples/#basicim"
-  prev="/demo/BasicMC1/"
-  next="/demo/BasicIM2/"
+  title="View Transition Example: Covered Object Fit"
+  backlink="/basics/examples/#basicim4" prev="/demo/BasicIM3/" next=""
 >
   <p>
-    This example demonstrates the default morph transition between two images.
+    We still have some options left on how to place and size the old and new
+    image during the morph transition. This examples uses `object-fit`.
   </p>
 
   <div id="DOM1" class="active">
@@ -30,13 +29,24 @@ import Demo from "@/layouts/DemoLayout.astro";
           detail. Click [here] to return to teaser view.
         </p>
       </div>
-      <img src="/portrait.webp" />
+      <img src="/landscape.webp" />
     </article>
   </div>
   <style is:inline slot="late-head">
+    ::view-transition-group(*) {
+      animation-duration: 1s;
+    }
     .card img,
     article img {
       view-transition-name: img;
+    }
+    ::view-transition-old(img),
+    ::view-transition-new(img) {
+      overflow: clip;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      object-position: 100% 40%;
     }
     #DOM1,
     #DOM2 {
@@ -69,11 +79,11 @@ import Demo from "@/layouts/DemoLayout.astro";
     }
     article div {
       padding: 1rem;
-      max-width: 50%;
+      max-width: 40%;
     }
     article img {
       margin: auto;
-      height: min(512px, 66vh);
+      width: min(400px, 50vw);
       border-radius: 8px;
       box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
     }

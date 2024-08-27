@@ -36,9 +36,22 @@ The approach shown here works consistently for both same-document and cross-docu
 
 For the styling of the elements see the source of this page.
 
+### View Transition specific CSS
+
+To define a morph transition from one element to another, you have to assign the same view transition name to both elements. In this example we morph between two images, the card's image and the article's image.
+
+```css
+.card img,
+article img {
+  view-transition-name: img;
+}
+```
+
+It is not important that the two elements are similar or even have the same tag. Technically, you can morph between any arbitrary elements, e.g. transforming a form into a table. However, achieving a visually appealing result may require some CSS adjustments.
+
 ### Script Part
 
-The script part adds listeners for the click event to both DOM trees.
+The script attaches click event listeners to both DOM trees, enabling interaction. When a click occurs, the listener toggles the active class between the two DOM trees. The CSS ensures that only the active DOM tree is visible, while the other is hidden using `display: none`. The View Transition API effectively ignores hidden parts of the DOM, which is why it's possible to assign the same view transition name, img, to both images. Although view transition names need to be unique, the uniqueness is preserved because only the visible part of the DOM is considered.
 
 ```html
 <script>
@@ -55,30 +68,15 @@ The script part adds listeners for the click event to both DOM trees.
     document.startViewTransition ? document.startViewTransition(fun) : fun();
   }
 </script>
-</div>
 ````
 
-When clicked, the listener swaps the active class between the two DOM trees.
 
 If you want to learn more about why `mayStartViewTransition()` is used here, see the description in the [Basic Same-Document example](/demo/BasicS/).
 
-### View Transition specific CSS
-
-To define a morph transition from one element to another, you have to assign the same view transition name to both elements. In this example we morph between two images, the card's image and the article's image.
-
-```css
-.card img,
-article img {
-  view-transition-name: img;
-}
-```
-
-It is not important that the two elements are similar or even have the same tag. Technically, you can morph between any arbitrary elements, e.g. transforming a form into a table. However, achieving a visually appealing result may require some CSS adjustments.
 
 ## Inspection Chamber Insights
 
-
-The built-in morph effect operates as follows:
+With the inspection chamber, you can examine the details of the default morph animation. This built-in effect works as follows:
 
 - At the beginning of the view transition, the group pseudo-element is transformed to match the position and size of the old element. Both the old and new images are rendered on the group pseudo-element.
 - As the transition progresses, the group pseudo-element gradually shifts in position and size until it aligns with the new element's dimensions. Throughout this movement, the old and new images continue to be displayed on the group element. While the group's size is interpolated between the start and end states, the specifics of how the old and new images are resized during the transition might involve more complexity. We will explore this further in upcoming examples. In this example where old and new images have the same aspect ratio, the size of the images are also just interpolated.
@@ -92,6 +90,8 @@ The first two bullet points are implemented by the browser defined `-ua-view-tra
 <span class="light:sl-hidden">![Animation details](_IMan-dark.png)</span>
 <span class="dark:sl-hidden">![Animation details](_IMan-light.png)</span>
 
-In the panel you see an additional animation for the old and new images: `-ua-mix-blend-mode-plus-lighter` ensures that the colors of the semi-transparent images add up to the original color values and that the sum of those images is never looks under or over exposed.
+The panel displays the details of the `-ua-view-transition-group-anim-img` animation. The live values show how the `width` and `height` grow as the image is getting larger and the `transform` value changes with the position of the image.
+
+In the panel you can also see an additional animation for the old and new images: `-ua-mix-blend-mode-plus-lighter` ensures that the colors of the semi-transparent images add up to the original color values and that the sum of those images is never looks under or over exposed.
 
 Everything that is outside of the images where we assigned the view transition name `img` is controlled by the `root` group. As we did not specify something else, this has the default animation: it fades out the card and fades in the detailed view.

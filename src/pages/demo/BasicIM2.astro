@@ -3,13 +3,15 @@ import Demo from "@/layouts/DemoLayout.astro";
 ---
 
 <Demo
-  title="View Transition Example: Basic Image Morph"
-  backlink="/basics/examples/#basicim"
-  prev="/demo/BasicMC1/"
-  next="/demo/BasicIM2/"
+  title="View Transition Example: Different Aspect Ratio"
+  backlink="/basics/examples/#basicim2"
+  prev="/demo/BasicIM/"
+  next="/demo/BasicIM3/"
 >
   <p>
-    This example demonstrates the default morph transition between two images.
+    This example demonstrates the default morph transition between two images,
+    with the key difference being that these images have different aspect ratios
+    compared to the <a href="/demo/BasicIM/">previous example</a>.
   </p>
 
   <div id="DOM1" class="active">
@@ -30,10 +32,13 @@ import Demo from "@/layouts/DemoLayout.astro";
           detail. Click [here] to return to teaser view.
         </p>
       </div>
-      <img src="/portrait.webp" />
+      <img src="/landscape.webp" />
     </article>
   </div>
   <style is:inline slot="late-head">
+    ::view-transition-group(*) {
+      animation-duration: 1ms;
+    }
     .card img,
     article img {
       view-transition-name: img;
@@ -69,11 +74,11 @@ import Demo from "@/layouts/DemoLayout.astro";
     }
     article div {
       padding: 1rem;
-      max-width: 50%;
+      max-width: 40%;
     }
     article img {
       margin: auto;
-      height: min(512px, 66vh);
+      width: min(400px, 50vw);
       border-radius: 8px;
       box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
     }

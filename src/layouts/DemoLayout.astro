@@ -2,9 +2,11 @@
 export interface Props {
   title: string;
   backlink: string;
+  prev: string;
+  next: string;
 }
 
-const { title, backlink } = Astro.props;
+const { title, backlink, prev, next } = Astro.props;
 const script =
   'const _=document.documentElement;_.dataset.theme=_.style.colorScheme=localStorage.getItem("starlight-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches? "dark":"light")';
 ---
@@ -14,7 +16,7 @@ const script =
     <slot name="early-head" />
     <link href="/demo-explainer/styles.css" rel="stylesheet" />
     <script is:inline set:html={script} />
-    <script is:inline src="/chamber.js/"/>
+    <script is:inline src="/chamber.js/"></script>
     <title>{title}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,17 +25,41 @@ const script =
   </head>
   <body>
     <h1>{title}</h1>
-    <a
-      id="back"
-      href={backlink}
-      >Back to the list of examples</a
-    >
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; font-size: 0.9rem;">
+      {
+        prev && (
+          <a id="prev" href={prev}>
+            Prev
+          </a>
+        )
+      }
+      <a id="back" href={backlink}>Back to the example list</a>
+      {
+        next && (
+          <a id="next" href={next}>
+            Next
+          </a>
+        )
+      }
+    </div>
     <slot />
     <div id="vtbag-spacer" style="min-height:100vh"></div>
-    <a
-    id="back"
-    href={backlink}
-    >Back to the list of examples</a
-  >
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; font-size: 0.9rem;">
+      {
+        prev && (
+          <a id="prev" href={prev}>
+            Prev
+          </a>
+        )
+      }
+      <a id="back" href={backlink}>Back to the example list</a>
+      {
+        next && (
+          <a id="next" href={next}>
+            Next
+          </a>
+        )
+      }
+    </div>
   </body>
 </html>

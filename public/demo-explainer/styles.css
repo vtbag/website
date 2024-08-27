@@ -66,6 +66,7 @@ section img {
   box-shadow: 0 4px 6px #8888;
   }
 [data-theme='dark'] section img[src*='-dark'],
-[data-theme='light'] section img[src*='-light'] {
-  display: block;
+[data-theme='light'] section img[src*='-light'],
+section img[src*='-both'] {
+    display: block;
 }

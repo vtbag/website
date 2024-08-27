@@ -3,13 +3,12 @@ import Demo from "@/layouts/DemoLayout.astro";
 ---
 
 <Demo
-  title="View Transition Example: Basic Image Morph"
-  backlink="/basics/examples/#basicim"
-  prev="/demo/BasicMC1/"
-  next="/demo/BasicIM2/"
+  title="View Transition Example: Clipped Overflow"
+  backlink="/basics/examples/#basicim3" prev="/demo/BasicIM2/" next="/demo/BasicIM4/"
 >
   <p>
-    This example demonstrates the default morph transition between two images.
+    This example shows how to prevent images to grow beyond the the original
+    size of the old and new images.
   </p>
 
   <div id="DOM1" class="active">
@@ -30,13 +29,25 @@ import Demo from "@/layouts/DemoLayout.astro";
           detail. Click [here] to return to teaser view.
         </p>
       </div>
-      <img src="/portrait.webp" />
+      <img src="/landscape.webp" />
     </article>
   </div>
   <style is:inline slot="late-head">
+    ::view-transition-group(*) {
+      animation-duration: 1s;
+    }
     .card img,
     article img {
       view-transition-name: img;
+    }
+    ::view-transition-group(img) {
+      overflow: clip;
+    }
+    ::view-transition-old(img),
+    ::view-transition-new(img) {
+      block-size: 100%;
+      inline-size: auto;
+      right: 0;
     }
     #DOM1,
     #DOM2 {
@@ -69,11 +80,11 @@ import Demo from "@/layouts/DemoLayout.astro";
     }
     article div {
       padding: 1rem;
-      max-width: 50%;
+      max-width: 40%;
     }
     article img {
       margin: auto;
-      height: min(512px, 66vh);
+      width: min(400px, 50vw);
       border-radius: 8px;
       box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
     }

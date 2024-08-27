@@ -1,14 +1,11 @@
 ---
 title: View Transition Examples
 description: Basic examples on how to use the View Transition API for same-document and cross-document view transitions.
-head:
-  - tag: script
-    content: "self !== top && (top.location.href = self.location.href)"
 ---
 
 import DemoLink from "src/components/DemoLink.astro";
 
-This page lists examples of view transitions, starting with the most basic settings and gradually adding more features. The tables provides a brief description of what makes each example unique and includes a link to the actual demo with its code and detailed description.
+This page lists examples of view transitions, starting with the most basic settings and gradually adding more features. The tables provides a brief description of what makes each example unique and includes a link to the actual example with its code and detailed description.
 
 ## Same-Document View Transition Examples
 
@@ -149,7 +146,10 @@ Morphing thumbnails into hero images is one of the classical use cases for view 
 
 | Name                                                                          | Description                                                                                       |
 | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| <DemoLink id="basicim" href="/demo/BasicIM/">Basic</DemoLink>                  | The default morph transition with same aspect-ratio images |
+| <DemoLink id="basicim" href="/demo/BasicIM/">Same aspect ratio</DemoLink>                  | The default morph transition with same aspect-ratio images |
+| <DemoLink id="basicim2" href="/demo/BasicIM2/">Different aspect ratio</DemoLink>                  | The default morph transition with images of different aspect-ratio |
+| <DemoLink id="basicim3" href="/demo/BasicIM3/">Clipped overflow</DemoLink>                  | An alternative morph transition where images do not grow beyond the group outline |
+| <DemoLink id="basicim4" href="/demo/BasicIM4/">Covered object fit</DemoLink>                  | A non-overflowing alternative for images with different aspect-ratio |
 
 More to come. Especially morph animations.
 
