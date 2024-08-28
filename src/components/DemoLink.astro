@@ -3,30 +3,15 @@ export interface Props {
   id: string;
   href: string;
 }
-const {id, href } = Astro.props;
+const { id, href } = Astro.props;
 ---
 
-<a data-vtbag-demo-link {id} {href}><slot /></a>
-<script>
-  import { navigate } from "astro:transitions/client";
-  // @ts-ignore
-  const supportsViewTransitions = document.startViewTransition
-    ? "true"
-    : "false";
-  document.addEventListener("astro:page-load", () => {
-    document.querySelectorAll("a[data-vtbag-demo-link]").forEach((a) =>
-      a.addEventListener("click", (e) => {
-        e.preventDefault();
-        sessionStorage.setItem("vtbag-ui-standby", supportsViewTransitions);
-        sessionStorage.setItem(
-          "vtbag-ui-reopener-position",
-          JSON.stringify({
-            reopenerLeft: "16px",
-            reopenerTop: "16px",
-          })
-        );
-        navigate((e.target as HTMLElement).getAttribute("href")!);
-      })
-    );
-  });
-</script>
+<a class="demolink" {id} {href}><slot /></a>
+
+<style is:global>
+  .demolink:focus-visible {
+    color: var(--color-primary);
+    text-decoration: none;
+    outline: none
+  }
+</style>

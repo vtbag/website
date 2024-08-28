@@ -18,6 +18,16 @@ export async function GET() {
 				: '<p style="padding:10px;background-color: #996">Cross-document view transitions are not supported in this browser.</p>');
 			}
 		}));
+		if (!sessionStorage.getItem('vtbag-ui-reopener-position')) {
+				sessionStorage.setItem("vtbag-ui-standby", "true");
+        sessionStorage.setItem(
+          "vtbag-ui-reopener-position",
+          JSON.stringify({
+            reopenerLeft: "16px",
+            reopenerTop: "16px",
+          })
+        );
+		}
 		if (level > 0) {${inspectionChamber}};`,
 		{
 			status: 200,
