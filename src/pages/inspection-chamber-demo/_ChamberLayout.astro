@@ -9,6 +9,7 @@ const { title } = Astro.props;
 ---
 
 <Layout {title}>
+  <script slot="head" is:inline>sessionStorage.removeItem("vtbag-ui-standby")</script>
   <script is:inline src={chamber} slot="head"/>
   <slot />
 </Layout>
