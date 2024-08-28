@@ -8,3 +8,5 @@ if [ "$?" -ne "0" ]; then
 fi
 ./bin/check_links.sh
 [ -n "$GS" ] && echo -n "google-site-verification: ${GS}" > ./dist/${GS}
+
+find dist -type f -exec grep -l 'script src="/chamber.js/"' {} \; | xargs sed -i 's|script src="/chamber.js/"|script src="/chamber.js"|'
