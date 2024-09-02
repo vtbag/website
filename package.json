@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.3",
-    "@astrojs/starlight": "^0.26.1",
+    "@astrojs/starlight": "^0.26.2",
     "@playwright/test": "^1.46.1",
     "@types/node": "^22.5.0",
     "@vtbag/inspection-chamber": "^1.0.10",
