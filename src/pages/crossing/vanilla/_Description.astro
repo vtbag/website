@@ -1,0 +1,171 @@
+---
+
+---
+<p>This is a demonstration of the <b>vanilla flavor</b> of the element crossing. This flavor provides well understood technology and is meant for production.</p>
+
+<p>
+  Enter data in the form fields, resize the text area, change the checkmarks,
+  switch the color-scheme, collapse a group in the navigation sidebar on the
+  left and reposition its scrollbar.
+</p>
+<p>
+  Then select the other page from the navigation sidebar to see whether your changes got
+  preserved. Also check the playback time of the video and the animation in the
+  footer.
+</p>
+
+
+<video controls width="200" loop autoplay data-vtbag-x="#video @currentTime">
+  <source src="/video.mp4" type="video/mp4" />Your browser does not support the
+  video tag.</video
+>
+
+<form id="exampleForm">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Enter your name"
+      required
+      data-vtbag-x="@value"
+    />
+  </div>
+  <div class="form-group">
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender" data-vtbag-x="@value">
+      <option value="male" selected>Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Interests:</label>
+    <div>
+      <input
+        type="checkbox"
+        id="interest1"
+        name="interests"
+        value="coding"
+        checked
+        data-vtbag-x="@checked"
+      />
+      <label for="interest1">Coding</label>
+    </div>
+    <div>
+      <input
+        type="checkbox"
+        id="interest2"
+        name="interests"
+        value="music"
+        data-vtbag-x="@checked"
+      />
+      <label for="interest2">Music</label>
+    </div>
+    <div>
+      <input
+        type="checkbox"
+        id="interest3"
+        name="interests"
+        value="sports"
+        data-vtbag-x="@checked"
+      />
+      <label for="interest3">Sports</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Subscription:</label>
+    <div>
+      <input
+        type="radio"
+        id="subscribeYes"
+        name="subscribe"
+        value="yes"
+        checked
+        data-vtbag-x="@checked"
+      />
+      <label for="subscribeYes">Yes</label>
+    </div>
+    <div>
+      <input
+        type="radio"
+        id="subscribeNo"
+        name="subscribe"
+        value="no"
+        data-vtbag-x="@checked"
+      />
+      <label for="subscribeNo">No</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="comments">Comments:</label>
+    <textarea
+      id="comments"
+      name="comments"
+      placeholder="Enter your comments"
+      data-vtbag-x="@value -width -height">This is a sample comment.</textarea
+    >
+  </div>
+</form>
+
+<style is:global>
+  video {
+    margin: auto;
+    display: block;
+    border: inset 10px #8888;
+  }
+
+  #dark,
+  #light {
+    display: none;
+  }
+  :root.dark #dark,
+  :root:not(.dark) #light {
+    display: inline;
+  }
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: var(--accent-background-color);
+    border: 1px solid #8888;
+    border-radius: 8px;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+    display: flex;
+  }
+
+  label {
+    display: inline;
+    margin-right: 2.5rem;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #8888;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 0.5rem;
+  }
+
+  textarea {
+    height: 100px;
+  }
+
+  select {
+    appearance: none;
+  }
+</style>

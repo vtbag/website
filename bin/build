@@ -10,3 +10,4 @@ fi
 [ -n "$GS" ] && echo -n "google-site-verification: ${GS}" > ./dist/${GS}
 
 find dist -type f -exec grep -l 'script src="/chamber.js/"' {} \; | xargs sed -i 's|script src="/chamber.js/"|script src="/chamber.js"|'
+find dist -type f -exec grep -l 'source src="/video.mp4"' {} \; | xargs sed -i 's|source src="/video.mp4"|source src="https://cdn.pixabay.com/video/2021/02/21/65860-515617507_tiny.mp4"|'

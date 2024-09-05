@@ -1,0 +1,205 @@
+---
+export interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/bag3.png" type="image/png" />
+    <script is:inline>
+      const _ = document.documentElement;
+      _.dataset.theme = _.style.colorScheme =
+        localStorage.getItem("starlight-theme") ||
+        (window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light");
+      _.classList.add(_.dataset.theme);
+      </script>
+  </head>
+  <body>
+    <div id="all">
+      <header>
+        <div>Header</div><a
+          href="/tools/element-crossing/#state-loss-on-cross-document-transitions"
+          id="back">Back to the Element Crossing page</a
+        >
+        <button id="dl">Light / Dark</button>
+      </header>
+      <div id="mid">
+        <nav>
+          <p>
+            A text that needs quite some space inside the sidebar above the
+            navigation links. It has no real content, but if it is large enough,
+            it forces scrollbars on the sidebar and that is its purpose.
+          </p>
+          <p id="limited">
+            This browser offers only <a>limited support</a> for the Element
+            Crossing script
+          </p>
+          <details open>
+            <summary>Group 1</summary>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+          </details>
+          <details open>
+            <summary>Group 2</summary>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+          </details>
+          <details open>
+            <summary>Group 3</summary>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+          </details>
+          <details open>
+            <summary>Group 4</summary>
+            <a href="/cross4ng/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+            <a href="/crossing/plain/1/">Page 1</a>
+            <a href="/crossing/plain/2/">Page 2</a>
+          </details>
+        </nav>
+        <main>
+          <slot />
+        </main>
+      </div>
+      <footer>
+        <div>Footer</div>
+      </footer>
+    </div>
+  </body>
+  <script>
+    document.getElementById("dl")!.addEventListener("click", () => {
+      document.documentElement.classList.toggle("dark");
+      if (document.documentElement.classList.contains("dark")) {
+        document.documentElement.style.colorScheme = "dark";
+      } else {
+        document.documentElement.style.colorScheme = "light";
+      }
+    });
+  </script>
+  </html>
+<style is:global>
+  #limited {
+    background-color: var(--accent-background);
+    color: darkred;
+  }
+  @view-transition {
+    navigation: auto;
+  }
+  @supports (view-transition-class: test) {
+    #limited {
+      display: none;
+    }
+  }
+  :root {
+    font-family: sans-serif;
+    --background-color: #e0e0e0;
+    --accent-background-color: #e0f0e0;
+    --color: #444;
+    --accent-color: #070;
+    color: var(--color);
+    background-color: var(--background-color);
+    accent-color: var(--accent-color);
+  }
+  :root.dark {
+    --background-color: #222;
+    --accent-background-color: #333;
+    --color: #ddd;
+    --accent-color: #dfd;
+  }
+  header {
+    background-color: var(--background-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
+  button {
+    background-color: var(--accent-background-color);
+    accent-color: var(--accent-color);
+    color: var(--color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 1em;
+    padding: 0.5em 1em;
+    box-shadow: 0 4px 6px #8888;
+  }
+  header div {
+    flex: 1 1 0%;
+  }
+  #dl {
+    cursor: pointer;
+  }
+  nav {
+    background-color: var(--accent-background-color);
+    padding: 1rem;
+    flex: 1;
+    overflow: auto;
+  }
+  nav a {
+    display: block;
+    text-decoration: none;
+    padding-left: 1em;
+  }
+  main {
+    flex: 5;
+    padding: 1rem;
+    overflow: auto;
+  }
+  footer {
+    background-color: var(--background-color);
+    padding: 1rem;
+  }
+  footer div {
+    text-align: center;
+    width: fit-content;
+  }
+  #all {
+    max-width: 50rem;
+    margin: auto;
+  }
+  #mid {
+    display: flex;
+    height: 70vh;
+  }
+  footer div {
+    animation: shift 10s infinite ease-in-out alternate;
+  }
+  @keyframes shift {
+    to {
+      transform: translateX(45rem);
+    }
+  }
+  #back {
+    display: inline-block;
+    color: black;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem;
+    background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+    box-shadow: 0 4px 6px #8888;
+  }
+</style>

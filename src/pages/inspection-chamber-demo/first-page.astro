@@ -10,6 +10,8 @@ import { Image } from 'astro:assets';
       style="view-transition-name: image; width:100%; height:100%"
       src={chamber}
       alt="The Bag's Inspection Chamber"
+      decoding="sync"
+      loading="eager"
     />
     <div
       style="view-transition-name: frame; position:fixed; top:5vh;left:10vw;background-color:rgba(3, 57, 64, 0.8);padding:20px"

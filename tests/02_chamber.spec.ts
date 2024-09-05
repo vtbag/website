@@ -64,17 +64,18 @@ test.describe("devToolbar", () => {
 
 test.describe("controls", () => {
   test('can close', async ({ page }) => {
-    await page.goto('http://localhost:4321/inspection-chamber-demo/first-page/');
+    await page.goto('http://localhost:4321/demo/BasicS/');
 
+    await expect(page.locator('#vtbag-ui-reopen')).toBeVisible();
+    await page.click('#vtbag-ui-reopen');
     await expect(page.locator('#vtbag-ui-reopen')).toBeHidden();
     await page.click('#vtbag-ui-standby');
     await expect(page.locator('#vtbag-ui-reopen')).toBeVisible();
   })
 
   test('can reopen', async ({ page }) => {
-    await page.goto('http://localhost:4321/inspection-chamber-demo/first-page/');
+    await page.goto('http://localhost:4321/demo/BasicS/');
 
-    await page.click('#vtbag-ui-standby');
     await expect(page.locator('#vtbag-ui-panel')).toBeHidden();
     await page.click('#vtbag-ui-reopen');
     await expect(page.locator('#vtbag-ui-reopen')).toBeHidden();
@@ -83,12 +84,11 @@ test.describe("controls", () => {
   });
 
   test('can really reopen', async ({ page }) => {
-    await page.goto('http://localhost:4321/inspection-chamber-demo/first-page/');
+    await page.goto('http://localhost:4321/demo/BasicC1/');
 
-    await page.click('#vtbag-ui-standby');
     await expect(page.locator('#vtbag-ui-panel')).toBeHidden();
-    await page.click("main div p a");
-    await page.waitForURL('http://localhost:4321/inspection-chamber-demo/second-page/');
+    await page.click(".right");
+    await page.waitForURL('http://localhost:4321/demo/BasicC2/');
     await page.click('#vtbag-ui-reopen');
     await expect(page.locator('#vtbag-ui-reopen')).toBeHidden();
     await expect(page.locator('#vtbag-ui-panel')).toBeVisible();

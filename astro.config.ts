@@ -8,9 +8,11 @@ import starlightImageZoom from 'starlight-image-zoom';
 import { visualizer } from "rollup-plugin-visualizer";
 
 import vtbot from "astro-vtbot";
+import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
 export default defineConfig({
+  experimental: { directRenderScript: true },
   site: 'https://vtbag.pages.dev',
   compressHTML: false,
   redirects: {
@@ -61,6 +63,8 @@ export default defineConfig({
     editLink: {
       baseUrl: "https://github.com/vtbag/website/edit/main/"
     },
+
+
     sidebar: sidebar(),
   }), vtbot()],
   vite: {
@@ -83,7 +87,8 @@ function sidebar() {
   }, {
     label: 'Tools',
     items: [
-      { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" }
+      { label: 'Element Crossing', link: "/tools/element-crossing/", badge: { text: 'new', variant: 'tip' } as Badge },
+      { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" },
     ],
   }, {
     label: 'Basics',

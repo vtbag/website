@@ -1,0 +1,168 @@
+---
+
+---
+
+<p>
+  Cross-document navigation with the View Transition API (Level 2) enables
+  smooth transitions between pages, bringing the seamless look and feel of
+  single-page applications to your multi-page app.
+</p>
+
+<video controls width="200" loop autoplay>
+  <source src="/video.mp4" type="video/mp4" />Your browser does not support the
+  video tag.</video
+>
+
+<p>
+  Some HTML elements on your page may change their internal state over time or
+  in response to user interactions. However, when transitioning to the next
+  page, this dynamic state is typically lost and reverts to the static values
+  defined in the HTML.
+</p>
+
+<p>
+  This can affect:
+  <ul>
+    <li>
+      Element properties, such as the open or closed state of detail elements
+      (e.g., those in the navigation bar), and specific CSS classes like <code
+        id="light">light</code
+      ><code id="dark">dark</code>.
+    </li>
+    <li>CSS properties, such as the user's preferred color scheme.</li>
+    <li>The position of scrollbars, e.g. in long navigation bars</li>
+    <li>
+      The current playback time of media elements, including audio and video.
+    </li>
+    <li>The current playback time of CSS animations and transitions.</li>
+    <li>The state and content of input fields.</li>
+    <li>The content of iframes.</li>
+  </ul>
+</p>
+ ```
+
+<form id="exampleForm">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      placeholder="Enter your name"
+      required
+    />
+  </div>
+  <div class="form-group">
+    <label for="gender">Gender:</label>
+    <select id="gender" name="gender">
+      <option value="male" selected>Male</option>
+      <option value="female">Female</option>
+      <option value="other">Other</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label>Interests:</label>
+    <div>
+      <input
+        type="checkbox"
+        id="interest1"
+        name="interests"
+        value="coding"
+        checked
+      />
+      <label for="interest1">Coding</label>
+    </div>
+    <div>
+      <input type="checkbox" id="interest2" name="interests" value="music" />
+      <label for="interest2">Music</label>
+    </div>
+    <div>
+      <input type="checkbox" id="interest3" name="interests" value="sports" />
+      <label for="interest3">Sports</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Subscription:</label>
+    <div>
+      <input
+        type="radio"
+        id="subscribeYes"
+        name="subscribe"
+        value="yes"
+        checked
+      />
+      <label for="subscribeYes">Yes</label>
+    </div>
+    <div>
+      <input type="radio" id="subscribeNo" name="subscribe" value="no" />
+      <label for="subscribeNo">No</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="comments">Comments:</label>
+    <textarea id="comments" name="comments" placeholder="Enter your comments"
+      >This is a sample comment.</textarea
+    >
+  </div>
+</form>
+
+<style is:global>
+  video {
+    margin: auto;
+    display: block;
+    border: inset 10px #8888;
+  }
+
+  #dark,
+  #light {
+    display: none;
+  }
+  :root.dark #dark,
+  :root:not(.dark) #light {
+    display: inline;
+  }
+  form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: var(--accent-background-color);
+    border: 1px solid #8888;
+    border-radius: 8px;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+    display: flex;
+  }
+
+  label {
+    display: inline;
+    margin-right: 2.5rem;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #8888;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    margin-right: 0.5rem;
+  }
+
+  textarea {
+    height: 100px;
+  }
+
+  select {
+    appearance: none;
+  }
+</style>

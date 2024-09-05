@@ -1,0 +1,317 @@
+---
+title: The Element Crossing
+description: "@vtbag/element-crossing allows you carry over state to the next page when using cross-document view transitions"
+tableOfContents:
+  minHeadingLevel: 2
+  maxHeadingLevel: 3
+---
+import { Steps } from "@astrojs/starlight/components";
+
+<div style="display:flex">
+<div id="logo" style="flex:1; margin: 3ex">
+![crossing](../../../../assets/crossing.png)
+</div><div style="flex:3">
+Transfer selected element states across cross-document view transitions.
+
+The Element Crossing allows you to preserve state of the elements of your current page and carry it over to the next page when using cross-document view transitions.
+This also works independent of view transitions as long as all pages have the same origin. Tag your DOM elements for crossing and find their current dynamic state on the next page.
+
+</div>
+</div>
+
+<style>{`
+  #logo img {
+    view-transition-name: logo;
+    mask-image: radial-gradient(
+        ellipse at center,
+        white 35%,
+        transparent 71%
+      );
+  }
+`}</style>
+
+## PREREQUISITE
+
+:::danger[Dependency on View Transition API]
+The Element Crossing is designed for use with cross-document view transitions. While it can also be used independently of view transitions and on browsers without native support for Level 2 of the View Transition API. In that case, the fallback might appear jumpy, depending on the element state it’s applied to.
+:::
+
+## State Loss on Cross-Document Transitions
+
+You can easily activate and customize cross-document view transitions using just CSS!
+But keep in mind that swapping in a new page will reset all your current dynamic DOM state.
+
+Check out [this example](/crossing/plain/1/) to see which parts of the DOM are impacted:
+- The state of collapsed link groups
+- Changes to the color scheme
+- The position of the video and animation in the footer
+- The content of the form at the bottom of the page
+
+In those cases, navigation not only results in a regrettable loss of information but can also be visually disrupt the seamless and smooth effect of view transitions.
+
+## Using the Element Crossing
+
+The Element Crossing script helps you preserve state that matters and minimize visual disruptions. It comes in two flavors: **Vanilla** and **Over-the-Top**.
+
+Here, **Vanilla** stands for *reliable*, *well-understood* state of the art.\
+And **Over-the-Top** is &hellip; well, a bit over the top: *experimental*, *fancy* and might not work at all in some settings.
+
+From the feature list, there are only few difference:
+* Vanilla stores the state of DOM and CSS properties in the `sessionStorage` to move them to the new page across a full page load.
+* Over-the-Top can also preserve whole DOM trees across cross-document view transitions and offers a `crossingStorage` to preserve arbitrary JavaScript objects across navigation.
+
+Coincidentally, the implementation of the crossingStorage literally works *over the top (window)*.
+
+### Element Crossing Demo: Vanilla
+
+The [Vanilla demo](/crossing/vanilla/1/) showcases how this version of the Element Crossing can maintain state across cross-document view transitions. You can directly incorporate it into your own projects.
+
+
+### Element Crossing Demo: Experimental Over-the-Top
+
+Experimental and maybe never mature for production: The [Over-the-top demo](/crossing/over-the-top/1/) demonstrates the additional features of the over-the-top version.
+
+## Installation
+:::tip
+If you want to use the ElementCrossing with an Astro project, see [astro-vtbot](https://events-3bg.pages.dev/library/ElementCrossing/) for reusable components you can easily use in your project.
+:::
+
+To use the Element Crossing, you can install the npm package in your project. Alternatively you can load the script from one of the global content delivery networks that provide npm packages.
+
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Tabs>
+  <TabItem label="Using the npm package" icon="seti:npm">
+    <Steps>
+1. Install `@vtbag/element-crossing@latest` from npm.
+2. In your project, add `@vtbag/element-crossing/lib/vanilla.js` as an inline script at the beginning of the `<head>` element on all pages where you want to retrieve or restore state during navigation.
+</Steps>
+
+Details depend on your project setup and the frameworks used, but it can be as simple as:
+
+```jsx
+import crossing from "@vtbag/element-crossing?url";
+
+<html>
+  <head>
+    <script src={crossing} />
+    ...
+  </head>
+  ...
+</html>;
+```
+  </TabItem>
+  <TabItem label="Loading the script from a CDN" icon="cloudflare">
+
+You can load the script from CDNs such as jsdelivr.net or unpkg.com. Place the script inline at the beginning of the `<head>` element on all pages where you want to retrieve or restore state during navigation.
+
+Using `jsdeliver.net`:
+
+```html
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/@vtbag/element-crossing" />
+    ...
+  </head>
+  ...
+</html>
+```
+
+or alternatively using `unpkg.com`:
+
+```html
+<html>
+  <head>
+    <script src="https://unpkg.com/@vtbag/element-crossing" />
+    ...
+  </head>
+  ...
+</html>
+```
+  </TabItem>
+</Tabs>
+
+To experiment with the over-the-top flavor include the `@vtbag/element-crossing/experimental` and the `@vtbag/element-crossing` script in that order.
+
+## Vanilla Configuration
+
+To move state to the next page, you need to tell the Element Crossing for which HTML elements to move state and what state to move. Assigning the `data-vtbag-x` attribute to identify the elements that should have some state carried over.
+
+### Expressions
+
+The `data-vtbag-x` attribute accepts a string that has to fullfil the following grammar:
+
+<svg xmlns="http://www.w3.org/2000/svg" width="583" height="217">
+{/*
+data-vtbag-x ::= "id:" identifier ( space+ "prop:" name | space+ "class:" name | space+ "style:" name | space+ "anim" name )*+
+*/}
+   <defs>
+      <style>{`
+    .line                 {fill: none; stroke: #888888; stroke-width: 1;}
+    text.terminal         {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #141000;
+                            font-weight: bold;
+                          }
+    text.nonterminal      {font-family: Verdana, Sans-serif;
+                            font-size: 12px;
+                            fill: #1A1400;
+                            font-weight: normal;
+                          }
+    rect, circle, polygon {fill: #888888 stroke: #888888;}
+    rect.terminal         {fill: #FFDB4D; stroke: #332900; stroke-width: 1;}
+    rect.nonterminal      {fill: #FFEC9E; stroke: #332900; stroke-width: 1;}
+`}
+  </style>
+   </defs>
+   <polygon points="9 49 1 45 1 53"/>
+   <polygon points="17 49 9 45 9 53"/>
+   <rect x="31" y="35" width="38" height="32" rx="10"/>
+   <rect x="29"
+         y="33"
+         width="38"
+         height="32"
+         class="terminal"
+         rx="10"/>
+   <text class="terminal" x="39" y="53">id:</text>
+   <a >
+      <rect x="89" y="35" width="76" height="32"/>
+      <rect x="87" y="33" width="76" height="32" class="nonterminal"/>
+      <text class="nonterminal" x="97" y="53">identifier</text>
+   </a>
+   <a >
+      <rect x="245" y="35" width="56" height="32"/>
+      <rect x="243" y="33" width="56" height="32" class="nonterminal"/>
+      <text class="nonterminal" x="253" y="53">space</text>
+   </a>
+   <rect x="361" y="35" width="56" height="32" rx="10"/>
+   <rect x="359"
+         y="33"
+         width="56"
+         height="32"
+         class="terminal"
+         rx="10"/>
+   <text class="terminal" x="369" y="53">prop:</text>
+   <rect x="361" y="79" width="58" height="32" rx="10"/>
+   <rect x="359"
+         y="77"
+         width="58"
+         height="32"
+         class="terminal"
+         rx="10"/>
+   <text class="terminal" x="369" y="97">class:</text>
+   <rect x="361" y="123" width="58" height="32" rx="10"/>
+   <rect x="359"
+         y="121"
+         width="58"
+         height="32"
+         class="terminal"
+         rx="10"/>
+   <text class="terminal" x="369" y="141">style:</text>
+   <rect x="361" y="167" width="52" height="32" rx="10"/>
+   <rect x="359"
+         y="165"
+         width="52"
+         height="32"
+         class="terminal"
+         rx="10"/>
+   <text class="terminal" x="369" y="185">anim</text>
+   <a >
+      <rect x="459" y="35" width="56" height="32"/>
+      <rect x="457" y="33" width="56" height="32" class="nonterminal"/>
+      <text class="nonterminal" x="467" y="53">name</text>
+   </a>
+   <path class="line"
+         d="m17 49 h2 m0 0 h10 m38 0 h10 m0 0 h10 m76 0 h10 m60 0 h10 m56 0 h10 m-96 0 l20 0 m-1 0 q-9 0 -9 -10 l0 -12 q0 -10 10 -10 m76 32 l20 0 m-20 0 q10 0 10 -10 l0 -12 q0 -10 -10 -10 m-76 0 h10 m0 0 h66 m40 32 h10 m56 0 h10 m0 0 h2 m-98 0 h20 m78 0 h20 m-118 0 q10 0 10 10 m98 0 q0 -10 10 -10 m-108 10 v24 m98 0 v-24 m-98 24 q0 10 10 10 m78 0 q10 0 10 -10 m-88 10 h10 m58 0 h10 m-88 -10 v20 m98 0 v-20 m-98 20 v24 m98 0 v-24 m-98 24 q0 10 10 10 m78 0 q10 0 10 -10 m-88 10 h10 m58 0 h10 m-88 -10 v20 m98 0 v-20 m-98 20 v24 m98 0 v-24 m-98 24 q0 10 10 10 m78 0 q10 0 10 -10 m-88 10 h10 m52 0 h10 m0 0 h6 m20 -132 h10 m56 0 h10 m-330 0 l20 0 m-1 0 q-9 0 -9 -10 l0 -28 q0 -10 10 -10 m310 48 l20 0 m-20 0 q10 0 10 -10 l0 -28 q0 -10 -10 -10 m-310 0 h10 m0 0 h300 m-350 48 h20 m350 0 h20 m-390 0 q10 0 10 10 m370 0 q0 -10 10 -10 m-380 10 v146 m370 0 v-146 m-370 146 q0 10 10 10 m350 0 q10 0 10 -10 m-360 10 h10 m0 0 h340 m23 -166 h-3"/>
+   <polygon points="573 49 581 45 581 53"/>
+   <polygon points="573 49 565 45 565 53"/>
+</svg>
+
+
+
+#### id
+The `id` expression is used to link elements between the old and new pages, allowing state to be transferred from the current HTML element to the target element with the same id on the subsequent page. If an id value appears exclusively on either the old or the new page, no state transfer occurs. It's important that id values remain unique on their respective pages. If the current HTML element already has an `id` attribute, the id expression within the `data-vtbag-x` string can be omitted.
+
+#### prop
+The `prop` expression identifies a property of the current HTML element. The value of this property is then transferred to the corresponding property of the target element on the next page.
+
+
+
+#### class
+The `class` expression specifies an entry in the current HTML element's `classList` property. If the class is present on the current element, it will be added to the target element's class list. Conversely, if the class is absent on the current element, it will be removed from the target element's class list.
+
+
+#### style
+The style expression identifies a CSS property of the current HTML element. The value of this property is transferred to the same property on the target element on the next page.
+
+#### anim
+The anim expression references a CSSAnimation of the current HTML element. If the target element on the next page has an animation with the same `animationName`, the current playback time is transferred. Note these current restrictions of the Element Crossing: The `animationName` values must be unique per HTML element, and only CSSAnimations are supported, not CSSTransitions.
+
+### Abbreviated Forms
+The long forms `id:`, `prop:`, `class:`, `style:`, and `anim:` can be abbreviated as `#`, `@`, `.`, `-`, and `~`, respectively. For example, instead of writing `data-vtbag-x="id:group class:active prop:value"`, you could write `data-vtbag-x="#group .active @value"`, or use a combination of both forms.
+
+### Applications with Real-World Examples
+
+Although the expressions may seem basic, it's amazing how easily you can create the desired effects. Address any CSS property or DOM element property, any CSS class, or CSS animation. Below is a table that outlines the expressions used in the example above:
+
+|Effect| HTML (on the old and new page)|
+|----|---|
+|Do not reset the scroll position of the sidebar on navigation|`<nav data-vtbag-x="id:nav prop:scrollTop">`|
+|Keep the collapsed state of the navigation group|`<details data-vtbag-x="id:ng1 prop:open">`|
+|Carry over the current playback time of the video|`<video data-vtbag-x="id:video prop:currentTime">`|
+|Carry over the state of the footer animation, which is defined as `animation: shift ...`|`<div data-vtbag-x="id:footer anim:shift">`|
+|Keep the current `dark` CSS class and the `color-scheme` CSS property|`<html data-vtbag-x="id:root class:dark style:color-scheme">`|
+|Do not lose the input of the form elements or the textarea dimensions|`<input id="name" type="text" data-vtbag-x="prop:value">`, `<input id="interest1" type="checkbox" data-vtbag-x="prop:checked">`, `<textarea id="comments" data-vtbag-x="prop:value style:width style:height">`|
+
+
+The values of the id expressions used here are arbitrary as long as they are unique per page and appear on both sides of the crossing.
+
+## Over-the-Top Features
+
+The Over-the-Top flavor provides one additional expression for the `data-vtbag-x` attribute and an additional API similar to `window.sessionStorage`.
+
+### The `crossingStorage` API
+ The API is made available as `window.crossingStorage`. It provides the following functions:
+|Signature|Description|
+|--|--|
+|`setItem(key: string, data: any): void`|Store the data object under the given key.|
+|`getItem(key: string): any`|Retrieve the data object stored under the given key.|
+|`removeItem(key: string): void`|Remove the data object stored under the given key.|
+|`clear(): void`|Remove all the data objects stored under any key.|
+|`pseudoAddress(object:object):string`|Returns a random but fixed value that consistently identifies the object like `0xAB1234` (or `0x000000` if the object is `null` or `undefined`).|
+
+Stored values will survive a cross-document navigation and can be retrieved on the other side.
+
+
+### Additional `elem` Expression
+
+The additional expression supported by the over-the-top mode is `elem:`, abbreviated as `&`.
+
+#### elem
+The `elem` expression specifies a name that is used as a key to store the current HTML element in `window.crossingStorage` and to replace the target element on the next page with that value.
+
+### Applications with Real-World Examples
+
+With the help of the `elem:` expression we can simplify the examples above in many cases.
+
+:::caution[Please note &hellip;]
+&hellip; that being able to copy whole DOM trees across cross-document view transitions does not guarantee that all state is retained. Often re-inserting the subtree into the new page or simply the cleanup of the full page reload might reset some properties to their default values.
+:::
+
+Here are the earlier examples revisited with the new capabilities:
+
+|Effect| HTML (on the old and new page)|Explanation|
+|----|---|---|
+|Keep the collapsed state of *all* navigation groups / Do not reset the scroll position of the sidebar on navigation|`<nav data-vtbag-x="id:nav elem:nav prop:scrollTop">`|Copying the whole `<nav>` frees us from annotating every `<details>` as all the collapse states are retained with the `<nav>` element. But the scroll position gets lost when we move the `<nav>` from the old to the new page. Thus we still need to explicitly copy the `scrollTop` property |
+|Carry over the current playback time of the video|`<video data-vtbag-x="id:video prop:currentTime">`|Same as before, no improvement here.
+|Carry over the state of the footer animation, which is defined as `animation: shift ...`|`<div data-vtbag-x="id:footer anim:shift">`|Animation state gets reset on re-insertion of the element. No advantage of using `elem:` here.
+|Keep the current `dark` CSS class and the `color-scheme` CSS property|`<html data-vtbag-x="id:root class:dark style:color-scheme">`|You don't want to copy the whole page. What would be the point of navigation then?|
+|Do not lose the input of the form elements or the textarea dimensions|`<form id="exampleForm" data-vtbag-x="&form">`|Now this is really an improvement! Instead of annotating all input fields, just preserve the whole form and re-insert it on the new page with all its state and content.|
+
+### Know limitations
+
+This first version has some known limitations.
+
+* Using the Over-the-Top flavored Element Crossing can corrupt the remaining browser history for pages within its coverage area if you leave and then re-enter that area using the browser's back/forward navigation.
+
+* Currently, entries in sessionStorage are not removed after use, and there is no configuration option to control this behavior. As a result, memory usage increases during navigation until the session is closed. On the plus side, you can resume a video from where you left off, even if you've visited many other pages in the meantime.

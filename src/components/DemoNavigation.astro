@@ -6,7 +6,7 @@ export interface Props {
 }
 const { backlink, prev, next } = Astro.props;
 ---
-<div class="demonav">{prev && (<a id="prev" href={prev}>Prev</a>)}<a id="back" href={backlink}>Back to the example list</a>{next && (<a id="next" href={next}>Next</a>)}</div>
+<div class="demonav">{prev && (<a id="prev" href={"javascript:top.sessionStorage.setItem('vtbag-ui-standby','true'),top.location.href='" + prev + "'"}>Prev</a>)}<a id="back" href={"javascript:top.sessionStorage.setItem('vtbag-ui-standby','true'),top.location.href='" + backlink+"'"}>Back to the example list</a>{next && (<a id="next" href={"javascript:top.sessionStorage.setItem('vtbag-ui-standby','true'),top.location.href='" + next +"'"}>Next</a>)}</div>
 <style is:global>
   .demonav {
     display: flex;

@@ -5,10 +5,28 @@ description: "@vtbag/inspection-chamber allows you to examine, judge & optimize 
 
 import { Steps } from "@astrojs/starlight/components";
 
+<div style="display:flex">
+<div id="logo" style="flex:1; margin: 3ex">
+![chamber](../../../../assets/chamber.png)
+</div><div style="flex:3">
 The Inspection Chamber allows you to examine the details of view transitions. It’s designed for use during development and supports both same-document and cross-document view transitions.
 
 Place your pages in the Inspection Chamber and put the view transitions through their paces.
 You can thoroughly examine each transition: play it in slow motion, examine timings step-by-step, disable transitions or highlight the pseudo elements &mdash; everything is easily achievable here.
+
+</div>
+</div>
+
+<style>{`
+  #logo img {
+    view-transition-name: logo;
+    mask-image: radial-gradient(
+        ellipse at center,
+        white 35%,
+        transparent 71%
+      );
+  }
+`}</style>
 
 <div style="padding: 10px 20px 20px; border:12px dotted orange; width: max-content; border-radius:20px;font-size:32px;transform:rotate(3deg) translateY(20px) translateX(40px)">
   [See it in action!](/inspection-chamber-demo/first-page/)
@@ -16,7 +34,7 @@ You can thoroughly examine each transition: play it in slow motion, examine timi
 
 ## PREREQUISITE
 
-:::danger[Bleeding Edge]
+:::danger[Dependency on View Transition API]
 The Inspection Chamber requires a current **Chrome browser version 126 or higher**, and on some versions you must also manually activate **chrome://flags/#view-transition-on-navigation-iframe**  .
 :::
 
@@ -26,10 +44,10 @@ The Inspection Chamber currently only works with **Chromium browser (Chrome, Edg
 ## Installation
 
 :::tip
-If you want to use the Inspection Chamber with an Astro project, see [astro-vtbot](https://events-3bg.pages.dev/library/InspectionChamber/) for instructions.
+If you want to use the Inspection Chamber with an Astro project, see [astro-vtbot](https://events-3bg.pages.dev/library/InspectionChamber/) for instructions. In Astro, the Chamber can be opened from the devToolbar!
 :::
 
-To start up the Inspection Chamber on your pages, you can install the npm package in your project/server. Alternatively you can load the script from one of the global content delivery networks that provide npm packages.
+To start up the Inspection Chamber on your pages, you can install the npm package in your project. Alternatively you can load the script from one of the global content delivery networks that provide npm packages.
 
 import { Tabs, TabItem } from "@astrojs/starlight/components";
 
