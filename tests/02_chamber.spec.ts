@@ -70,6 +70,7 @@ test.describe("controls", () => {
     await page.click('#vtbag-ui-reopen');
     await expect(page.locator('#vtbag-ui-reopen')).toBeHidden();
     await page.click('#vtbag-ui-standby');
+    await expect(page.locator('#vtbag-ui-panel')).toBeHidden();
     await expect(page.locator('#vtbag-ui-reopen')).toBeVisible();
   })
 

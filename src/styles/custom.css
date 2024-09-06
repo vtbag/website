@@ -90,9 +90,16 @@ section.footnotes {
   border-top: 1px solid var(--sl-color-gray-4);
 }
 
-h2 a,
-h3 a,
-h4 a {
+a {
+  text-decoration: underline dotted;
+}
+:is(h1,h2,h3,h4,h5,h6) a {
+  text-decoration: none;
+}
+:is(nav,table,h1,h2,h3,h4,h5,h6) a {
+  text-decoration: none;
+}
+a.data-footnote-backref {
   text-decoration: none;
 }
 
