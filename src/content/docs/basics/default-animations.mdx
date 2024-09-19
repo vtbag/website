@@ -1,0 +1,60 @@
+---
+title: Default View Transition Animations
+description: Mastering the fundamentals is key to creating seamless animations with the View Transition API. Here’s a quick guide to get you started.
+---
+
+If you do not specify custom animations, the View Transition API automatically assigns two types of animations to the pseudo-elements:
+
+* **Exit/Entry animations**, which consist of fade-out animation fromm 100% to 0% opacity for the old image and a fade-in animation from 0% to 100% opacity for the new image.
+* **Group (or Morph) animations**, where the transition group animates differences  in width, height, and position starting from the values of the old image and gradually reaching the values of the new one.  Morph animations are only defined for groups containing both the old and new image.
+
+## Really?
+
+You caught me! The explanations above have been slightly simplified for the sake of clarity.
+
+Additional technical details:
+
+* The browser’s default exit and entry animations do more than just transition opacity. They also set the `mix-blend-mode` to `plus-lighter`, but only when both an old and new image are present in the image pair. Combined with the `isolation: isolate` setting of the image-pair, this ensures that during a cross-fade, the pixels of two identical images will sum to the original color and opacity. Without this, the images might exhibit an [overexposure-like effect](/tips/over-exposure/) during animations.
+
+* In the description of morph animations above, *position* was used for simplicity. In reality, the group animation accounts for both the element's position and any applied CSS transformations, such as those defined by `matrix3d` or specialized forms like `rotate`. When you read *position* in the following text, it always means *&hellip;and the applied transformations*.
+
+By default, both types of animations, entry/exit and group/morph, occur simultaneously, though they may not always be noticeable. For example, if elements sharing the same view transition name have identical size and position before and after the transition, the group animation will result in no visible change. Similarly, if the old and new images are identical, only the group animation will be apparent, with the exit and entry animations having no visible effect.
+
+## Morphing Animation Details
+
+The above description states that the group animation morphs from the size and position values of the old image to the values of the new image. But how does this work exactly? Morph animations are only defined for groups that have both, the old and the new image. The height, width and position of the group pseudo-element is copied over from the old element. The image pair, the only child of the group, fills the whole group. The old and the new image are inside the image pair, where the new image is rendered above the old image. If the new image is fully transparent at the beginning of the animation, the screen shows the old image in its old position.
+
+During the morph animation, the group moves to the final position of the new image. Doing so, it takes the image-pair and the images withing with it. At the same time, the width and height of the group element transitions towards the width and height of the new image. This change in size might force the images inside the image-pair to react with size changes as well.
+
+Let's assume we start with an old image with an aspect ratio of 2:3 and morph this into a 3:2 new image.
+
+The table below deconstructs the procedure into its individual components. The first row illustrates the progression of group pseudo-element (orange), transitioning from the portrait orientation at 0%, through a square at 50%, to the landscape orientation at 100%. The outlines at 0% and 100% correspond to the old and new images of the view transition, while the 50% outline represents the interpolated midpoint you might expect to see at the halfway mark.
+
+### How the Boxes Morph
+In our example, the group's outline gradually gets wider  and shortens in height.
+
+<style>{`td {vertical-align: top; text-align: right;}`}</style>
+<div style="margin-left:calc(50% - 14em); width: fit-content"><table><tbody class="not-content"><tr><td>&nbsp;</td><td>0%</td><td>50%</td><td>100%</td></tr><tr><td>group</td><td><svg width="60" height="80"><g><rect x="10" y="10" width="40" height="60" stroke="#B08600" stroke-width="2" stroke-dasharray="2 4" fill="none"/></g></svg></td><td><svg width="70" height="70"><g><rect x="10" y="10" width="50" height="50" stroke="#B08600" stroke-width="2" stroke-dasharray="2 4" fill="none" /></g></svg></td><td><svg width="80" height="60"><g><rect x="10" y="10" width="60" height="40" stroke="#B08600" stroke-width="2" stroke-dasharray="2 4" fill="none" /></g></svg></td></tr><tr><td>group & old</td><td><svg width="60" height="80"><g><rect x="10" y="10" width="40" height="60" stroke="#B08600" stroke-width="2" stroke-dasharray="2 4" fill="none"/><rect x="10" y="10" width="40" height="60" stroke="#532476" stroke-width="2" stroke-dasharray="8 6" fill="none"/></g></svg></td><td><svg width="70" height="95"><g><rect x="10" y="10" width="50" height="50" stroke="#B08600" stroke-width="2" stroke-dasharray="2 4" fill="none" /><rect x="10" y="10" width="50" height="75" stroke="#532476" stroke-width="2" stroke-dasharray="8 6" fill="none" /></g></svg></td><td><svg width="80" height="110"><g><rect x="10" y="10" width="60" height="40" stroke="#B08600" stroke-width="2" stroke-dasharray="2 4" fill="none" /><rect x="10" y="10" width="60" height="90" stroke="#532476" stroke-width="2" stroke-dasharray="8 6" fill="none" /></g></svg></td></tr><tr><td>group & new</td><td><svg width="60" height="80"><g><rect x="10" y="10" width="40" height="60" stroke="#B08600" stroke-width="2" stroke-dasharray="2 4" fill="none"/><rect x="10" y="10" width="40" height="27" stroke="#275317" stroke-width="2" stroke-dasharray="8 6" fill="none"/></g></svg></td><td><svg width="70" height="70"><g><rect x="10" y="10" width="50" height="50" stroke="#B08600" stroke-width="2" stroke-dasharray="2 4" fill="none" /><rect x="10" y="10" width="50" height="33" stroke="#275317" stroke-width="2" stroke-dasharray="8 6" fill="none" /></g></svg></td><td><svg width="80" height="60"><g><rect x="10" y="10" width="60" height="40" stroke="#B08600" stroke-width="2" stroke-dasharray="2 4" fill="none" /><rect x="10" y="10" width="60" height="40" stroke="#275317" stroke-width="2" stroke-dasharray="8 6" fill="none" /></g></svg></td></tr><tr><td>group & old & new</td><td><svg width="60" height="80"><g><rect x="10" y="10" width="40" height="60" stroke="#B0860044" stroke-width="2" stroke-dasharray="2 4" fill="none"/><rect x="10" y="10" width="40" height="60" stroke="#532476" stroke-width="2" stroke-dasharray="8 6" fill="none"/><rect x="10" y="10" width="40" height="27" stroke="#27531744" stroke-width="2" stroke-dasharray="8 6" fill="none"/></g></svg></td><td><svg width="70" height="95"><g><rect x="10" y="10" width="50" height="50" stroke="#B0860088" stroke-width="2" stroke-dasharray="2 4" fill="none" /><rect x="10" y="10" width="50" height="75" stroke="#53247688" stroke-width="2" stroke-dasharray="8 6" fill="none"/><rect x="10" y="10" width="50" height="33" stroke="#27531788" stroke-width="2" stroke-dasharray="8 6" fill="none" /></g></svg></td><td><svg width="80" height="110"><g><rect x="10" y="10" width="60" height="40" stroke="#B0860044" stroke-width="2" stroke-dasharray="2 4" fill="none" /><rect x="10" y="10" width="60" height="90" stroke="#53247644" stroke-width="2" stroke-dasharray="8 6" fill="none"/><rect x="10" y="10" width="60" height="40" stroke="#275317" stroke-width="2" stroke-dasharray="8 6" fill="none" /></g></svg></td></tr></tbody></table></div>
+
+The next row demonstrates the transition of the old image (purple) as if it didn’t fade out. By default, the View Transition API sets the old image's width to match the group shown in the first row, but it doesn’t adjust the height to the group's height, as that would distort the image. Instead, it preserves the image's aspect ratio.
+
+The browser generated CSS that is responsible for this trick [is this](https://drafts.csswg.org/css-view-transitions-1/#ua-styles):
+
+```css title="user agent style sheet"
+::view-transition-old(*),
+::view-transition-new(*) {
+  inline-size: 100%;
+  block-size: auto;
+  ...
+}
+```
+With a horizontal writing mode, this means that the width of the images is equal to the width of the group and the height adapts so that the images are not distorted. As a consequence, the images itself might be much taller or smaller than the height of the `::view-transition-group` pseudo elements.
+
+In this example, as the group expands to 150% of its original width, the old image similarly scales up to 150% of its original height and is always larger than the group.
+
+The third row of the table illustrates the transition of the new image (in green) as if it didn’t fade in. Here again, the width is matched to the group's width while maintaining the aspect ratio. As a result, the image expands along with the group, but remains proportionally smaller. In this example, it never exceeding the size of the group, and reaches its full height only at the end of the animation.
+
+Finally the last rows shows the combined effect and also hints a bit on the fade in and out of the images.
+
+
+

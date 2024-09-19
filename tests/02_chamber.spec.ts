@@ -131,11 +131,12 @@ test.describe("controls", () => {
 test.describe("sub-panel", () => {
   const open = async (page: Page) => {
     await page.goto('http://localhost:4321/inspection-chamber-demo/first-page/');
+
     // account for tutorial mode: close the auto-opened panel
     await page.click('#vtbag-ui-messages h4');
     await expect(page.locator('#vtbag-ui-inner-panel')).toBeHidden();
-
-    await page.click('#vtbag-ui-messages h4');
+    await new Promise<void>(r => setTimeout(r, 100));
+    await page.click('#vtbag-ui-filter h4');
     await expect(page.locator('#vtbag-ui-inner-panel')).toBeVisible();
   };
 

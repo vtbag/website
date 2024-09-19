@@ -10,8 +10,7 @@
 }
 
 :root {
-  transition:
-    --sl-color-text 2s;
+  transition: --sl-color-text 2s;
 }
 :root[loading] * {
   cursor: progress;
@@ -93,10 +92,10 @@ section.footnotes {
 a {
   text-decoration: underline dotted;
 }
-:is(h1,h2,h3,h4,h5,h6) a {
+:is(h1, h2, h3, h4, h5, h6) a {
   text-decoration: none;
 }
-:is(nav,table,h1,h2,h3,h4,h5,h6) a {
+:is(nav, table, h1, h2, h3, h4, h5, h6) a {
   text-decoration: none;
 }
 a.data-footnote-backref {
@@ -152,8 +151,17 @@ starlight-menu-button button {
 
 .hero h1 {
   color: var(--sl-color-text-accent);
+  margin-top: 1.5rem;
 }
 
+h1 {
+  display: inline-block;
+}
+::view-transition-old(title-heading),
+::view-transition-new(title-heading) {
+  height: 100%;
+  width: 100%;
+}
 .hero .action {
   color: var(--sl-color-accent-high);
   font-size: large;
@@ -168,7 +176,7 @@ starlight-menu-button button {
     var(--sl-color-text-accent) 0px 0px 5px 2px;
 }
 .hero .actions .primary:hover {
-  color: var(--sl-color-white)
+  color: var(--sl-color-white);
 }
 h1 {
   display: inline-block;
@@ -194,7 +202,7 @@ main kbd {
   border: 1px solid #ccc;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
 :root[data-theme="dark"] main kbd {
   color: #fff;

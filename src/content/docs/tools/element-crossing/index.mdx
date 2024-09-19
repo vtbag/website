@@ -242,7 +242,7 @@ The `class` expression specifies an entry in the current HTML element's `classLi
 
 
 #### style
-The style expression identifies a CSS property of the current HTML element. The value of this property is transferred to the same property on the target element on the next page.
+The style expression identifies an entry of the current HTML element's `style` property. The value of this entry is transferred to the `style` property off the target element on the next page. This does not give access to CSS properties only available in computed styles.
 
 #### anim
 The anim expression references a CSSAnimation of the current HTML element. If the target element on the next page has an animation with the same `animationName`, the current playback time is transferred. Note these current restrictions of the Element Crossing: The `animationName` values must be unique per HTML element, and only CSSAnimations are supported, not CSSTransitions.
@@ -270,6 +270,13 @@ The values of the id expressions used here are arbitrary as long as they are uni
 
 The Over-the-Top flavor provides one additional expression for the `data-vtbag-x` attribute and an additional API similar to `window.sessionStorage`.
 
+### Additional `elem` Expression
+
+The additional expression supported by the over-the-top mode is `elem:`, abbreviated as `&`.
+
+#### elem
+The `elem` expression specifies a name that is used as a key to store the current HTML element in `window.crossingStorage` and to replace the target element on the next page with that value.
+
 ### The `crossingStorage` API
  The API is made available as `window.crossingStorage`. It provides the following functions:
 |Signature|Description|
@@ -281,14 +288,6 @@ The Over-the-Top flavor provides one additional expression for the `data-vtbag-x
 |`pseudoAddress(object:object):string`|Returns a random but fixed value that consistently identifies the object like `0xAB1234` (or `0x000000` if the object is `null` or `undefined`).|
 
 Stored values will survive a cross-document navigation and can be retrieved on the other side.
-
-
-### Additional `elem` Expression
-
-The additional expression supported by the over-the-top mode is `elem:`, abbreviated as `&`.
-
-#### elem
-The `elem` expression specifies a name that is used as a key to store the current HTML element in `window.crossingStorage` and to replace the target element on the next page with that value.
 
 ### Applications with Real-World Examples
 
@@ -314,4 +313,4 @@ This first version has some known limitations.
 
 * Using the Over-the-Top flavored Element Crossing can corrupt the remaining browser history for pages within its coverage area if you leave and then re-enter that area using the browser's back/forward navigation.
 
-* Currently, entries in sessionStorage are not removed after use, and there is no configuration option to control this behavior. As a result, memory usage increases during navigation until the session is closed. On the plus side, you can resume a video from where you left off, even if you've visited many other pages in the meantime.
+* Initially, entries in sessionStorage were not cleared after use. This worked well for view transitions. However, when performing a full page reload, it became confusing to see the DOM differ from what was originally in the HTML file. The current solution is to clear the sessionStorage entry after each page load and skipping the value restoration for anything other than a cross-document view transition. Stay tuned for further updates.

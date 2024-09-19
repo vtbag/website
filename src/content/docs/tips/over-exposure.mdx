@@ -1,0 +1,147 @@
+---
+title: Flashes during Fade Animations?
+description: Why custom fade animations for view transitions might flash.
+---
+
+Defining custom fade animations for view transitions is not as straightforward as it might initially seem. Typical issues, where the combined old an new image appears brighter or darker as expected during view transitions can be caused by a [wrong `mix-blend-mode`](#set-the-correct-mix-blend-mode) or by [reverting an asymmetric timing function](#avoid-reverse-with-asymmetric-timings).
+
+
+You can create custom fade animations for view transitions similar to how the browser applies default animations when no custom animations are specified for the old or new image:
+
+```css
+@keyframes -ua-view-transition-fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes -ua-view-transition-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+```
+
+
+## Root Causes for Flashes
+
+However, this seemingly straightforward approach can result in flashes, sometimes similar to an overexposed effect or a sudden darkening of the animation. The image flashes during the transition, making the animation appear brighter than either the old or new image. With a dark background, the effect is just the opposite: halfway through the animation, the combined image appears darker than either the old or new image.
+
+This effect is most noticeable during a cross-fade involving the same image. \
+**See it in action: click the image to trigger a view transition** using the definition above.
+
+<style>{`
+::view-transition-old(main),
+::view-transition-new(main) {
+  animation-duration: 0;
+}
+#img {
+  view-transition-name: img;
+}
+::view-transition-old(img) {
+  animation: both 1s fadeOut;
+}
+::view-transition-new(img) {
+  animation: both 1s fadeIn;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+`}</style>
+
+<div style="background-color: yellow">
+  <img
+    id="img"
+    onclick="self.document.startViewTransition()"
+    src="/landscape.webp"
+    data-zoom-off
+  />
+</div>
+
+This happens because, during the transition, both images become partially transparent. As a result, you can see part of the background through the old and new image. When cross-fading between two opaque images, you wouldn't expect the background to be visible, but that’s exactly what happens with the default settings. A bright background will make the image appear brighter, a dark background will darken it, and in the example above, a yellow background shines through as &hellip; yellow.
+
+## Set the Correct `mix-blend-mode`
+
+When the View Transition API adds its default fade animations to the pseudo-elements for the old and the new image, it also adds the `-ua-mix-blend-mode-plus-lighter` animation, which is defined as:
+
+```css
+@keyframes -ua-mix-blend-mode-plus-lighter {
+  from {
+    mix-blend-mode: plus-lighter;
+  }
+  to {
+    mix-blend-mode: plus-lighter;
+  }
+}
+```
+
+This blend mode adds the alpha channels (= the opacity) of both images. As long as the alphas add up to one, there will be no transparent pixels in a crossover of two opaque images and no background will shine through. An in-place cross-fade of identical images will not produce any noticeable effects.
+
+Additionally, the browser's built-in stylesheet automatically assigns the `isolation` CSS property with the value `isolate` to all image pairs. This ensures that blending is confined to the images themselves, unaffected by the background.
+
+The `-ua-mix-blend-mode-plus-lighter` animation is only added by the browser if the image-pair has both, an old and a new image. Single children (:only-child) in image pairs blend in normal mode. While you can not reference the `-ua-mix-blend-mode-plus-lighter` keyframes definition from your user CSS, you can copy the definition above with your own keyframes name to use it.
+
+
+## Avoid `reverse` with Asymmetric Timings
+Resist the urge to define your fadeIn as a `reverse` fadeOut:
+```css del={5}
+::view-transition-old(myElement) {
+  animation: 1s both fadeOut;
+}
+::view-transition-old(myElement) {
+  animation: 1s both reverse fadeOut;
+}
+```
+This works well with symmetrical timing functions like `linear` or `ease-in-out`. However, with an asymmetrical timing function such as `ease`, the default, the alpha values only add up to 1 at the start and end of the animation. Thus, even with `mix-blend-mode: plus-lighter`, this results in semi-transparent pixels when cross-fading opaque images. And the effect is even stronger than what we saw in the first example on this page.\
+**Click the image below** to see the effect of a fade-in defined as reverse fade-out with `ease` timing.
+
+<style>{`
+#img2 {
+  view-transition-name: img2;
+}
+::view-transition-old(img2) {
+  animation: both 1s fadeOut;
+  mix-blend-mode: plus-lighter;
+}
+::view-transition-new(img2) {
+  animation: both 1s reverse fadeOut;
+  mix-blend-mode: plus-lighter;
+}
+`}</style>
+
+<div style="background-color: yellow">
+  <img
+    id="img2"
+    onclick="self.document.startViewTransition()"
+    src="/landscape.webp"
+    data-zoom-off
+  />
+</div>
+
+## Final Pattern
+
+To achieve proper custom fade animations, you can use the following CSS. In this example, `<some-timing-function>` serves as a placeholder for a specific, fixed timing function. This approach assumes that the keyframe definitions for `fadeIn` and `fadeOut` produce opacity values that always sum to 1 at any point during the animation.
+
+```css mark={3,9}
+::view-transition-old(img) {
+  animation: both 1s <some-timing-function> fadeOut;
+  mix-blend-mode: plus-lighter;
+}
+::view-transition-new(img) {
+  animation: both 1s <some-timing-function> fadeIn;
+  mix-blend-mode: plus-lighter;
+}
+::view-transition-old(img):only-child,
+::view-transition-new(img):only-child {
+  mix-blend-mode: normal;
+}
+@keyframes fadeOut {to {opacity: 0}}
+@keyframes fadeIn {from {opacity: 0}}
+```
+You might even drop the marked lines, as only the blending of the new image into the old image is relevant here.

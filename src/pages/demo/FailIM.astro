@@ -1,0 +1,86 @@
+---
+import Demo from "@/layouts/DemoLayout.astro";
+---
+
+<Demo
+  title="View Transition Example: Surprising Fade"
+  backlink="/basics/examples/#failim"
+  prev="/demo/BasicIM4/"
+  next="/demo/Fail1/"
+>
+<p>This example highlights an unexpected issue that can arise from a simple typo. It took me some time to fully understand what was happening when I first encountered it.</p> <p>At first glance, this appears to be the <a href="/demo/BasicIM/"
+      >standard image morph example</a
+    >.  However, instead of smoothly scaling into its larger version, the image fades gradually and then makes a sudden jump back at the end.</p> <p><b>Click the image to see for yourself!</b></p>
+  <div>
+    <div id="DOM1" class="active">
+      <img width="300" src="/landscape.webp" />
+    </div>
+    <div id="DOM2">
+      <img width="600" src="/landscape.webp" />
+    </div>
+  </div>
+  <style is:global>
+    #DOM1,
+    #DOM2,
+    #DOM3,
+    #DOM4 {
+      display: none;
+      cursor: pointer;
+    }
+    #DOM1.active,
+    #DOM2.active,
+    #DOM3.active,
+    #DOM4.active  {
+      display: block;
+    }
+    :root {
+      view-transition-name: none;
+    }
+  </style>
+  <style is:inline slot="late-head">
+    ::view-transition-group(img) {
+      animation-duration: 1s;
+    }
+    #DOM1 {
+      margin: 0px auto;
+      padding: 25px;
+      width: 600px;
+      height: 375px;
+      view-transition-name: base;
+      background-color: #eee;
+    }
+    #DOM2 {
+      margin: 0px auto;
+      padding: 25px;
+      width: 600px;
+      height: 375px;
+      view-transition-name: baes;
+      background-color: #eee;
+    }
+    [data-theme="dark"] :is(#DOM1, #DOM2) {
+      background-color: #222;
+    }
+    #DOM1 img,
+    #DOM2 img {
+      view-transition-name: img;
+    }
+  </style>
+  <script>
+    document.querySelectorAll("#DOM1, #DOM2").forEach((elem) =>
+      elem.addEventListener("click", () => {
+        mayViewTransition(() => {
+          elem.classList.remove("active");
+          elem
+            .parentElement!.querySelector(
+              elem.id === "DOM1" ? "#DOM2" : "#DOM1"
+            )
+            ?.classList.add("active");
+        });
+      })
+    );
+    function mayViewTransition(fun: () => void) {
+      // @ts-ignore
+      document.startViewTransition ? document.startViewTransition(fun) : fun();
+    }
+  </script>
+</Demo>

@@ -1,0 +1,295 @@
+---
+title: "Pseudo-Elements of the View Transition API"
+description: "What are those pseudo-elements of the View Transition API and how can I style and animate them?"
+---
+
+The key feature of the View Transition API is that it generates images for parts of your DOM and operates solely on those images. This enables the API to display sections of the old page exactly as they appeared before the transition began.
+
+None of your actual DOM elements are directly visible during the transition. Everything is covered by the generated images, which are moved around in their own layer above your web page.
+
+## The Theater Curtain
+
+Think of it like a theater: A curtain drops, painted with the last scene, while the stage is being rebuilt behind it. On the curtain, images gradually shift to depict the next scene. Then, the curtain lifts to reveal the new stage. Just like in modern theater, there can be multiple curtains: some closer to the audience, others further back.
+
+
+<style>{`
+    .container {
+      position: relative;
+      height: 250px;
+      width: 400px;
+      margin: 0 auto;
+      transform-style: preserve-3d;
+      perspective: 50cm;
+      transition: transform 1s ease;
+      perspective-origin: center top;
+    }
+    .container:hover {
+      transform: rotate3d(-1, -1, -0.5, 60deg)
+    }
+
+    .container div {
+      padding-left:0.25em;
+      position: absolute;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      border: 2px solid #ff8000;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transform-origin: center;
+      font-size: 12px;
+    }
+    [data-theme=dark] .container div {
+      background-color: #000;
+    }
+
+    div.small {
+      width: auto;
+      height: auto;
+      background-color: rgba(255, 128, 0, 0.1);
+      border: 2px solid #ff8000;
+    }
+    [data-theme=dark] div.small {
+        background-color: rgba(255, 128, 0, 0.1);
+    }
+    .container div:nth-child(2) {
+      inset: 20px 140px 100px 20px;
+      transform: translateZ(10px);
+    }
+    .container div:nth-child(3) {
+      inset: 175px 20px 20px 20px;
+      transform: translateZ(20px);
+    }
+
+    .container div:nth-child(4) {
+      inset: 20px 20px 20px 275px;
+      transform: translateZ(30px);
+    }
+    .container div:nth-child(5) {
+      inset: 40px 30px 180px 290px;
+      transform: translateZ(40px);
+    }
+    .container div:nth-child(6) {
+      inset: 80px 30px 140px 290px;
+      transform: translateZ(50px);
+    }
+    .container div:nth-child(7) {
+      inset: 120px 30px 100px 290px;
+      transform: translateZ(60px);
+    }
+    .container div:nth-child(8) {
+      inset: 20px 160px 40px 40px;
+      transform: translateZ(70px);
+    }
+    .container div:nth-child(9) {
+      transform: translateZ(-150px);
+      background-color: #eef;
+    }
+    [data-theme=dark] .container div:nth-child(9) {
+      background-color: #333;
+    }
+
+
+    .container div:nth-child(10) {
+      inset: 20px 20px 20px 275px;
+      transform: translateZ(-150px);
+    }
+    .container div:nth-child(11) {
+      inset: 40px 30px 180px 290px;
+      transform: translateZ(-150px);
+    }
+    .container div:nth-child(12) {
+      inset: 80px 30px 140px 290px;
+      transform: translateZ(-150px);
+    }
+    .container div:nth-child(13) {
+      inset: 120px 30px 100px 290px;
+      transform: translateZ(-150px);
+    }
+    .container div:nth-child(14) {
+      inset: 20px 160px 40px 40px;
+      transform: translateZ(-150px);
+    }
+
+`}</style>
+
+
+<div style="margin-top: 50px">
+<div class="container not-content">
+  <div class="rectangle">::view-transition</div>
+  <div class="rectangle small">1</div>
+  <div class="rectangle small">2</div>
+  <div class="rectangle small">3</div>
+  <div class="rectangle small">4</div>
+  <div class="rectangle small">5</div>
+  <div class="rectangle small">6</div>
+  <div class="rectangle small">7</div>
+  <div class="rectangle">DOM</div>
+  <div class="rectangle small">3</div>
+  <div class="rectangle small">4</div>
+  <div class="rectangle small">5</div>
+  <div class="rectangle small">6</div>
+  <div class="rectangle small">7</div>
+</div>
+</div>
+
+While theater can create magic, view transitions go even further with their "curtains." These curtains not only move independently, but they can also change in size, orientation, opacity, and more. Some curtains even act as dynamic surfaces, projecting constantly changing content.
+
+But that's about it.
+
+Now that we've covered the general concept, we can move on from the magic and dive into the technical details.
+
+## Types of Pseudo-Elements
+
+The components that form the "curtain" are called _view transition pseudo-elements_. While they aren't real DOM elements, they can be targeted with CSS selectors and styled using CSS rules. You may already be familiar with other HTML pseudo-elements like `::before` or `::first-letter`.
+
+The View Transition API introduces five types of pseudo-elements:
+
+- `::view-transition`
+- `::view-transition-group`
+- `::view-transition-image-pair`
+- `::view-transition-old`
+- `::view-transition-new`
+
+The `::view-transition` pseudo-element, which is rooted at the `<html>` element of the DOM, is the root of all pseudo-elements created by the View Transition API.
+
+All these pseudo-elements only exist briefly during the transition effect, making them difficult to spot in the DOM.
+
+:::note
+
+To make spotting pseudo-elements in the DOM easier, you can set very long animation durations, giving you more time to investigate the DOM in the browser's DevTools.
+
+Alternatively, in the Inspection Chamber's Full Control Mode, time freezes, allowing for detailed examination of the pseudo-elements. During an active view transition, click on a name in the Animation Groups panel to copy a command to your clipboard. You can then paste this command into the browser’s DevTools console for closer inspection.
+
+```console
+inspect(top.document.querySelector("#vtbag-main-frame").contentDocument.querySelector(":root"))
+
+<html lang=​"en">​
+  ::view-transition                // the parent of all groups
+   ​::view-transition-group(root)   // the group of the <html> element
+   ​::view-transition-group(myName) // the group for "view-transition-name: myName"
+   ...
+  ​<head>​…​</head>
+  ​<body>​…​</body>
+​</html>​
+```
+
+Here `root` is the automatically assigned[^root] `view-transition-name` for the `<html>` element (:root) of your document. `myName` is an arbitrary example `view-transition-name`.
+:::
+
+
+### Old and New Image Pseudos
+
+Introducing images for parts of the DOM allows you to display how the DOM looked even if it has changed or disappeared.
+
+Each element in the old DOM with a `view-transition-name: someName` CSS property generates a `::view-transition-old(someName)` pseudo-element with the same name. Similarly, for elements in the new DOM with a `view-transition-name: someName` CSS property, `::view-transition-new(someName)` pseudo-elements are created with the corresponding name.
+
+These pseudo-elements represent images of their original elements. For `::view-transition-old`, think of it as a screenshot capturing how the element looked just before the view transition began.
+
+The `::view-transition-new` images are no simple screenshots but _replaced elements_. While they behave similarly to screenshots in that they are bitmap images whose height and width can be adjusted, they aren't static: If the underlying elements in the new DOM change, the pixels of the replaced element update as well.
+
+This might be confusing, as the original element is usually hidden behind the `::view-transition` pseudo-element (the “curtain”). Here's the key difference: old images are immutable. For example, if you show the _old image_ of a video player during a view transition, the image is frozen. Replaced elements, however, are _live_. If you display a _new image_ of a video player, the video will continue to play during the transition.
+
+DOM elements without an explicit `view-transition-name` won't generate their own images, with one exception: the document's `:root` element, `<html>`. The View Transition API automatically assigns `view-transition-name: root` to it. <a id="opt-out" />You can override this with your own name or **opt out** entirely by assigning the special value `none`:
+
+```css
+:root {
+  view-transition-name: none;
+}
+```
+This removes the view transition name from the document's `<html>` element.
+
+### Groups and Image-Pairs
+
+Because view transition names must be unique[^unique] inside their DOM, there can be at most one old image and one new image with a given name. The API assumes that elements with the same `view-transition-name` on both the old and the new pages represent the same logical concept. It is not necessary for these elements to be implemented the same way or even use the same HTML tags. The old and new images form a pair, and this pair is the only child of the group. Both `::view-transition-group` and `::view-transition-image-pair` are named using the `view-transition-name`. All groups are direct children of the `::view-transition` pseudo-element. Thus, a typical structure looks like this, where a pair can have one or two children.
+
+```c
+::view-transition                       // the parent of all groups
+  ​::view-transition-group(root)         // the transition group of the <html> element
+    ::view-transition-image-pair(root)  // the image pair for the root group
+      ::view-transition-old(root)       // with the old image of the root group
+      ::view-transition-new(root)       // and the new image of the root group
+  ​::view-transition-group(name1)        // the group for "view-transition-name: name1"
+    ::view-transition-image-pair(name1) // with an image pair
+      ::view-transition-old(name1)      // that only has the old image
+  ​::view-transition-group(name2)        // the group for "view-transition-name: name2"
+    ::view-transition-image-pair(name2) // with an image pair
+      ::view-transition-new(name2)      // that only has the new image
+```
+
+The term "pair" might be a bit misleading here: it refers to having _at least one_ and _at most two_ children, but there can be instances where only an old image or only a new image is present.
+
+The image-pairs are the direct parents of the `::view-transition-old` and `::view-transition-new` images. They allow you to apply common styling to both images, set CSS isolation (default is isolate) for the pair, and to use `:only-child` to style [exit/entry transition different from morph](/basics/default-animations/) transitions.
+
+
+With the one to one relation between groups and image pairs, the group looks a bit redundant. This 1:1 relationship [will change in the future](https://drafts.csswg.org/css-view-transitions-2/#nested-view-transitions). But today the groups form a simple sequence and the order of the elements in this list also defines the standard paint order of the pseudos.
+
+[^unique]: In certain cases, the View Transition API may ignore the `view-transition-name` of an element. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance are not rendered (e.g., by setting their `display` CSS property to `none`). This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site.
+
+
+
+## Creation  of Pseudo-Elements
+
+The `::view-transition-old` pseudo elements are created in a pre-order depth first traversal of the old DOM. When an element with a `view-transition-name` is encountered, its old image is captured. During this process, other elements with view transition names are effectively ignored, as if their `visibility` were set to `hidden`. This ensures that the images have "holes" where other images can be properly placed.
+
+The ::view-transition-old pseudo-elements are created during a pre-order depth-first traversal of the old DOM. When an element with a view-transition-name is encountered, its old image is rendered. During this process, other elements with view transition names are effectively ignored, as if their visibility were set to hidden. This ensures that the images have "holes" where other images can be properly placed.
+
+
+The image of the `<html>` element, if not [opted out](#opt-out), covers the whole viewport. Its view transition group is the first in the list of `::view-transition-group` children of the `::view-transition` pseudo-element.  Subsequent groups are added after the root group once their old images have been created.
+
+<div style="width: fit-content; margin: 0 auto">
+```d2 width=450 sketch title="Creation of old images"
+"::view-transition" -> "::view-transition-group(root)" -> "::view-transition-image-pair(root)" -> "::view-transition-old(root)"
+"::view-transition" -> "::view-transition-group(other)" -> "::view-transition-image-pair(other)" -> "::view-transition-old(other)"
+"::view-transition" -> "::view-transition-group(third)" -> "::view-transition-image-pair(third)" -> "::view-transition-old(third)"
+...@../../../common
+```
+</div>
+
+For same-document view transitions, the creation of old images is the first step after calling `startViewTransition()`. For cross-document view transitions, creation of old images occurs right after the `pageswap` event is fired. The new images are processed when the `updateCallbackDone` promise resolves (for same-document view transitions) or right after the `pagereveal` event fires (for cross-document view transitions).
+
+The process for creating new images is similar to the creation of old image pseudos.  The key difference is that a `::view-transition-group` for a specific `view-transition-name` may already exist when the `::view-transition-new` image is created. In such cases, the new image is added to the existing `::view-transition-image-pair` of that group. The image pair will then contain both the old and new images, always in that order.
+
+If no existing group is found, a `new ::view-transition-image-pair` and `::view-transition-group` pseudo-element is created for the view-transition-name and added to the end of the `::view-transition` pseudo-element’s group list. This pair will then contain only the new image.
+
+<div style="width: fit-content; margin: 0 auto">
+```d2 width=600 sketch title="Addition of new images"
+"::view-transition" -> "::view-transition-group(root)" -> "::view-transition-image-pair(root)" -> "::view-transition-old(root)"
+"::view-transition-image-pair(root)" -> "::view-transition-new(root)"
+"::view-transition" -> "::view-transition-group(other)" -> "::view-transition-image-pair(other)" -> "::view-transition-old(other)"
+"::view-transition" -> "::view-transition-group(third)" -> "::view-transition-image-pair(third)" -> "::view-transition-old(third)"
+"::view-transition-image-pair(third)" -> "::view-transition-new(third)"
+"::view-transition" -> "::view-transition-group(fourth)" -> "::view-transition-image-pair(fourth)" -> "::view-transition-new(forth)"
+...@../../../common
+```
+</div>
+
+As with the old DOM, the pre-order depth-first traversal of the new DOM typically identifies the `<html>` element as the first to have its image captured.
+
+In a typical setup, where the View Transition API automatically assigns the `root` view transition name to the `<html>` element in both the old and new DOM, the group for the `root` transition name will already exist when the image of the `<html>`  element is captured in the new DOM. Thus, the first five lines of the output, [as shown above](#groups-and-image-pairs), are common in most settings.
+
+When examining the `::view-transition-groups` in order, the elements at the start of the list will have at least an old image, while those towards the end will have at least a new image.
+
+## Rendering Pseudo-Elements
+
+Before the view transition starts, the pseudo elements are rendered on top of the current page. For cross-document view transitions, this might start in the middle of the page load process.  But there are [techniques to delay the start of the view transition]().
+
+The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport and is full transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it.
+
+The transition groups are rendered in the order they appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
+
+There is a clear separation between regular DOM elements and the view transition pseudo-elements. The pseudo-elements form their own stacking context, known as the _view transition layer_. This one is special as it sits above all other elements of the page. As with regular elements, the `z-index` property can be used to alter how the pseudo-elements hide each other. However, no regular page elements can be forced into or above the view transition layer, even with high `z-index` values.
+
+Just as elements on the page cannot be forced to appear in front of the pseudo-elements, pseudo-elements cannot be moved behind page elements. To achieve this effect, you must assign view transition names to the elements that should be in the foreground. This will generate images within the view transition layer, which can then be arranged using the `z-index`.
+
+
+## Delaying Cross Document Transitions
+
+With cross-document transitions the browser has to guess what would be a good time to start the view transition. It has do be able to load at least the html with the elements that should participate in a view transition. And it definitively needs to load the stylesheets that describe the view transition. But it would be a bad user experience if it would wait for a long page to load completely and await all scripts to run before the transition starts.
+
+Start of view transitions will always await the `<head>` to be loaded. External stylesheets inside the head will also be awaited for. If you want to make sure that view transitions wait for an external script, add the `blocking="render"` attribute to the script element. You can also instruct view transitions to wait until some fragment URL of the current page is loaded by adding a link to the `<head>`  like this:
+```html
+<link rel="expect" href="#somewhere" blocking="render"/>
+```
+
+ haven't yet been able to wait for an image to load, but the View Transition API points toward a different approach.  [Example 5](https://drafts.csswg.org/css-view-transitions-2/#cross-doc-examples) suggests checking if an image has fully loaded, and if not, modifying the view transitions to handle the situation rather than waiting for the image to load..

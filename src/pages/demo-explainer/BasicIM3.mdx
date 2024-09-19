@@ -13,7 +13,10 @@ Preventing the old and new images from overflowing the group outline is straight
     }
 ```
 
-Now the images will be cut off when they extend beyond the boundaries of the transition group. Admittedly, cutting the face in half isn't visually appealing. In this examples it looks better when we change the default from all images being full group width to full group height. Now, the landscape image grows in from the left, creating a nice reveal effect. Adding `right: 0` keeps the face aligned with the right edge as it fades.
+Now the images will be cut off when they extend beyond the boundaries of the transition group. Admittedly, cutting the face in half isn't visually appealing.
+
+### Further Improvement: Prefer Height Over Width
+In this examples it looks better when we also change [the default behavior of morph transitions](/basics/default-animations/#how-the-boxes-morph) from all images being _full group width_ to _full group height_. Now, the landscape image grows in from the left, creating a nice reveal effect. Adding `right: 0` keeps the face aligned with the right edge as it fades.
 
 ```css ins={1-6}
     ::view-transition-old(img),

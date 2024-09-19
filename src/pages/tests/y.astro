@@ -4,12 +4,14 @@ import Crossing from "astro-vtbot/components/ElementCrossing.astro";
 
 <html>
   <head>
-    <Crossing experimentalFeatures />
+    <Crossing />
     <title>Text Y</title>
   </head>
   <body>
-    <span data-vtbag-x="#button &button">huch</span>
-    <a href="/test/x/">goto x</a>
+    <span data-vtbag-x="#button">span1</span>
+    <a href="/tests/z/">goto z</a>
+    <a href="/tests/z2/">goto z2</a>
+    <p id="p" style="color: blue" data-vtbag-x="-color">p1</p>
     <script>
       document
         .querySelectorAll<HTMLButtonElement>("button")

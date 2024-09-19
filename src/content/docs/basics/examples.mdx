@@ -7,26 +7,16 @@ import DemoLink from "src/components/DemoLink.astro";
 
 This page references a series of view transition examples, starting with basic configurations and progressively incorporating more features. The tables below provide a brief description of what distinguishes each example and includes a link to the live example which also includes its code and a detailed explanation.
 
-The View Transition API automatically applies two primary types of animations to your elements:
-
-* Exit/Entry animations, which include an exit animation for the old image and an entry animation for the new image.
-* Group (or Morph) animations, where the transition group animates changes in width, height, and position[^position] from the old image to the new one.
-
-
-[^position]: Here, *position* is used for simplicity. The group animation actually refers to both position and all applied CSS transformations, such as those defined by `matrix3d` or its specialized forms like `rotate`.
-
-By default, both types of animations occur simultaneously. However, they might not always be noticeable. For instance, if elements with the same view transition name have the same size and position before and after the transition, the group animation will result in no visible change. Similarly, if the old and new images are identical, only the group animation will be visible, while the exit/entry animations won't produce noticeable effects.[^plus-lighter]
-
-[^plus-lighter]: The cross-fade effect is more intricate than it appears at first glance. It works so smoothly because the default animations also set the [ `mix-blend-mode` CSS property to `plus-lighter`](https://events-3bg.pages.dev/jotter/api/example/#the--new-and--old-image-animation)
+You should be familiar with the [default animations](/tips/default-animations/) inserted by the View Transition API.
 
 The [first set of examples](#same-document-view-transitiom-examples) focuses on **exit and entry** animations for **same-document** view-transitions, animating a component directly on its page.
 
 The [second set of examples](#cross-document-view-transition-examples) highlights **exit and entry** animations of **cross-document** view transitions. Those are triggered by following a link to a new page.
 
-While the first two sets demonstrate exit and entry animations, the [Image Morph Set](#image-morph-examples) introduces group animations, starting with image morphs, which tend to be easier compared to morphs involving text.
+While the first two sets demonstrate exit and entry animations, the [Image Morph Set](#image-morph-examples) introduces **group/morph animations**, starting with **image morphs**, which tend to be easier compared to morphs involving text.
 
 
-For morphing text with view transitions, we explore two additional sets: the Little Fail Set, which demonstrates various common failures, and the Improved Set, which attempts to address and enhance those issues.
+For morphing text with view transitions, we investigate two additional sets: the [Strange Artifacts Set](#strange-text-morph-examples), which identifies several common pitfalls, and the [Improved Set](#improved-text-morph-examples), which attempts to fix and improve these issues.
 
 ## Same-Document View Transition Examples
 
@@ -127,7 +117,6 @@ These examples focus on a picture component where you navigate through individua
 
 ## Image Morph Examples
 
-
 Morphing thumbnails into hero images is a classic use case for view transitions. Morphing animations share the characteristic that the position and/or size of elements with the same view transition name differ before and after the transition. The animation visually connects the two, showing that the small thumbnail serves as a placeholder for the larger image.
 
 <div title="Select a link from the table below">
@@ -170,8 +159,43 @@ Morphing thumbnails into hero images is a classic use case for view transitions.
 | <DemoLink id="basicim2" href="/demo/BasicIM2/">Different aspect ratio</DemoLink>                  | The default morph transition with images of different aspect-ratio |
 | <DemoLink id="basicim3" href="/demo/BasicIM3/">Clipped overflow</DemoLink>                  | An alternative morph transition where images do not grow beyond the group outline |
 | <DemoLink id="basicim4" href="/demo/BasicIM4/">Covered object fit</DemoLink>                  | A non-overflowing alternative for images with different aspect-ratio |
+| <DemoLink id="failim" href="/demo/FailIM/">Surprising fade</DemoLink>| An unfortunate attempt that fails due to a typo |
 
-More to come. Especially text morph animations.
+
+## Strange Text Morph Examples
+
+When it comes to group animations, text can be much trickier to work with compared to image morph transitions. Morphing text often results in some unexpected glitches. Below are some of the most common issues you're likely to encounter in your own projects.
+
+<div title="Select a link from the table below">
+  <Card title="Morphing text into text">
+<span class="light:sl-hidden">![Animation details](@/pages/demo-explainer/_Fail1-dark.png)</span>
+<span class="dark:sl-hidden">![Animation details](@/pages/demo-explainer/_Fail1-light.png)</span>
+<span style="color:green">*This is not yet the example, click a link from the left column in the table blow.*</span>
+  </Card>
+</div>
+
+
+| Name                                                                          | Description                                                                                       |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| <DemoLink id="fail1" href="/demo/Fail1/">Inline to block morph</DemoLink>                  | A typical pitfall when morphing links to headings |
+| <DemoLink id="fail2" href="/demo/Fail2/">Unintended ratio differences</DemoLink>                  | When both elements are inline and still differ in aspect ratio |
+
+## Improved Text Morph Examples
+
+Now that you've seen the potential pitfalls of morphing text in animations, you’re probably eager to find out how to avoid these issues. Good news: there are some effective solutions you can apply to smooth out these rough edges and achieve cleaner transitions.
+
+<div title="Select a link from the table below">
+  <Card title="Morphing text into text">
+<span class="light:sl-hidden">![Animation details](@/pages/demo-explainer/_Improved1-dark.png)</span>
+<span class="dark:sl-hidden">![Animation details](@/pages/demo-explainer/_Improved1-light.png)</span>
+<span style="color:green">*This is not yet the example, click a link from the left column in the table blow.*</span>
+  </Card>
+</div>
+
+| Name                                                                          | Description                                                                                       |
+| ----------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| <DemoLink id="improved1" href="/demo/Improved1/">Inline to block morph</DemoLink>                  | A typical pitfall when moving links to headings |
+
 
 import { Card } from "@astrojs/starlight/components";
 

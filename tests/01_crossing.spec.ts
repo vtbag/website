@@ -13,7 +13,7 @@ test.describe("vtbag", () => {
     await expect(page).toHaveTitle('Vanilla Element Crossing 1/2 | @vtbag');
     await page.fill('#name', 'Jane Doe');
     await page.selectOption('#gender', 'female');
-    await page.check('#interest1');
+    await page.check('#interest2');
 
     await page.click('text=Page 2');
     await expect(page).toHaveTitle('Vanilla Element Crossing 2/2 | @vtbag');
@@ -23,11 +23,11 @@ test.describe("vtbag", () => {
     // @ts-expect-error
     const genderValue = await page.$eval('#gender', el => el.value);
     // @ts-expect-error
-    const isCodingChecked = await page.$eval('#interest1', el => el.checked);
+    const isMusicChecked = await page.$eval('#interest2', el => el.checked);
 
     await expect(nameValue).toBe('Jane Doe');
     await expect(genderValue).toBe('female');
-    await expect(isCodingChecked).toBe(true);
+    await expect(isMusicChecked).toBe(true);
 
   });
 
@@ -73,8 +73,26 @@ test.describe("vtbag", () => {
 });
 
 test.describe("vtbot", () => {
-  test("astro integration", async ({ page }) => {
-    await page.goto('http://localhost:4321/tests/x/');
-    await expect(page).toHaveTitle('Test X');
+  test("astro integration (vanilla)", async ({ page }) => {
+    await page.goto('http://localhost:4321/tests/y/');
+
+    expect(await page.locator("#p").getAttribute("style")).toBe("color: blue");
+    await page.click('text=goto z');
+    expect(await page.locator("#p").getAttribute("style")).toBe("color: blue;");
   });
+
+  test("astro integration (vanilla, reload)", async ({ page }) => {
+    await page.goto('http://localhost:4321/tests/y/');
+
+    expect(await page.locator("#p").getAttribute("style")).toBe("color: blue");
+    await page.click('text=goto z2');
+    expect(await page.locator("#p").getAttribute("style")).toBe("color: blue;");
+    await page.reload();
+    expect(await page.locator("#p").getAttribute("style")).toBe("color: red");
+  });
+  test("astro integration (ott)", async ({ page }) => {
+    await page.goto('http://localhost:4321/tests/x/');
+    expect(await page.locator("iframe").contentFrame().locator("head title").textContent()).toBe("Test X");
+  });
+
 });

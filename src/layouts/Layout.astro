@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from "astro:transitions";
 export interface Props {
 	title: string;
 	pageFindIgnore?: boolean;
@@ -9,6 +10,7 @@ const { title, pageFindIgnore = false } = Astro.props;
 
 <html style="color-scheme: dark;" lang="en">
 	<head>
+		<ViewTransitions />
 		<slot name="head" />
 		<meta charset="UTF-8" />
 		<title>{title + ' | @vtbag'}</title>

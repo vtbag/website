@@ -1,9 +1,10 @@
 ---
 export const partial = true;
+const {title = "How does it work?"} = Astro.props.frontmatter;
 ---
 
 <body>
-  <h2 id="how"><a href="#how">How does it work?</a></h2>
+  <h2 id="how"><a href="#how">{title}</a></h2>
   <p>
     <i
       >To explore this example in more detail, press <kbd>Ctrl-U</kbd> or select

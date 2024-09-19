@@ -8,6 +8,7 @@ import starlightImageZoom from 'starlight-image-zoom';
 import { visualizer } from "rollup-plugin-visualizer";
 
 import vtbot from "astro-vtbot";
+import d2 from "astro-d2";
 import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
@@ -66,7 +67,9 @@ export default defineConfig({
 
 
     sidebar: sidebar(),
-  }), vtbot()],
+  }), d2({
+		skipGeneration: process.env.GITHUB_ACTIONS === "true"
+	}), vtbot()],
   vite: {
     server: {
       fs: {
@@ -87,21 +90,23 @@ function sidebar() {
   }, {
     label: 'Tools',
     items: [
-      { label: 'Element Crossing', link: "/tools/element-crossing/", badge: { text: 'new', variant: 'tip' } as Badge },
+      { label: 'Element Crossing', link: "/tools/element-crossing/"},
       { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" },
     ],
   }, {
-    label: 'Basics',
+    label: 'Basics',badge: { text: 'new', variant: 'tip' } as Badge ,
     items: [
-      { label: 'View Transition API', link: "/basics/api/" }, {
-        label: 'View Transition Examples', link: "/basics/examples/"
-      }
+      { label: 'View Transition API', link: "/basics/api/" },
+      { label: 'View Transition Examples', link: "/basics/examples/" },
+      { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/"},
+      { label: 'Mechanics of Default Animations', link: "/basics/default-animations/"  }
     ]
   }, {
-    label: 'Tips & Tricks',
+    label: 'CSS Tips & Tricks',
     items: [
       { label: 'Where to place the CSS', link: "/tips/css/" },
-      { label: "Cursor switch on navigation?", link: "tips/pointer/" }
+      { label: "Flashes during fade animations?", link: "tips/over-exposure/" },
+      { label: "Avoid Pointer Flickering", link: "tips/pointer/" }
     ]
   }];
 }

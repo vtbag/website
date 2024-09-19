@@ -22,6 +22,7 @@ import Demo from "@/layouts/DemoLayout.astro";
         <p>This is a teaser text for the card. (Click to start)</p>
       </div>
     </div>
+    <div style="height: 3.5em"/>
   </div>
   <div id="DOM2">
     <article>
@@ -35,14 +36,7 @@ import Demo from "@/layouts/DemoLayout.astro";
       <img src="/landscape.webp" />
     </article>
   </div>
-  <style is:inline slot="late-head">
-    ::view-transition-group(*) {
-      animation-duration: 1s;
-    }
-    .card img,
-    article img {
-      view-transition-name: img;
-    }
+  <style is:global>
     #DOM1,
     #DOM2 {
       display: none;
@@ -52,6 +46,16 @@ import Demo from "@/layouts/DemoLayout.astro";
     #DOM2.active {
       display: block;
     }
+  </style>
+  <style is:inline slot="late-head">
+    ::view-transition-group(*) {
+      animation-duration: 1s;
+    }
+    .card img,
+    article img {
+      view-transition-name: img;
+    }
+
     #DOM1 {
       margin: auto;
       width: max(50%, 300px);
@@ -83,18 +87,21 @@ import Demo from "@/layouts/DemoLayout.astro";
       box-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);
     }
   </style>
-  <script is:inline>
+  <script>
     document.querySelectorAll("#DOM1, #DOM2").forEach((elem) =>
-      elem.addEventListener("click", (e) => {
+      elem.addEventListener("click", () => {
         mayViewTransition(() => {
           elem.classList.remove("active");
-          elem.parentElement
-            .querySelector(elem.id === "DOM1" ? "#DOM2" : "#DOM1")
+          elem
+            .parentElement!.querySelector(
+              elem.id === "DOM1" ? "#DOM2" : "#DOM1"
+            )
             ?.classList.add("active");
         });
       })
     );
-    function mayViewTransition(fun) {
+    function mayViewTransition(fun: () => void) {
+      // @ts-ignore
       document.startViewTransition ? document.startViewTransition(fun) : fun();
     }
   </script>

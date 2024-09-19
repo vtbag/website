@@ -2,7 +2,7 @@
 import { spawnSync } from 'child_process';
 import { basename, dirname } from 'path';
 
-const { labels, lang, lastUpdated } = Astro.props;
+const { lang, lastUpdated } = Astro.props;
 const file = `src/content/${Astro.props.entry.collection}/${Astro.props.entry.id}`;
 
 const firstPublished = new Date(
@@ -23,7 +23,7 @@ const firstPublished = new Date(
 	lastUpdated && (
 		<p style="display: flex; justify-content: space-between;">
 			<span>
-				{labels['page.lastUpdated']}{' '}
+				{'Last updated:'}{' '}
 				<time datetime={lastUpdated.toISOString()}>
 					{lastUpdated.toLocaleDateString(lang, { dateStyle: 'medium', timeZone: 'UTC' })}
 				</time>

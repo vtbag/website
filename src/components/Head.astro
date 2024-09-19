@@ -7,6 +7,8 @@ import PageOffset from "astro-vtbot/components/PageOffset.astro";
 import PageOrder from "astro-vtbot/components/starlight/PageOrder.astro";
 import AutoNameSelected from "astro-vtbot/components/AutoNameSelected.astro";
 import BorderControl from "astro-vtbot/components/BorderControl.astro";
+import ElementCrossing from "astro-vtbot/components/ElementCrossing.astro";
+
 ---
 
 {/* Define a view transition animation for `<main>`*/}
@@ -86,7 +88,7 @@ import BorderControl from "astro-vtbot/components/BorderControl.astro";
   /* Without further configuration, make headings stand out during view transitions.
     Can be used to declaratively add view transition names which open a door to all kinds of funny thing. */
 }
-<AutoNameSelected />
-
+<AutoNameSelected selector="h2"/>
+<ElementCrossing />
 <BorderControl fence={{ outside: ["/demo/"] }} />
 

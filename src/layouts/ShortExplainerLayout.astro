@@ -1,0 +1,16 @@
+---
+export const partial = true;
+const {title = "How does it work?"} = Astro.props.frontmatter;
+---
+
+<body>
+  <h2 id="how"><a href="#how">{title}</a></h2>
+  <section><slot /></section>
+</body>
+<style>
+  p {
+    font-size: 0.8rem;
+    margin-left: 2em;
+    color: #888;
+  }
+</style>

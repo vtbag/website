@@ -1,0 +1,108 @@
+---
+import Demo from "@/layouts/DemoLayout.astro";
+---
+
+<Demo
+  title="View Transition Example: Inline to Block Text Morph"
+  backlink="/basics/examples/#improved1"
+  prev="/demo/Fail1/"
+  next=""
+>
+  <div style="height: 16rem">
+    <div id="DOM1" class="active">
+      <p>
+        This example shows <a>an improved effect</a> for <a href="/demo/Fail1/"
+          >this strange transition</a
+        >]. Click the first link to start the transition with the improved
+        version.
+      </p>
+    </div>
+    <div id="DOM2">
+      <p style="height: 4rem"></p>
+      <div>
+        <h2>an improved effect</h2>
+        <p>Now the link morphs smoothly into the heading!</p>
+        <p><a>Click here</a> to morph back</p>
+      </div>
+    </div>
+  </div>
+  <style is:global>
+    #DOM1,
+    #DOM2 {
+      display: none;
+      cursor: pointer;
+    }
+    #DOM1.active,
+    #DOM2.active {
+      display: block;
+    }
+  </style>
+  <style is:inline slot="late-head">
+    ::view-transition-group(title) {
+      animation-duration: 1s;
+    }
+    #DOM1 a:first-of-type,
+    #DOM2 h2 {
+      view-transition-name: title;
+    }
+    /* Alternative 1
+    ::view-transition-group(title) {
+      overflow: clip;
+    }
+    ::view-transition-old(title),
+    ::view-transition-new(title) {
+      block-size: 100%;
+      inline-size: auto;
+    }
+    */
+
+    /* Alternative 2
+    #DOM2 h2 {
+      display: inline;
+    }*/
+    /* Alternative 3 */
+    #DOM2 h2 {
+      display: inline;
+    }
+    ::view-transition-old(title),
+    ::view-transition-new(title) {
+      width: 100%;
+      height: 100%;
+    }
+
+    /**/
+    #DOM1 a,
+    #DOM2 h2,
+    #DOM2 a {
+      color: #888;
+      text-decoration: wavy underline;
+    }
+    #DOM1,
+    #DOM2 div {
+      border: 2px solid gray;
+      border-radius: 6px;
+    }
+    #DOM1 p,
+    #DOM2 div {
+      padding: 1rem;
+    }
+  </style>
+  <script>
+    document.querySelectorAll("#DOM1, #DOM2").forEach((elem) =>
+      elem.addEventListener("click", () => {
+        mayViewTransition(() => {
+          elem.classList.remove("active");
+          elem
+            .parentElement!.querySelector(
+              elem.id === "DOM1" ? "#DOM2" : "#DOM1"
+            )
+            ?.classList.add("active");
+        });
+      })
+    );
+    function mayViewTransition(fun: () => void) {
+      // @ts-ignore
+      document.startViewTransition ? document.startViewTransition(fun) : fun();
+    }
+  </script>
+</Demo>

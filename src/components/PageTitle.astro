@@ -1,18 +1,17 @@
 ---
-import type { Props } from '@astrojs/starlight/props';
-import StarlightPageTitle from '@astrojs/starlight/components/PageTitle.astro';
-import LastUpdated from './LastUpdated.astro';
+import type { Props } from "@astrojs/starlight/props";
+import StarlightPageTitle from "@astrojs/starlight/components/PageTitle.astro";
+import LastUpdated from "./LastUpdated.astro";
 ---
 
-
 <div id="vtbag-head-last-update">
-	<LastUpdated {...Astro.props} />
+  <LastUpdated {...Astro.props} />
 </div>
-
 <StarlightPageTitle {...Astro.props}><slot /></StarlightPageTitle>
 
 <style is:global>
-	#vtbag-head-last-update {
-		color: gray;
-	}
+  #vtbag-head-last-update {
+    color: gray;
+  }
 </style>
+

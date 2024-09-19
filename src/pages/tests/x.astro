@@ -5,7 +5,7 @@ import Crossing from "astro-vtbot/components/ElementCrossing.astro";
 <html>
   <head>
     <Crossing experimentalFeatures />
-    <title>Text X</title>
+    <title>Test X</title>
   </head>
   <body>
     <button data-vtbag-x="#button &button">alert</button>
@@ -16,6 +16,7 @@ import Crossing from "astro-vtbot/components/ElementCrossing.astro";
           b.addEventListener("click", () => (b.innerText = "" + new Date()))
         );
     </script>
+    <p id="p">no color</p>
     <a href="/test/y/">goto y</a>
   </body>
 </html>
