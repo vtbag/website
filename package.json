@@ -15,7 +15,7 @@
     "@splidejs/splide": "^4.1.4",
     "@types/node": "^22.5.5",
     "@vtbag/inspection-chamber": "^1.0.12",
-    "astro": "^4.15.5",
+    "astro": "^4.15.9",
     "astro-breadcrumbs": "^3.1.0",
     "astro-d2": "^0.5.0",
     "astro-vtbot": "^1.9.3",
