@@ -280,8 +280,12 @@ The transition groups are rendered in the order they appear as children of the `
 
 There is a clear separation between regular DOM elements and the view transition pseudo-elements. The pseudo-elements form their own stacking context, known as the _view transition layer_. This one is special as it sits above all other elements of the page. As with regular elements, the `z-index` property can be used to alter how the pseudo-elements hide each other. However, no regular page elements can be forced into or above the view transition layer, even with high `z-index` values.
 
-Just as elements on the page cannot be forced to appear in front of the pseudo-elements, pseudo-elements cannot be moved behind page elements. To achieve this effect, you must assign view transition names to the elements that should be in the foreground. This will generate images within the view transition layer, which can then be arranged using the `z-index`.
+One advantage of using images and a separate _view transition layer_ is that animations are not restricted by the original DOM tree structure. However, this can lead to unexpected side effects if you apply view-transition-name attributes as an afterthought.
 
+For example, if an element is partially hidden by other elements and you assign it a view transition name, it may unexpectedly appear in front during the transition. To manage this, either treat it as a feature or avoid such cases. Alternatively, you can include the obscuring elements in a view transition group, ensuring their images also move to the _view transition layer_, where they now have a chance to partially hide your other image as before.
+Here you also can use `z-index` properties to rearrange the images to your liking.
+
+Just as pseudo-elements cannot be moved behind page elements, elements on the page won't appear in front of the pseudo-elements. If you have prominent elements on your page that should always be in the foreground, even through view transitions, consider giving them an view transition name to lift  them to the _view transition layer_ and raise them there with an appropriate `z-index`.
 
 ## Delaying Cross Document Transitions
 
@@ -292,4 +296,5 @@ Start of view transitions will always await the `<head>` to be loaded. External 
 <link rel="expect" href="#somewhere" blocking="render"/>
 ```
 
- haven't yet been able to wait for an image to load, but the View Transition API points toward a different approach.  [Example 5](https://drafts.csswg.org/css-view-transitions-2/#cross-doc-examples) suggests checking if an image has fully loaded, and if not, modifying the view transitions to handle the situation rather than waiting for the image to load..
+ haven't yet been able to wait for an image to load, but the View Transition API points toward a different approach.  [Example 5](https://drafts.csswg.org/css-view-transitions-2/#cross-doc-examples) suggests checking if an image has fully loaded, and if not, modifying the view transitions to handle the situation rather than waiting for the image to load.
+
