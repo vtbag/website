@@ -68,8 +68,8 @@ export default defineConfig({
 
     sidebar: sidebar(),
   }), d2({
-		skipGeneration: process.env.GITHUB_ACTIONS === "true"
-	}), vtbot()],
+    skipGeneration: process.env.GITHUB_ACTIONS === "true"
+  }), vtbot()],
   vite: {
     server: {
       fs: {
@@ -90,22 +90,23 @@ function sidebar() {
   }, {
     label: 'Tools',
     items: [
-      { label: 'Element Crossing', link: "/tools/element-crossing/"},
       { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" },
+      { label: 'Element Crossing', link: "/tools/element-crossing/" },
+      { label: 'Turn-Signal', link: "/tools/turn-signal/", badge: { text: 'new', variant: 'tip' } as Badge },
     ],
   }, {
-    label: 'Basics',badge: { text: 'new', variant: 'tip' } as Badge ,
+    label: 'Basics',
     items: [
       { label: 'View Transition API', link: "/basics/api/" },
       { label: 'View Transition Examples', link: "/basics/examples/" },
-      { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/"},
-      { label: 'Mechanics of Default Animations', link: "/basics/default-animations/"  }
+      { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
+      { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" }
     ]
   }, {
     label: 'CSS Tips & Tricks',
     items: [
       { label: 'Where to place the CSS', link: "/tips/css/" },
-      { label: "Flashes during fade animations?", link: "tips/over-exposure/" },
+      { label: "Flickering during morph animations?", link: "tips/over-exposure/" },
       { label: "Avoid Pointer Flickering", link: "tips/pointer/" }
     ]
   }];

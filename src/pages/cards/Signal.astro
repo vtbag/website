@@ -1,0 +1,56 @@
+---
+
+---
+
+<html lang="en" style="color-scheme:dark">
+  <head>
+    <title>Signal</title>
+  </head>
+  <body>
+    <img width="640" src="/signal.png" />
+    <h1>The Turn-Signal</h1>
+    <h2>Directional view transitions for intuitive navigation!</h2>
+  </body>
+</html>
+<style is:global>
+  :root,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 1280px;
+    height: 640px;
+    overflow: hidden;
+    background: linear-gradient(115deg, #000000 30%, #ff000010 40%, #ffff0010 50%);
+    background-size: 200% 100%;
+  }
+  img {
+    display: block;
+    float: left;
+  }
+  h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 72px;
+    padding: 20px;
+    color: #ff0000;
+    transform: translate(-40px, 20px);
+    text-align: right;
+    text-wrap: balance;
+  }
+  h2 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 56px;
+    padding: 30px;
+    color: #ffff40;
+    text-wrap: balance;
+    text-align: right;
+    transform: translate(-40px, 40px);
+  }
+  a {
+    text-decoration: none;
+    color: aqua;
+  }
+
+  @view-transition {
+    navigation: auto;
+  }
+</style>

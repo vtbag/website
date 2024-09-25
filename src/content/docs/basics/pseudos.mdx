@@ -272,7 +272,7 @@ When examining the `::view-transition-groups` in order, the elements at the star
 
 ## Rendering Pseudo-Elements
 
-Before the view transition starts, the pseudo elements are rendered on top of the current page. For cross-document view transitions, this might start in the middle of the page load process.  But there are [techniques to delay the start of the view transition]().
+Before the view transition starts, the pseudo elements are rendered on top of the current page. For cross-document view transitions, this might start in the middle of the page load process.  But there are [techniques to delay the start of the view transition](#delaying-cross-document-transitions).
 
 The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport and is full transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it.
 

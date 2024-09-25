@@ -9,8 +9,10 @@ const { title } = Astro.props;
 ---
 
 <Layout {title}>
-  <script slot="head" is:inline>sessionStorage.removeItem("vtbag-ui-standby")</script>
-  <script is:inline src={chamber} slot="head"/>
+  <script slot="head" is:inline>
+    sessionStorage.removeItem("vtbag-ui-standby");
+  </script>
+  <script is:inline src={chamber} slot="head"></script>
   <slot />
 </Layout>
 
@@ -29,5 +31,14 @@ const { title } = Astro.props;
   }
   @view-transition {
     navigation: auto;
+  }
+  #back {
+    display: inline-block;
+    color: black;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem;
+    background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+    box-shadow: 0 4px 6px #8888;
   }
 </style>

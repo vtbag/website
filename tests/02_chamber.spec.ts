@@ -136,7 +136,7 @@ test.describe("sub-panel", () => {
     await page.click('#vtbag-ui-messages h4');
     await expect(page.locator('#vtbag-ui-inner-panel')).toBeHidden();
     await new Promise<void>(r => setTimeout(r, 100));
-    await page.click('#vtbag-ui-filter h4');
+    await page.click('#vtbag-ui-messages h4');
     await expect(page.locator('#vtbag-ui-inner-panel')).toBeVisible();
   };
 

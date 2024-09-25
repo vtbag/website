@@ -1,0 +1,181 @@
+---
+import { Image } from "astro:assets";
+import bag from "../../assets/bag.png";
+import chamber from "../../assets/chamber.png";
+import crossing from "../../assets/crossing.png";
+import signal from "../../assets/signal.png";
+import turnSignal from "@vtbag/turn-signal?url";
+
+export interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+const script =
+  'const _=document.documentElement;_.dataset.theme=_.style.colorScheme=localStorage.getItem("starlight-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches? "dark":"light")';
+const pathname = Astro.url.pathname;
+const pages = ["bag", "chamber", "crossing", "signal"];
+const images = [bag, chamber, crossing, signal];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/bag3.png" type="image/png" />
+    <script is:inline set:html={script} />
+    <script is:inline data-selector="header a" src={turnSignal}></script>
+  </head>
+  <body>
+    <header style="display:flex">
+      <div style="width: 30vw"><h2>Turn-Signal Demo</h2></div>
+      <div
+        style="width: calc(100% - 100px); display:flex; overflow: auto; align-items:center"
+      >
+        {
+          pages.map((page, idx) => (
+            <a
+              class:list={{ selected: pathname.endsWith(`/${page}/`) }}
+              href={`/signal-demo/${page}/`}
+              style="padding: 10px; text-decoration: none; color: black"
+            >
+              <Image width="80" src={images[idx] ?? bag} alt={page} />
+            </a>
+          ))
+        }
+      </div>
+      <a id="back" style="width: 10vw" href="/tools/turn-signal/">Leave Demo</a>
+    </header>
+    <script is:inline>
+      document.querySelector("a.selected").scrollIntoView({
+        behavior: "instant",
+        block: "center",
+        inline: "center",
+      });
+    </script>
+    <main>
+      <hr/><p>
+        This is a demo of the Turn-Signal script.<br />
+        Click an image in the header to navigate to another page.<br />
+        Use your browser's back and forward buttons to navigate between pages.<br
+        />
+        See how the direction of the view transitions changes based on the
+        direction of navigation.
+      </p><hr/>
+      <slot />
+    </main>
+  </body>
+</html>
+
+<style is:global>
+  @view-transition {
+    navigation: auto;
+  }
+  @keyframes slideFromRight {
+    from {
+      transform: translateX(100vw);
+    }
+  }
+  @keyframes slideFromLeft {
+    from {
+      transform: translateX(-100vw);
+    }
+  }
+  @keyframes slideToRight {
+    to {
+      transform: translateX(100vw);
+    }
+  }
+  @keyframes slideToLeft {
+    to {
+      transform: translateX(-100vw);
+    }
+  }
+  @keyframes stepBackUp {
+    50% {
+      transform: scale(0.8);
+    }
+  }
+
+  ::view-transition-old(img) {
+    animation: slideToLeft both 0.5s;
+  }
+  ::view-transition-new(img) {
+    animation: slideFromRight both 0.5s;
+  }
+
+  :active-view-transition-type(backward) {
+    &::view-transition-old(img) {
+      animation: slideToRight both 0.5s;
+    }
+    &::view-transition-new(img) {
+      animation: slideFromLeft both 0.5s;
+    }
+  }
+
+  :active-view-transition-type(same) {
+    &::view-transition-old(img),
+    &::view-transition-new(img) {
+      animation: stepBackUp both 0.5s;
+    }
+  }
+
+  ::view-transition-group(img) {
+    overflow: clip;
+  }
+
+  body {
+    font-family: sans-serif;
+  }
+  header img {
+    mask-image: radial-gradient(ellipse at center, white 35%, transparent 71%);
+  }
+
+  a.selected {
+    background: radial-gradient(
+      circle at center,
+      #0008 50%,
+      #fff8 55%,
+      #0008 60%,
+      #0000 66%
+    );
+  }
+  [data-theme="dark"]a.selected {
+    background: radial-gradient(
+      circle at center,
+      #fff8 50%,
+      #0008 55%,
+      #fff8 60%,
+      #0000 66%
+    );
+  }
+
+  main {
+    width: fit-content;
+    margin: 0 auto;
+  }
+  main img {
+    height: 66vh;
+    width: auto;
+    view-transition-name: img;
+  }
+  @media (orientation: portrait) {
+    main img {
+      width: 100%;
+      height: auto;
+      margin-top: 10vh;
+    }
+  }
+  #back {
+    display: inline-block;
+    color: black;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem;
+    background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+    box-shadow: 0 4px 6px #8888;
+  }
+  hr {
+    border-color: #8888;
+  }
+</style>

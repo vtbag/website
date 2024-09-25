@@ -1,5 +1,5 @@
 ---
-title: Flashes during Fade Animations?
+title: Flickering during Morph Animations?
 description: Why custom fade animations for view transitions might flash.
 ---
 
@@ -24,7 +24,7 @@ You can create custom fade animations for view transitions similar to how the br
 
 ## Root Causes for Flashes
 
-However, this seemingly straightforward approach can result in flashes, sometimes similar to an overexposed effect or a sudden darkening of the animation. The image flashes during the transition, making the animation appear brighter than either the old or new image. With a dark background, the effect is just the opposite: halfway through the animation, the combined image appears darker than either the old or new image.
+However, this seemingly straightforward approach can result in flashes, sometimes similar to an overexposed effect or a sudden darkening of the animation. The image flickers during the transition, making the animation appear brighter than either the old or new image. With a dark background, the effect is just the opposite: halfway through the animation, the combined image appears darker than either the old or new image.
 
 This effect is most noticeable during a cross-fade involving the same image. \
 **See it in action: click the image to trigger a view transition** using the definition above.
@@ -32,8 +32,11 @@ This effect is most noticeable during a cross-fade involving the same image. \
 <style>{`
 ::view-transition-old(main),
 ::view-transition-new(main) {
-  animation-duration: 0;
+  animation-duration: 0 !important;
 }
+`}</style>
+
+<style>{`
 #img {
   view-transition-name: img;
 }

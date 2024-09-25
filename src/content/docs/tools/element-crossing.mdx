@@ -9,7 +9,7 @@ import { Steps } from "@astrojs/starlight/components";
 
 <div style="display:flex">
 <div id="logo" style="flex:1; margin: 3ex">
-![crossing](../../../../assets/crossing.png)
+![The Element Crossing](../../../assets/crossing.png)
 </div><div style="flex:3">
 Transfer selected element states across cross-document view transitions.
 
@@ -141,9 +141,10 @@ To move state to the next page, you need to tell the Element Crossing for which 
 
 The `data-vtbag-x` attribute accepts a string that has to fullfil the following grammar:
 
-<svg xmlns="http://www.w3.org/2000/svg" width="583" height="217">
+<div style="width: min(100%, 555px); margin:0 auto">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 217" width="100%" >
 {/*
-data-vtbag-x ::= "id:" identifier ( space+ "prop:" name | space+ "class:" name | space+ "style:" name | space+ "anim" name )*+
+data-vtbag-x ::= "id:" identifier ( space+ "prop:" name | space+ "class:" name | space+ "style:" name | space+ "anim:" name )*+
 */}
    <defs>
       <style>{`
@@ -174,16 +175,16 @@ data-vtbag-x ::= "id:" identifier ( space+ "prop:" name | space+ "class:" name |
          class="terminal"
          rx="10"/>
    <text class="terminal" x="39" y="53">id:</text>
-   <a >
+   <g>
       <rect x="89" y="35" width="76" height="32"/>
       <rect x="87" y="33" width="76" height="32" class="nonterminal"/>
       <text class="nonterminal" x="97" y="53">identifier</text>
-   </a>
-   <a >
+   </g>
+   <g>
       <rect x="245" y="35" width="56" height="32"/>
       <rect x="243" y="33" width="56" height="32" class="nonterminal"/>
       <text class="nonterminal" x="253" y="53">space</text>
-   </a>
+   </g>
    <rect x="361" y="35" width="56" height="32" rx="10"/>
    <rect x="359"
          y="33"
@@ -215,18 +216,18 @@ data-vtbag-x ::= "id:" identifier ( space+ "prop:" name | space+ "class:" name |
          height="32"
          class="terminal"
          rx="10"/>
-   <text class="terminal" x="369" y="185">anim</text>
-   <a >
+   <text class="terminal" x="369" y="185">anim:</text>
+   <g>
       <rect x="459" y="35" width="56" height="32"/>
       <rect x="457" y="33" width="56" height="32" class="nonterminal"/>
       <text class="nonterminal" x="467" y="53">name</text>
-   </a>
+   </g>
    <path class="line"
          d="m17 49 h2 m0 0 h10 m38 0 h10 m0 0 h10 m76 0 h10 m60 0 h10 m56 0 h10 m-96 0 l20 0 m-1 0 q-9 0 -9 -10 l0 -12 q0 -10 10 -10 m76 32 l20 0 m-20 0 q10 0 10 -10 l0 -12 q0 -10 -10 -10 m-76 0 h10 m0 0 h66 m40 32 h10 m56 0 h10 m0 0 h2 m-98 0 h20 m78 0 h20 m-118 0 q10 0 10 10 m98 0 q0 -10 10 -10 m-108 10 v24 m98 0 v-24 m-98 24 q0 10 10 10 m78 0 q10 0 10 -10 m-88 10 h10 m58 0 h10 m-88 -10 v20 m98 0 v-20 m-98 20 v24 m98 0 v-24 m-98 24 q0 10 10 10 m78 0 q10 0 10 -10 m-88 10 h10 m58 0 h10 m-88 -10 v20 m98 0 v-20 m-98 20 v24 m98 0 v-24 m-98 24 q0 10 10 10 m78 0 q10 0 10 -10 m-88 10 h10 m52 0 h10 m0 0 h6 m20 -132 h10 m56 0 h10 m-330 0 l20 0 m-1 0 q-9 0 -9 -10 l0 -28 q0 -10 10 -10 m310 48 l20 0 m-20 0 q10 0 10 -10 l0 -28 q0 -10 -10 -10 m-310 0 h10 m0 0 h300 m-350 48 h20 m350 0 h20 m-390 0 q10 0 10 10 m370 0 q0 -10 10 -10 m-380 10 v146 m370 0 v-146 m-370 146 q0 10 10 10 m350 0 q10 0 10 -10 m-360 10 h10 m0 0 h340 m23 -166 h-3"/>
    <polygon points="573 49 581 45 581 53"/>
    <polygon points="573 49 565 45 565 53"/>
 </svg>
-
+</div>
 
 
 #### id

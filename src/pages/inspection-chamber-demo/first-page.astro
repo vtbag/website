@@ -19,16 +19,17 @@ import { Image } from 'astro:assets';
       <h1 style="view-transition-name: heading; font-size: min(6vw,48px)">
         Welcome to<br/>the Bag's Inspection Chamber
       </h1>
-      <h1 style="view-transition-name: heading2; font-size: min(5vw,32px)">
+      <h1 style="view-transition-name: heading2; font-size: min(3vw,24px)">
         With the push of a button, the inspection chamber activated, its
         interior lighting up to expose the inner workings of the page under
         examination, uncovering secrets invisible to the naked eye.
       </h1>
-      <p style="view-transition-name: para;">Click <a style="view-transition-name: anchor" href="/inspection-chamber-demo/second-page/">here</a> to navigate to the second page.</p>
-      <a style="view-transition-name: anchor2" href="javascript:top.location.href='/tools/inspection-chamber/'">Quit demo.</a>
+      <p style="view-transition-name: para"><a style="view-transition-name: anchor; font-size: min(6vw,48px)" href="/inspection-chamber-demo/second-page/"><b>Click here</b></a> to navigate to the second page.</p>
+      <a id="back" style="view-transition-name: anchor2" href="javascript:top.location.href='/tools/inspection-chamber/'">Quit demo.</a>
     </div>
     <div
     style="view-transition-name: frame2; background-color:darkred; position:fixed; bottom:10vh;left:10vw;width:90vw;padding:20px;color:wheat"
-  >The inspection chamber requires a current browser that and you might even need to manually activate <code>chrome://flags/#view-transition-on-navigation-iframe</code>.</b></div>
+  >The inspection chamber requires a current browser and you might even need to manually activate <code>chrome://flags/#view-transition-on-navigation-iframe</code>.</b></div>
   </main>
 </Layout>
+
