@@ -92,7 +92,8 @@ function sidebar() {
     items: [
       { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" },
       { label: 'Element Crossing', link: "/tools/element-crossing/" },
-      { label: 'Turn-Signal', link: "/tools/turn-signal/", badge: { text: 'new', variant: 'tip' } as Badge },
+      { label: 'Turn-Signal', link: "/tools/turn-signal/" },
+      { label: 'Cam-Shaft', link: "/tools/cam-shaft/", badge: { text: 'new', variant: 'tip' } as Badge },
     ],
   }, {
     label: 'Basics',
@@ -107,7 +108,8 @@ function sidebar() {
     items: [
       { label: 'Where to place the CSS', link: "/tips/css/" },
       { label: "Flickering during morph animations?", link: "tips/over-exposure/" },
-      { label: "Avoid Pointer Flickering", link: "tips/pointer/" }
+      { label: "Avoid Pointer Flickering", link: "tips/pointer/" },
+      { label: "Pseudo-smooth-scrolling?", link: "tips/pseudo-smooth-scrolling/" }
     ]
   }];
 }

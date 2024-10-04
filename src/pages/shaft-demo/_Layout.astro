@@ -1,0 +1,386 @@
+---
+import TurnSignal from "@vtbag/turn-signal?url";
+
+export interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/bag3.png" type="image/png" />
+    <script is:inline>
+      if ("onpagereveal" in window) {
+        addEventListener("pagereveal", () => {});
+      }
+    </script>
+    <script is:inline src={TurnSignal}></script>
+    <script is:inline>
+      if ("onpagereveal" in window) {
+        const _ = document.documentElement;
+        _.dataset.theme = _.style.colorScheme =
+          localStorage.getItem("starlight-theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        _.classList.add(_.dataset.theme);
+      }
+    </script>
+  </head>
+  <body>
+    <div style="height: 6.66rem"></div>
+    <main>
+      <slot />
+    </main>
+    <header>
+      <div>Header</div><a
+        href="/tips/pseudo-smooth-scrolling/#interactive-demo"
+        id="back">Exit</a
+      >
+      <button id="dl">Light/Dark</button>
+    </header>
+    <nav>
+      <a href="/shaft-demo/2/#bot">Step 1</a>
+      <a href="/shaft-demo/2/">Step 2</a>
+      <a href="/shaft-demo/1/#bot">Step 3</a>
+      <a href="/shaft-demo/1/">Step 4</a>
+      <br />
+      <a href="/shaft-demo2/1/">With<br />Cam-<br />Shaft</a>
+    </nav>
+    <footer>
+      <div>Footer</div>
+    </footer>
+  </body>
+  <script>
+    document.getElementById("dl")!.addEventListener("click", () => {
+      const root = document.documentElement;
+      root.classList.toggle("dark");
+      let theme = root.classList.contains("dark") ? "dark" : "light";
+      localStorage.setItem(
+        "starlight-theme",
+        (root.dataset.theme = root.style.colorScheme = theme)
+      );
+    });
+  </script>
+</html>
+<style is:global>
+  * {
+    box-sizing: border-box;
+  }
+  @view-transition {
+    navigation: auto;
+  }
+  main {
+    view-transition-name: main;
+  }
+  nav {
+    view-transition-name: nav;
+  }
+  header {
+    view-transition-name: header;
+  }
+  footer {
+    view-transition-name: footer;
+  }
+  ::view-transition-group(fi),
+  ::view-transition-group(main) {
+    animation-duration: 1s;
+  }
+
+  ::view-transition-old(main) {
+    animation-name: slideOut;
+  }
+  ::view-transition-new(main) {
+    animation-name: slideIn;
+  }
+
+  :active-view-transition-type(backward)::view-transition-old(main) {
+    animation-name: slideIn;
+    animation-direction: reverse;
+  }
+  :active-view-transition-type(backward)::view-transition-new(main) {
+    animation-name: slideOut;
+    animation-direction: reverse;
+  }
+
+  @keyframes slideOut {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+    }
+  }
+  #fi {
+    view-transition-name: fi;
+  }
+
+  :root {
+    font-family: sans-serif;
+    --background-color: #e0e0e0;
+    --accent-background-color: #e0f0e0;
+    --color: #444;
+    --accent-color: #070;
+    color: var(--color);
+    background-color: var(--background-color);
+    accent-color: var(--accent-color);
+  }
+  :root.dark {
+    --background-color: #222;
+    --accent-background-color: #333;
+    --color: #ddd;
+    --accent-color: #dfd;
+  }
+  footer,
+  header {
+    position: fixed;
+    width: 100%;
+    height: 6.66rem;
+    top: 0;
+    background-color: var(--background-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    background-color: #eeec;
+    backdrop-filter: blur(2px);
+  }
+
+  [data-theme="dark"] :is(footer, header) {
+    background-color: #111c;
+  }
+
+  footer {
+    top: unset;
+    height: 4rem;
+    bottom: 0;
+  }
+  button {
+    background-color: var(--accent-background-color);
+    accent-color: var(--accent-color);
+    color: var(--color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin: 1em;
+    padding: 0.5em 1em;
+    box-shadow: 0 4px 6px #8888;
+    cursor: pointer;
+  }
+  header div {
+    flex: 1 1 0%;
+  }
+  nav {
+    position: fixed;
+    top: 6.66rem;
+    background-color: var(--accent-background-color);
+    overflow: auto;
+  }
+  nav a {
+    display: block;
+    text-decoration: none;
+    padding: 0.5rem;
+  }
+  main {
+    scroll-padding-top: 6.66rem;
+    padding: 1rem;
+    padding-left: 80px;
+    overflow: auto;
+  }
+  #all {
+    max-width: 50rem;
+    margin: auto;
+  }
+  #mid {
+    display: flex;
+    height: 70vh;
+  }
+  #back {
+    display: inline-block;
+    color: black;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem;
+    background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+    box-shadow: 0 4px 6px #8888;
+  }
+  #dark,
+  #light {
+    display: none;
+  }
+  :root.dark #dark,
+  :root:not(.dark) #light {
+    display: inline;
+  }
+  p.lorem,
+  p.desc {
+    line-height: 2;
+    font-size: 1.2rem;
+    max-width: 640px;
+    margin: 40px 10vw;
+  }
+  p.desc {
+    color: var(--accent-color);
+    line-height: 1.8rem;
+  }
+  #outerouter {
+    max-width: 640px;
+    margin: 0 10vw;
+    margin-top: 0;
+  }
+  #container #outerouter {
+    margin: 0;
+  }
+
+  #outer {
+    width: 100px;
+    height: 200px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  #dia {
+    display: flex;
+    width: 500px;
+    animation: hshift 5s infinite linear;
+  }
+  #screen {
+    position: relative;
+    z-index: 10;
+    top: -200px;
+    width: 100px;
+    height: 100px;
+    background-color: #fff8;
+    border: 3px solid #8888;
+    border-radius: 10px;
+    animation: vshift 5s infinite linear;
+    color: black;
+    padding-top: 3.5rem;
+    padding-left: 1em;
+  }
+  #dia div {
+    height: 200px;
+    width: 100px;
+    color: #222;
+    border: 1px solid #888;
+    padding: 1em 0.5rem;
+  }
+
+  #dia :is(div:nth-child(1), div:nth-child(5)) {
+    background: linear-gradient(180deg, #8fc 0%, #8fc 80%, red 100%);
+  }
+  #dia div:nth-child(2) {
+    background: linear-gradient(0deg, #8cf 0%, #8cf 80%, red 100%);
+  }
+  #dia div:nth-child(3) {
+    background: linear-gradient(180deg, #8cf 0%, #8cf 80%, red 100%);
+  }
+  #dia div:nth-child(4) {
+    background: linear-gradient(0deg, #8fc 0%, #8fc 80%, red 100%);
+  }
+
+  @keyframes hshift {
+    10% {
+      transform: translateX(0px);
+    }
+    25% {
+      transform: translateX(-100px);
+    }
+    35% {
+      transform: translateX(-100px);
+    }
+    50% {
+      transform: translateX(-200px);
+    }
+    60% {
+      transform: translateX(-200px);
+    }
+    75% {
+      transform: translateX(-300px);
+    }
+    85% {
+      transform: translateX(-300px);
+    }
+    100% {
+      transform: translateX(-400px);
+    }
+  }
+  @keyframes vshift {
+    10% {
+      transform: translateY(0px);
+    }
+    25% {
+      transform: translateY(100px);
+    }
+    35% {
+      transform: translateY(100px);
+    }
+    50% {
+      transform: translateY(0px);
+    }
+    60% {
+      transform: translateY(0px);
+    }
+    75% {
+      transform: translateY(100px);
+    }
+    85% {
+      transform: translateY(100px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  @keyframes oVshift {
+    10% {
+      transform: translateY(0px);
+    }
+    25% {
+      transform: translateY(-100px);
+    }
+    35% {
+      transform: translateY(-100px);
+    }
+    50% {
+      transform: translateY(0px);
+    }
+    60% {
+      transform: translateY(0px);
+    }
+    75% {
+      transform: translateY(-100px);
+    }
+    85% {
+      transform: translateY(-100px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  @keyframes Vshift {
+    0%,
+    24.99% {
+      transform: translateY(-100px);
+    }
+    25%,
+    49.99% {
+      transform: translateY(0px);
+    }
+    50%,
+    74.99% {
+      transform: translateY(-100px);
+    }
+    75%,
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  #bot {
+    scroll-margin-top: 6.66rem;
+  }
+</style>

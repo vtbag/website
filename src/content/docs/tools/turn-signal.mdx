@@ -126,22 +126,49 @@ There are no configuration options and the `forced-traversal` script does not ta
 
 ## Configuration and Usage
 
-`@vtbag/turn-signal` main script accepts several config options. Those are specified as data* attributes on the `<script>` element. They are all optional. If used without any parameters, the TTurn-Signal detects backwards history traversals and sets the `backward` view transition type for those. Navigation to the current page sets the `same` type. For all other navigation, the `forward` type is set.
+`@vtbag/turn-signal` main script accepts several config options. Those are specified as `data-*` attributes on the `<script>` element. They are all optional. If used without any parameters, the Turn-Signal detects backwards history traversals and sets the `backward` view transition type for those. Navigation to the current page sets the `same` type. For all other navigation, the `forward` type is set.
 
-You can use this to style different animations dependent on the direction of the navigation:
+You can use these view transition types to style different animations dependent on the direction of the navigation
 
+
+### CSS for Reverse Animation
+
+Chances are more often then not that you can not simply revert the direction of your animation for the `backward` effect. Assume you have `slideOutToLeft` for the old image and `slideInFromRight` for the new image.
 ```css
-::view-transition-old(root) {...}
-::view-transition-new(root) {...}
-
-:active-view-transition-type(backward) {
-  &::view-transition-old(root),
-  &::view-transition-new(root) {
-    animation-direction: reverse;
+  ::view-transition-old(main) {
+    animation-name: slideOutToLeft;
   }
-}
-```
+  ::view-transition-new(main) {
+    animation-name: slideInFromRight;
+  }
 
+  @keyframes slideOutToLeft {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(100%);
+    }
+  }
+```
+Just changing the direction of the animations would lead to something best named `slideInFromLeft` for the old image and `slideOutToRight` for the new image. While the animations are about right, just setting `animation-direction: reverse` would apply them to the wrong images. You do not want to slide in the old image or slide out the new image. So better you swap the keyframes, too &hellip;
+```css
+  :active-view-transition-type(backward) {
+    &::view-transition-old(main) {
+      animation-name: slideInFromRight;
+      animation-direction: reverse;
+    }
+    &::view-transition-new(main) {
+      animation-name: slideOutToLeft;
+      animation-direction: reverse;
+    }
+  }  }
+```
+&hellip; or even explicitly define keyframes for slideOutToRight and slideInFromLeft if you feel that is clearer.
+
+### Config Options
 |Config option|Type|Effect|
 |--|--|--|
 |data-selector|a CSS selector|<p>If your site has a concept of _previous_ and _next_ page, use this to tell the Turn-Signal about your pages and their order. One selector _to find them all_.</p><p>The selector should return one element per page of your site, and each element must have an href attribute. Typically, you would select `<a>` elements from your navigation bar, such as `data-selector="nav a"`.</p><p>If your site doesn't already have a suitable structure, consider generating a list of pages in a non-intrusive way. For example, you could use `<a>` elements inside a `<template>` element or `<link>` elements with a custom `rel` attribute.</p><p> The sequence of selected URLs is used to derive the navigation direction. Navigation to a page that comes later in the sequence of selected URLs will be a _forward_ navigation. Navigation to a page that comes earlier in the sequence of selected URLs will be a _backward_ navigation.</p>|

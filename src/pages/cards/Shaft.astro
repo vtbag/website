@@ -1,0 +1,77 @@
+---
+
+---
+
+<html lang="en" style="color-scheme:dark">
+  <head>
+    <title>Shaft</title>
+  </head>
+  <body>
+    <img width="640" src="/shaft.png" />
+    <h1>The Cam-Shaft</h1>
+    <h2>
+      Bump your<hr />
+      <span>::view-transition images</span><hr />into position to<br />
+       avoid that unexpected<br />pseudo-smooth-scrolling
+    </h2>
+  </body>
+</html>
+<style is:global>
+  :root,
+  body {
+    margin: 0;
+    padding: 0;
+    width: 1280px;
+    height: 640px;
+    overflow: hidden;
+    background: linear-gradient(
+      115deg,
+      #aaccff40 30%,
+      #4488ff20 40%,
+      #aaccff40 50%
+    );
+    background-size: 200% 100%;
+  }
+  img {
+    position: absolute;
+    display: block;
+    float: right;
+    transform: translateX(6vw);
+    mask-image: radial-gradient(ellipse at center, white 35%, transparent 71%);
+  }
+  h1 {
+    position: absolute;
+    text-shadow: #0002 0px 0px 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 84px;
+    padding: 20px;
+    color: darkgoldenrod;
+    text-align: right;
+    text-wrap: balance;
+    transform: rotate(-90deg) translate(-200px, -250px);
+  }
+  h2 {
+    position: absolute;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 56px;
+    padding: 30px;
+    color: darkgoldenrod;
+    text-wrap: balance;
+    text-align: right;
+    transform: translate(520px, 20px);
+    color: goldenrod;
+    text-shadow: #0008 0px 0px 5px;
+  }
+
+  span {
+    color:white;
+  }
+  a {
+    text-decoration: none;
+    color: aqua;
+  }
+
+  @view-transition {
+    navigation: auto;
+  }
+</style>

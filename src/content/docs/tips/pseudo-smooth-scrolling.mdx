@@ -1,0 +1,76 @@
+---
+title: "Pseudo-Smooth-Scrolling"
+description: "Instant scrolling on a page with view transition might lead to an unexpected smooth-scrolling effect. "
+---
+
+Pseudo-smooth-scrolling is an effect that looks like smooth-scrolling, but in fact is the result of the browser’s default morph animation. It happens when a navigation involves instant scrolling and tall transitions groups.
+
+Take a look at the image below, showing an abstract website layout with a light blue header, a blue navigation panel, and a light yellow content area. The content area has a `view-transition-name` applied. If you scroll down and then navigate to another page, you might notice something strange: while the scrollbar jumps instantly, the content scrolls smoothly. What's going on here?
+
+
+<svg width="300px" height="150px" viewBox="0 0 300 150" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <rect fill="none" stroke="#aaa" x="0" y="0" width="300" height="150"></rect>
+  <rect fill="lightblue" stroke="#aaa" x="0" y="0" width="300" height="30"></rect>
+  <rect fill="steelblue" stroke="#aaa" x="0" y="30" width="70" height="120"></rect>
+  <rect fill="gray" stroke="#aaa" x="290" y="30" width="10" height="120"></rect>
+  <rect fill="white" stroke="#aaa" x="290" y="100" width="10" height="30"></rect>
+  <rect fill="lightyellow" stroke="#aaa" x="70" y="30" width="220" height="120"></rect>
+</svg>
+
+Only part of the content element is visible at a time, as it's much taller than the screen. For simplicity, let's assume the content element is the same size on both the old and new pages. However, different sections of it are displayed. On the old page, the purple section at the bottom is visible.
+<svg width="300px" height="250px" viewBox="0 -100 300 250" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <rect fill="none" stroke="#aaa" x="0" y="0" width="300" height="150"></rect>
+  <rect fill="lightblue" stroke="#aaa" x="0" y="0" width="300" height="30"></rect>
+  <rect fill="steelblue" stroke="#aaa" x="0" y="30" width="70" height="120"></rect>
+  <rect fill="gray" stroke="#aaa" x="290" y="30" width="10" height="120"></rect>
+  <rect fill="white" stroke="#aaa" x="290" y="100" width="10" height="30"></rect>
+  <rect fill="lightyellow" stroke="#aaa" x="70" y="-100" width="220" height="250"></rect>
+  <rect fill="none" stroke="darkslateblue" stroke-width="3" x="70" y="32" width="220" height="116"></rect>
+</svg>
+
+On the new page, the top part of the content element is visible, which is the dark green section.
+
+When you select the new page from the navigation panel, the scrollbar instantly jumps to the top, and the view transition kicks in. Through the default group animation applied to the content element, the browser initially shows the purple-bordered section, then smoothly transitions to the green-bordered area. During this process, it cross-fades between the old and new content.
+
+<svg width="300px" height="280px" viewBox="0 0 300 280" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+  <rect fill="none" stroke="#aaa" x="0" y="0" width="300" height="150"></rect>
+  <rect fill="lightblue" stroke="#aaa" x="0" y="0" width="300" height="30"></rect>
+  <rect fill="steelblue" stroke="#aaa" x="0" y="30" width="70" height="120"></rect>
+  <rect fill="gray" stroke="#aaa" x="290" y="30" width="10" height="120"></rect>
+  <rect fill="white" stroke="#aaa" x="290" y="30" width="10" height="30"></rect>
+  <rect fill="lightyellow" stroke="#aaa" x="70" y="30" width="220" height="250"></rect>
+  <rect fill="none" stroke="darkolivegreen" stroke-width="3" x="70" y="32" width="220" height="116"></rect>
+  <rect fill="none" stroke="darkslateblue" stroke-width="3" x="70" y="160" width="220" height="118"></rect>
+</svg>
+
+So, it’s not the scrollbar slider that smoothly moves from the lower to the upper position, but rather the view transition images that slide down through the viewport.
+
+## Interactive Demo
+[Explore an interactive demo of the effect](/shaft-demo/1/)
+
+
+
+## How to Avoid?
+
+The pseudo-smooth-scrolling effect can be quite appealing if the pages are not too lengthy and you intend to use it deliberately. However, it might also occur unintentionally, especially if you specifically want to avoid smooth scrolling on your pages.
+There are two ways to avoid the effect.
+
+### Just Animate the Root
+The pseudo-smooth-scrolling effect only occurs when the `view-transition-name` is applied to an HTML element other than the top-level `<html>` element. The View Transition API [treats the `:root` element differently](https://drafts.csswg.org/css-view-transitions-1/#capture-the-image). The old and new images of the document element are always constrained to the size of the viewport, meaning the default group animation doesn’t transform the position and no scrolling happens at all.
+
+If possible, resist the temptation to apply a view transition name to large content elements. Instead, use the `root` transition group on the `<html>` element to achieve the desired effect. If you fear that your root group now obscures header, footer, and navbar, you can always assign view transition names to those elements, allowing them to enter the view transition layer and [cover portions of the root images](/basics/pseudos/#rendering-pseudo-elements) as needed.
+
+### Make Use of the Cam-Shaft
+
+
+
+If using the root transition group doesn't meet your design objectives, you can turn to the [`@vtbag/cam-shaft`](/tools/cam-shaft/) script to adjust the images into their proper positions, compensating for the scroll delta. This approach eliminates sliding viewports and the pseudo-smooth-scroll effect. Just identify the transition groups that need adjustments, and let the script take care of the rest.
+
+<style>{`
+svg {
+  margin: 0 auto;
+}
+`}</style>

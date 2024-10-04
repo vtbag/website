@@ -1,0 +1,243 @@
+---
+import fi from "../../assets/fi.png";
+import { Image } from "astro:assets";
+---
+
+<p class="desc">
+  At the start of the transition, the default morph animation positions the
+  transition group so that the old image shows the content visible before the
+  transition. As the transition progresses, the group's animation gradually
+  shifts the images, revealing the section of the new image that corresponds to
+  the final state after the transition. The sketch below illustrates the
+  pseudo-smooth-scroll effect.
+</p>
+
+<div id="container">
+  <div id="outerouter">
+    <div id="outer">
+      <div id="dia">
+        <div>Page 1, step 0/4</div>
+        <div><br /><br /><br /><br /><br />Page 2, step 1</div>
+        <div>Page 2, step 2</div>
+        <div><br /><br /><br /><br /><br />Page 1, step 3</div>
+        <div>Page 1, step 0/4</div>
+      </div>
+      <div id="screen">Viewport</div>
+    </div>
+  </div>
+
+  <div id="outerouter2">
+    <div id="outer2">
+      <div id="dia2">
+        <div>Page 1, step 0/4</div>
+        <div><br /><br /><br /><br /><br />Page 2, step 1</div>
+        <div>Page 2, step 2</div>
+        <div><br /><br /><br /><br /><br />Page 1, step 3</div>
+        <div>Page 1, step 0/4</div>
+      </div>
+      <div id="screen2">Viewport</div>
+    </div>
+  </div>
+</div>
+<style is:global>
+  #container {
+    display: flex;
+    max-width: 640px;
+    margin: 0px 10vw;
+    margin-top: 120px;
+    justify-content: space-around;
+  }
+  #outerouter {
+    width: fit-content;
+    transform: translateY(-60px)
+  }
+  #outerouter2 {
+    width: fit-content;
+    animation: vshift2 5s infinite linear;
+  }
+  @keyframes vshift2 {
+    10% {
+      transform: translateY(0px);
+    }
+    25% {
+      transform: translateY(-100px);
+    }
+    35% {
+      transform: translateY(-100px);
+    }
+    50% {
+      transform: translateY(0px);
+    }
+    60% {
+      transform: translateY(0px);
+    }
+    75% {
+      transform: translateY(-100px);
+    }
+    85% {
+      transform: translateY(-100px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+  #outer2 {
+    width: 100px;
+    height: 200px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  #dia2 {
+    display: flex;
+    width: 500px;
+    animation: hshift 5s infinite linear;
+  }
+  #screen2 {
+    position: relative;
+    z-index: 10;
+    top: -200px;
+    width: 100px;
+    height: 100px;
+    background-color: #fff8;
+    border: 3px solid #8888;
+    border-radius: 10px;
+    animation: vshift 5s infinite linear;
+    color: black;
+    padding-top: 3.5rem;
+    padding-left: 1em;
+  }
+  #dia2 div {
+    height: 200px;
+    width: 100px;
+    color: #222;
+    border: 1px solid #888;
+    padding: 1em 0.5rem;
+  }
+
+  #dia2 :is(div:nth-child(1), div:nth-child(5)) {
+    background: linear-gradient(180deg, #8fc 0%, #8fc 80%, red 100%);
+  }
+  #dia2 div:nth-child(2) {
+    background: linear-gradient(0deg, #8cf 0%, #8cf 80%, red 100%);
+  }
+  #dia2 div:nth-child(3) {
+    background: linear-gradient(180deg, #8cf 0%, #8cf 80%, red 100%);
+  }
+  #dia2 div:nth-child(4) {
+    background: linear-gradient(0deg, #8fc 0%, #8fc 80%, red 100%);
+  }
+</style>
+<p class="desc">
+  Instead of the scroll position sliding up and down the screen, it is the
+  viewport moving up and down the large pseudo-elments &ndash; or seen the other
+  way around: the large pseudo-elements move up and down in the viewport but the
+  scroll position only changes instantly once at the beginning of the transition, not continously during the transition.
+</p>
+
+<p class="desc">Take <a href="/shaft-demo/1/#bot">Step 3</a> to learn why just disabling the group animation isn't a good approach for getting rid of the pseudo-smooth-scroll effect.</p>
+
+<h2>Lorem Ipsum Text 2</h2>
+
+<p class="lorem">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
+  Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at
+  nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec
+  tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget
+  nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+  inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia
+  nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at
+  dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc
+  egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non,
+  massa.
+</p>
+<p class="lorem">
+  Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus,
+  ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum
+  velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+  inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis,
+  tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi.
+  Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat
+  imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo
+  eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.
+</p>
+<p class="lorem">
+  Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus,
+  ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum
+  velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+  inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis,
+  tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi.
+  Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat
+  imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo
+  eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.
+</p>
+<p class="lorem">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
+  Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at
+  nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec
+  tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget
+  nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+  inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia
+  nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at
+  dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc
+  egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non,
+  massa.
+</p><p class="lorem">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
+  Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at
+  nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec
+  tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget
+  nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+  inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia
+  nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at
+  dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc
+  egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non,
+  massa.
+</p>
+<p class="lorem">
+  Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus,
+  ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum
+  velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+  inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis,
+  tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi.
+  Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat
+  imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo
+  eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.
+</p>
+<p class="lorem">
+  Fusce ac turpis quis ligula lacinia aliquet. Mauris ipsum. Nulla metus metus,
+  ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum
+  velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+  inceptos himenaeos. Nam nec ante. Sed lacinia, urna non tincidunt mattis,
+  tortor neque adipiscing diam, a cursus ipsum ante quis turpis. Nulla facilisi.
+  Ut fringilla. Suspendisse potenti. Nunc feugiat mi a tellus consequat
+  imperdiet. Vestibulum sapien. Proin quam. Etiam ultrices. Suspendisse in justo
+  eu magna luctus suscipit. Sed lectus. Integer euismod lacus luctus magna.
+</p>
+<p class="lorem">
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio.
+  Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at
+  nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec
+  tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget
+  nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per
+  inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia
+  nunc. Curabitur tortor. Pellentesque nibh. Aenean quam. In scelerisque sem at
+  dolor. Maecenas mattis. Sed convallis tristique sem. Proin ut ligula vel nunc
+  egestas porttitor. Morbi lectus risus, iaculis vel, suscipit quis, luctus non,
+  massa.
+</p>
+<p id="bot" class="desc">
+  You can recognize the effect by observing the scrollbar. In a true smooth
+  scroll, the scrollbar glides to its new position. However, with the
+  pseudo-smooth-scroll effect from view transitions, the scrollbar jumps
+  instantly while the content slides.
+</p>
+
+<Image id="fi" src={fi} alt="" />
+
+<p class="desc">Take <a href="/shaft-demo/2/">Step 2</a> to find out what causes this effect.</p>
+
+<style is:global>
+  #fi {
+    transform: rotateY(180deg) translateX(-20vw);
+  }
+</style>
