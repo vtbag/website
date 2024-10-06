@@ -4,6 +4,7 @@ import bag from "../../assets/bag.png";
 import chamber from "../../assets/chamber.png";
 import crossing from "../../assets/crossing.png";
 import signal from "../../assets/signal.png";
+import shaft from "../../assets/shaft.png";
 import turnSignal from "@vtbag/turn-signal?url";
 
 export interface Props {
@@ -13,8 +14,8 @@ const { title } = Astro.props;
 const script =
   'const _=document.documentElement;_.dataset.theme=_.style.colorScheme=localStorage.getItem("starlight-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches? "dark":"light")';
 const pathname = Astro.url.pathname;
-const pages = ["bag", "chamber", "crossing", "signal"];
-const images = [bag, chamber, crossing, signal];
+const pages = ["bag", "chamber", "crossing", "signal", "shaft"];
+const images = [bag, chamber, crossing, signal, shaft];
 ---
 
 <html lang="en">

@@ -1,0 +1,86 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import StarlightHead from "@astrojs/starlight/components/Head.astro";
+import turnSignal from "@vtbag/turn-signal?url";
+import camShaft from "@vtbag/cam-shaft?url";
+---
+
+<StarlightHead {...Astro.props}><slot /></StarlightHead>
+<script is:inline>
+  ["pageswap", "pagereveal"].forEach((event) =>
+    addEventListener(
+      event,
+      (e) =>
+        e.viewTransition &&
+        document
+          .querySelectorAll("h2")
+          .forEach((h2, idx) => (h2.style.viewTransitionName = `h2-${idx}`))
+    )
+  );
+</script>
+{/* Decent transitions for scrolled down pages */}
+<script is:inline src={camShaft}/>
+
+{/* Make animation direction based on the order of the pages in the sidebar */}
+<script is:inline src={turnSignal} data-selector="nav.sidebar li a" />
+
+{
+  /* Without further configuration, make headings stand out during view transitions.
+    Can be used to declaratively add view transition names which open a door to all kinds of funny thing. */
+}
+
+<style is:global>
+  @view-transition {
+    navigation: auto;
+  }
+  main {
+    view-transition-name: main;
+  }
+  ::view-transition-old(main) {
+    animation: forwardsSwingOut 150ms ease-in-out;
+  }
+  ::view-transition-new(main) {
+    animation: forwardsSwingIn 150ms ease-in-out;
+  }
+  :active-view-transition-type(backward)::view-transition-old(main) {
+    animation: backwardsSwingOut 150ms ease-in-out;
+  }
+  :active-view-transition-type(backward)::view-transition-new(main) {
+    animation: backwardsSwingIn 150ms ease-in-out;
+  }
+  @keyframes forwardsSwingOut {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes forwardsSwingIn {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  @keyframes backwardsSwingOut {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  @keyframes backwardsSwingIn {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+  ::view-transition-image-pair(main) {
+    overflow: hidden;
+  }
+</style>
