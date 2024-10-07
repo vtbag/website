@@ -18,7 +18,7 @@
     "@vtbag/inspection-chamber": "^1.0.15",
     "@vtbag/turn-signal": "^1.0.1",
     "@vtbag/cam-shaft": "^1.0.0",
-    "astro": "^4.15.11",
+    "astro": "^4.15.12",
     "astro-breadcrumbs": "^3.2.0",
     "astro-d2": "^0.5.2",
     "astro-vtbot": "^1.10.3",
