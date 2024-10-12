@@ -1,5 +1,5 @@
 ---
-title: "@vtbag&emsp;&emsp;&emsp;&emsp;&ensp;&thinsp;"
+title: "@vtbag"
 description: Bag of Tricks for View Transitions.
 hero:
   tagline: Website for the @vtbag umbrella
@@ -19,10 +19,22 @@ head:
     attrs:
       name: robots
       content: "index, follow"
+  - tag: meta
+    attrs:
+      property: "og:type"
+      content: "website"
+  - tag: script
+    attrs:
+      type: "application/ld+json"
+      data-vtbot-linter: "ignore"
+    content: '{"@context": "https://schema.org", "@type": "WebSite", "name": "@vtbag", "url": "https://vtbag.pages.dev/"}'
 ---
 
 <style>{`
   .hero h1 {
+    text-align: left;
     font-size: var(--sl-text-h1);
+    width: 8.25em;
   }
+
 `}</style>

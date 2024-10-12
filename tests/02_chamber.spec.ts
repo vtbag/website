@@ -252,6 +252,8 @@ test.describe("Full control", () => {
   test('can fast forward', async ({ page }) => {
     await start(page);
 
+    await page.waitForTimeout(100);
+
     await page.evaluate(() => {
       const input = top!.document.querySelector<HTMLInputElement>('#vtbag-ui-controller2')!;
       input.value = "125";

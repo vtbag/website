@@ -36,7 +36,7 @@ export default defineConfig({
   integrations: [starlight({
     title: '@vtbag',
     components: {
-      Head: "./src/components/NHead.astro",
+      Head: "./src/components/Head.astro",
       PageTitle: "./src/components/PageTitle.astro"
     },
     plugins: [starlightImageZoom()],
@@ -54,9 +54,9 @@ export default defineConfig({
     customCss: ["./src/styles/custom.css"],
     lastUpdated: true,
     pagination: true,
-    favicon: "/bag3.png",
+    favicon: "/bag4.png",
     logo: {
-      src: "./src/assets/bag.png"
+      src: "./src/assets/bag.webp"
     },
     social: {
       github: 'https://github.com/vtbag/website'

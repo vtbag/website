@@ -12,9 +12,7 @@
 :root {
   transition: --sl-color-text 2s;
 }
-:root[loading] * {
-  cursor: progress;
-}
+
 body {
   text-align: left;
   hyphens: auto;
