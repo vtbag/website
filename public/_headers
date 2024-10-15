@@ -1,3 +1,4 @@
 /basics/pseudos/
-  etag: W/"hurz"
-  rumpel: "Stielzchen"
+  Cache-Control: max-age=10
+  Etag: W/"hurz"
+  Rumpel: "Stielzchen"
