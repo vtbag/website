@@ -1,5 +1,5 @@
 ---
-import DemoNavigation from '@/components/DemoNavigation.astro';
+import DemoNavigation from "@/components/DemoNavigation.astro";
 export interface Props {
   title: string;
   backlink: string;
@@ -26,9 +26,9 @@ const script =
   </head>
   <body>
     <h1>{title}</h1>
-    <DemoNavigation {prev} {backlink} {next}/>
+    <DemoNavigation {prev} {backlink} {next} />
     <slot />
     <div id="vtbag-spacer" style="min-height:100vh"></div>
-    <DemoNavigation {prev} {backlink} {next}/>
+    <DemoNavigation {prev} {backlink} {next} />
   </body>
 </html>

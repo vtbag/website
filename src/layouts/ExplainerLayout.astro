@@ -1,4 +1,6 @@
 ---
+import LeaveDemoLink from "../components/LeaveDemoLink.astro";
+
 export const partial = true;
 const {title = "How does it work?"} = Astro.props.frontmatter;
 ---
@@ -15,8 +17,8 @@ const {title = "How does it work?"} = Astro.props.frontmatter;
     <i
       >The description below references terms of the view transition API like
       "old" and "new" images or "pseudo-elements". Background information about
-      those terms and on how view transitions work can be found <a
-        href="/basics/api/">in the API section</a
+      those terms and on how view transitions work can be found <LeaveDemoLink
+        href="/basics/api/">in the API section</LeaveDemoLink
       >.</i
     >
   </p>

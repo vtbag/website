@@ -1,0 +1,9 @@
+---
+export interface Props {
+  href: string;
+}
+const {href} = Astro.props;
+---
+
+{href && (<a href={"javascript:top.sessionStorage.setItem('vtbag-ui-standby','true'),top.location.assign('" + href + "')"}><slot/></a>)}
+

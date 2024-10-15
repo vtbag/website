@@ -36,7 +36,7 @@ export default defineConfig({
   integrations: [starlight({
     title: '@vtbag',
     components: {
-      Head: "./src/components/Head.astro",
+      Head: "./src/components/NHead.astro",
       PageTitle: "./src/components/PageTitle.astro"
     },
     plugins: [starlightImageZoom()],

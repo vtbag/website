@@ -1,0 +1,50 @@
+---
+
+export interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<html lang="en" style="color-scheme: dark;">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title}</title>
+    <script>
+      addEventListener("pageswap", (e) => {
+        // @ts-expect-error
+        if (e.viewTransition) {
+          console.log(new Date().getTime(), "pageswap");
+        }
+      });
+      addEventListener("pagereveal", (e) => {
+        // @ts-expect-error
+        if (e.viewTransition) {
+          console.log(new Date().getTime(), "pagereveal");
+        }
+      });
+      // @ts-expect-error
+      window.navigation.addEventListener("navigate", (e) => {
+        console.log(new Date().getTime(), "navigate");
+      });
+      addEventListener("DOMContentLoaded", (_e) => {
+        console.log(new Date().getTime(), "DOMContentLoaded");
+      });
+      addEventListener("load", (_e) => {
+        console.log(new Date().getTime(), "load");
+      });
+    </script>
+    <slot name="head" />
+  </head>
+  <body>
+    <h1>{title}</h1>
+    <slot />
+    <img style="width:200vw" src="/chamber_action.png" alt=""/>
+  </body>
+</html>
+<style>
+  @view-transition {
+    navigation: auto;
+  }
+</style>
