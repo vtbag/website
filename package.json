@@ -18,7 +18,7 @@
     "@vtbag/element-crossing": "^1.0.1",
     "@vtbag/inspection-chamber": "^1.0.15",
     "@vtbag/turn-signal": "^1.0.1",
-    "astro": "^4.16.2",
+    "astro": "^4.16.4",
     "astro-breadcrumbs": "^3.2.0",
     "astro-d2": "^0.6.0",
     "astro-vtbot": "^1.10.3",
