@@ -153,7 +153,7 @@ The View Transition API introduces five types of pseudo-elements:
 - `::view-transition-old`
 - `::view-transition-new`
 
-The `::view-transition` pseudo-element, which is rooted at the `<html>` element of the DOM, is the root of all pseudo-elements created by the View Transition API.
+The `::view-transition` pseudo-element, which is rooted at the document's documentElement, is the root of all pseudo-elements created by the View Transition API.
 
 All these pseudo-elements only exist briefly during the transition effect, making them difficult to spot in the DOM.
 
@@ -168,7 +168,7 @@ inspect(top.document.querySelector("#vtbag-main-frame").contentDocument.querySel
 
 <html lang=​"en">​
   ::view-transition                // the parent of all groups
-   ​::view-transition-group(root)   // the group of the <html> element
+   ​::view-transition-group(root)   // the group of the document's documentElement
    ​::view-transition-group(myName) // the group for "view-transition-name: myName"
    ...
   ​<head>​…​</head>
@@ -176,7 +176,7 @@ inspect(top.document.querySelector("#vtbag-main-frame").contentDocument.querySel
 ​</html>​
 ```
 
-Here `root` is the automatically assigned[^root] `view-transition-name` for the `<html>` element (:root) of your document. `myName` is an arbitrary example `view-transition-name`.
+Here `root` is the automatically assigned `view-transition-name` for the document's documentElement (:root). `myName` is an arbitrary example `view-transition-name`.
 :::
 
 
@@ -192,14 +192,14 @@ The `::view-transition-new` images are no simple screenshots but _replaced eleme
 
 This might be confusing, as the original element is usually hidden behind the `::view-transition` pseudo-element (the “curtain”). Here's the key difference: old images are immutable. For example, if you show the _old image_ of a video player during a view transition, the image is frozen. Replaced elements, however, are _live_. If you display a _new image_ of a video player, the video will continue to play during the transition.
 
-DOM elements without an explicit `view-transition-name` won't generate their own images, with one exception: the document's `:root` element, `<html>`. The View Transition API automatically assigns `view-transition-name: root` to it. <a id="opt-out" />You can override this with your own name or **opt out** entirely by assigning the special value `none`:
+DOM elements without an explicit `view-transition-name` won't generate their own images, with one exception: the document's `:root` element. The View Transition API automatically assigns `view-transition-name: root` to it. <a id="opt-out" />You can override this with your own name or **opt out** entirely by assigning the special value `none`:
 
 ```css
 :root {
   view-transition-name: none;
 }
 ```
-This removes the view transition name from the document's `<html>` element.
+This removes the view transition name from the document's `:root` element.
 
 ### Groups and Image-Pairs
 
@@ -207,7 +207,7 @@ Because view transition names must be unique[^unique] inside their DOM, there ca
 
 ```c
 ::view-transition                       // the parent of all groups
-  ​::view-transition-group(root)         // the transition group of the <html> element
+  ​::view-transition-group(root)         // the transition group of the :root element
     ::view-transition-image-pair(root)  // the image pair for the root group
       ::view-transition-old(root)       // with the old image of the root group
       ::view-transition-new(root)       // and the new image of the root group
@@ -237,7 +237,7 @@ The `::view-transition-old` pseudo elements are created in a pre-order depth fir
 The ::view-transition-old pseudo-elements are created during a pre-order depth-first traversal of the old DOM. When an element with a view-transition-name is encountered, its old image is rendered. During this process, other elements with view transition names are effectively ignored, as if their visibility were set to hidden. This ensures that the images have "holes" where other images can be properly placed.
 
 
-The image of the `<html>` element, if not [opted out](#opt-out), covers the whole viewport. Its view transition group is the first in the list of `::view-transition-group` children of the `::view-transition` pseudo-element.  Subsequent groups are added after the root group once their old images have been created.
+The image of the `:root` element, if not [opted out](#opt-out), covers the whole viewport. Its view transition group is the first in the list of `::view-transition-group` children of the `::view-transition` pseudo-element.  Subsequent groups are added after the root group once their old images have been created.
 
 <div style="width: fit-content; margin: 0 auto">
 ```d2 width=450 sketch title="Creation of old images"
@@ -266,9 +266,9 @@ If no existing group is found, a `new ::view-transition-image-pair` and `::view-
 ```
 </div>
 
-As with the old DOM, the pre-order depth-first traversal of the new DOM typically identifies the `<html>` element as the first to have its image captured.
+As with the old DOM, the pre-order depth-first traversal of the new DOM typically identifies the `:root` element as the first to have its image captured.
 
-In a typical setup, where the View Transition API automatically assigns the `root` view transition name to the `<html>` element in both the old and new DOM, the group for the `root` transition name will already exist when the image of the `<html>`  element is captured in the new DOM. Thus, the first five lines of the output, [as shown above](#groups-and-image-pairs), are common in most settings.
+In a typical setup, where the View Transition API automatically assigns the `root` view transition name to the `:root` element in both the old and new DOM, the group for the `root` transition name will already exist when the image of the `:root` element is captured in the new DOM. Thus, the first five lines of the output, [as shown above](#groups-and-image-pairs), are common in most settings.
 
 When examining the `::view-transition-groups` in order, the elements at the start of the list will have at least an old image, while those towards the end will have at least a new image.
 

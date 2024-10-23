@@ -32,16 +32,7 @@ It is not important to have much imagination when choosing names. They can be th
 
 At the start of the view transition, the **view transition names have to be unique** in the DOM. You can exempt an element from this uniqueness check by setting its (or one of its parent's) styling to `visibility: hidden` or `display: none`. For those elements, the browser won't generate pseudos.
 
-The browser automatically assigns the view transition name `root` to the `:root` element, i.e. the top-level `<html>` element of the DOM. If you prefer another name, you can override it. If you do not want the `<html>` element to participate in the view transition with own pseudo-elements, you explicitly have to remove the `root` name with either
-```css
-:root {
-  view-transition-name: none;
-}
-```
-or
-```html
-<html style="view-transition-name: none">
-```
+The browser automatically assigns the view transition name `root` to the `:root` element, i.e. the top-level `<html>` element for an HTML document. If you prefer another name, you can override it. If you do not want the `<html>` element to participate in the view transition with own pseudo-elements, you explicitly have to remove the `root` name by [overriding it with `none`](/basics/pseudos/#opt-out).
 
 Of course view transition names do not need to be static. You can assign them conditionally, e.g. inside a media query or with a selector that checks for a special CSS class further up the DOM. Another interesting way for conditional assignment of view transition names is to let the m [depend on view transition types](/basics/styling/#conditional-view-transitions).
 
