@@ -102,7 +102,7 @@ function sidebar() {
       { label: 'View Transition Examples', link: "/basics/examples/" },
       { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
       { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" },
-      { label: 'Styling View Transition', link: "/basics/styling/" }
+      { label: 'Styling View Transitions', link: "/basics/styling/" }
     ]
   }, {
     label: 'CSS Tips & Tricks',
