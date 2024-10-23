@@ -1,0 +1,41 @@
+---
+import {Image} from "astro:assets";
+export interface Props {
+  alt: string;
+  image: any;
+}
+---
+
+<div style="display:flex">
+  <div id="logo" style="flex:1; margin: 3ex">
+    <Image src={Astro.props.image} alt={Astro.props.alt} />
+  </div><div style="flex:3">
+    <slot />
+  </div>
+</div>
+<style is:global>
+  #logo img {
+    view-transition-name: logo;
+    mask-image: radial-gradient(
+        ellipse at center,
+        white 35%,
+        transparent 71%
+      );
+  }
+  ::view-transition-old(logo) {
+    animation: 250ms ease both logo-out;
+  }
+  ::view-transition-new(logo) {
+    animation: 250ms 250ms ease both logo-in;
+  }
+  @keyframes logo-out {
+    to {
+      transform: rotateY(90deg);
+    }
+  }
+  @keyframes logo-in {
+    from {
+      transform: rotateY(90deg);
+    }
+  }
+</style>

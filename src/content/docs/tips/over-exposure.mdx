@@ -5,7 +5,6 @@ description: Why custom fade animations for view transitions might flash.
 
 Defining custom fade animations for view transitions is not as straightforward as it might initially seem. Typical issues, where the combined old an new image appears brighter or darker as expected during view transitions can be caused by a [wrong `mix-blend-mode`](#set-the-correct-mix-blend-mode) or by [reverting an asymmetric timing function](#avoid-reverse-with-asymmetric-timings).
 
-
 You can create custom fade animations for view transitions similar to how the browser applies default animations when no custom animations are specified for the old or new image:
 
 ```css
@@ -21,7 +20,6 @@ You can create custom fade animations for view transitions similar to how the br
 }
 ```
 
-
 ## Root Causes for Flashes
 
 However, this seemingly straightforward approach can result in flashes, sometimes similar to an overexposed effect or a sudden darkening of the animation. The image flickers during the transition, making the animation appear brighter than either the old or new image. With a dark background, the effect is just the opposite: halfway through the animation, the combined image appears darker than either the old or new image.
@@ -30,16 +28,17 @@ This effect is most noticeable during a cross-fade involving the same image. \
 **See it in action: click the image to trigger a view transition** using the definition above.
 
 <style>{`
-::view-transition-old(main),
-::view-transition-new(main) {
-  animation-duration: 0 !important;
-}
+  :active-view-transition-type(same-document)::view-transition-old(main),
+  :active-view-transition-type(same-document)::view-transition-new(main) {
+    animation: none;
+  }
+
+  :active-view-transition-type(same-document) #img {
+    view-transition-name: img;
+  }
 `}</style>
 
 <style>{`
-#img {
-  view-transition-name: img;
-}
 ::view-transition-old(img) {
   animation: both 1s fadeOut;
 }
@@ -61,7 +60,7 @@ This effect is most noticeable during a cross-fade involving the same image. \
 <div style="background-color: yellow">
   <img
     id="img"
-    onclick="self.document.startViewTransition()"
+    onclick="self.document.startViewTransition({types: ['same-document']})"
     src="/landscape.webp"
     data-zoom-off
   />
@@ -90,9 +89,10 @@ Additionally, the browser's built-in stylesheet automatically assigns the `isola
 
 The `-ua-mix-blend-mode-plus-lighter` animation is only added by the browser if the image-pair has both, an old and a new image. Single children (:only-child) in image pairs blend in normal mode. While you can not reference the `-ua-mix-blend-mode-plus-lighter` keyframes definition from your user CSS, you can copy the definition above with your own keyframes name to use it.
 
-
 ## Avoid `reverse` with Asymmetric Timings
+
 Resist the urge to define your fadeIn as a `reverse` fadeOut:
+
 ```css del={5}
 ::view-transition-old(myElement) {
   animation: 1s both fadeOut;
@@ -101,12 +101,16 @@ Resist the urge to define your fadeIn as a `reverse` fadeOut:
   animation: 1s both reverse fadeOut;
 }
 ```
+
 This works well with symmetrical timing functions like `linear` or `ease-in-out`. However, with an asymmetrical timing function such as `ease`, the default, the alpha values only add up to 1 at the start and end of the animation. Thus, even with `mix-blend-mode: plus-lighter`, this results in semi-transparent pixels when cross-fading opaque images. And the effect is even stronger than what we saw in the first example on this page.\
 **Click the image below** to see the effect of a fade-in defined as reverse fade-out with `ease` timing.
 
 <style>{`
-#img2 {
-  view-transition-name: img2;
+
+:active-view-transition-type(same-document) {
+  #img2 {
+    view-transition-name: img2;
+  }
 }
 ::view-transition-old(img2) {
   animation: both 1s fadeOut;
@@ -121,13 +125,13 @@ This works well with symmetrical timing functions like `linear` or `ease-in-out`
 <div style="background-color: yellow">
   <img
     id="img2"
-    onclick="self.document.startViewTransition()"
+    onclick="self.document.startViewTransition({types:['same-document']})"
     src="/landscape.webp"
     data-zoom-off
   />
 </div>
 
-## Final Pattern
+## Complete Pattern
 
 To achieve proper custom fade animations, you can use the following CSS. In this example, `<some-timing-function>` serves as a placeholder for a specific, fixed timing function. This approach assumes that the keyframe definitions for `fadeIn` and `fadeOut` produce opacity values that always sum to 1 at any point during the animation.
 
@@ -144,7 +148,54 @@ To achieve proper custom fade animations, you can use the following CSS. In this
 ::view-transition-new(img):only-child {
   mix-blend-mode: normal;
 }
-@keyframes fadeOut {to {opacity: 0}}
-@keyframes fadeIn {from {opacity: 0}}
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
 ```
+
 You might even drop the marked lines, as only the blending of the new image into the old image is relevant here.
+
+## Reusing the User Agent Stylesheet
+
+As the names of the keyframes are defined in the specification of the View Transition API they are part of the interface. Hence you can refer to them from your own stylesheets, reducing the amount of new definitions.
+
+```css
+::view-transition-old(img) {
+  animation:
+    500ms linear -ua-view-transition-fade-out,
+    500ms linear -ua-mix-blend-mode-plus-lighter;
+}
+::view-transition-old(img) {
+  animation:
+    500ms linear -ua-view-transition-fade-out,
+    500ms linear -ua-mix-blend-mode-plus-lighter;
+}
+```
+
+Make sure you use the [same timing related values](/tips/over-exposure/#avoid-reverse-with-asymmetric-timings) for both animation names.
+
+If your transition is similar to the built-in transition, it may be even better to redefine only some animation-specific properties, but not the entire `animation` shorthand:
+
+```css
+::view-transition-image-pair(*) {
+  animation-duration: 400ms;
+}
+```
+
+or
+
+```css
+::view-transition-new(img),
+::view-transition-old(img) {
+  animation-timing-function: linear;
+}
+```
+
+This way you keep the original `-ua-*` animations, including the `-ua-mix-blend-mode-plus-lighter`. See also the [section on styling](/basics/styling/#cross-fade-of-the-images) for which properties are inherited and which are not.

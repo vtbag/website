@@ -6,29 +6,16 @@ tableOfContents:
   maxHeadingLevel: 3
 ---
 import { Steps } from "@astrojs/starlight/components";
+import Logo from "../../../components/Logo.astro";
+import crossing from "../../../assets/crossing.png";
 
-<div style="display:flex">
-<div id="logo" style="flex:1; margin: 3ex">
-![The Element Crossing](../../../assets/crossing.png)
-</div><div style="flex:3">
+<Logo alt="The Element Crossing" image={crossing}>
 Transfer selected element states across cross-document view transitions.
 
 The Element Crossing allows you to preserve state of the elements of your current page and carry it over to the next page when using cross-document view transitions.
 This also works independent of view transitions as long as all pages have the same origin. Tag your DOM elements for crossing and find their current dynamic state on the next page.
 
-</div>
-</div>
-
-<style>{`
-  #logo img {
-    view-transition-name: logo;
-    mask-image: radial-gradient(
-        ellipse at center,
-        white 35%,
-        transparent 71%
-      );
-  }
-`}</style>
+</Logo>
 
 ## PREREQUISITE
 
@@ -78,16 +65,12 @@ If you want to use the ElementCrossing with an Astro project, see [astro-vtbot](
 
 To use the Element Crossing, you can install the npm package in your project. Alternatively you can load the script from one of the global content delivery networks that provide npm packages.
 
-import { Tabs, TabItem } from "@astrojs/starlight/components";
-
-<Tabs>
-  <TabItem label="Using the npm package" icon="seti:npm">
-    <Steps>
-1. Install `@vtbag/element-crossing@latest` from npm.
+<Steps>
+1. Install `@vtbag/element-crossing` from npm.
 2. In your project, add `@vtbag/element-crossing/lib/vanilla.js` as an inline script at the beginning of the `<head>` element on all pages where you want to retrieve or restore state during navigation.
 </Steps>
 
-Details depend on your project setup and the frameworks used, but it can be as simple as:
+Details depend on your project setup and the frameworks used, but with a bundler like `vite` it can be as simple as:
 
 ```jsx
 import crossing from "@vtbag/element-crossing?url";
@@ -98,38 +81,8 @@ import crossing from "@vtbag/element-crossing?url";
     ...
   </head>
   ...
-</html>;
-```
-  </TabItem>
-  <TabItem label="Loading the script from a CDN" icon="cloudflare">
-
-You can load the script from CDNs such as jsdelivr.net or unpkg.com. Place the script inline at the beginning of the `<head>` element on all pages where you want to retrieve or restore state during navigation.
-
-Using `jsdeliver.net`:
-
-```html
-<html>
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/@vtbag/element-crossing" />
-    ...
-  </head>
-  ...
 </html>
 ```
-
-or alternatively using `unpkg.com`:
-
-```html
-<html>
-  <head>
-    <script src="https://unpkg.com/@vtbag/element-crossing" />
-    ...
-  </head>
-  ...
-</html>
-```
-  </TabItem>
-</Tabs>
 
 To experiment with the over-the-top flavor include the `@vtbag/element-crossing/experimental` and the `@vtbag/element-crossing` script in that order.
 

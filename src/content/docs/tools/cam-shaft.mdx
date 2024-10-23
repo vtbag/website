@@ -3,29 +3,16 @@ title: The Cam-Shaft
 description: "Bump your view transition images into position to avoid that unexpected pseudo-smooth-scrolling."
 ---
 import { Steps } from "@astrojs/starlight/components";
+import Logo from "../../../components/Logo.astro";
+import shaft from "../../../assets/shaft.png";
 
-<div style="display:flex">
-<div id="logo" style="flex:1; margin: 3ex">
-![The Cam-shaft](../../../assets/shaft.png)
-</div><div style="flex:3">
+<Logo alt="The Cam-Shaft" image={shaft}>
 
 Bump your view transition images into position to avoid that unexpected pseudo-smooth-scrolling.
 
 The Cam-Shaft is about an issue we already resolved for Astro's ViewTransitions (see [here](https://events-3bg.pages.dev/jotter/starlight/inner-workings/transitions/#the-pseudo-scrolling-main-area) and [here](https://events-3bg.pages.dev/library/PageOffset/)), but it still requires support for browser-native cross-document view transitions.
 
-</div>
-</div>
-<style>{`
-  #logo img {
-    view-transition-name: logo;
-    mask-image: radial-gradient(
-        ellipse at center,
-        white 35%,
-        transparent 71%
-      );
-  }
-`}</style>
-
+</Logo>
 
 ## PREREQUISITE
 
@@ -48,16 +35,12 @@ If you want to use the Cam-Shaft with an Astro project, see [astro-vtbot](https:
 
 To use the Cam-Shaft, you can install the npm package in your project. Alternatively you can load the script from one of the global content delivery networks that provide npm packages.
 
-import { Tabs, TabItem } from "@astrojs/starlight/components";
-
-<Tabs>
-  <TabItem label="Using the npm package" icon="seti:npm">
-    <Steps>
-1. Install `@vtbag/cam-shaft@latest` from npm.
+<Steps>
+1. Install `@vtbag/cam-shaft from npm
 2. In your project, add `@vtbag/cam-shaft/index.js` as an inline script at the beginning of the `<head>` element on all pages of your site.
 </Steps>
 
-Details depend on your project setup and the frameworks used, but it can be as simple as:
+Details depend on your project setup and the frameworks used, but with a bundler like `vite` it can be as simple as:
 
 ```jsx
 import shaft from "@vtbag/cam-shaft?url";
@@ -67,41 +50,10 @@ import shaft from "@vtbag/cam-shaft?url";
     ...
   </head>
   ...
-</html>;
-```
-  </TabItem>
-  <TabItem label="Loading the script from a CDN" icon="cloudflare">
-
-You can load the script from CDNs such as jsdelivr.net or unpkg.com. Place the script inline at the beginning of the `<head>` element on all pages where you need avoid pseudo-smooth-scrolling.
-
-Using `jsdeliver.net`:
-
-```html
-<html>
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/@vtbag/cam-shaft" />
-    ...
-  </head>
-  ...
 </html>
 ```
-
-or alternatively using `unpkg.com`:
-
-```html
-<html>
-  <head>
-    <script src="https://unpkg.com/@vtbag/cam-shaft" />
-    ...
-  </head>
-  ...
-</html>
-```
-  </TabItem>
-</Tabs>
 
 ## Configuration and Usage
-
 
 The Cam-Shaft script needs to know which view transition name's images it should bump and nudge. By default, it assumes it should handle `::view-transition-group(main)`.
 

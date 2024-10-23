@@ -1,4 +1,4 @@
-/basics/pseudos/
-  Cache-Control: no-cache
-  Etag: W/"13d5c-c2EQ2YBn07GjDUKtkkQ7DaNzk70"
-  Rumpel: "Stielzchen"
+/*
+  cache-control: max-age=60, stale-while-revalidate=120, stale-if-error=86400
+  last-modified: Sat, 19 Oct 2024 11:07:00 GMT
+

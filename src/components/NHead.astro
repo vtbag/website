@@ -8,11 +8,14 @@ import "./vtbag-bar.css";
 
 <StarlightHead {...Astro.props}><slot /></StarlightHead>
 
+{ // @ts-ignore
+<link rel="expect" href="#unexpected" blocking="render"/>}
+
 {/* Decent transitions for scrolled down pages */}
 <script is:inline src={camShaft}></script>
 
 {/* Make animation direction based on the order of the pages in the sidebar */}
-<script is:inline src={turnSignal} data-selector="nav.sidebar li a"></script>
+<script is:inline src={turnSignal} data-selector="header a, nav.sidebar li a"></script>
 
 {
   /* Make headings stand out during view transitions. Can be used to declaratively add view transition names which open a door to all kinds of funny thing. */
@@ -37,24 +40,28 @@ import "./vtbag-bar.css";
   main {
     view-transition-name: main;
   }
+  :active-view-transition-type(same) main {
+    view-transition-name: none;
+  }
   ::view-transition-old(main) {
-    animation: forwardsSwingOut 400ms ease-in-out;
+    animation: forwardsSwingOut 500ms ease-in-out;
   }
   ::view-transition-new(main) {
-    animation: forwardsSwingIn 400ms ease-in-out;
+    animation: forwardsSwingIn 500ms ease-in-out;
   }
   :active-view-transition-type(backward)::view-transition-old(main) {
-    animation: backwardsSwingOut 400ms ease-in-out;
+    animation: backwardsSwingOut 500ms ease-in-out;
   }
   :active-view-transition-type(backward)::view-transition-new(main) {
-    animation: backwardsSwingIn 400ms ease-in-out;
+    animation: backwardsSwingIn 500ms ease-in-out;
   }
-  :active-view-transition-type(same)::view-transition-old(main) {
-    animation: shake-old 400ms ease-in-out;
+  :active-view-transition-type(same)::view-transition-old(root) {
+    animation: shake-old 500ms ease-in-out;
   }
-  :active-view-transition-type(same)::view-transition-new(main) {
-    animation: shake-new 400ms ease-in-out;
+  :active-view-transition-type(same)::view-transition-new(root) {
+    animation: shake-new 500ms ease-in-out;
   }
+
   @keyframes forwardsSwingOut {
     0% {
       transform: translateX(0);
@@ -96,28 +103,15 @@ import "./vtbag-bar.css";
     }
   }
   @keyframes shake-old {
-    25% {
-      transform: rotateZ(-2deg);
-    }
-    50% {
-      transform: rotateZ(0deg);
-      opacity: 0.5;
-    }
-    51%, 100% {
+    to {
+      transform: scale(25);
       opacity: 0;
     }
   }
   @keyframes shake-new {
-    0%, 49% {
+    from {
       opacity: 0;
-    }
-    50% {
-      transform: rotateZ(0deg);
-      opacity: 0.5;
-    }
-    75% {
-      transform: rotateZ(2deg);
-      opacity: 1;
+      transform: scale(0);
     }
   }
   ::view-transition-image-pair(main) {
