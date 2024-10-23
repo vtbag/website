@@ -18,7 +18,17 @@ There are three parts that you influence with CSS when it comes to view transiti
 * Trigger CSS for things other than animations
 
 ### Add DOM Elements to View Transition
-If you want a DOM element to participate in view transitions with an individual animation, you assign a value to the `view-transition-name` CSS property of the element. The browser will generate three or four pseudo-elements for each DOM element with a view transition name. These are [a transition group, an image pair](/basics/pseudos/#groups-and-image-pairs) and at least one of [the old or new image pseudos](/basics/pseudos/#old-and-new-image-pseudos).
+If you want a DOM element to participate in view transitions with an individual animation, you assign a value to the `view-transition-name` CSS property of the element. The browser will then generate three or four pseudo-elements for each DOM element with a view transition name. These are [a transition group, an image pair](/basics/pseudos/#groups-and-image-pairs) and at least one of [the old or new image pseudos](/basics/pseudos/#old-and-new-image-pseudos).
+
+```html title="Assigning a view transition name using inline styling"
+<main style="view-transition-name: main">...
+```
+```html title="Assigning a view transition name with a stylesheet"
+main {
+  view-transition-name: main;
+}
+```
+It is not important to have much imagination when choosing names. They can be the same as the `id` of an element or name of a singleton tag like `body` or `footer`.
 
 At the start of the view transition, the **view transition names have to be unique** in the DOM. You can exempt an element from this uniqueness check by setting its (or one of its parent's) styling to `visibility: hidden` or `display: none`. For those elements, the browser won't generate pseudos.
 
@@ -51,6 +61,34 @@ The first two typically work together in a cross-fade or in a combined effect th
 
 If your 'image-pair' has only a single image, the browser places the `view-transition-group()`  at the same position and does not define a morphing animation because there is nothing to align. You will still have the animation for the old or new image, respectively. Instead of a morph animation you have an entry animation if the old image is missing or an exit animation if the new image is missing.
 
+Using an [animation shorthand](https://developer.mozilla.org/en-US/docs/Web/CSS/animation), CSS rules for the element with view transition name `x` could look like this:
+```css title="redefining all animations with the shorthand"
+::view-transition-old(x) {
+  animation: 333ms linear both slide-out;
+}
+::view-transition-new(x) {
+  animation: 333ms linear both slide-in;
+}
+::view-transition-group(x) {
+  animation: none; /* switch off morph transition */
+}
+```
+The animation shorthand is quite expressive. You can define several animations at once wit h different durations and start delays.
+
+There might be good reasons for defining completely new animations for your view-transitions.
+But when you assign to shorthand properties, like `animation`, you completely override the definitions from the user agent stylesheet. And then you have to specify all values or be sure that the CSS default  values fit your expectations.
+
+If you only want to override the duration and the timing function of an animation defined by the view transition API, you might be better of with:
+
+```css title="Redefine single animation properties but keep all others"
+::view-transition-group(x) {
+  animation-duration: 333ms;
+  animation-timing-function: linear;
+}
+```
+
+That way you keep the former definitions and only change what is important to you. For an example on reusing browser-defined keyframes, see the notes on [reusing user agent stylesheets](/tips/over-exposure/#reusing-the-user-agent-stylesheet).
+
 Sometimes you want the animations for new and old images behave different for morph and entry/exit animations. this two cases can be distinguished with the :only-child CSS pseudo-class.
 
 For example, assume you have an element that pops in with an entry animation and pops out with an exit animation. You do not want an animation if the element is on both sides of the transition, i.e. neither exit nor entry.
@@ -61,10 +99,6 @@ For example, assume you have an element that pops in with an entry animation and
 }
 ```
 
-There might be good reasons for defining completely new animations for your view-transitions.
-But when you assign to shorthand properties, most important `animation`, you override the definitions from the user agent stylesheet. And if you do only specify some values for the shorthand, you have to know browser defaults for the values you do not specify explicitly.
-
-Often it is better to use simple CSS properties rather than the shorthands. That way you keep the former definitions and only change what is important to you. For an example [see the notes on reusing user agent stylesheets](/tips/over-exposure/#reusing-the-user-agent-stylesheet) when redefining fade animations.
 
 ### Styling Beyond Animations
 
@@ -82,7 +116,7 @@ You can also style other DOM elements that are not created by the View Transitio
 ## The User Agent Stylesheet
 
 When the View Transition API inserts an animation, it has to give some default values to them.
-Here is what the API automatically assign in its user agent style sheet for a view transition name `x`. In keyframe names, `-ua` stands for _user agent_.
+Here is what the API automatically assign in its [user agent stylesheet](https://drafts.csswg.org/css-view-transitions-1/#ua-styles) for a view transition name `x`. In keyframe names, `-ua` stands for _user agent_.
 
 ### Group / Morph Animation
 If both, the old image and the new image for `x` exist, the API defines a [morph animation from the old to the new image](/basics/default-animations/#morphing-animation-details). The browser generates specific keyframes for each view transition group:
@@ -179,9 +213,7 @@ Of course styling view transition pseudo-elements is not limited to animations. 
 ```
 
 
-## Selecting Pseudo-Elements
-
-
+## Selecting Pseudo-Elements &hellip;
 
 ### &hellip; with Names
 

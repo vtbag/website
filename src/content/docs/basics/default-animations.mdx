@@ -38,7 +38,7 @@ In our example, the group's outline gradually gets wider  and shortens in height
 
 The next row demonstrates the transition of the old image (purple) as if it didn’t fade out. By default, the View Transition API sets the old image's width to match the group shown in the first row, but it doesn’t adjust the height to the group's height, as that would distort the image. Instead, it preserves the image's aspect ratio.
 
-The browser generated CSS that is responsible for this trick [is this](https://drafts.csswg.org/css-view-transitions-1/#ua-styles):
+The browser generated CSS that is responsible for this trick is this:
 
 ```css title="user agent style sheet"
 ::view-transition-old(*),

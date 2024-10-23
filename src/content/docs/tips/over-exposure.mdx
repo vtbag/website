@@ -164,7 +164,7 @@ You might even drop the marked lines, as only the blending of the new image into
 
 ## Reusing the User Agent Stylesheet
 
-As the names of the keyframes are defined in the specification of the View Transition API they are part of the interface. Hence you can refer to them from your own stylesheets, reducing the amount of new definitions.
+As the [names of the keyframes](/basics/styling/#the-user-agent-stylesheet) are defined in the [specification](https://events-3bg.pages.dev/jotter/api/references/#w3c-drafts) of the View Transition API they are part of the interface. Hence you can refer to them from your own stylesheets, reducing the amount of new definitions.
 
 ```css
 ::view-transition-old(img) {
@@ -172,9 +172,9 @@ As the names of the keyframes are defined in the specification of the View Trans
     500ms linear -ua-view-transition-fade-out,
     500ms linear -ua-mix-blend-mode-plus-lighter;
 }
-::view-transition-old(img) {
+::view-transition-new(img) {
   animation:
-    500ms linear -ua-view-transition-fade-out,
+    500ms linear -ua-view-transition-fade-in,
     500ms linear -ua-mix-blend-mode-plus-lighter;
 }
 ```
