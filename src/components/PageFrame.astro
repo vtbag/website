@@ -1,0 +1,11 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import StarlightPageFrame from "@astrojs/starlight/components/PageFrame.astro";
+---
+
+<StarlightPageFrame {...Astro.props}>
+  <slot slot="sidebar" name="sidebar"/>
+  <slot slot="header" name="header"/>
+  <slot slot="default" name="default"/>
+</StarlightPageFrame>
+<div id="the_unexpected"/>

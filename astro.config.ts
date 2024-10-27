@@ -37,7 +37,8 @@ export default defineConfig({
     title: '@vtbag',
     components: {
       Head: "./src/components/NHead.astro",
-      PageTitle: "./src/components/PageTitle.astro"
+      PageTitle: "./src/components/PageTitle.astro",
+      PageFrame: "./src/components/PageFrame.astro",
     },
     plugins: [starlightImageZoom()],
     tableOfContents: {
