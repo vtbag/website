@@ -63,12 +63,23 @@ test.describe("vtbag", () => {
     });
     await new Promise(r => setTimeout(r, 1000));
     const video1 = await page.$eval('video', el => el.currentTime);
+    const svg1 = await page.$eval(
+      '#animated-svg',
+        (el) => el instanceof SVGSVGElement && el.getCurrentTime()
+      );
     console.log(video1);
+    console.log(svg1);
+    
     await page.click('text=Page 2');
     await expect(page).toHaveTitle('Vanilla Element Crossing 2/2 | @vtbag');
 
-    const video2 = await page.$eval('video', el => el.currentTime);
+    const video2 = await page.$eval("video", (el) => el.currentTime);
+    const svg2 = await page.$eval(
+      '#animated-svg',
+      (el) => el instanceof SVGSVGElement && el.getCurrentTime()
+    );
     console.log(video2);
+    console.log(svg2);
   });
 });
 
