@@ -56,7 +56,7 @@ export default defineConfig({
     pagination: true,
     favicon: "/bag4.png",
     logo: {
-      src: "./src/assets/bag.webp"
+      src: "./src/assets/mini-bag.webp"
     },
     social: {
       github: 'https://github.com/vtbag/website'
