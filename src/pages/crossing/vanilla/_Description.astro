@@ -1,7 +1,16 @@
 ---
-
+const PATH_VALUES = `
+  M131.6 -244.4C153.5 -215.3 142.6 -145.6 176.5 -98.2C210.4 -50.7 289.2 -25.3 277.8 -6.6C266.4 12.2 164.8 24.3 131.1 72.3C97.5 120.2 131.7 203.8 121.2 218.8C110.7 233.7 55.3 179.8 11.6 159.8C-32.2 139.7 -64.3 153.4 -103.6 155.1C-142.9 156.8 -189.2 146.4 -179.8 118.5C-170.4 90.7 -105.2 45.3 -120.1 -8.6C-134.9 -62.5 -229.8 -125 -223.2 -125C-216.5 -125 -108.3 -62.5 -54.1 -73.1C0 -83.7 0 -167.3 27.4 -214.8C54.8 -262.3 109.7 -273.6 131.6 -244.4;
+  M166.3 -251.2C207.6 -264.2 227.6 -203.6 254.5 -149.5C281.5 -95.3 315.2 -47.7 322 3.9C328.8 55.5 308.6 111 266.4 138.7C224.3 166.4 160.1 166.4 112.1 200.8C64 235.2 32 304.1 5 295.4C-22 286.8 -44 200.5 -44 138.4C-44 76.2 -22 38.1 -30 19.1C-38 0 -76 0 -110.6 -20C-145.3 -40 -176.6 -80 -180.8 -120.3C-185.1 -160.5 -162.3 -201.1 -127.6 -191.9C-93 -182.7 -46.5 -123.9 8 -137.7C62.5 -151.6 125 -238.2 166.3 -251.2;
+  M122.2 -168C167.1 -185.8 218.2 -170.6 261.4 -137.2C304.6 -103.7 339.8 -51.8 301.1 -22.3C262.4 7.2 149.8 14.3 87.3 14.3C24.8 14.3 12.4 7.2 6.2 41.8C0 76.3 0 152.7 -14.4 177.6C-28.8 202.6 -57.7 176.2 -84.5 153.5C-111.4 130.9 -136.2 111.9 -179 87C-221.7 62 -282.4 31 -299.4 -9.8C-316.4 -50.7 -289.8 -101.3 -232.7 -101.3C-175.5 -101.3 -87.8 -50.7 -43.9 -33.5C0 -16.3 0 -32.7 19.3 -66.2C38.7 -99.6 77.3 -150.3 122.2 -168;
+  M131.6 -244.4C153.5 -215.3 142.6 -145.6 176.5 -98.2C210.4 -50.7 289.2 -25.3 277.8 -6.6C266.4 12.2 164.8 24.3 131.1 72.3C97.5 120.2 131.7 203.8 121.2 218.8C110.7 233.7 55.3 179.8 11.6 159.8C-32.2 139.7 -64.3 153.4 -103.6 155.1C-142.9 156.8 -189.2 146.4 -179.8 118.5C-170.4 90.7 -105.2 45.3 -120.1 -8.6C-134.9 -62.5 -229.8 -125 -223.2 -125C-216.5 -125 -108.3 -62.5 -54.1 -73.1C0 -83.7 0 -167.3 27.4 -214.8C54.8 -262.3 109.7 -273.6 131.6 -244.4;
+`;
 ---
-<p>This is a demonstration of the <b>vanilla flavor</b> of the element crossing. This flavor provides well understood technology and is meant for production.</p>
+
+<p>
+  This is a demonstration of the <b>vanilla flavor</b> of the element crossing. This
+  flavor provides well understood technology and is meant for production.
+</p>
 
 <p>
   Enter data in the form fields, resize the text area, change the checkmarks,
@@ -9,16 +18,28 @@
   left and reposition its scrollbar.
 </p>
 <p>
-  Then select the other page from the navigation sidebar to see whether your changes got
-  preserved. Also check the playback time of the video and the animation in the
-  footer.
+  Then select the other page from the navigation sidebar to see whether your
+  changes got preserved. Also check the playback time of the video and the
+  animation in the footer.
 </p>
 
-
-<video controls width="200" loop autoplay data-vtbag-x="#video @currentTime">
-  <source src="/video.mp4" type="video/mp4" />Your browser does not support the
-  video tag.</video
->
+<div class="animations">
+  <video controls width="200" loop autoplay data-vtbag-x="#video @currentTime">
+    <source src="/video.mp4" type="video/mp4" />Your browser does not support the
+    video tag.</video
+  >
+  <svg id="animated-svg" viewBox="0 0 900 600" width="200" height="112.5" data-vtbag-x="#svg svg-anim:test">
+    <g transform="translate(400 300)">
+    <path>
+      <animate
+        attributeName="d"
+        dur="8000ms"
+        repeatCount="indefinite"
+        values={PATH_VALUES}></animate>
+    </path>
+  </g>
+  </svg>
+</div>
 
 <form id="exampleForm">
   <div class="form-group">
@@ -110,10 +131,25 @@
 </form>
 
 <style is:global>
-  video {
-    margin: auto;
-    display: block;
+  .animations {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+
+  video, svg {
+/*    margin: auto;
+    display: block; */
     border: inset 10px #8888;
+  }
+
+  svg {
+    path {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 4;
+    }
   }
 
   #dark,
