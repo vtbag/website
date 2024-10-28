@@ -37,7 +37,8 @@ export default defineConfig({
     title: '@vtbag',
     components: {
       Head: "./src/components/NHead.astro",
-      PageTitle: "./src/components/PageTitle.astro"
+      PageTitle: "./src/components/PageTitle.astro",
+      PageFrame: "./src/components/PageFrame.astro",
     },
     plugins: [starlightImageZoom()],
     tableOfContents: {
@@ -56,7 +57,7 @@ export default defineConfig({
     pagination: true,
     favicon: "/bag4.png",
     logo: {
-      src: "./src/assets/bag.webp"
+      src: "./src/assets/mini-bag.webp"
     },
     social: {
       github: 'https://github.com/vtbag/website'
