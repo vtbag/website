@@ -1,4 +1,6 @@
 ---
+import AnimatedSvg from "@/components/AnimatedSvg.astro";
+
 
 ---
 <p>This is a demonstration of the <b>over-the-top flavor</b> of the element crossing. This flavor is experimental technology and it is not certain whether it will ever be mature enough for production.</p>
@@ -8,16 +10,17 @@
   left and reposition its scrollbar.
 </p>
 <p>
-  Then select the other page from the navigation sidebar to see whether your changes got
-  preserved. Also check the playback time of the video and the animation in the
-  footer.
+  Then select the other page from the navigation sidebar to see whether your changes got preserved. Also check the playback time of the video and the animated SVG as well as the animation in the footer.
 </p>
 
 
-<video controls width="200" loop autoplay data-vtbag-x="#video @currentTime">
-  <source src="/video.mp4" type="video/mp4" />Your browser does not support the
-  video tag.</video
->
+<div class="animations">
+  <video controls width="200" loop autoplay data-vtbag-x="#video @currentTime">
+    <source src="/video.mp4" type="video/mp4" />Your browser does not support the
+    video tag.</video
+  >
+  <AnimatedSvg expression="#svg ~/svg" />
+</div>
 
 <form id="exampleForm" data-vtbag-x="&form">
   <div class="form-group">
@@ -102,9 +105,14 @@
 </form>
 
 <style is:global>
-  video {
-    margin: auto;
-    display: block;
+  .animations {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+
+  .animations > * {
     border: inset 10px #8888;
   }
 

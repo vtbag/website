@@ -201,6 +201,8 @@ The style expression identifies an entry of the current HTML element's `style` p
 #### anim
 The anim expression references a CSSAnimation of the current HTML element. If the target element on the next page has an animation with the same `animationName`, the current playback time is transferred. Note these current restrictions of the Element Crossing: The `animationName` values must be unique per HTML element, and only CSSAnimations are supported, not CSSTransitions.
 
+The `anim` expression can also be used to persist SVG animation states. Using the special `anim:/svg` expression, it transfers the current animation playback time to the target element. The expression needs to be declared on the `<svg>` element, not on the `<animate>` element.
+
 ### Abbreviated Forms
 The long forms `id:`, `prop:`, `class:`, `style:`, and `anim:` can be abbreviated as `#`, `@`, `.`, `-`, and `~`, respectively. For example, instead of writing `data-vtbag-x="id:group class:active prop:value"`, you could write `data-vtbag-x="#group .active @value"`, or use a combination of both forms.
 

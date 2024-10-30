@@ -54,21 +54,30 @@ test.describe("vtbag", () => {
 
 
   test('preserves animations and media timing', async ({ page }) => {
-    // todo: unable to get the video to play yet
     await page.goto('http://localhost:4321/crossing/vanilla/1/');
     await expect(page).toHaveTitle('Vanilla Element Crossing 1/2 | @vtbag');
     await page.evaluate(async () => {
-      const video = document.querySelector("video");
-      video && video.play();
+      document.querySelector("video")!.play();
     });
     await new Promise(r => setTimeout(r, 1000));
     const video1 = await page.$eval('video', el => el.currentTime);
-    console.log(video1);
+    const svg1 = await page.$eval('svg', (el: SVGSVGElement) => el.getCurrentTime());
+    const footer1 =await page.$eval('footer div', el => ~~getComputedStyle(el).transform.split(/,\s*/)[4]!);
+
     await page.click('text=Page 2');
     await expect(page).toHaveTitle('Vanilla Element Crossing 2/2 | @vtbag');
+    await new Promise(r=>setTimeout(r)); // get rid of race condition
 
-    const video2 = await page.$eval('video', el => el.currentTime);
-    console.log(video2);
+    const video2 = await page.$eval("video", (el) => el.currentTime);
+    const svg2 = await page.$eval('svg', (el: SVGSVGElement) => el.getCurrentTime());
+    const footer2 =await page.$eval('footer div', el => ~~getComputedStyle(el).transform.split(/,\s*/)[4]!);
+
+    expect(video1).toBeGreaterThan(1);
+    expect(video2).toBeGreaterThan(video1);
+    expect(svg1).toBeGreaterThan(1);
+    expect(svg2).toBeGreaterThan(svg1);
+    expect(footer1).toBeGreaterThan(1);
+    expect(footer2).toBeGreaterThan(footer1);
   });
 });
 
