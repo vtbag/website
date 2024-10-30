@@ -1,4 +1,6 @@
 ---
+import AnimatedSvg from "@/components/AnimatedSvg.astro";
+
 
 ---
 
@@ -8,10 +10,14 @@
   single-page applications to your multi-page app.
 </p>
 
-<video controls width="200" loop autoplay>
-  <source src="/video.mp4" type="video/mp4" />Your browser does not support the
-  video tag.</video
->
+
+<div class="animations">
+  <video controls width="200" loop autoplay>
+    <source src="/video.mp4" type="video/mp4" />Your browser does not support the
+    video tag.</video
+  >
+  <AnimatedSvg />
+</div>
 
 <p>
   Some HTML elements on your page may change their internal state over time or
@@ -107,9 +113,14 @@
 </form>
 
 <style is:global>
-  video {
-    margin: auto;
-    display: block;
+  .animations {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+
+  .animations > * {
     border: inset 10px #8888;
   }
 
