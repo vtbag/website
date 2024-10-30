@@ -66,6 +66,7 @@ test.describe("vtbag", () => {
 
     await page.click('text=Page 2');
     await expect(page).toHaveTitle('Vanilla Element Crossing 2/2 | @vtbag');
+    await new Promise(r=>setTimeout(r)); // get rid of race condition
 
     const video2 = await page.$eval("video", (el) => el.currentTime);
     const svg2 = await page.$eval('svg', (el: SVGSVGElement) => el.getCurrentTime());
