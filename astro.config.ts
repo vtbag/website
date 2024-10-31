@@ -9,7 +9,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 
 import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
-import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
+//import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
 export default defineConfig({
@@ -94,7 +94,7 @@ function sidebar() {
       { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" },
       { label: 'Element Crossing', link: "/tools/element-crossing/" },
       { label: 'Turn-Signal', link: "/tools/turn-signal/" },
-      { label: 'Cam-Shaft', link: "/tools/cam-shaft/", badge: { text: 'new', variant: 'tip' } as Badge },
+      { label: 'Cam-Shaft', link: "/tools/cam-shaft/" }
     ],
   }, {
     label: 'Basics',
