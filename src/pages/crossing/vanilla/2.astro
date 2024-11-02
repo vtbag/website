@@ -4,6 +4,13 @@ import Description from "./_Description.astro";
 ---
 
 <Layout title="Vanilla Element Crossing 2/2 | @vtbag">
+  <script is:inline slot="head">
+    addEventListener("pagereveal", () => {
+      const video = document.querySelector("video");
+      video.parentElement.insertAdjacentElement("beforeend", video);
+    });
+  </script>
   <h1>Vanilla Element Crossing Demo 2/2</h1>
   <Description />
 </Layout>
+

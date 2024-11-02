@@ -7,10 +7,16 @@ export interface Props {
 const { title } = Astro.props;
 ---
 
-<html lang="en" data-vtbag-x="id:root class:dark style:color-scheme">
+<html id="root" lang="en" data-vtbag-x="id:root class:dark style:color-scheme">
   <head>
     <meta charset="utf-8" />
     <title>{title}</title>
+    {
+      (
+        // @ts-ignore
+        <link rel="expect" href="#root" blocking="render" />
+      )
+    }
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/bag3.png" type="image/png" />
     <script is:inline src={crossing}></script>
@@ -25,6 +31,7 @@ const { title } = Astro.props;
         _.classList.add(_.dataset.theme);
       }
     </script>
+    <slot name="head" />
   </head>
   <body>
     <div id="all">
@@ -112,6 +119,50 @@ const { title } = Astro.props;
   }
   @view-transition {
     navigation: auto;
+  }
+  ::view-transition-group(root) {
+    animation: none;
+  }
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  video {
+    view-transition-name: video;
+  }
+  svg {
+    view-transition-name: svg;
+  }
+
+  ::view-transition-new(video),
+  ::view-transition-new(svg) {
+    animation: 500ms both reveal ;
+  }
+  ::view-transition-old(video),
+  ::view-transition-old(svg) {
+    animation: 500ms both hide;
+  }
+  @keyframes hide {
+    14.99% {
+      opacity: 1;
+    }
+    15% {
+      opacity: 0;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes reveal {
+    from {
+      opacity:0;
+    }
+    14.99% {
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
   }
   @supports (view-transition-class: test) {
     #limited {

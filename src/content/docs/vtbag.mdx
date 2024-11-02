@@ -3,14 +3,34 @@ title: "@vtbag: Overview"
 description: What are those Bags of Tricks?
 ---
 
+
+import Logo from "../../components/Logo.astro";
+import ToolsBar from "../../components/ToolsBar.astro";
+
+import chamber from "../../assets/chamber.png";
+import crossing from "../../assets/crossing.png";
+import signal from "../../assets/signal.png"
+import shaft from "../../assets/shaft.png"
+
 @vtbag is a comprehensive suite of tools, tips, and tricks to make your experience with the View Transition API smoother and more efficient.
 
 ### Tools
 The site already got some interesting tools to offer:
-* The [Inspection Chamber](/tools/inspection-chamber/), a in-browser devtool that allows you to interactively put your view transitions through their paces.
-* The [Element-Crossing](/tools/element-crossing/), which allows you to move state across browser-native cross-document view transitions.
-* The [TurnSignal](/tools/turn-signal/), which sets view transition types so your CCS rules can style backward animations different than forward animations.
-* The [CamShaft](/tools/cam-shaft/), which bumps your view transition images into place to avoid unexpected pseudo-smooth-scroll effects.
+<ToolsBar>
+<Logo alt="The Inspection Chamber" image={chamber} href="/tools/inspection-chamber/">
+The [Inspection Chamber](/tools/inspection-chamber/), a in-browser devtool that allows you to interactively put your view transitions through their paces.
+</Logo>
+<Logo alt="The Element Crossing" image={crossing} href="/tools/element-crossing/">
+The [Element-Crossing](/tools/element-crossing/), which allows you to move state like video playback position across browser-native cross-document view transitions.
+</Logo>
+<Logo alt="The Turn-Signal" image={signal} href="/tools/turn-signal/">
+The [TurnSignal](/tools/turn-signal/), which sets view transition types so your CCS rules can style backward animations different than forward animations.
+</Logo>
+<Logo alt="The Cam-Shaft" image={shaft} href="/tools/cam-shaft/">
+The [CamShaft](/tools/cam-shaft/), which bumps your view transition images into place to avoid unexpected pseudo-smooth-scroll effects.
+</Logo>
+</ToolsBar>
+
 
 More tools are in the pipeline, and I’m eager to hear your feedback and learn [what would be most valuable to you](https://github.com/vtbag/website/issues/new?assignees=&labels=enhancement&projects=&template=feature-request.yml).
 
@@ -24,19 +44,18 @@ The third block contains practical tips and tricks for styling view transitions.
 
 @vtbag is all about the View Transition API. Find out [more about this browser API](https://events-3bg.pages.dev/jotter/api/).
 
-The content part of this site is build with [Starlight + View Transitions](https://events-3bg.pages.dev/jotter/starlight/guide/). Thanks to Astro's view transition simulation, you can experience some of the effects on the content pages even with browsers that do not yet offer native support for the View Transition API.
-
-The tech demos on this site are independent of Astro. They only use the View Transition API and require browsers with native support for it. Cross document effects need a [level 2 compliant browser](https://events-3bg.pages.dev/jotter/api/test-page/). The [Inspection Chamber](/tools/inspection-chamber/) also requires support for view transitions inside iframes, which might require you to manually set the `chrome://flags/#view-transition-on-navigation-iframe` flag.
+The content part of this site is build with [Starlight](https://starlight.astro.build/). The view transitions featured on this site and tech demos are independent of Astro. They only use the View Transition API and require browsers with native support for it. Cross document effects need a [level 2 compliant browser](https://events-3bg.pages.dev/jotter/api/test-page/).
 
 ## Relation to astro-vtbot
 
-Some of you might be familiar with [astro-vtbot](https://events-3bg.pages.dev), the big sister, or at least the spiritual predecessor, of @vtbag: Even when the same-document (level 1) View Transition API in Chrome was only accessible behind flags, the Astro project had already anticipated parts of the level 2 specification, enabling cross-document view transitions for MPAs. Of course, Astro's client-side router isn’t technically comparable to level 2 view transitions and has its own challenges in handling scripts and state, but it allowed many users to experiment early and build expertise in view transitions.
+Some of you might be familiar with [astro-vtbot](https://events-3bg.pages.dev), the big sister, or at least the spiritual predecessor, of `@vtbag`: Even when the same-document (level 1) View Transition API in Chrome was only accessible behind a flag, the Astro project had already anticipated parts of the level 2 specification, enabling cross-document view transitions for MPAs. Of course, Astro's client-side router isn’t technically comparable to level 2 view transitions and has its own challenges in handling scripts and state, but it allowed many users to experiment early and build expertise in view transitions.
 
 Astro-vtbot, as a community project, built on that foundation by offering technical demos, reusable components, and a wealth of tips and tricks for using view transitions in Astro projects.
 
 ## Another Bag of Tricks
-With the wider adoption of the view transition API and the introduction of level 2, cross-document transitions can now be defined purely with CSS, without the need for an additional client-side router. @vtbag is your go-to resource for framework-agnostic support around view transitions.
+With the wider adoption of the view transition API and the introduction of level 2, cross-document transitions can now be defined purely with CSS, without the need for an additional client-side router. `@vtbag` is your go-to resource for framework-agnostic support around view transitions.
 
-@vtbag inherits the concept of a Bag of Tricks from astro-vtbot: a diverse collection of tricks, tips, components, and tools. While astro-vtbot continues to focus on the specific needs of the Astro router, @vtbag aims at the view transition API in general, without being tied to any specific framework.
+`@vtbag` inherits the concept of a Bag of Tricks from astro-vtbot: a diverse collection of tricks, tips, components, and tools. While astro-vtbot continues to focus on the specific needs of the Astro router, `@vtbag` aims at the view transition API in general, without being tied to any specific framework.
 
-Both astro-vtbot and @vtbag might be referred to as "The Bag" as typically the context makes it clear which one is meant.
+Both astro-vtbot and `@vtbag` might be referred to as "The Bag" as typically the context makes it clear which one is meant.
+

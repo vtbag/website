@@ -4,6 +4,12 @@ import Description from "./_Description.astro";
 ---
 
 <Layout title="Over-the-Top Element Crossing 2/2 | @vtbag">
+  <script is:inline slot="head">
+    addEventListener("pagereveal", () => {
+      const video = document.querySelector("video");
+      video.parentElement.insertAdjacentElement("beforeend", video);
+    });
+  </script>
   <h1>Experimental Over-the-Top Element Crossing Demo 2/2</h1>
   <Description />
 </Layout>

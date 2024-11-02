@@ -9,6 +9,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 
 import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
+import inoxToolsPortalGun from "@inox-tools/portal-gun";
 //import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
@@ -60,7 +61,8 @@ export default defineConfig({
       src: "./src/assets/mini-bag.webp"
     },
     social: {
-      github: 'https://github.com/vtbag/website'
+      github: 'https://github.com/vtbag/website',
+      blueSky:'https://bsky.app/profile/martrapp.bsky.social'
     },
     editLink: {
       baseUrl: "https://github.com/vtbag/website/edit/main/"
@@ -70,7 +72,7 @@ export default defineConfig({
     sidebar: sidebar(),
   }), d2({
     skipGeneration: process.env.GITHUB_ACTIONS === "true"
-  }), vtbot({ autoLint: false, loadingIndicator: false })],
+  }), vtbot({ autoLint: false, loadingIndicator: false }), inoxToolsPortalGun()],
   vite: {
     server: {
       fs: {

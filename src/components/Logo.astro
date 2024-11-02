@@ -1,26 +1,25 @@
 ---
-import {Image} from "astro:assets";
+import { Image } from "astro:assets";
 export interface Props {
   alt: string;
   image: any;
+  href: string;
 }
+
+const { alt, image, href} = Astro.props;
 ---
 
 <div style="display:flex">
-  <div id="logo" style="flex:1; margin: 3ex">
-    <Image src={Astro.props.image} alt={Astro.props.alt} />
-  </div><div style="flex:3">
+  <div class="logo" style=`flex:1; margin: 3ex;`><a {href}>
+    <Image src={image} {alt} loading="eager" decoding="sync"/></a>
+  </div><div style=`flex:3`>
     <slot />
   </div>
 </div>
 <style is:global>
-  #logo img {
+  .logo img {
     view-transition-name: logo;
-    mask-image: radial-gradient(
-        ellipse at center,
-        white 35%,
-        transparent 71%
-      );
+    mask-image: radial-gradient(ellipse at center, white 35%, transparent 71%);
   }
   ::view-transition-old(logo) {
     animation: 250ms ease both logo-out;

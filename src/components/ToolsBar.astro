@@ -1,0 +1,47 @@
+---
+
+---
+
+<div id="toolsbar">
+  <slot />
+</div>
+<style is:global>
+  #toolsbar {
+    width: clamp(333px, ,333px);
+    display:flex;
+    flex-wrap: wrap;
+    margin-inline: auto;
+  }
+  #toolsbar > div:nth-of-type(1) {
+    margin-top: 1em;
+  }
+  #toolsbar > div {
+    width: 333px;
+  }
+  .logo img {
+    view-transition-name: none;
+  }
+</style>
+<portal-gate to="end:head">
+  <script is:inline>
+    const mark = (entry) => {
+      const elem = document.querySelector(
+        `#toolsbar > div:has(a[href="${new URL(entry.url).pathname}"]) > .logo img`
+      );
+      elem && elem.style.setProperty("view-transition-name", "logo");
+      return elem;
+    };
+    addEventListener(
+      "pageswap",
+      (e) => e.viewTransition && mark(e.activation.entry)
+    );
+    addEventListener("pagereveal", (e) => {
+      if (e.viewTransition) {
+        const elem = mark(navigation.activation.from);
+        e.viewTransition.ready.then(() =>
+          elem?.style.removeProperty("view-transition-name")
+        );
+      }
+    });
+  </script>
+</portal-gate>

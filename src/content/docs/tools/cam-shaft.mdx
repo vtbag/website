@@ -4,15 +4,16 @@ description: "Bump your view transition images into position to avoid that unexp
 ---
 import { Steps } from "@astrojs/starlight/components";
 import Logo from "../../../components/Logo.astro";
+import CTA from "../../../components/CTA.astro";
 import shaft from "../../../assets/shaft.png";
 
 <Logo alt="The Cam-Shaft" image={shaft}>
-
 Bump your view transition images into position to avoid that unexpected pseudo-smooth-scrolling.
 
 The Cam-Shaft is about an issue we already resolved for Astro's ViewTransitions (see [here](https://events-3bg.pages.dev/jotter/starlight/inner-workings/transitions/#the-pseudo-scrolling-main-area) and [here](https://events-3bg.pages.dev/library/PageOffset/)), but it still requires support for browser-native cross-document view transitions.
 
 </Logo>
+<CTA>[Enjoy Instant Scrolling](/shaft-demo2/1/)</CTA>
 
 ## PREREQUISITE
 

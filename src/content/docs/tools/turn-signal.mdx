@@ -4,6 +4,7 @@ description: "@vtbag/turn-signal simplifies directional (back/forward) view tran
 ---
 import { Steps } from "@astrojs/starlight/components";
 import Logo from "../../../components/Logo.astro";
+import CTA from "../../../components/CTA.astro";
 import signal from "../../../assets/signal.png"
 
 <Logo alt="The Turn-Signal" image={signal}>
@@ -13,6 +14,7 @@ The Turn-Signal is a lightweight script for purely progressive enhancement of cr
 
 </Logo>
 
+<CTA>[Move Forwards & Backwards](/signal-demo/bag/)</CTA>
 
 ## PREREQUISITE
 
@@ -164,6 +166,6 @@ The Turn-Signal also always sets view transition type `old` on the old page and 
 |--|--|--|
 |data-selector|a CSS selector|<p>If your site has a concept of _previous_ and _next_ page, use this to tell the Turn-Signal about your pages and their order. One selector _to find them all_.</p><p>The selector should return one element per page of your site, and each element must have an href attribute. Typically, you would select `<a>` elements from your navigation bar, such as `data-selector="nav a"`.</p><p>If your site doesn't already have a suitable structure, consider generating a list of pages in a non-intrusive way. For example, you could use `<a>` elements inside a `<template>` element or `<link>` elements with a custom `rel` attribute.</p><p> The sequence of selected URLs is used to derive the navigation direction. Navigation to a page that comes later in the sequence of selected URLs will be a _forward_ navigation. Navigation to a page that comes earlier in the sequence of selected URLs will be a _backward_ navigation.</p>|
 |data-direction-types|backward-value, same-value, forward-value|<p>The Turn-Signal sets view transition types to convey the derived direction in a form that can easily be used for styling your animations.</p><p>By default, the types are `backward`, `same`, and `forward`, i.e. as if set using `data-direction-types="backward, same, forward"`. </p><p>An alternative would be `data-direction-types="reverse,,"` This would do nothing for same page and forward navigation, but would set the `reverse` type on backward navigation.</p><p>On the old page, the Turn-Signal also sets a type called `old` and on the new page it sets a type called `new`. This behavior can not be customized.</p>
-|data-direction-attribute|attribute-name, backward-value, same-value, forward-value|<p>For compatibility with existing code you might want to use attributes rather than view transition types to select different styling for your animations.</p><p>You can specify what attribute to use and what values to set. Here is an example of how to make Turn-Signal directions compatible with th CSS Astro generates for `transition:animate`: `data-direction-attribute="data-astro-transition, back, forward, forward"`.</p>
+|data-direction-attribute|attribute-name, backward-value, same-value, forward-value|<p>For compatibility with existing code you might want to use attributes rather than view transition types to select different styling for your animations.</p><p>You can specify what attribute to use and what values to set. Here is an example of how to make Turn-Signal directions compatible with the CSS Astro generates for `transition:animate`: `data-direction-attribute="data-astro-transition, back, forward, forward"`.</p>
 
 

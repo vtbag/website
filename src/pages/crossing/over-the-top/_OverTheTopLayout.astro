@@ -27,6 +27,7 @@ const { title } = Astro.props;
     </script>
     <script is:inline src={overTheTop}></script>
     <script is:inline src={crossing}></script>
+    <slot name="head" />
   </head>
   <body>
     <div id="all">
@@ -114,6 +115,51 @@ const { title } = Astro.props;
   }
   @view-transition {
     navigation: auto;
+  }
+
+  ::view-transition-group(root) {
+    animation: none;
+  }
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  video {
+    view-transition-name: video;
+  }
+  svg {
+    view-transition-name: svg;
+  }
+
+  ::view-transition-new(video),
+  ::view-transition-new(svg) {
+    animation: 500ms both reveal ;
+  }
+  ::view-transition-old(video),
+  ::view-transition-old(svg) {
+    animation: 500ms both hide;
+  }
+  @keyframes hide {
+    14.99% {
+      opacity: 1;
+    }
+    15% {
+      opacity: 0;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes reveal {
+    from {
+      opacity:0;
+    }
+    14.99% {
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
   }
   @supports (view-transition-class: test) {
     #limited {

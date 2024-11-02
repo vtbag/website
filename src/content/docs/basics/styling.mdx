@@ -5,7 +5,6 @@ description: Styling view transitions with :active-view-transition-type and view
 
 import { Steps } from "@astrojs/starlight/components";
 
-
 The animations introduced by the View Transition API are controlled by CSS rules. The way to make the animations fit your expectations is to alter the [default animation](/basics/default-animations/) by overriding the styles for the [pseudo elements](/basics/pseudos/).
 
 To do this efficiently you should know what the View Transition API defines as defaults and how to easily change these styles if needed. To simplify styling, level 2 of the API introduced helpers in form of the `view-transition-class` property and the `:active-view-transition*` pseudo-classes.
@@ -13,21 +12,23 @@ To do this efficiently you should know what the View Transition API defines as d
 ## Styling Tasks for View Transitions
 
 There are three parts that you influence with CSS when it comes to view transitions:
-* Tell the View Transition API which DOM elements to setup for individual animations
-* Setup animations for elements participating in a view transition
-* Trigger CSS for things other than animations
+
+- Tell the View Transition API which DOM elements to setup for individual animations
+- Setup animations for elements participating in a view transition
+- Trigger CSS for things other than animations
 
 ### Add DOM Elements to View Transition
+
 If you want a DOM element to participate in view transitions with an individual animation, you assign a value to the `view-transition-name` CSS property of the element. The browser will then generate three or four pseudo-elements for each DOM element with a view transition name. These are [a transition group, an image pair](/basics/pseudos/#groups-and-image-pairs) and at least one of [the old or new image pseudos](/basics/pseudos/#old-and-new-image-pseudos).
 
 ```html title="Assigning a view transition name using inline styling"
-<main style="view-transition-name: main">...
+<main style="view-transition-name: main">...</main>
 ```
+
 ```html title="Assigning a view transition name with a stylesheet"
-main {
-  view-transition-name: main;
-}
+main { view-transition-name: main; }
 ```
+
 It is not important to have much imagination when choosing names. They can be the same as the `id` of an element or name of a singleton tag like `body` or `footer`.
 
 At the start of the view transition, the **view transition names have to be unique** in the DOM. You can exempt an element from this uniqueness check by setting its (or one of its parent's) styling to `visibility: hidden` or `display: none`. For those elements, the browser won't generate pseudos.
@@ -44,15 +45,16 @@ For a single view transition name, `x`, there are different animations that you 
 
 If your image-pair has both, an old and a new image, you can control how the old image is replaced by the new image during the transition. Three animations are involved:
 
-* the animation of the `view-transition-old(x)` pseudo-element,
-* the animation of the `view-transition-new(x)` pseudo-element and
-* the animation of the `view-transition-group(x)` pseudo-element
+- the animation of the `view-transition-old(x)` pseudo-element,
+- the animation of the `view-transition-new(x)` pseudo-element and
+- the animation of the `view-transition-group(x)` pseudo-element
 
 The first two typically work together in a cross-fade or in a combined effect that removes the old image and inserts the new one. The animation of the `view-transition-group()` aligns differences in size, transformation, and position of the old and new image.
 
-If your 'image-pair' has only a single image, the browser places the `view-transition-group()`  at the same position and does not define a morphing animation because there is nothing to align. You will still have the animation for the old or new image, respectively. Instead of a morph animation you have an entry animation if the old image is missing or an exit animation if the new image is missing.
+If your 'image-pair' has only a single image, the browser places the `view-transition-group()` at the same position and does not define a morphing animation because there is nothing to align. You will still have the animation for the old or new image, respectively. Instead of a morph animation you have an entry animation if the old image is missing or an exit animation if the new image is missing.
 
 Using an [animation shorthand](https://developer.mozilla.org/en-US/docs/Web/CSS/animation), CSS rules for the element with view transition name `x` could look like this:
+
 ```css title="redefining all animations with the shorthand"
 ::view-transition-old(x) {
   animation: 333ms linear both slide-out;
@@ -64,10 +66,11 @@ Using an [animation shorthand](https://developer.mozilla.org/en-US/docs/Web/CSS/
   animation: none; /* switch off morph transition */
 }
 ```
+
 The animation shorthand is quite expressive. You can define several animations at once wit h different durations and start delays.
 
 There might be good reasons for defining completely new animations for your view-transitions.
-But when you assign to shorthand properties, like `animation`, you completely override the definitions from the user agent stylesheet. And then you have to specify all values or be sure that the CSS default  values fit your expectations.
+But when you assign to shorthand properties, like `animation`, you completely override the definitions from the user agent stylesheet. And then you have to specify all values or be sure that the CSS default values fit your expectations.
 
 If you only want to override the duration and the timing function of an animation defined by the view transition API, you might be better of with:
 
@@ -90,10 +93,10 @@ For example, assume you have an element that pops in with an entry animation and
 }
 ```
 
-
 ### Styling Beyond Animations
 
 While the typical task will be redefining animations when styling view transitions, you can also use view transitions to trigger other style changes. You can statically set the properties of the pseudo-elements created by the View Transition API. For example you could add a border.
+
 ```css
 ::view-transition-old(x) {
   border: 1pt solid red;
@@ -102,19 +105,18 @@ While the typical task will be redefining animations when styling view transitio
 
 You can also style other DOM elements that are not created by the View Transition API, but keep in mind that those elements are typically [hidden behind the view transition pseudo-elements](/basics/pseudos/#the-theater-curtain) during a view transition.
 
-
-
 ## The User Agent Stylesheet
 
 When the View Transition API inserts an animation, it has to give some default values to them.
 Here is what the API automatically assign in its [user agent stylesheet](https://drafts.csswg.org/css-view-transitions-1/#ua-styles) for a view transition name `x`. In keyframe names, `-ua` stands for _user agent_.
 
 ### Group / Morph Animation
+
 If both, the old image and the new image for `x` exist, the API defines a [morph animation from the old to the new image](/basics/default-animations/#morphing-animation-details). The browser generates specific keyframes for each view transition group:
 
 ```css
 ::view-transition-group(x) {
-  animation: 0.25s ease 0s 1 normal both running -ua-view-transition-group-anim-x
+  animation: 0.25s ease 0s 1 normal both running -ua-view-transition-group-anim-x;
 }
 @keyframes -ua-view-transition-group-anim-x {
   0% {
@@ -131,13 +133,19 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
   }
 }
 ```
+
 The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the new image's size, transform, and position. I.e. if the original element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honored by the generated transform.
 
 ### Cross-Fade of the images
 
-The typical cross-fade effect of  view transitions is implemented by animations defined on the pseudo-elements for the old and new images. The definitions are the same for all view transition names.
+The typical cross-fade effect of view transitions is implemented by animations defined on the pseudo-elements for the old and new images. The definitions are the same for all view transition names.
 
 ```css
+::view-transition-image-pair(x) {
+  animation-duration: inherit;
+  animation-delay: inherit;
+  animation-fill-mode: inherit;
+}
 ::view-transition-old(x) {
   animation: <inherited duration> ease <inherited delay> 1 normal <inherited fillMode> running
   animation-name: -ua-view-transition-fade-out, -ua-mix-blend-mode-plus-lighter
@@ -171,11 +179,12 @@ The typical cross-fade effect of  view transitions is implemented by animations 
   }
 }
 ```
+
 The inherited values come from the view transition image pair, which inherits them from the view transition group. `-ua-mix-blend-mode-plus-lighter` is only added if the image pair has both images. For some background on `-ua-mix-blend-mode-plus-lighter` see the [section about mix blend modes](/tips/over-exposure/#set-the-correct-mix-blend-mode).
 
 ### Non-Animation Properties
 
-Of course styling view transition pseudo-elements is not limited to animations.  The browser's user agent stylesheet also contains examples for such styling:
+Of course styling view transition pseudo-elements is not limited to animations. The browser's user agent stylesheet also contains examples for such styling:
 
 ```css
 :root::view-transition {
@@ -203,7 +212,6 @@ Of course styling view transition pseudo-elements is not limited to animations. 
 }
 ```
 
-
 ## Selecting Pseudo-Elements &hellip;
 
 ### &hellip; with Names
@@ -217,6 +225,7 @@ In the examples above you saw the patterns for addressing an individual pseudo-e
 ```
 
 Beside addressing individual pseudo-elements it is also possible to address the pseudo elements of all view transition names at once using `*` instead of a view transition name:
+
 ```css
 ::view-transition-<pseudo-element>(*) {
   /* property definitions */
@@ -224,6 +233,7 @@ Beside addressing individual pseudo-elements it is also possible to address the 
 ```
 
 Also seen above: You can address the root of all view transition pseudo-elements, although it has no name:
+
 ```css
 ::view-transition {
   /* property definitions */
@@ -232,28 +242,31 @@ Also seen above: You can address the root of all view transition pseudo-elements
 
 ### &hellip; with Classes
 
-When you have CSS rules for a large number of view transition names, you can use the `(*)` pattern to address a pseudo-element for _all_ transition names and use specific rules with the (`(name-x)`)  pattern to handle the exception. There might be situations where you wish for a better developer experience. This is where view transition classes come in.
+When you have CSS rules for a large number of view transition names, you can use the `(*)` pattern to address a pseudo-element for _all_ transition names and use specific rules with the (`(name-x)`) pattern to handle the exception. There might be situations where you wish for a better developer experience. This is where view transition classes come in.
 
 Similar to the `view-transition-name` property, you can assign `view-transition-class` values to DOM elements. While view transition names have to be unique in the DOM, view transition class values need not and typically will not be unique.
 
 When looking at how the view transition classes are used, the similarity to CSS classes is rather obvious. You use them inside the pseudo-element selectors, prefixed by a dot (`.`).
 If multiple class names are used to identify a pseudo element, all must match. The following CSS rule can be used to address all view transition groups that have the `nav-link` view transition class:
 
-
 ```css
 ::view-transition-group(*.nav-link) {
   /* ... */
 }
 ```
+
 This is an example on how to assign the class:
+
 ```css
 #navbar a {
   view-transition-class: nav-link;
 }
-#prev, #next {
+#prev,
+#next {
   view-transition-class: nav-link some-other-class;
 }
 ```
+
 This might best be combined with dynamically (per script) added view transition names or tooling where you declaratively assign view transition names.
 
 ### &hellip; with Types
@@ -267,12 +280,15 @@ The pseudo-class that can check for types is `:active-view-transition-type()`. I
 Thus, the typical patterns to use `:active-view-transition-type()` are:
 
 Directly prepend the pseudo-class to a pseudo-element selector &hellip;
+
 ```css
 :active-view-transition-type(type)::view-transition-group(main) {
   /* ... */
 }
 ```
+
 &hellip; or equivalently use it with a nested CSS rule.
+
 ```css
 :active-view-transition-type(type) {
   &::view-transition-group(main) {
@@ -282,15 +298,16 @@ Directly prepend the pseudo-class to a pseudo-element selector &hellip;
 ```
 
 There is an additional pseudo-class that does not take type parameters.
+
 ```css
 :active-view-transition {
   /* ... */
 }
 ```
+
 This selector will match the the `:root` element while a view transition is active. You can use this for example to [change the shape of the pointer](/tips/pointer/) during view transitions.
 
 When you navigate forth and back through the pages of this site, you see an example on how types are used to select different animation.
-
 
 <Steps>
 
@@ -318,5 +335,3 @@ The scope of view transitions is the whole document. Until this might get change
 When you use these patterns in your own stylesheets, be aware that the specificities differ: `:root::view-transition-group(x)` with a specificity of _(0, 1, 1)_ is more specific than `::view-transition-group(x)` with a specificity of _(0, 0, 1)_.
 
 Now you might conclude that you also need to prefix your view transition pseudo-elements with `:root` if you want to override the defaults. That is not the case. The user agent stylesheet has the least important origin and is overridden by user stylesheet rules &mdash; independent of specificity.
-
-

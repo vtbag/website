@@ -4,6 +4,12 @@ import Description from "./_Description.astro";
 ---
 
 <Layout title="Cross-document View Transition 2/2 | @vtbag">
+  <script is:inline slot="head">
+    addEventListener("pagereveal", () => {
+      const video = document.querySelector("video");
+      video.parentElement.insertAdjacentElement("beforeend", video);
+    });
+  </script>
   <h1>Plain Cross-document View Transitions 2/2</h1>
   <Description />
 </Layout>
