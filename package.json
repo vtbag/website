@@ -17,7 +17,7 @@
     "@vtbag/element-crossing": "^1.0.3",
     "@vtbag/inspection-chamber": "^1.0.17",
     "@vtbag/turn-signal": "^1.1.0",
-    "astro": "^4.16.8",
+    "astro": "^4.16.9",
     "astro-d2": "^0.6.0",
     "astro-vtbot": "^1.10.6",
     "rehype-autolink-headings": "^7.1.0",
