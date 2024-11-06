@@ -62,7 +62,7 @@ export default defineConfig({
     },
     social: {
       github: 'https://github.com/vtbag/website',
-      blueSky:'https://bsky.app/profile/martrapp.bsky.social'
+      blueSky:'https://bsky.app/profile/martr.app'
     },
     editLink: {
       baseUrl: "https://github.com/vtbag/website/edit/main/"
