@@ -21,13 +21,13 @@ The last chance to set these names on the old page using JavaScript is during th
 For the new images, your last opportunity to define names using JavaScript is the pagereveal event, triggered after the new page is loaded and just before screenshots of the new images are taken.
 
 ## Animations
-This might come as a surprise, but it's simple to explain: Besides defining view transition names and taking screenshots of the old images, the old page has no control over how the view transition is styled. Any pseudo-element related CSS defined on the old page will be ignored, unless the old page is also the new one.
+This might come as a surprise, but it's simple to explain: Besides defining view transition names and taking screenshots of the old images, the old page has no control over how the view transition is styled. Any pseudo-element related CSS defined on the old page will be ignored &mdash; unless the old page is also the new one.
 
 The reason for this is that the animations are triggered by the appearance of the view transition pseudo-elements on the `:root` element of the new page. At that moment, only the styles from the new page are available.
 
-While it seems logical, it’s still somewhat counterintuitive that the CSS for an exit animation for an element that only exists on the old page needs to be defined on the new page.
+While it seems logical, it’s still somewhat counterintuitive that the CSS for an exit animation for an element that only exists on the old page needs to be defined on the new page. But keep in mind, that it is not the old element that is animated, but the _image_ of the old element that has been inserted as a pseudo-element on the new page.
 
-If you’re accustomed to building with components, it might not always be clear which page a component will end up on and where the corresponding CSS should be placed. Additionally, the requirement that view transition names must be unique on a page makes you reconsider whether it’s wise to hardcode view transition names inside reusable components.
+If you're accustomed to building with components, it might not always be clear which page a component will end up on and where the corresponding CSS should be placed. Additionally, the requirement that view transition names must be unique on a page makes you reconsider whether it's wise to hardcode view transition names inside reusable components. But that is not much different from using `id` attributes.
 
 ## Conclusion
 I'm still exploring paths and alternatives but this would be my current recommendations:

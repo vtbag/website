@@ -244,6 +244,10 @@ Also seen above: You can address the root of all view transition pseudo-elements
 
 When you have CSS rules for a large number of view transition names, you can use the `(*)` pattern to address a pseudo-element for _all_ transition names and use specific rules with the (`(name-x)`) pattern to handle the exception. There might be situations where you wish for a better developer experience. This is where view transition classes come in.
 
+:::note
+This feature is available beginning with Level 2 of the View Transition API.
+:::
+
 Similar to the `view-transition-name` property, you can assign `view-transition-class` values to DOM elements. While view transition names have to be unique in the DOM, view transition class values need not and typically will not be unique.
 
 When looking at how the view transition classes are used, the similarity to CSS classes is rather obvious. You use them inside the pseudo-element selectors, prefixed by a dot (`.`).
@@ -273,7 +277,22 @@ This might best be combined with dynamically (per script) added view transition 
 
 Often you want to support different animations for a given view transition pseudo-element and select one of those alternatives depending on some condition. The concept that the View Transition API provides for this use case is called _active view transition types_.
 
+:::note
+This feature is available beginning with Level 2 of the View Transition API.
+:::
+
 While it is active, a view transition might have a set of identifiers called _types_ that can be used in CSS pseudo-classes to select different rules. During the view transition, the set can be altered at any time by assigning to the `types` property of the viewTransition object. The initial set of types can be set when calling `startViewTransition()` or it might be specified using the `types` property inside a `@view-transition` rule.
+
+```ts title="Level 2 signature of startViewTranstion()"
+document.startViewTransition({types: ['boom'], update: changeTheDOM})
+```
+or
+```css title="Setting types using CSS"
+@view-transition {
+  navigation: auto;
+  types: boom, var(--special)
+}
+```
 
 The pseudo-class that can check for types is `:active-view-transition-type()`. It takes a comma separated list of types. If at least one of these types is set on the active view transition, the pseudo-class matches the documents root element.
 
