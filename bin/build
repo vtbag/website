@@ -13,4 +13,6 @@ find dist -type f -exec grep -l '<a href=\S* rel="me"' {} \; | xargs sed -i 's|<
 find dist -type f -exec grep -l 'script src="/chamber.js/"' {} \; | xargs sed -i 's|script src="/chamber.js/"|script src="/chamber.js"|'
 find dist -type f -exec grep -l 'source src="/video.mp4"' {} \; | xargs sed -i 's|source src="/video.mp4"|source src="https://cdn.pixabay.com/video/2021/02/21/65860-515617507_tiny.mp4"|'
 
-echo "/*\n  cache-control: max-age=60, stale-while-revalidate=120, stale-if-error=86400\n  last-modified: `date -u +'%a, %d %b %Y %H:%M:%S GMT'`\n\n/\n  cache-control: max-age=60, stale-while-revalidate=120, stale-if-error=86400\n  last-modified: `date -u +'%a, %d %b %Y %H:%M:%S GMT'`" > dist/_header
+echo "/*\n  cache-control: max-age=60, stale-while-revalidate=120, stale-if-error=86400\n  last-modified: `date -u +'%a, %d %b %Y %H:%M:%S GMT'`\n\n/\n  cache-control: max-age=60, stale-while-revalidate=120, stale-if-error=86400\n  last-modified: `date -u +'%a, %d %b %Y %H:%M:%S GMT'`\n\n/_header\n  cache-control: no-store\n" > dist/_header
+
+cat dist/_header
