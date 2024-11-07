@@ -15,7 +15,7 @@ import inoxToolsPortalGun from "@inox-tools/portal-gun";
 // https://astro.build/config
 export default defineConfig({
   experimental: { directRenderScript: true },
-  site: 'https://vtbag.pages.dev',
+  site: 'https://vtbag.dev',
   compressHTML: false,
   redirects: {
     '/inspection-chamber/': '/tools/inspection-chamber/'
@@ -50,7 +50,7 @@ export default defineConfig({
       tag: "meta",
       attrs: {
         property: "og:image",
-        content: "https://vtbag.pages.dev/social.png"
+        content: "https://vtbag.dev/social.png"
       }
     }],
     customCss: ["./src/styles/custom.css"],
