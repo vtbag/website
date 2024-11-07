@@ -1,0 +1,67 @@
+---
+title: "Test Your Browser's View Transition Capabilities"
+description: Check what part of the View Transition API is supported by your browser
+---
+
+This page shows whether your current browser has native support for view transitions.
+
+|Feature|Support?|
+|-------|---------|
+|View Transition API Level 1|<span id="level1"/>|
+|View Transition API Level 2|<span id="level2"/>|
+|Nested transition groups|<span id="level2b"/>|
+
+The W3C Draft for [Level 1](https://drafts.csswg.org/css-view-transitions-1/) of the View Transition API defines view transitions within th same document.\
+The W3C Draft for [Level 2]( https://drafts.csswg.org/css-view-transitions-2/) of the View Transition API covers cross-document view transitions.
+
+Find more pointers to interesting reads at the [astro-vtbot website](https://events-3bg.pages.dev/jotter/api/references/).
+
+
+
+Browser compatibility data: https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API#browser_compatibility
+
+<style>{`
+	#level1::before {
+			content: 'Not supported';
+		}
+	#level2::before {
+			content: 'Not supported';
+		}
+	#level2b::before {
+			content: 'Not supported';
+		}
+
+	@supports (view-transition-name: a) {
+		#level1::before {
+			content: 'Supported';
+			background-color: lightgreen;
+			color: black;
+			display: inline-block;
+			margin: auto;
+			padding: 0.5ex 1ex;
+			width: 100%;
+		}
+	}
+	@supports (view-transition-class: b) {
+		#level2::before {
+			content: 'Supported';
+			background-color: lightgreen;
+			color: black;
+			display: inline-block;
+			margin: auto;
+			padding: 0.5ex 1ex;
+			width: 100%;
+		}
+	}
+	@supports (view-transition-group: normal) {
+		#level2b::before {
+			content: 'Supported';
+			background-color: lightgreen;
+			color: black;
+			display: inline-block;
+			margin: auto;
+			padding: 0.5ex 1ex;
+			width: 100%;
+		}
+	}
+`}</style>

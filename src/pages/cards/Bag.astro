@@ -7,7 +7,7 @@ import bag from "../../assets/bag.png?url"
       <img src={bag} alt="bag" />
     </div>
     <div style="width:57vw">
-      <h2><hr>Tools, Tips, and Tricks<br>to Enhance your Development Skills<br>with View Transitions!<hr>
+      <h2><hr><span class="effect">Tools, Tips, and Tricks</span><br>to E  with the<br><span class="effect2">View Transition API!</span><hr>
       </h2>
     </div>
     <h1>The Bag of Tricks for View Transitions</h1>
@@ -22,16 +22,16 @@ import bag from "../../assets/bag.png?url"
     }
     h1 {
       padding: 3vh 3vw;
-      color: #f5e3d5;
+      color: #a98b6c;
       font-size: 66px;
       font-family: Arial, Helvetica, sans-serif;
-      transform: translate(0, -140vh)
+      transform: translate(0, -135vh)
     }
     h2 {
-      color:#c5b3a5;
+      color:#a98b6ccc;
       font-size: 56px;
       font-family: Arial, Helvetica, sans-serif;
-      transform: translate(-4vw, -15vh);
+      transform: translate(-4vw, -12vh);
       text-align: right;
     }
     body {
@@ -40,7 +40,7 @@ import bag from "../../assets/bag.png?url"
     img {
       display: block;
       margin: auto;
-      transform: rotate(-10deg) translate(0vw, 19vh);
+      transform: rotate(-10deg) translate(0vw, 18vh);
       mask-image: radial-gradient(
         ellipse at center,
         white 35%,
@@ -50,6 +50,25 @@ import bag from "../../assets/bag.png?url"
     body div {
       display: inline-block;
       height: 100vh;
+    }
+    .effect {
+      background: linear-gradient(90deg, #c5b3a5, #a98b6c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(64,64,64, 0.5);
+      font-weight: 700;
+      font-size: 66px;
+    }
+    .effect2 {
+      background: linear-gradient(90deg, #a98b6c, #c5b3a5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(64,64,64, 0.5);
+      font-weight: 700;
+      font-size: 66px;
+    }
+    hr {
+      border-color: #ffc4;
     }
   </style>
 </html>

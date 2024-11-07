@@ -62,7 +62,7 @@ export default defineConfig({
     },
     social: {
       github: 'https://github.com/vtbag/website',
-      blueSky:'https://bsky.app/profile/martr.app'
+      blueSky: 'https://bsky.app/profile/martr.app'
     },
     editLink: {
       baseUrl: "https://github.com/vtbag/website/edit/main/"
@@ -101,6 +101,7 @@ function sidebar() {
   }, {
     label: 'Basics',
     items: [
+      { label: 'Browser Support', link: "/basics/testpage/" },
       { label: 'View Transition API', link: "/basics/api/" },
       { label: 'View Transition Examples', link: "/basics/examples/" },
       { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
