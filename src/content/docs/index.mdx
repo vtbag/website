@@ -30,6 +30,8 @@ head:
     content: '{"@context": "https://schema.org", "@type": "WebSite", "name": "@vtbag", "url": "https://vtbag.dev/"}'
 ---
 
+import Bsky from "../../components/bsky.astro"
+
 <style>{`
   .hero h1 {
     text-align: left;
@@ -40,4 +42,9 @@ head:
   .right-sidebar-panel {
     display: none;
   }
+  .smallCTA {
+    font-size: 1.2rem;
+  }
 `}</style>
+
+<span class="smallCTA">If you’re enjoying this site, <Bsky text="Hey @vtbag.dev! Just checked out vtbag.dev and loving the info, tools, and tips & tricks on the View Transition API!">feel free to spread the word!</Bsky></span>
