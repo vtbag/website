@@ -15,4 +15,4 @@ find dist -type f -exec grep -l 'source src="/video.mp4"' {} \; | xargs sed -i '
 
 echo "/*\n  cache-control: max-age=60\n  last-modified: `date -u +'%a, %d %b %Y %H:%M:%S GMT'`" > dist/_headers
 
-cat dist/_header
+cat dist/_headers
