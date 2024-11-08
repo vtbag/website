@@ -1,4 +1,0 @@
-/*
-  cache-control: max-age=60, stale-while-revalidate=120, stale-if-error=86400
-  last-modified: Sat, 19 Oct 2024 11:07:00 GMT
-
