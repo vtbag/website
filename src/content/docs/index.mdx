@@ -47,9 +47,13 @@ import Bsky from "../../components/Bsky.astro";
   }
 `}</style>
 
-<p class="smallCTA">If you're enjoying this site, please <a target="_blank" href="https://bsky.app/profile/martr.app">follow me</a> and <a target="_blank" href="https://bsky.app/profile/vtbag.dev">The Bag</a> on <span>🦋</span>  Bluesky! <br />And maybe you want to <Bsky text="Just checked out the vtbag.dev site of @vtbag.dev and want to share ...">share something with your followers</Bsky> <span>🦋</span> about this site?</p>
+<p class="smallCTA">If you're enjoying this site, please <a target="_blank" href="https://bsky.app/profile/martr.app">follow me</a> and <a target="_blank" href="https://bsky.app/profile/vtbag.dev">The Bag</a> on <span>🦋</span>  Bluesky! <br /><br />And maybe you want to <Bsky text="Just checked out the vtbag.dev site of @vtbag.dev and want to share ...">share something with your followers</Bsky> <span>🦋</span> about this site?</p>
 
 <style>{`
+  p {
+    max-width: 66%;
+    margin-inline: auto;
+  }
   p span {
     view-transition-name: butterfly2;
   }
@@ -64,12 +68,12 @@ import Bsky from "../../components/Bsky.astro";
   }
   @keyframes butterfly1 {
     from {
-      transform: translateX(50vw)
+      transform: translateX(100vw)
     }
   }
   @keyframes butterfly2 {
     from {
-      transform: translateX(-50vw)
+      transform: translateX(-100vw)
     }
   }
 `}</style>
