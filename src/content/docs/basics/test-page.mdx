@@ -9,7 +9,8 @@ This page shows whether your current browser has native support for view transit
 |-------|---------|
 |View Transition API Level 1|<span id="level1"/>|
 |View Transition API Level 2|<span id="level2"/>|
-|Nested transition groups|<span id="level2b"/>|
+|Nested transition groups: `view-transition-group` property|<span id="level2b"/>|
+|Auto-generated names: `view-transition-name: auto`|<span id="level2c"/>|
 
 The W3C Draft for [Level 1](https://drafts.csswg.org/css-view-transitions-1/) of the View Transition API defines view transitions within th same document.\
 The W3C Draft for [Level 2]( https://drafts.csswg.org/css-view-transitions-2/) of the View Transition API covers cross-document view transitions.
@@ -28,6 +29,9 @@ Browser compatibility data: https://developer.mozilla.org/en-US/docs/Web/API/Vie
 			content: 'Not supported';
 		}
 	#level2b::before {
+			content: 'Not supported';
+		}
+	#level2c::before {
 			content: 'Not supported';
 		}
 
@@ -54,6 +58,17 @@ Browser compatibility data: https://developer.mozilla.org/en-US/docs/Web/API/Vie
 		}
 	}
 	@supports (view-transition-group: normal) {
+		#level2b::before {
+			content: 'Supported';
+			background-color: lightgreen;
+			color: black;
+			display: inline-block;
+			margin: auto;
+			padding: 0.5ex 1ex;
+			width: 100%;
+		}
+	}
+	@supports (view-transition-name: auto) {
 		#level2b::before {
 			content: 'Supported';
 			background-color: lightgreen;

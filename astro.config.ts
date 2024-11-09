@@ -101,7 +101,8 @@ function sidebar() {
   }, {
     label: 'Basics',
     items: [
-      { label: 'Browser Support', link: "/basics/testpage/" },
+      { label: 'Browser Support', link: "/basics/test-page/" },
+//      { label: 'Step by Step Tutorial', link: "/basics/step-by-step/" },
       { label: 'View Transition API', link: "/basics/api/" },
       { label: 'View Transition Examples', link: "/basics/examples/" },
       { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
