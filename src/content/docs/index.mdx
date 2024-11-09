@@ -30,7 +30,7 @@ head:
     content: '{"@context": "https://schema.org", "@type": "WebSite", "name": "@vtbag", "url": "https://vtbag.dev/"}'
 ---
 
-import Bsky from "../../components/Bsky.astro"
+import Bsky from "../../components/Bsky.astro";
 
 <style>{`
   .hero h1 {
@@ -47,4 +47,29 @@ import Bsky from "../../components/Bsky.astro"
   }
 `}</style>
 
-<span class="smallCTA">If you’re enjoying this site, <Bsky text="Hey @vtbag.dev! Just checked out vtbag.dev and loving the info, tools, and tips & tricks on the View Transition API!">feel free to spread the word!</Bsky></span>
+<p class="smallCTA">If you're enjoying this site, please <a target="_blank" href="https://bsky.app/profile/martr.app">follow me</a> and <a target="_blank" href="https://bsky.app/profile/vtbag.dev">The Bag</a> on <span>🦋</span>  Bluesky! <br />And maybe you want to <Bsky text="Just checked out the vtbag.dev site of @vtbag.dev and want to share ...">share something with your followers</Bsky> <span>🦋</span> about this site?</p>
+
+<style>{`
+  p span {
+    view-transition-name: butterfly2;
+  }
+  p span:first-of-type {
+    view-transition-name: butterfly1;
+  }
+  ::view-transition-new(butterfly1) {
+    animation: 1s both ease-out butterfly1;
+  }
+  ::view-transition-new(butterfly2) {
+    animation: 1s both ease-in butterfly2;
+  }
+  @keyframes butterfly1 {
+    from {
+      transform: translateX(50vw)
+    }
+  }
+  @keyframes butterfly2 {
+    from {
+      transform: translateX(-50vw)
+    }
+  }
+`}</style>

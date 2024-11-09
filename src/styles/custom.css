@@ -218,3 +218,79 @@ main kbd {
     font-size: 16px;
   }
 }
+
+::view-transition-old(butterfly1) {
+  animation: 1s ease-in both butterfly1;
+}
+::view-transition-old(butterfly2) {
+  animation: 1s ease-out both butterfly2;
+}
+
+@keyframes butterfly1 {
+  10% {
+    transform: rotateZ(-13deg) scale(0.5, 1);
+  }
+  20% {
+    transform: scale(1, 1) translate(2vw, -2vh);
+  }
+  30% {
+    transform: rotateZ(13deg) scale(0.75, 1.5) translate(4vw, -4vh);
+  }
+  40% {
+    transform: scale(2, 2) scale(3vw, -4vw);
+  }
+  50% {
+    transform: rotateZ(-13deg) scale(1.25, 2.5) translate(3vw, -4vw);
+  }
+  60% {
+    transform: scale(3, 3) translate(3vw, -5vh);
+  }
+  70% {
+    transform: rotateZ(13deg) scale(1.75, 3.5) translate(3vw,-5vw);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(2, 4)  translate(5vw, -6vh);
+  }
+  90% {
+    transform: rotateZ(-13deg) scale(2.25, 4.5) translate(5vw, -6vh);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(4, 4) translate(5vw, -6vh);
+  }
+}
+@keyframes butterfly2 {
+  10% {
+    transform: rotateZ(-13deg) scale(0.5, 1);
+  }
+  20% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: rotateZ(13deg) scale(0.75, 1.5) translate(-30%, -30%);
+  }
+  40% {
+    transform: scale(2, 2);
+  }
+  50% {
+    transform: rotateZ(-13deg) scale(1.25, 2.5);
+  }
+  60% {
+    transform: scale(3, 3) translate(30%, -30%);
+  }
+  70% {
+    transform: rotateZ(13deg) scale(1.75, 3.5);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(2, 4);
+  }
+  90% {
+    transform: rotateZ(-13deg) scale(2.25, 4.5) translate(-30%, -30%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(5, 5) translate(-30%, -100%);
+  }
+}

@@ -6,4 +6,4 @@ const { text } = Astro.props;
 const encodedText = encodeURIComponent(text);
 ---
 
-<a target="_blank" href={`https://bsky.app/intent/compose?text=${encodedText}`}><slot />🦋</a>
+<a target="_blank" href={`https://bsky.app/intent/compose?text=${encodedText}`}><slot /></a>
