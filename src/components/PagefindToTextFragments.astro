@@ -1,0 +1,80 @@
+---
+
+---
+
+<script>
+  const targetAnchor = (e: Event) => {
+    let anchor: HTMLAnchorElement | null = null;
+    let target: HTMLElement | null = e.target as HTMLElement;
+    if (target instanceof HTMLElement) {
+      target = target.closest(`p[class*="pagefind-ui__result-excerpt"]`);
+      if (target instanceof HTMLElement) {
+        anchor = target.parentElement!.querySelector("a");
+      }
+    }
+    return { target, anchor };
+  };
+
+  function jumpToTextFragment(e: MouseEvent) {
+    const { target, anchor } = targetAnchor(e);
+    if (!target || !anchor) return;
+    const originalHash = anchor.hash;
+    if ("fragmentDirective" in document) {
+      let excerpt = target.innerText.replace(/\s+\d+\./g, ".");
+      let fragment = "";
+      const split = excerpt
+        .split(/[?\.:!…](\s+|$)/g)
+        .filter((x) => x.length > 0);
+      if (split.length > 0) {
+        fragment =
+          "#:~:text=" +
+          encodeURIComponentPlus(
+            split.sort((a, b) => b.length - a.length)[0] ?? ""
+          );
+        anchor.hash = fragment;
+      }
+    }
+    anchor.click();
+    anchor.hash = originalHash;
+  }
+
+  document.addEventListener("click", (e) => {
+    jumpToTextFragment(e);
+  });
+
+  function encodeURIComponentPlus(str: string) {
+    var replacements = {
+      "'": "%27",
+      "(": "%28",
+      ")": "%29",
+      "*": "%2a",
+      "-": "%2d",
+      _: "%5f",
+      "~": "%7e",
+    } as Record<string, string>;
+
+    return encodeURIComponent(str)
+      .split("")
+      .map((c) => replacements[c] || c)
+      .join("");
+  }
+</script>
+
+<style is:global>
+  .pagefind-ui__result-excerpt.svelte-4xnkmf.svelte-4xnkmf,
+  .pagefind-ui__result-excerpt.svelte-j9e30.svelte-j9e30 {
+    cursor: pointer;
+  }
+  html body #starlight__search .pagefind-ui__result-link::after {
+    content: none;
+  }
+
+  .pagefind-ui__result-inner.svelte-4xnkmf.svelte-4xnkmf
+    > .pagefind-ui__result-excerpt.svelte-4xnkmf.svelte-4xnkmf {
+    margin-top: 0px;
+    padding: var(--sl-search-result-nested-pad-block)
+      var(--sl-search-result-pad-inline-end)
+      var(--sl-search-result-nested-pad-block) 1rem;
+    background-color: var(--sl-color-black);
+  }
+</style>

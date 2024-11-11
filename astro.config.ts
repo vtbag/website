@@ -40,6 +40,7 @@ export default defineConfig({
       Head: "./src/components/NHead.astro",
       PageTitle: "./src/components/PageTitle.astro",
       PageFrame: "./src/components/PageFrame.astro",
+      Sidebar: "./src/components/Sidebar.astro"
     },
     plugins: [starlightImageZoom()],
     tableOfContents: {

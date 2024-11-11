@@ -294,3 +294,14 @@ main kbd {
     transform: scale(5, 5) translate(-30%, -100%);
   }
 }
+::view-transition-old(bsky),
+::view-transition-new(bsky) {
+  height: 100%;
+  width: 100%;
+}
+
+::view-transition-group(sl-sidebar),
+::view-transition-group(bsky),
+::view-transition-group(bskyText) {
+  animation-duration: 500ms;
+}

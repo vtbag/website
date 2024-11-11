@@ -47,18 +47,19 @@ import Bsky from "../../components/Bsky.astro";
   }
 `}</style>
 
-<p class="smallCTA">If you're enjoying this site, please <a target="_blank" href="https://bsky.app/profile/martr.app">follow me</a> and <a target="_blank" href="https://bsky.app/profile/vtbag.dev">The Bag</a> on <span>🦋</span>  Bluesky! <br /><br />And maybe you want to <Bsky text="Just checked out the vtbag.dev site of @vtbag.dev and want to share ...">share something with your followers</Bsky> <span>🦋</span> about this site?</p>
+<p class="smallCTA">Spark up a discussion on <span><b>🦋</b></span> Bluesky! Hit the <Bsky/> buttons to share your thoughts and please stay connected with
+<a target="_blank" href="https://bsky.app/profile/vtbag.dev">The Bag</a> and <a target="_blank" href="https://bsky.app/profile/martr.app">me</a> for  all the latest!</p>
 
 <style>{`
   p {
     max-width: 70%;
     margin-inline: auto;
   }
-  p span {
-    view-transition-name: butterfly2;
-  }
-  p span:first-of-type {
+  p span b {
     view-transition-name: butterfly1;
+  }
+  p a span b {
+    view-transition-name: butterfly2;
   }
   ::view-transition-new(butterfly1) {
     animation: 1s both ease-out butterfly1;

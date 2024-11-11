@@ -1,0 +1,8 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/components/Sidebar.astro';
+import Bsky from "./Bsky.astro";
+---
+
+{Astro.url.pathname !== "/" && <Bsky/>}
+<div style="view-transition-name: sl-sidebar"><Default {...Astro.props}><slot /></Default></div>

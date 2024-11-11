@@ -1,9 +1,53 @@
 ---
-export interface Props {
-  text: string;
-}
-const { text } = Astro.props;
+const choices = [
+  "Checking out [URL] and wanted to share ",
+  "On [URL] and thought I'd share ",
+  "Found something on [URL] ",
+  "Diving into [URL] I'm wondering ",
+  "Currently on [URL] and had to share my thoughts: ",
+  "Taking a look at [URL]. Let's talk about it. ",
+  "Here's what I think checking out [URL]: ",
+  "Just read [URL] and figured ",
+  "When exploring [URL], here's what comes to mind ",
+];
+const text =
+  choices[~~(Math.random() * choices.length)]?.replace(
+    "[URL]",
+    `vtbag.dev${Astro.url.pathname}`
+  ) ?? "";
 const encodedText = encodeURIComponent(text);
 ---
 
-<a target="_blank" href={`https://bsky.app/intent/compose?text=${encodedText}`}><slot /></a>
+<a
+  class="button-link not-content"
+  target="_blank"
+  href={`https://bsky.app/intent/compose?text=${encodedText}`}
+  ><span>Discuss on <b>🦋</b></span></a
+>
+
+<style>
+  .button-link span {
+    view-transition-name: bskyText;
+    display: inline-block;
+    margin-inline: auto;
+    font-size: 1rem;
+    padding: 3px 10px;
+    text-decoration: none;
+  }
+  .button-link {
+    view-transition-name: bsky;
+    color: #fff;
+    text-align:  center;
+    display: inline-block;
+    background-color: var(--sl-color-accent-low);
+    border: 2px solid var(--sl-color-accent);
+    border-radius: 8px;
+    box-shadow:
+      inset 1px 1px 5px var(--sl-color-gray-6),
+      1px 1px 2px var(--sl-color-gray-1);
+    transition:
+      background-color 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+</style>
