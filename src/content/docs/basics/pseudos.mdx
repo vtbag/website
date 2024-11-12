@@ -1,6 +1,11 @@
 ---
 title: "Pseudo-Elements of the View Transition API"
 description: "What are those pseudo-elements of the View Transition API and how can I style and animate them?"
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/pseudos-og.png"
 ---
 
 What are those pseudo-elements of the View Transition API and how can I style and animate them?
@@ -276,7 +281,7 @@ When examining the `::view-transition-groups` in order, the elements at the star
 
 Before the view transition starts, the pseudo elements are rendered on top of the current page. For cross-document view transitions, this might start in the middle of the page load process.  But there are [techniques to delay the start of the view transition](#delaying-cross-document-transitions).
 
-The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport and is full transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it.
+The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport and is full transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set     `pointer-events: none;` on it).
 
 The transition groups are rendered in the order they appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
 

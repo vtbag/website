@@ -1,5 +1,11 @@
 ---
 title: Where to Place CSS for Cross-Document View Transitions?
+description: Your CSS rules are ignored by the View Transition API? Maybe you put them in the wrong place.
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/css-og.png"
 ---
 
 You're aware that enabling cross-document view transitions is as simple as adding the view transition at-rule to your pages.
@@ -14,7 +20,7 @@ You also know that both pages, the old one and the new one, must opt in by inclu
 However, when you start adding more CSS to introduce additional view-transition names or customize the animations, you might wonder: Do I need this CSS on both pages?
 
 ## View Transition Names
-View transition names are tied to the DOM, whether they're set directly on elements or added via CSS rules. You must define the names for the old images on the old page and for the new images on the new page. This does not need to be static. You can use view transition types to add or remove view transition names via CSS, see the [Turn-Signal example](/tools/turn-signal/#direction-based-control-over-transitions).
+View transition names are tied to the DOM, whether they're set directly on elements or added via CSS rules. You must define the names for the old images on the old page and for the new images on the new page. This does not need to be static. You can use view transition types to add or remove view transition names via CSS, see the [Turn-Signal example](/tools/turn-signal/#switching-transition-names).
 
 The last chance to set these names on the old page using JavaScript is during the pageswap event, which occurs right before the screenshots for the old images are taken and navigation leaves the page.
 
@@ -33,4 +39,4 @@ If you're accustomed to building with components, it might not always be clear w
 I'm still exploring paths and alternatives but this would be my current recommendations:
 1. For complex pages, ensuring the uniqueness of view transition names might be easier if you assign them dynamically using JavaScript.
 2. Placing your view transition animation definitions in a global CSS file can be effective. This way, both the old and new pages share the same definitions, eliminating the need to worry about where to place them.
-3. Utilizing [view transition classes and types](/basics/styling/#selecting-pseudo-elements-with-classes) can help decouple usage from definitions, making your code more flexible."
+3. Utilizing [view transition classes and types](/basics/styling/#-with-classes) can help decouple usage from definitions, making your code more flexible."

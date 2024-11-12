@@ -1,6 +1,11 @@
 ---
 title: Styling View Transitions
-description: Styling view transitions with :active-view-transition-type and view-transition-class
+description: Styling view transitions including :active-view-transition-type and view-transition-class
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/styling-og.png"
 ---
 
 import { Steps } from "@astrojs/starlight/components";
@@ -45,7 +50,7 @@ The opposite problem to view transition names not being unique is that elements 
 The browser automatically assigns the view transition name `root` to the `:root` element, i.e. the top-level `<html>` element for an HTML document. If you prefer another name, you can override it. If you do not want the `<html>` element to participate in the view transition with own pseudo-elements, you explicitly have to remove the `root` name by [overriding it with `none`](/basics/pseudos/#opt-out).
 
 #### Dynamic Names
-Of course view transition names do not need to be static. You can assign them conditionally, e.g. inside a media query or with a selector that checks for a special CSS class further up the DOM. Another interesting way for conditional assignment of view transition names is to let the m [depend on view transition types](/basics/styling/#conditional-view-transitions).
+Of course view transition names do not need to be static. You can assign them conditionally, e.g. inside a media query or with a selector that checks for a special CSS class further up the DOM. Another interesting way for conditional assignment of view transition names is to let them [depend on view transition types](/basics/styling/#conditional-view-transitions).
 
 Because they are animatable CSS properties, view transition names can even be changed using other animations. So if you like you could automatically change a name over time or depending on the scroll position with scroll-driven animations.
 

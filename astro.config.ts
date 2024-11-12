@@ -114,9 +114,20 @@ function sidebar() {
     label: 'CSS Tips & Tricks',
     items: [
       { label: 'Where to place the CSS', link: "/tips/css/" },
-      { label: "Flickering during morph animations?", link: "tips/over-exposure/" },
-      { label: "Avoid Pointer Flickering", link: "tips/pointer/" },
-      { label: "Pseudo-smooth-scrolling?", link: "tips/pseudo-smooth-scrolling/" }
+      { label: "Flickering during morph animations?", link: "/tips/over-exposure/" },
+      { label: "Avoid Pointer Flickering", link: "/tips/pointer/" },
+      { label: "Pseudo-smooth-scrolling?", link: "/tips/pseudo-smooth-scrolling/" }
+    ]
+  },{
+    label: 'All Demos',
+    items: [
+      { label: 'Inspection Chamber in Action', link: "/inspection-chamber-demo/first-page/" },
+      { label: 'State Loss on Navigation', link: "/crossing/plain/1/" },
+      { label: "Preserved State", link: "/crossing/vanilla/1/" },
+      { label: "Preserved State (exp.)", link: "/crossing/over-the-top/1/" },
+      { label: "Turn Signal Directions", link: "/signal-demo/bag/" },
+      { label: "Pseudo-Smooth-Scrolling", link: "/shaft-demo/1/" },
+      { label: "Instant scrolling with Cam-Shaft", link: "/shaft-demo2/1/" }
     ]
   }];
 }
