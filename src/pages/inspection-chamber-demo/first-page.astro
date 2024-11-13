@@ -1,7 +1,8 @@
 ---
 import ChamberLayout from "./_ChamberLayout.astro";
 import chamber from "../../assets/chamber.png";
-import { Image } from 'astro:assets';
+import { Image } from "astro:assets";
+import Bsky from "../../components/Bsky.astro";
 ---
 
 <ChamberLayout title="Inspection Chamber Demo">
@@ -17,19 +18,35 @@ import { Image } from 'astro:assets';
       style="view-transition-name: frame; position:fixed; top:5vh;left:10vw;background-color:rgba(3, 57, 64, 0.8);padding:20px"
     >
       <h1 style="view-transition-name: heading; font-size: min(6vw,48px)">
-        Welcome to<br/>the Bag's Inspection Chamber
+        Welcome to<br />the Bag's Inspection Chamber
       </h1>
+
+    <Bsky />
       <h1 style="view-transition-name: heading2; font-size: min(3vw,24px)">
         With the push of a button, the inspection chamber activated, its
         interior lighting up to expose the inner workings of the page under
         examination, uncovering secrets invisible to the naked eye.
       </h1>
-      <p style="view-transition-name: para"><a style="view-transition-name: anchor; font-size: min(6vw,48px)" href="/inspection-chamber-demo/second-page/"><b>Click here</b></a> to navigate to the second page.</p>
-      <a id="back" style="view-transition-name: anchor2" href="javascript:top.location.href='/tools/inspection-chamber/'">Quit demo.</a>
+      <p style="view-transition-name: para">
+        <a
+          style="view-transition-name: anchor; font-size: min(6vw,48px)"
+          href="/inspection-chamber-demo/second-page/"><b>Click here</b></a
+        > to navigate to the second page.
+      </p>
+      <a
+        id="back"
+        style="view-transition-name: anchor2"
+        href="javascript:top.location.href='/tools/inspection-chamber/'"
+        >Quit demo.</a
+      >
     </div>
     <div
-    style="view-transition-name: frame2; background-color:darkred; position:fixed; bottom:10vh;left:10vw;width:90vw;padding:20px;color:wheat"
-  >The inspection chamber requires a current browser and you might even need to manually activate <code>chrome://flags/#view-transition-on-navigation-iframe</code>.</b></div>
+      style="view-transition-name: frame2; background-color:darkred; position:fixed; bottom:10vh;left:10vw;width:90vw;padding:20px;color:wheat"
+    >
+      The inspection chamber requires a current browser and you might even need
+      to manually activate <code
+        >chrome://flags/#view-transition-on-navigation-iframe</code
+      >.
+    </div>
   </main>
-</Layout>
-
+</ChamberLayout>

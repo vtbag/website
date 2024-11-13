@@ -244,9 +244,9 @@ test.describe("Full control", () => {
 
   test('shows all animations', async ({ page }) => {
     await start(page);
-    await expect(page.locator("#vtbag-ui-names li")).toHaveCount(8);
-    await expect(page.locator("#vtbag-ui-names li.old")).toHaveCount(8);
-    await expect(page.locator("#vtbag-ui-names li.new")).toHaveCount(7);
+    await expect(page.locator("#vtbag-ui-names li")).toHaveCount(10);
+    await expect(page.locator("#vtbag-ui-names li.old")).toHaveCount(10);
+    await expect(page.locator("#vtbag-ui-names li.new")).toHaveCount(9);
   });
 
   test('can fast forward', async ({ page }) => {

@@ -1,0 +1,40 @@
+/*  General notes styling view transitions from the old page to the new page:
+    Some CSS rules need to be on the old page, but most rules are taken from the new page.
+    - View transition opt-in: @view-transition {navigation: auto} at-rule
+      has to present on old and new page
+    - Definition if view transition groups:
+        view-transition-name and view-transition-group properties
+      Have to be present on the old page to define old images and their hierarchy
+      Have to be present on the new page to define new images and their hierarchy
+
+    All other ::view-transition CSS rules are taken from the new page, only.
+*/
+
+/*  Enable cross-document view transitions.
+    This at-rule has to be included on the old page and on the new page */
+@view-transition {
+  navigation: auto;
+}
+
+/* Switch off view transitions for users who prefer reduced motion */
+@media (prefers-reduced-motion) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* Change the default duration of 250ms to 500ms */
+::view-transition-group(*) {
+  transition-duration: 500ms;
+}
+/* This works as long as the animations of the -old and -new images inherit the duration via their -image-pair (as the rules from the user-agent stylesheet do) */
+
+/* Immediately drop the static old image, and only show the `live` new image, e.g. for including a video element in a longer transition */
+::view-transition-old(*) {
+  display: none;
+}
+::view-transition-new(*) {
+  animation: none;
+}
+
+/* Force images to same

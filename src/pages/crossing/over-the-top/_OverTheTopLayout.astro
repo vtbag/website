@@ -1,30 +1,28 @@
 ---
 import overTheTop from "@vtbag/element-crossing/experimental?url";
 import crossing from "@vtbag/element-crossing?url";
-
 export interface Props {
   title: string;
 }
 const { title } = Astro.props;
 ---
 
-<html lang="en" data-vtbag-x="id:root class:dark style:color-scheme">
+<html
+  id="root"
+  lang="en"
+  data-vtbag-x="id:root class:dark style:color-scheme prop:data-theme"
+>
   <head>
     <meta charset="utf-8" />
     <title>{title}</title>
+    {
+      (
+        // @ts-ignore
+        <link rel="expect" href="#root" blocking="render" />
+      )
+    }
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/bag3.png" type="image/png" />
-    <script is:inline>
-      if ("onpagereveal" in window) {
-        const _ = document.documentElement;
-        _.dataset.theme = _.style.colorScheme =
-          localStorage.getItem("starlight-theme") ||
-          (window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light");
-        _.classList.add(_.dataset.theme);
-      }
-    </script>
     <script is:inline src={overTheTop}></script>
     <script is:inline src={crossing}></script>
     <slot name="head" />
@@ -33,7 +31,7 @@ const { title } = Astro.props;
     <div id="all">
       <header>
         <div>Header</div><a
-          href="javascript:top.location.href='/tools/element-crossing/#element-crossing-demo-experimental-over-the-top'"
+          href="/tools/element-crossing/#element-crossing-demo-experimental-over-the-top"
           id="back">Back to the Element Crossing page</a
         >
         <button id="dl">Light / Dark</button>
@@ -96,13 +94,14 @@ const { title } = Astro.props;
         <div data-vtbag-x="#footer ~shift">Footer</div>
       </footer>
     </div>
-    <script is:inline>
-      document.getElementById("dl")?.addEventListener("click", () => {
-        document.documentElement.classList.toggle("dark");
-        if (document.documentElement.classList.contains("dark")) {
-          document.documentElement.style.colorScheme = "dark";
+    <script>
+      document.getElementById("dl")!.addEventListener("click", () => {
+        const root = document.documentElement;
+        root.classList.toggle("dark");
+        if (root.classList.contains("dark")) {
+          root.dataset.theme = root.style.colorScheme = "dark";
         } else {
-          document.documentElement.style.colorScheme = "light";
+          root.dataset.theme = root.style.colorScheme = "light";
         }
       });
     </script>
@@ -133,7 +132,7 @@ const { title } = Astro.props;
 
   ::view-transition-new(video),
   ::view-transition-new(svg) {
-    animation: 500ms both reveal ;
+    animation: 500ms both reveal;
   }
   ::view-transition-old(video),
   ::view-transition-old(svg) {
@@ -152,7 +151,7 @@ const { title } = Astro.props;
   }
   @keyframes reveal {
     from {
-      opacity:0;
+      opacity: 0;
     }
     14.99% {
       opacity: 0;

@@ -38,6 +38,11 @@ import Bsky from "../../components/Bsky.astro";
     font-size: var(--sl-text-h1);
     width: 8.25em;
   }
+ .hero .actions .primary {
+  border: none;
+  background-color: var(--sl-color-accent-low, rgb(85, 45, 25));
+  color: var(--sl-color-accent);
+  }
 
   .right-sidebar-panel {
     display: none;
@@ -47,8 +52,7 @@ import Bsky from "../../components/Bsky.astro";
   }
 `}</style>
 
-<p class="smallCTA">Spark up a discussion on <span><b>🦋</b></span> Bluesky! Hit the <Bsky/> buttons to share your thoughts and please stay connected with
-<a target="_blank" href="https://bsky.app/profile/vtbag.dev">The Bag</a> and <a target="_blank" href="https://bsky.app/profile/martr.app">me</a> for  all the latest!</p>
+<p class="smallCTA">Spark up a discussion on <span><b>🦋</b></span> Bluesky! Hit the <Bsky /> buttons to share your thoughts and please stay connected with <a target="_blank" href="https://bsky.app/profile/vtbag.dev">The Bag</a> and <a target="_blank" href="https://bsky.app/profile/martr.app">me</a> for all the latest!</p>
 
 <style>{`
   p {

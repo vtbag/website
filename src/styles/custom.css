@@ -44,7 +44,7 @@ body {
 /* Light mode colors. */
 :root[data-theme="light"] {
   --sl-color-accent-low: #ecccbc;
-  --sl-color-accent: #a09080;
+  --sl-color-accent: #706050;
   --sl-color-accent-high: #908570;
   --sl-color-white: #606060;
   --sl-color-gray-1: #2f2724;

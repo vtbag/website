@@ -2,6 +2,7 @@
 import Layout from "./_ChamberLayout.astro";
 import chamber from "../../assets/chamber.png";
 import { Image } from 'astro:assets';
+import Bsky from "../../components/Bsky.astro";
 ---
 
 <Layout title="Inspection Chamber Demo">
@@ -17,6 +18,8 @@ import { Image } from 'astro:assets';
     <h1 style="view-transition-name: heading2; font-size: min(6vw,48px)">
       Take control!
     </h1>
+
+    <Bsky />
       <h1 style="view-transition-name: heading; font-size: min(5vw,32px)">
         Use the controls in the panel to examine the details of the view transitions on this page.
       </h1>
