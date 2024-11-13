@@ -103,9 +103,11 @@ function sidebar() {
     label: 'Basics',
     items: [
       { label: 'Browser Support', link: "/basics/test-page/" },
-//      { label: 'Step by Step Tutorial', link: "/basics/step-by-step/" },
+      //      { label: 'Step by Step Tutorial', link: "/basics/step-by-step/" },
       { label: 'View Transition API', link: "/basics/api/" },
-      { label: 'View Transition Examples', link: "/basics/examples/" },
+      {
+        label: 'View Transition Examples', link: "/basics/examples/", badge: { text: '🢀', variant: 'success' },
+      },
       { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
       { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" },
       { label: 'Styling View Transitions', link: "/basics/styling/" }
@@ -118,7 +120,7 @@ function sidebar() {
       { label: "Avoid Pointer Flickering", link: "/tips/pointer/" },
       { label: "Pseudo-smooth-scrolling?", link: "/tips/pseudo-smooth-scrolling/" }
     ]
-  },{
+  }, {
     label: 'All Demos',
     items: [
       { label: 'Inspection Chamber in Action', link: "/inspection-chamber-demo/first-page/" },
