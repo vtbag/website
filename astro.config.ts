@@ -10,6 +10,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
+import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 //import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
@@ -106,7 +107,7 @@ function sidebar() {
       //      { label: 'Step by Step Tutorial', link: "/basics/step-by-step/" },
       { label: 'View Transition API', link: "/basics/api/" },
       {
-        label: 'View Transition Examples', link: "/basics/examples/", badge: { text: '🢀', variant: 'success' },
+        label: 'View Transition Examples', link: "/basics/examples/", badge: { text: '🢀', variant: 'success' } as Badge,
       },
       { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
       { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" },
