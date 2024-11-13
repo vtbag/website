@@ -1,4 +1,5 @@
 ---
+import LightDark from "@/components/LightDark.astro";
 import CamShaft from "@vtbag/cam-shaft?url";
 import TurnSignal from "@vtbag/turn-signal?url";
 export interface Props {
@@ -13,21 +14,9 @@ const { title } = Astro.props;
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/bag3.png" type="image/png" />
-
+    <LightDark />
     <script is:inline src={CamShaft} data-view-transition-names="main"></script>
     <script is:inline src={TurnSignal}></script>
-
-    <script is:inline>
-      if ("onpagereveal" in window) {
-        const _ = document.documentElement;
-        _.dataset.theme = _.style.colorScheme =
-          localStorage.getItem("starlight-theme") ||
-          (window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light");
-        _.classList.add(_.dataset.theme);
-      }
-    </script>
   </head>
   <body>
     <div style="height: 6.66rem"></div>
@@ -36,7 +25,6 @@ const { title } = Astro.props;
     </main>
     <header>
       <div>Header</div><a href="/tools/cam-shaft/#what-is-it" id="back">Exit</a>
-      <button id="dl">Light/Dark</button>
     </header>
     <nav>
       <a href="/shaft-demo2/2/#bot">Step 1</a>
@@ -50,264 +38,252 @@ const { title } = Astro.props;
       <div>Footer</div>
     </footer>
   </body>
-  <script>
-    document.getElementById("dl")!.addEventListener("click", () => {
-      const root = document.documentElement;
-      root.classList.toggle("dark");
-      let theme = root.classList.contains("dark") ? "dark" : "light";
-      localStorage.setItem(
-        "starlight-theme",
-        (root.dataset.theme = root.style.colorScheme = theme)
-      );
-    });
-  </script>
-</html>
+  <style is:global>
+    * {
+      box-sizing: border-box;
+    }
+    @view-transition {
+      navigation: auto;
+    }
+    main {
+      view-transition-name: main;
+    }
+    nav {
+      view-transition-name: nav;
+    }
+    header {
+      view-transition-name: header;
+    }
+    footer {
+      view-transition-name: footer;
+    }
 
-<style is:global>
-  * {
-    box-sizing: border-box;
-  }
-  @view-transition {
-    navigation: auto;
-  }
-  main {
-    view-transition-name: main;
-  }
-  nav {
-    view-transition-name: nav;
-  }
-  header {
-    view-transition-name: header;
-  }
-  footer {
-    view-transition-name: footer;
-  }
+    ::view-transition-group(fi),
+    ::view-transition-group(main) {
+      animation-duration: 1s;
+    }
 
-  ::view-transition-group(fi),
-  ::view-transition-group(main) {
-    animation-duration: 1s;
-  }
-
-  ::view-transition-old(main) {
-    animation-name: slideOut;
-  }
-  ::view-transition-new(main) {
-    animation-name: slideIn;
-  }
-
-  :active-view-transition-type(backward) {
-    &::view-transition-old(main) {
-      animation-direction: reverse;
+    ::view-transition-old(main) {
+      animation-name: slideOut;
+    }
+    ::view-transition-new(main) {
       animation-name: slideIn;
     }
-    &::view-transition-new(main) {
-      animation-name: slideOut;
-      animation-direction: reverse;
-    }
-  }
 
-  @keyframes slideOut {
-    to {
-      transform: translateX(-100%);
+    :active-view-transition-type(backward) {
+      &::view-transition-old(main) {
+        animation-direction: reverse;
+        animation-name: slideIn;
+      }
+      &::view-transition-new(main) {
+        animation-name: slideOut;
+        animation-direction: reverse;
+      }
     }
-  }
-  @keyframes slideIn {
-    from {
-      transform: translateX(100%);
-    }
-  }
-  :root {
-    font-family: sans-serif;
-    --background-color: #e0e0e0;
-    --accent-background-color: #e0f0e0;
-    --color: #444;
-    --accent-color: #070;
-    color: var(--color);
-    background-color: var(--background-color);
-    accent-color: var(--accent-color);
-  }
-  :root.dark {
-    --background-color: #222;
-    --accent-background-color: #333;
-    --color: #ddd;
-    --accent-color: #dfd;
-  }
-  footer,
-  header {
-    position: fixed;
-    width: 100%;
-    height: 6.66rem;
-    top: 0;
-    background-color: var(--background-color);
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-    background-color: #eeec;
-    backdrop-filter: blur(2px);
-  }
 
-  [data-theme="dark"] :is(footer, header) {
-    background-color: #111c;
-  }
+    @keyframes slideOut {
+      to {
+        transform: translateX(-100%);
+      }
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+      }
+    }
+    :root {
+      font-family: sans-serif;
+      --background-color: #e0e0e0;
+      --accent-background-color: #e0f0e0;
+      --color: #444;
+      --accent-color: #070;
+      color: var(--color);
+      background-color: var(--background-color);
+      accent-color: var(--accent-color);
+    }
+    :root.dark {
+      --background-color: #222;
+      --accent-background-color: #333;
+      --color: #ddd;
+      --accent-color: #dfd;
+    }
+    footer,
+    header {
+      position: fixed;
+      width: 100%;
+      height: 6.66rem;
+      top: 0;
+      background-color: var(--background-color);
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      background-color: #eeec;
+      backdrop-filter: blur(2px);
+    }
 
-  footer {
-    top: unset;
-    height: 4rem;
-    bottom: 0;
-  }
-  button {
-    background-color: var(--accent-background-color);
-    accent-color: var(--accent-color);
-    color: var(--color);
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    margin: 1em;
-    padding: 0.5em 1em;
-    box-shadow: 0 4px 6px #8888;
-    cursor: pointer;
-  }
-  header div {
-    flex: 1 1 0%;
-  }
-  nav {
-    position: fixed;
-    top: 6.66rem;
-    background-color: var(--accent-background-color);
-    overflow: auto;
-  }
-  nav a {
-    display: block;
-    text-decoration: none;
-    padding: 0.5rem;
-  }
-  main {
-    scroll-padding-top: 6.66rem;
-    padding: 1rem;
-    padding-left: 80px;
-    overflow: auto;
-  }
-  #all {
-    max-width: 50rem;
-    margin: auto;
-  }
-  #mid {
-    display: flex;
-    height: 70vh;
-  }
-  #back {
-    display: inline-block;
-    color: black;
-    border-radius: 8px;
-    padding: 1rem;
-    margin: 1rem;
-    background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
-    box-shadow: 0 4px 6px #8888;
-  }
-  #dark,
-  #light {
-    display: none;
-  }
-  :root.dark #dark,
-  :root:not(.dark) #light {
-    display: inline;
-  }
-  p.lorem,
-  p.desc {
-    line-height: 2;
-    font-size: 1.2rem;
-    max-width: 640px;
-    margin: 40px 10vw;
-  }
-  p.desc {
-    color: var(--accent-color);
-    line-height: 1.8rem;
-  }
-  #outerouter {
-    max-width: 640px;
-    margin: 0 10vw;
-    margin-top: 0;
-  }
-  #outer {
-    margin: 0 auto;
-    overflow: hidden;
-    animation: none;
-    height: 300px;
-    width: 100px;
-  }
-  #dia {
-    display: flex;
-    width: 1200px;
-    animation: hshift 5s infinite linear;
-  }
-  #screen {
-    position: relative;
-    z-index: 10;
-    width: 100px;
-    height: 100px;
-    background-color: #fff8;
-    border: 3px solid #8888;
-    border-radius: 10px;
-    color: black;
-    padding-top: 3.5rem;
-    padding-left: 1em;
-    top: -100px;
-    animation: none;
-  }
-  #dia div {
-    height: 200px;
-    width: 100px;
-    background: #8fc;
-    color: #222;
-    border: 1px solid #888;
-    padding: 1em 0.5rem;
-  }
-  #dia :is(div:nth-child(1), div:nth-child(5), div:nth-child(9)) {
-    background: linear-gradient(180deg, #8fc 0%, #8fc 80%, red 100%);
-  }
-  #dia :is(div:nth-child(2), div:nth-child(6), div:nth-child(10)) {
-    background: linear-gradient(0deg, #8cf 0%, #8cf 80%, red 100%);
-  }
-  #dia :is(div:nth-child(3), div:nth-child(7), div:nth-child(11)) {
-    background: linear-gradient(180deg, #8cf 0%, #8cf 80%, red 100%);
-  }
-  #dia :is(div:nth-child(4), div:nth-child(8), div:nth-child(12)) {
-    background: linear-gradient(0deg, #8fc 0%, #8fc 80%, red 100%);
-  }
-  @keyframes hshift {
-    0% {
-      transform: translateX(-400px);
+    [data-theme="dark"] :is(footer, header) {
+      background-color: #111c;
     }
-    15%,
-    25% {
-      transform: translateX(-500px);
+
+    footer {
+      top: unset;
+      height: 4rem;
+      bottom: 0;
     }
-    40%,
-    50% {
-      transform: translateX(-600px);
+    button {
+      background-color: var(--accent-background-color);
+      accent-color: var(--accent-color);
+      color: var(--color);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin: 1em;
+      padding: 0.5em 1em;
+      box-shadow: 0 4px 6px #8888;
+      cursor: pointer;
     }
-    65%,
-    75% {
-      transform: translateX(-700px);
+    header div {
+      flex: 1 1 0%;
     }
-    90%,
-    100% {
-      transform: translateX(-800px);
+    nav {
+      position: fixed;
+      top: 6.66rem;
+      background-color: var(--accent-background-color);
+      overflow: auto;
     }
-  }
-  #fi {
-    view-transition-name: fi;
-  }
-  #dia div:nth-child(1),
-  #dia div:nth-child(3),
-  #dia div:nth-child(5),
-  #dia div:nth-child(7),
-  #dia div:nth-child(9),
-  #dia div:nth-child(11) {
-    transform: translateY(100px);
-  }
-  #bot {
-    scroll-margin-top: 6.66rem;
-  }
-</style>
+    nav a {
+      display: block;
+      text-decoration: none;
+      padding: 0.5rem;
+    }
+    main {
+      scroll-padding-top: 6.66rem;
+      padding: 1rem;
+      padding-left: 80px;
+      overflow: auto;
+    }
+    #all {
+      max-width: 50rem;
+      margin: auto;
+    }
+    #mid {
+      display: flex;
+      height: 70vh;
+    }
+    #back {
+      display: inline-block;
+      color: black;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem;
+      background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+      box-shadow: 0 4px 6px #8888;
+    }
+    #dark,
+    #light {
+      display: none;
+    }
+    :root.dark #dark,
+    :root:not(.dark) #light {
+      display: inline;
+    }
+    p.lorem,
+    p.desc {
+      line-height: 2;
+      font-size: 1.2rem;
+      max-width: 640px;
+      margin: 40px 10vw;
+    }
+    p.desc {
+      color: var(--accent-color);
+      line-height: 1.8rem;
+    }
+    #outerouter {
+      max-width: 640px;
+      margin: 0 10vw;
+      margin-top: 0;
+    }
+    #outer {
+      margin: 0 auto;
+      overflow: hidden;
+      animation: none;
+      height: 300px;
+      width: 100px;
+    }
+    #dia {
+      display: flex;
+      width: 1200px;
+      animation: hshift 5s infinite linear;
+    }
+    #screen {
+      position: relative;
+      z-index: 10;
+      width: 100px;
+      height: 100px;
+      background-color: #fff8;
+      border: 3px solid #8888;
+      border-radius: 10px;
+      color: black;
+      padding-top: 3.5rem;
+      padding-left: 1em;
+      top: -100px;
+      animation: none;
+    }
+    #dia div {
+      height: 200px;
+      width: 100px;
+      background: #8fc;
+      color: #222;
+      border: 1px solid #888;
+      padding: 1em 0.5rem;
+    }
+    #dia :is(div:nth-child(1), div:nth-child(5), div:nth-child(9)) {
+      background: linear-gradient(180deg, #8fc 0%, #8fc 80%, red 100%);
+    }
+    #dia :is(div:nth-child(2), div:nth-child(6), div:nth-child(10)) {
+      background: linear-gradient(0deg, #8cf 0%, #8cf 80%, red 100%);
+    }
+    #dia :is(div:nth-child(3), div:nth-child(7), div:nth-child(11)) {
+      background: linear-gradient(180deg, #8cf 0%, #8cf 80%, red 100%);
+    }
+    #dia :is(div:nth-child(4), div:nth-child(8), div:nth-child(12)) {
+      background: linear-gradient(0deg, #8fc 0%, #8fc 80%, red 100%);
+    }
+    @keyframes hshift {
+      0% {
+        transform: translateX(-400px);
+      }
+      15%,
+      25% {
+        transform: translateX(-500px);
+      }
+      40%,
+      50% {
+        transform: translateX(-600px);
+      }
+      65%,
+      75% {
+        transform: translateX(-700px);
+      }
+      90%,
+      100% {
+        transform: translateX(-800px);
+      }
+    }
+    #fi {
+      view-transition-name: fi;
+    }
+    #dia div:nth-child(1),
+    #dia div:nth-child(3),
+    #dia div:nth-child(5),
+    #dia div:nth-child(7),
+    #dia div:nth-child(9),
+    #dia div:nth-child(11) {
+      transform: translateY(100px);
+    }
+    #bot {
+      scroll-margin-top: 6.66rem;
+    }
+  </style>
+</html>

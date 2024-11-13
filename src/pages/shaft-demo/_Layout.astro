@@ -1,4 +1,5 @@
 ---
+import LightDark from "@/components/LightDark.astro";
 import TurnSignal from "@vtbag/turn-signal?url";
 
 export interface Props {
@@ -13,23 +14,8 @@ const { title } = Astro.props;
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/bag3.png" type="image/png" />
-    <script is:inline>
-      if ("onpagereveal" in window) {
-        addEventListener("pagereveal", () => {});
-      }
-    </script>
+    <LightDark />
     <script is:inline src={TurnSignal}></script>
-    <script is:inline>
-      if ("onpagereveal" in window) {
-        const _ = document.documentElement;
-        _.dataset.theme = _.style.colorScheme =
-          localStorage.getItem("starlight-theme") ||
-          (window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light");
-        _.classList.add(_.dataset.theme);
-      }
-    </script>
   </head>
   <body>
     <div style="height: 6.66rem"></div>
@@ -41,7 +27,6 @@ const { title } = Astro.props;
         href="/tips/pseudo-smooth-scrolling/#interactive-demo"
         id="back">Exit</a
       >
-      <button id="dl">Light/Dark</button>
     </header>
     <nav>
       <a href="/shaft-demo/2/#bot">Step 1</a>
@@ -55,17 +40,6 @@ const { title } = Astro.props;
       <div>Footer</div>
     </footer>
   </body>
-  <script>
-    document.getElementById("dl")!.addEventListener("click", () => {
-      const root = document.documentElement;
-      root.classList.toggle("dark");
-      let theme = root.classList.contains("dark") ? "dark" : "light";
-      localStorage.setItem(
-        "starlight-theme",
-        (root.dataset.theme = root.style.colorScheme = theme)
-      );
-    });
-  </script>
 </html>
 <style is:global>
   * {
