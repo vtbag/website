@@ -69,6 +69,7 @@ import "./_solution_styles.css";
           .querySelector("#other > div:nth-of-type(2)")
           .replaceWith(document.querySelector("#other > div").cloneNode(true));
         const twin = document.querySelector("#other > div:nth-of-type(2) ul");
+        document.querySelector("#other > div:nth-of-type(2) .button-link")?.remove();
         twin.id = "";
         twin.scrollTop = scrollInfo.scrollTop;
         const x = twin.querySelectorAll("li");
@@ -115,7 +116,7 @@ import "./_solution_styles.css";
           introduced to make things simple. This wasn't. Give us nested groups,
           please! ;-)<br />[<a href="/tips/hide-and-seek/#playing-hide--seek"
             >Back to the Hide and Seek page</a
-          >]  <Bsky/>
+          >] <Bsky />
         </p>
       </div>
       <div id="d2"></div>
