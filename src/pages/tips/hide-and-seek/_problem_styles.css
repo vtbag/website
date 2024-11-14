@@ -1,0 +1,146 @@
+@view-transition {
+  navigation: auto;
+}
+::view-transition-group(*) {
+  animation-duration: 2s;
+}
+#itemList {
+  view-transition-name: itemList;
+}
+:root {
+  --neon-pink: #ff2e88;
+  --neon-blue: #00fff9;
+  --neon-purple: #bd00ff;
+  --dark-bg: #0a0a16;
+  --cyber-grid: #1a1a3a;
+
+  font-family: "Courier New", monospace;
+  line-height: 1.5;
+  color: #ffffff;
+  background-color: var(--dark-bg);
+}
+div:nth-of-type(1) > button {
+  view-transition-name: button;
+}
+#other > div:nth-of-type(1) {
+  margin: 0 auto;
+}
+body {
+  overflow: hidden;
+  margin: 0 auto;
+  min-height: 100vh;
+  width: 100vw;
+  background:
+    linear-gradient(90deg, var(--dark-bg) 21px, transparent 1%) center,
+    linear-gradient(var(--dark-bg) 21px, transparent 1%) center,
+    var(--neon-blue);
+  background-size: 22px 22px;
+  background-attachment: fixed;
+}
+#other {
+  margin: 0;
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background:
+    linear-gradient(90deg, var(--dark-bg) 21px, transparent 1%) center,
+    linear-gradient(var(--dark-bg) 21px, transparent 1%) center,
+    var(--neon-blue);
+  background-size: 22px 22px;
+  background-attachment: fixed;
+}
+
+
+h1 {
+  color: var(--neon-blue);
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 10px var(--neon-blue);
+  letter-spacing: 2px;
+}
+
+a {
+  color: var(--neon-blue);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cyber-list {
+  height: 300px;
+  overflow-y: auto;
+  margin: 2rem 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--neon-purple);
+  border-radius: 4px;
+}
+
+.cyber-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.cyber-list::-webkit-scrollbar-track {
+  background: var(--dark-bg);
+}
+
+.cyber-list::-webkit-scrollbar-thumb {
+  background: var(--neon-pink);
+  border-radius: 5px;
+}
+
+.cyber-list li {
+  padding: 1rem;
+  margin: 0.5rem;
+  background: var(--cyber-grid);
+  border-left: 3px solid var(--neon-blue);
+  transition: all 0.3s ease;
+  box-shadow: 2px 2px #00fff9;
+}
+
+.cyber-list li:hover {
+  transform: translateX(5px);
+  background: rgba(0, 255, 249, 0.1);
+  border-left-color: var(--neon-pink);
+}
+
+button {
+  display: block;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  font-family: "Courier New", monospace;
+  font-size: 1.2rem;
+  color: var(--neon-blue);
+  background: transparent;
+  border: 2px solid var(--neon-blue);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+button:hover {
+  background: var(--neon-blue);
+  color: var(--dark-bg);
+  box-shadow: 0 0 20px var(--neon-blue);
+}
+
+.glitch-effect {
+  animation: glitch 1s linear infinite;
+}
+
+@keyframes glitch {
+  2%,
+  64% {
+    transform: translate(2px, 0) skew(0deg);
+  }
+  4%,
+  60% {
+    transform: translate(-2px, 0) skew(0deg);
+  }
+  62% {
+    transform: translate(0, 0) skew(5deg);
+  }
+}

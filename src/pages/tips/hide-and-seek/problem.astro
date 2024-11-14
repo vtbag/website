@@ -1,0 +1,96 @@
+---
+import "./_problem_styles.css";
+---
+
+<!doctype html>
+<html lang="en" data-vtbag-x="#window @scrollTop">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script is:inline>
+      const cyberItems = [
+        "Quantum Neural Interface",
+        "Holographic Data Core",
+        "Nano-Tech Augments",
+        "Plasma Energy Cells",
+        "Binary Dream Encoder",
+        "Neural Network Nodes",
+        "Cyber-Optic Enhancer",
+        "Digital Soul Backup",
+        "Quantum Encryption Key",
+        "Memory Crystal Array",
+        "Bio-Digital Converter",
+        "Synthetic Nerve Wire",
+        "AI Consciousness Shard",
+        "Virtual Reality Seed",
+        "Tech-Organic Hybrid",
+        "Data Stream Amplifier",
+        "Cyber-Kinetic Core",
+        "Digital Ghost Protocol",
+        "Neural Mesh Network",
+        "Quantum Phase Shifter",
+      ];
+
+      addEventListener("pagereveal", (event) => {
+
+        const scrollInfo = JSON.parse(
+          sessionStorage.getItem("vtbag-hide-seek") ||
+            '{"scrollTop":0, "scrollY":0}'
+        );
+        scrollTo({ top: scrollInfo.scrollY, left: 0, behavior: "instant" });
+        const transition = event.viewTransition;
+
+        const list = shuffleArray(cyberItems);
+        const items = createList(list);
+        const itemList = document.querySelector("ul.cyber-list");
+        itemList.innerHTML = items;
+        itemList.scrollTop = scrollInfo.scrollTop;
+
+        const x = itemList.querySelectorAll("li");
+        x.forEach((i) => {
+          i.style.viewTransitionName = i.innerText.replaceAll(" ", "-");
+        });
+      });
+      function shuffleArray(array) {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+      }
+      function createList(items, vt) {
+        return items.map((item) => `<li>${item}</li>`).join("");
+      }
+    </script>
+    {
+      (
+        // @ts-ignore
+        <link rel="expect" href="#body" blocking="render" />
+      )
+    }
+  </head>
+  <body id="body">
+    <div id="other">
+      <div id="d1">
+        <h1>CYBER<span class="glitch-effect">TECH</span> INVENTORY</h1>
+        <ul class="cyber-list"></ul>
+        <button class="-glitch-effect">RANDOMIZE</button>
+        <p style="max-width:640px">Oh what a mess! All items of the list define a transition group to show how the items are shuffled. But with the start of the view transition, they are all thrown on the screen, even if they were clipped before. What a mess!<br/>
+          [<a href="/tips/hide-and-seek/#naive-scrollable-list">Back to the Hide and Seek page</a>]</p>
+      </div>
+      <div id="d2"></div>
+    </div>
+    <script>
+      document.querySelector("button")!.addEventListener("click", () => {
+        const ul = document.querySelector("#other > div ul")!;
+        sessionStorage.setItem(
+          "vtbag-hide-seek",
+          JSON.stringify({ scrollTop: ul.scrollTop, scrollY })
+        );
+        location.href = "/tips/hide-and-seek/problem/";
+      });
+    </script>
+  </body>
+</html>

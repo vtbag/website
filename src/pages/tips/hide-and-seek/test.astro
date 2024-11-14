@@ -1,0 +1,23 @@
+---
+
+---
+
+<html>
+  <body>
+    <div>
+      <img id="img1" src="/bag.png" />
+      <img id="img2" width=200 height=200 src="/chamber.webp" />
+      <img id="img3" src="/bag.png" />
+
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  img {
+    position: fixed;
+  }
+  #img3 {
+    mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="368" height="350"><rect x="0" y="0" width="368" height="50" fill="black"/><rect x="0" y="300" width="368" height="50" fill="black"/><rect x="0" y="0" width="50" height="350" fill="black"/><rect x="318" y="0" width="50" height="350" fill="black"/></svg>');
+  }
+</style>
