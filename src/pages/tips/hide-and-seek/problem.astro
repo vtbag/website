@@ -6,8 +6,19 @@ import "./_problem_styles.css";
 <html lang="en" data-vtbag-x="#window @scrollTop">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/bag3.png" type="image/png" />
+    <meta
+      property="og:description"
+      content="Without nested groups, view transition images break out of their captivity as soon as the opportunity arises."
+    />
+    <meta property="og:image" content="/hide-and-seek-og.png" />
+    <meta property="og:url" content="/tips/hide-and-seek/" />
+    <meta property="og:title" content="Hide and Seek" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="@vtbag" />
+    <meta name="twitter:card" content="summary_large_image" />
+
     <script is:inline>
       const cyberItems = [
         "Quantum Neural Interface",
@@ -33,7 +44,13 @@ import "./_problem_styles.css";
       ];
 
       addEventListener("pagereveal", (event) => {
-
+        const from = new URL(navigation.activation.from.url, location.href);
+        if (
+          event.viewTransition &&
+          from.pathname !== "/tips/hide-and-seek/problem/"
+        ) {
+          event.viewTransition.skipTransition?.();
+        }
         const scrollInfo = JSON.parse(
           sessionStorage.getItem("vtbag-hide-seek") ||
             '{"scrollTop":0, "scrollY":0}'
@@ -77,8 +94,17 @@ import "./_problem_styles.css";
         <h1>CYBER<span class="glitch-effect">TECH</span> INVENTORY</h1>
         <ul class="cyber-list"></ul>
         <button class="-glitch-effect">RANDOMIZE</button>
-        <p style="max-width:640px">Oh what a mess! All items of the list define a transition group to show how the items are shuffled. But with the start of the view transition, they are all thrown on the screen, even if they were clipped before. What a mess!<br/>
-          [<a href="/tips/hide-and-seek/#naive-scrollable-list">Back to the Hide and Seek page</a>]</p>
+        <p style="max-width:640px">
+          Oh what a mess! All items of the list define a transition group to
+          show how the items are shuffled. But with the start of the view
+          transition, they are all thrown on the screen, even if they were
+          clipped before. Can we <a href="/tips/hide-and-seek/solution/"
+            >do better</a
+          >?<br />
+           [<a href="/tips/hide-and-seek/#naive-scrollable-list"
+            >Back to the Hide and Seek page</a
+          >]
+        </p>
       </div>
       <div id="d2"></div>
     </div>
@@ -90,6 +116,18 @@ import "./_problem_styles.css";
           JSON.stringify({ scrollTop: ul.scrollTop, scrollY })
         );
         location.href = "/tips/hide-and-seek/problem/";
+      });
+      addEventListener("pageswap", (event) => {
+        // @ts-ignore
+        if (event.viewTransition) {
+          // @ts-ignore
+          const url = new URL(event.activation.entry.url, location.href);
+          console.log(url.pathname);
+          if (url.pathname !== "/tips/hide-and-seek/problem/") {
+            // @ts-ignore
+            event.viewTransition.skipTransition?.();
+          }
+        }
       });
     </script>
   </body>

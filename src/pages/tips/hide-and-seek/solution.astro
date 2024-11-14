@@ -6,8 +6,18 @@ import "./_solution_styles.css";
 <html lang="en" data-vtbag-x="#window @scrollTop">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/bag3.png" type="image/png" />
+    <meta
+      property="og:description"
+      content="Desperately waiting for nested view transition groups... Clipping these transitions shouldn't be this hard! 🙏"
+    />
+    <meta property="og:image" content="/hide-and-seek-og.png" />
+    <meta property="og:url" content="/tips/hide-and-seek/" />
+    <meta property="og:title" content="Hide and Seek" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="@vtbag" />
+    <meta name="twitter:card" content="summary_large_image" />
     <script is:inline>
       const cyberItems = [
         "Quantum Neural Interface",
@@ -33,6 +43,13 @@ import "./_solution_styles.css";
       ];
 
       addEventListener("pagereveal", (event) => {
+        const from = new URL(navigation.activation.from.url, location.href);
+        if (
+          event.viewTransition &&
+          from.pathname !== "/tips/hide-and-seek/solution/"
+        ) {
+          event.viewTransition.skipTransition?.();
+        }
         const scrollInfo = JSON.parse(
           sessionStorage.getItem("vtbag-hide-seek") ||
             '{"scrollTop":0, "scrollY":0}'
@@ -61,7 +78,7 @@ import "./_solution_styles.css";
         document.head.insertAdjacentHTML(
           "beforeend",
           `<style>::view-transition-new(root) {
-          mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="${innerWidth}" height="${innerHeight}"><rect x="0" y="0" width="${innerWidth}" height="${ul.top +1}" fill="black"/><rect x="0" y="${ul.bottom -1}" width="${innerWidth}" height="${innerHeight - ul.bottom+1}" fill="black"/><rect x="0" y="0" width="${ul.left + 1}" height="${innerHeight}" fill="black"/><rect x="${ul.right - 11}" y="0" width="${innerWidth - ul.right}" height="${innerHeight}" fill="black"/></svg>');
+          mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="${innerWidth}" height="${innerHeight}"><rect x="0" y="0" width="${innerWidth}" height="${ul.top + 1}" fill="black"/><rect x="0" y="${ul.bottom - 1}" width="${innerWidth}" height="${innerHeight - ul.bottom + 1}" fill="black"/><rect x="0" y="0" width="${ul.left + 1}" height="${innerHeight}" fill="black"/><rect x="${ul.right - 11}" y="0" width="${innerWidth - ul.right}" height="${innerHeight}" fill="black"/></svg>');
           }</style>`
         );
       });
@@ -90,7 +107,14 @@ import "./_solution_styles.css";
         <h1>CYBER<span class="glitch-effect">TECH</span> INVENTORY</h1>
         <ul class="cyber-list"></ul>
         <button class="-glitch-effect">RANDOMIZE</button>
-        <p style="max-width:640px">Ok, it kind of seems to work! This is demo is a rather crude force attack to to problem. Keep in mind that view transitions were introduced to make things simple. This wasn't. Give us nested groups, please! ;-)<br/>[<a href="/tips/hide-and-seek/#playing-hide--seek">Back to the Hide and Seek page</a>]</p>
+        <p style="max-width:640px">
+          Ok, it kind of seems to work! This is demo is a rather crude force
+          attack to to problem. Keep in mind that view transitions were
+          introduced to make things simple. This wasn't. Give us nested groups,
+          please! ;-)<br />[<a href="/tips/hide-and-seek/#playing-hide--seek"
+            >Back to the Hide and Seek page</a
+          >]
+        </p>
       </div>
       <div id="d2"></div>
     </div>
@@ -102,6 +126,18 @@ import "./_solution_styles.css";
           JSON.stringify({ scrollTop: ul.scrollTop, scrollY })
         );
         location.href = "/tips/hide-and-seek/solution/";
+      });
+      addEventListener("pageswap", (event) => {
+        // @ts-ignore
+        if (event.viewTransition) {
+          // @ts-ignore
+          const url = new URL(event.activation.entry.url, location.href);
+          console.log(url.pathname);
+          if (url.pathname !== "/tips/hide-and-seek/solution/") {
+            // @ts-ignore
+            event.viewTransition.skipTransition?.();
+          }
+        }
       });
     </script>
   </body>
