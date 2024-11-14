@@ -43,12 +43,13 @@ import "./_solution_styles.css";
       ];
 
       addEventListener("pagereveal", (event) => {
-        const from = new URL(navigation.activation.from.url, location.href);
-        if (
-          event.viewTransition &&
-          from.pathname !== "/tips/hide-and-seek/solution/"
-        ) {
-          event.viewTransition.skipTransition?.();
+        if (event.viewTransition) {
+          if (
+            new URL(navigation.activation.from.url, location.href).pathname !==
+            "/tips/hide-and-seek/solution/"
+          ) {
+            event.viewTransition.skipTransition?.();
+          }
         }
         const scrollInfo = JSON.parse(
           sessionStorage.getItem("vtbag-hide-seek") ||
