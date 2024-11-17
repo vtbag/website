@@ -1,6 +1,6 @@
 ---
-import Bsky from "@/components/Bsky.astro";
 import "./_solution_styles.css";
+import Bsky from "../../../components/Bsky.astro";
 ---
 
 <!doctype html>
@@ -9,9 +9,10 @@ import "./_solution_styles.css";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/bag3.png" type="image/png" />
+    <title>Scrolled List Demo | @vtbag</title>
     <meta
       property="og:description"
-      content="Desperately waiting for nested view transition groups... Clipping these transitions shouldn't be this hard! 🙏"
+      content="Without nested groups, view transition images break out of their captivity as soon as the opportunity arises."
     />
     <meta property="og:image" content="/hide-and-seek-og.png" />
     <meta property="og:url" content="/tips/hide-and-seek/" />
@@ -19,6 +20,7 @@ import "./_solution_styles.css";
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="@vtbag" />
     <meta name="twitter:card" content="summary_large_image" />
+
     <script is:inline>
       const cyberItems = [
         "Quantum Neural Interface",
@@ -43,48 +45,59 @@ import "./_solution_styles.css";
         "Quantum Phase Shifter",
       ];
 
+      addEventListener("DOMContentLoaded", () => {
+        if ("onpagereveal" in window) return;
+        const itemList = document.querySelector("ul.cyber-list");
+        itemList.innerHTML = createList(shuffleArray(cyberItems));
+        restorescrollPositions(itemList);
+      });
+
+      function restorescrollPositions(itemList) {
+        const scrollInfo = JSON.parse(
+          sessionStorage.getItem("vtbag-hide-seek") ||
+            '{"scrollTop":0, "scrollY":0}'
+        );
+        scrollTo({ top: scrollInfo.scrollY, left: 0, behavior: "instant" });
+        itemList.scrollTop = scrollInfo.scrollTop;
+      }
+
       addEventListener("pagereveal", (event) => {
         if (event.viewTransition) {
           if (
             new URL(navigation.activation.from.url, location.href).pathname !==
             "/tips/hide-and-seek/solution/"
           ) {
-            event.viewTransition.skipTransition?.();
+            //event.viewTransition.skipTransition?.();
           }
         }
-        const scrollInfo = JSON.parse(
-          sessionStorage.getItem("vtbag-hide-seek") ||
-            '{"scrollTop":0, "scrollY":0}'
-        );
-        scrollTo({ top: scrollInfo.scrollY, left: 0, behavior: "instant" });
-        const transition = event.viewTransition;
-
-        const list = shuffleArray(cyberItems);
-        const items = createList(list);
         const itemList = document.querySelector("ul.cyber-list");
-        itemList.innerHTML = items;
-        itemList.scrollTop = scrollInfo.scrollTop;
-
-        document
-          .querySelector("#other > div:nth-of-type(2)")
-          .replaceWith(document.querySelector("#other > div").cloneNode(true));
-        const twin = document.querySelector("#other > div:nth-of-type(2) ul");
-        document.querySelector("#other > div:nth-of-type(2) .button-link")?.remove();
-        twin.id = "";
-        twin.scrollTop = scrollInfo.scrollTop;
-        const x = twin.querySelectorAll("li");
-        x.forEach((i) => {
+        itemList.innerHTML = createList(shuffleArray(cyberItems));
+        restorescrollPositions(itemList);
+        itemList.querySelectorAll("li").forEach((i) => {
           i.style.viewTransitionName = i.innerText.replaceAll(" ", "-");
-          i.style.viewTransitionClass = "item";
         });
-        const ul = document.querySelector("ul").getBoundingClientRect();
-        document.head.insertAdjacentHTML(
-          "beforeend",
-          `<style>::view-transition-new(root) {
-          mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="${innerWidth}" height="${innerHeight}"><rect x="0" y="0" width="${innerWidth}" height="${ul.top + 1}" fill="black"/><rect x="0" y="${ul.bottom - 1}" width="${innerWidth}" height="${innerHeight - ul.bottom + 1}" fill="black"/><rect x="0" y="0" width="${ul.left + 1}" height="${innerHeight}" fill="black"/><rect x="${ul.right - 11}" y="0" width="${innerWidth - ul.right}" height="${innerHeight}" fill="black"/></svg>');
-          }</style>`
-        );
+        setListener();
+        if (event.viewTransition) {
+          fix(document.querySelector("#d1"), document.querySelector("ul"));
+          document
+            .querySelectorAll("#vtbag-hide-and-seek-front li")
+            .forEach((i) => i.remove());
+          event.viewTransition.finished.finally(() =>
+            document.querySelector("#vtbag-hide-and-seek-front")?.remove()
+          );
+        }
       });
+
+      function setListener() {
+        document.querySelector("button").addEventListener("click", () => {
+          const ul = document.querySelector("#d1 ul");
+          sessionStorage.setItem(
+            "vtbag-hide-seek",
+            JSON.stringify({ scrollTop: ul.scrollTop, scrollY })
+          );
+          location.href = "/tips/hide-and-seek/solution/";
+        });
+      }
       function shuffleArray(array) {
         const newArray = [...array];
         for (let i = newArray.length - 1; i > 0; i--) {
@@ -93,9 +106,92 @@ import "./_solution_styles.css";
         }
         return newArray;
       }
+
       function createList(items, vt) {
         return items.map((item) => `<li>${item}</li>`).join("");
       }
+      function cutSVG(element, cutters) {
+        if (!element) return;
+        const masks = ['<rect width="100%" height="100%" fill="white" />'];
+        const outerRect = element.getBoundingClientRect();
+        cutters.forEach((cutter) => {
+          const inner = cutter.element;
+          const insets = cutter.inset.split(" ").map(parseFloat);
+          for (let i = 0; i < 4; i++) {
+            const len = insets.length;
+            insets[i] = isNaN(insets[i] ?? 0)
+              ? 0
+              : (insets[len === 3 && i === 3 ? 2 : i % len] ?? 0);
+          }
+          const innerRect = inner.getBoundingClientRect();
+          const innerStyle = getComputedStyle(inner);
+
+          const left = parseFloat(innerStyle.borderLeftWidth);
+          innerRect.width -=
+            left +
+            parseFloat(innerStyle.borderRightWidth) +
+            insets[1] +
+            insets[3];
+          innerRect.x += left + insets[3];
+          const top = parseFloat(innerStyle.borderTopWidth);
+          innerRect.height -=
+            top +
+            parseFloat(innerStyle.borderBottomWidth) +
+            insets[0] +
+            insets[2];
+          innerRect.y += top + insets[0];
+          masks.push(
+            `<rect x="${innerRect.x - outerRect.x}" y="${innerRect.y - outerRect.y}" width="${innerRect.width}" height="${innerRect.height}" fill="black" />`
+          );
+        });
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${outerRect.width}" height="${outerRect.height}">${masks.join("")}</svg>`;
+        return svg;
+      }
+      function fix(larger, smaller) {
+        const front = larger.cloneNode(true);
+        stripViewTransitionNamesAndIds(front);
+        const svg = cutSVG(larger, [
+          {
+            element: smaller,
+            inset: "0 0px 0px 0",
+          },
+        ]);
+        front.style.pointerEvents = "none";
+        front.style.viewTransitionName = "vtbag-hide-and-seek-front";
+        front.id = "vtbag-hide-and-seek-front";
+        front.style.maskImage = `url('data:image/svg+xml;utf8,${svg}')`;
+        front.style.maskMode = "luminance";
+        front.style.position = "absolute";
+        const largerRect = larger.getBoundingClientRect();
+        larger.insertAdjacentElement("afterend", front);
+        front.style.top = `${largerRect.top + document.documentElement.scrollTop}px`;
+        front.style.left = `${largerRect.left + document.documentElement.scrollLeft}px`;
+        return front;
+      }
+      function stripViewTransitionNamesAndIds(element) {
+        element.querySelectorAll(":scope, :scope *").forEach((e) => {
+          e.removeAttribute("id");
+          e.removeAttribute("name");
+          e.style.viewTransitionName = "none";
+        });
+      }
+      addEventListener("resize", () => location.reload());
+      addEventListener("pageswap", (event) => {
+        // @ts-ignore
+        if (event.viewTransition) {
+          // @ts-ignore
+          const url = new URL(event.activation.entry.url, location.href);
+          console.log(url.pathname);
+          if (url.pathname !== "/tips/hide-and-seek/solution/") {
+            // @ts-ignore
+            //event.viewTransition.skipTransition?.();
+          }
+          fix(document.querySelector("#d1"), document.querySelector("ul"));
+          document
+            .querySelectorAll("#vtbag-hide-and-seek-front li")
+            .forEach((i) => i.remove());
+        }
+      });
     </script>
     {
       (
@@ -105,43 +201,18 @@ import "./_solution_styles.css";
     }
   </head>
   <body id="body">
-    <div id="other">
-      <div id="d1">
-        <h1>CYBER<span class="glitch-effect">TECH</span> INVENTORY</h1>
-        <ul class="cyber-list"></ul>
-        <button class="-glitch-effect">RANDOMIZE</button>
-        <p style="max-width:640px">
-          Ok, it kind of seems to work! This is demo is a rather crude force
-          attack to to problem. Keep in mind that view transitions were
-          introduced to make things simple. This wasn't. Give us nested groups,
-          please! ;-)<br />[<a href="/tips/hide-and-seek/#playing-hide--seek"
-            >Back to the Hide and Seek page</a
-          >] <Bsky />
-        </p>
-      </div>
-      <div id="d2"></div>
+    <div id="d1">
+      <h1><span class="glitch-effect">CYBERTECH INVENTORY</span></h1>
+      <ul class="cyber-list"></ul>
+      <button class="glitch-effect">RANDOMIZE</button>
+      <p style="max-width:640px">
+        Ok, not it works nicely! This is demo is rather elaborated solution.
+        Keep in mind that view transitions were introduced to make things
+        simple. This wasn't. Give us nested transition groups, please! ;-)<br
+        />[<a href="/basics/hide-and-seek/#playing-hide--seek"
+          >Back to the Hide and Seek page</a
+        >] <Bsky />
+      </p>
     </div>
-    <script>
-      document.querySelector("button")!.addEventListener("click", () => {
-        const ul = document.querySelector("#other > div ul")!;
-        sessionStorage.setItem(
-          "vtbag-hide-seek",
-          JSON.stringify({ scrollTop: ul.scrollTop, scrollY })
-        );
-        location.href = "/tips/hide-and-seek/solution/";
-      });
-      addEventListener("pageswap", (event) => {
-        // @ts-ignore
-        if (event.viewTransition) {
-          // @ts-ignore
-          const url = new URL(event.activation.entry.url, location.href);
-          console.log(url.pathname);
-          if (url.pathname !== "/tips/hide-and-seek/solution/") {
-            // @ts-ignore
-            event.viewTransition.skipTransition?.();
-          }
-        }
-      });
-    </script>
   </body>
 </html>

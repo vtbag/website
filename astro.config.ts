@@ -111,7 +111,8 @@ function sidebar() {
       },
       { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
       { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" },
-      { label: 'Styling View Transitions', link: "/basics/styling/" }
+      { label: 'Styling View Transitions', link: "/basics/styling/" },
+      { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/" }
     ]
   }, {
     label: 'CSS Tips & Tricks',
@@ -120,7 +121,6 @@ function sidebar() {
       { label: "Flickering during morph animations?", link: "/tips/over-exposure/" },
       { label: "Avoid Pointer Flickering", link: "/tips/pointer/" },
       { label: "Pseudo-smooth-scrolling?", link: "/tips/pseudo-smooth-scrolling/" },
-      { label: "No nested groups, yet?", link: "/tips/hide-and-seek/" }
     ]
   }, {
     label: 'All Demos',

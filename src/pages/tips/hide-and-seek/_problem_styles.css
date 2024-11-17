@@ -4,9 +4,6 @@
 ::view-transition-group(*) {
   animation-duration: 2s;
 }
-#itemList {
-  view-transition-name: itemList;
-}
 :root {
   --neon-pink: #ff2e88;
   --neon-blue: #00fff9;
@@ -19,9 +16,7 @@
   color: #ffffff;
   background-color: var(--dark-bg);
 }
-div:nth-of-type(1) > button {
-  view-transition-name: button;
-}
+
 #other > div:nth-of-type(1) {
   margin: 0 auto;
 }

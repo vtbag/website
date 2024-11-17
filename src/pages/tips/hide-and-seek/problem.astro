@@ -9,6 +9,7 @@ import Bsky from "../../../components/Bsky.astro";
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/bag3.png" type="image/png" />
+    <title>Scrolled List Demo | @vtbag</title>
     <meta
       property="og:description"
       content="Without nested groups, view transition images break out of their captivity as soon as the opportunity arises."
@@ -44,6 +45,22 @@ import Bsky from "../../../components/Bsky.astro";
         "Quantum Phase Shifter",
       ];
 
+      addEventListener("DOMContentLoaded", () => {
+        if ("onpagereveal" in window) return;
+        const itemList = document.querySelector("ul.cyber-list");
+        itemList.innerHTML = createList(shuffleArray(cyberItems));
+        restorescrollPositions(itemList);
+      });
+
+      function restorescrollPositions(itemList) {
+        const scrollInfo = JSON.parse(
+          sessionStorage.getItem("vtbag-hide-seek") ||
+            '{"scrollTop":0, "scrollY":0}'
+        );
+        scrollTo({ top: scrollInfo.scrollY, left: 0, behavior: "instant" });
+        itemList.scrollTop = scrollInfo.scrollTop;
+      }
+
       addEventListener("pagereveal", (event) => {
         if (event.viewTransition) {
           if (
@@ -53,24 +70,14 @@ import Bsky from "../../../components/Bsky.astro";
             event.viewTransition.skipTransition?.();
           }
         }
-        const scrollInfo = JSON.parse(
-          sessionStorage.getItem("vtbag-hide-seek") ||
-            '{"scrollTop":0, "scrollY":0}'
-        );
-        scrollTo({ top: scrollInfo.scrollY, left: 0, behavior: "instant" });
-        const transition = event.viewTransition;
-
-        const list = shuffleArray(cyberItems);
-        const items = createList(list);
         const itemList = document.querySelector("ul.cyber-list");
-        itemList.innerHTML = items;
-        itemList.scrollTop = scrollInfo.scrollTop;
-
-        const x = itemList.querySelectorAll("li");
-        x.forEach((i) => {
+        itemList.innerHTML = createList(shuffleArray(cyberItems));
+        restorescrollPositions(itemList);
+        itemList.querySelectorAll("li").forEach((i) => {
           i.style.viewTransitionName = i.innerText.replaceAll(" ", "-");
         });
       });
+
       function shuffleArray(array) {
         const newArray = [...array];
         for (let i = newArray.length - 1; i > 0; i--) {
@@ -79,6 +86,7 @@ import Bsky from "../../../components/Bsky.astro";
         }
         return newArray;
       }
+
       function createList(items, vt) {
         return items.map((item) => `<li>${item}</li>`).join("");
       }
@@ -100,15 +108,15 @@ import Bsky from "../../../components/Bsky.astro";
           Oh what a mess! All items of the list define a transition group to
           show how the items are shuffled. But with the start of the view
           transition, they are all thrown on the screen, even if they were
+          transition, they are all thrown on the screen, even if they were
           clipped before. Can we <a href="/tips/hide-and-seek/solution/"
             >do better</a
           >?<br />
-           [<a href="/tips/hide-and-seek/#naive-scrollable-list"
+          [<a href="/basics/hide-and-seek/#naive-scrollable-list"
             >Back to the Hide and Seek page</a
-          >] <Bsky/>
+          >] <Bsky />
         </p>
       </div>
-      <div id="d2"></div>
     </div>
     <script>
       document.querySelector("button")!.addEventListener("click", () => {

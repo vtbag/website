@@ -2,32 +2,23 @@
   navigation: auto;
 }
 :root {
-  view-transition-name: none;
+  color-scheme: dark;
 }
-#other {
-  view-transition-name: root;
+::view-transition-group(bsky) ,
+::view-transition-group(bskyText) {
+  display: none;
+}
+#d1 > button {
+  view-transition-name: button;
 }
 ::view-transition-group(*) {
   animation-duration: 2s;
 }
-::view-transition-group(root) {
-  z-index: 1;
-}
-::view-transition-group(button) {
-  z-index: 2;
-}
-::view-transition-old(root) {
+::view-transition-old(*) {
   display: none;
 }
-::view-transition-new(root) {
+::view-transition-new(*) {
   animation: none;
-}
-::view-transition-old(.item),
-::view-transition-new(.item) {
-  transform: translateX(-100vw);
-}
-#itemList {
-  view-transition-name: itemList;
 }
 :root {
   --neon-pink: #ff2e88;
@@ -41,46 +32,45 @@
   color: #ffffff;
   background-color: var(--dark-bg);
 }
-div:nth-of-type(1) > button {
-  view-transition-name: button;
-}
-#other > div {
-  margin: 0 auto;
-}
+
 body {
-  overflow: hidden;
+  padding: 0;
   margin: 0;
-  min-height: 101vh;
-  width: 200vw;
-  background:
-    linear-gradient(90deg, var(--dark-bg) 21px, transparent 1%) center,
-    linear-gradient(var(--dark-bg) 21px, transparent 1%) center,
-    var(--neon-blue);
-  background-size: 22px 22px;
-  background-attachment: fixed;
-}
-#other {
-  margin: 0;
-  width: 200vw;
   min-height: 100vh;
-  display: flex;
-  align-items: center;
+  width: 100vw;
+}
+
+:root,
+#d1,
+#vtbag-hide-and-seek-front {
   background:
-    linear-gradient(90deg, var(--dark-bg) 21px, transparent 1%) center,
-    linear-gradient(var(--dark-bg) 21px, transparent 1%) center,
+    linear-gradient(90deg, var(--dark-bg) 21px, #0000 1%) center,
+    linear-gradient(var(--dark-bg) 21px, #0000 1%) center,
     var(--neon-blue);
   background-size: 22px 22px;
   background-attachment: fixed;
 }
 
+#d1,
+#vtbag-hide-and-seek-front {
+  margin: 0px auto;
+  padding: 32px;
+  max-width: 640px;
+  min-height: calc(100vh - 64px);
+}
 
 h1 {
   color: var(--neon-blue);
+  margin:0;
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 2rem;
   text-shadow: 0 0 10px var(--neon-blue);
   letter-spacing: 2px;
+}
+
+h1 span {
+  display: inline-block;
 }
 
 a {
@@ -134,7 +124,7 @@ button {
   font-family: "Courier New", monospace;
   font-size: 1.2rem;
   color: var(--neon-blue);
-  background: transparent;
+  background: #000;
   border: 2px solid var(--neon-blue);
   border-radius: 4px;
   cursor: pointer;
@@ -150,19 +140,30 @@ button:hover {
 }
 
 .glitch-effect {
-  animation: glitch 1s linear infinite;
+  animation: glitch 10s linear infinite;
 }
 
 @keyframes glitch {
-  2%,
+  32%,
+  84% {
+    transform: translate(12px, 0) skew(0deg);
+  }
+  34%,
+  80% {
+    transform: translate(-12px, 11px) skew(0deg);
+  }
+  62% {
+    transform: translate(0, 0) skew(15deg);
+  }
+  32%,
   64% {
-    transform: translate(2px, 0) skew(0deg);
+    transform: translate(12px, 0) skew(0deg);
   }
   4%,
   60% {
-    transform: translate(-2px, 0) skew(0deg);
+    transform: translate(-12px, -11px) skew(0deg);
   }
   62% {
-    transform: translate(0, 0) skew(5deg);
+    transform: translate(0, 0) skew(15deg);
   }
 }
