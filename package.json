@@ -12,7 +12,7 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/starlight": "^0.29.0",
     "@inox-tools/portal-gun": "^0.1.1",
-    "@playwright/test": "^1.48.2",
+    "@playwright/test": "^1.49.0",
     "@types/node": "^22.9.0",
     "@vtbag/cam-shaft": "^1.0.1",
     "@vtbag/element-crossing": "^1.0.3",
