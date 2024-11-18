@@ -1,0 +1,105 @@
+---
+title: Hide and Seek
+description: Making the most of view transitions while awaiting nested groups
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/hide-and-seek-og.png"
+---
+
+View transitions offer a unique capability: all images participating in the transition exist within a shared stacking context, separate from their original elements in the DOM. This setup is excellent for creating seamless morphing effects between elements, but it can introduce unexpected behavior. For example, elements that are clipped or partially obscured in the DOM might escape their visual boundaries during a view transition, breaking out of their intended constraints.
+
+Here, we'll explore techniques to regain control over such scenarios, ensuring your transitions are visually consistent.
+
+:::note
+This page is more of a rough draft than I’d usually share, but I couldn’t wait to publish the [`overflow:scroll` demo](#improved-scrollable-list). For now, you’ll have to put up with the work-in-progress state, but I promise to refine and complete it soon!
+:::
+
+Moving [view transition images](/basics/pseudos/#old-and-new-image-pseudos) into the [view transition layer](/basics/pseudos/#rendering-pseudo-elements:~:text=own%20stacking%20context%2C%20known%20as%20the%20view%20transition%20layer) above all other elements can lead to effects that are surprising but generally also easy to understand and resolve.
+
+This site features both subtle and striking examples. I’ll guide you through some of them to highlight the issues and their solutions.
+
+## Restoring Original Paint Order
+
+This is built with [Astro Starlight](https://starlight.astro.build/). Enabling cross-document view transitions for multi-page sites is surprisingly straightforward. [Most browsers](https://caniuse.com/?search=%40view-transition) support this feature; all you need to do is [add a simple CSS at-rule](/tips/css/) to your custom styles:
+
+
+```css
+@view-transition {
+  navigation: auto;
+}
+```
+
+Once activated, your site will have full-page cross-fade transitions during navigation. To add a touch of flair, we've assigned the view transition name `main` to the primary content area, creating the corresponding `::view-transition-group(main)` pseudo-element:
+
+```css
+main {
+  view-transition-name: main;
+}
+```
+
+Here is an interesting quirk: Scroll down a bit so part of the page content moves beneath the fixed search box at the top of the page.
+
+
+<div class="small">
+<span class="light:sl-hidden">![Searchbox hides main area](./_hidden-dark.png)</span>
+<span class="dark:sl-hidden">![Searchbox hides main area](./_hidden-light.png)</span>
+</div>
+
+Now navigate to a different page. During the view transition, the `::view-transition-group(main)` pseudo-element, along with its old and new images, enters the view transition layer. Since these images extend taller than the viewport, they obscure the search box momentarily.
+
+
+
+<div class="small">
+<span class="light:sl-hidden">![View transition image hides searchboxV](./_unhidden-dark.png)</span>
+<span class="dark:sl-hidden">![iew transition image hides searchbox](./_unhidden-light.png)</span>
+</div>
+
+<style>{`
+div.small img {
+  border:#888 solid 1pt;
+  margin-top: 1ex;
+  height: 100px;
+  object-fit: cover;
+}
+div.small {
+  width: max(250px, 50%);
+  margin-inline: auto;
+}
+`}</style>
+
+As a result, the search box seems to vanish during the transition and reappear afterward. While this behavior isn't a big deal, it can feel a bit jarring.
+
+To make the main are move behind the searchbox during view transitions, we have to paint the searchbox above `::view-transition-*(main)` images. As no normal DOM element can be painted above the view transition pseudo-elements, we have to define view transition images for the searchbox (or one of its descendants). That way we force an image of the searchbox into the view transition layer where it can cover the image of the main area. For our Starlight site we do this like this:
+
+To prevent this, we need the search box to visually sit above the `::view-transition-group(main)` images during transitions. However, regular DOM elements cannot render above view transition pseudo-elements. The solution? Assign a view transition name to the searchbox (or one of its parents), forcing it to generate its own images in the view transition layer. These images can then visually cover the main area images.
+
+```css
+header.header {
+  view-transition-name: header;
+}
+mobile-starlight-toc nav {
+  view-transition-name: mobile-starlight-toc-nav;
+}
+```
+The first rule targets the header which holds the searchbox. The second line targets the page navigation of the mobile view.
+
+With this setup, the search box gracefully stays visible during transitions, ensuring a seamless and polished user experience.
+
+## Clipping Images at the Transition-Group
+
+tbd.
+
+## Arbitrary Clipping
+
+tbd.
+
+### Naive Scrollable List
+
+Here is a [demo](/tips/hide-and-seek/problem/) of what you get with the naive approach.
+
+### Improved Scrollable List
+
+And this is [what I got so far](/tips/hide-and-seek/solution/)
+as a solution.

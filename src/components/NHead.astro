@@ -11,14 +11,19 @@ import "./vtbag-bar.css";
 
 <PagefindToTextFragments />
 
-{ // @ts-ignore
-<link rel="expect" href="#the_unexpected" blocking="render"/>}
+{
+  (
+    // @ts-ignore
+    <link rel="expect" href="#the_unexpected" blocking="render" />
+  )
+}
 
 {/* Decent transitions for scrolled down pages */}
 <script is:inline src={camShaft}></script>
 
 {/* Make animation direction based on the order of the pages in the sidebar */}
-<script is:inline src={turnSignal} data-selector="header a, nav.sidebar li a"></script>
+<script is:inline src={turnSignal} data-selector="header a, nav.sidebar li a"
+></script>
 
 {
   /* Make headings stand out during view transitions. Can be used to declaratively add view transition names which open a door to all kinds of funny thing. */
@@ -31,7 +36,10 @@ import "./vtbag-bar.css";
         event.viewTransition &&
         document
           .querySelectorAll("h2, h3")
-          .forEach((heading, index) => (heading.style.viewTransitionName = `vtbag-h-${index}`))
+          .forEach(
+            (heading, index) =>
+              (heading.style.viewTransitionName = `vtbag-h-${index}`)
+          )
     )
   );
 </script>
@@ -119,5 +127,12 @@ import "./vtbag-bar.css";
   }
   ::view-transition-image-pair(main) {
     overflow: hidden;
+  }
+
+  header.header {
+    view-transition-name: header;
+  }
+  mobile-starlight-toc nav {
+    view-transition-name: mobile-starlight-toc-nav;
   }
 </style>
