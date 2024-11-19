@@ -1,18 +1,20 @@
 @view-transition {
   navigation: auto;
 }
+
 :root {
   color-scheme: dark;
 }
-::view-transition-group(bsky) ,
+
+::view-transition-group(bsky),
 ::view-transition-group(bskyText) {
   display: none;
 }
-#d1 > button {
-  view-transition-name: button;
-}
 ::view-transition-group(*) {
   animation-duration: 2s;
+}
+::view-transition-image-pair(*) {
+  transform: translateY(-1px);
 }
 ::view-transition-old(*) {
   display: none;
@@ -33,16 +35,23 @@
   background-color: var(--dark-bg);
 }
 
-body {
+html,body {
   padding: 0;
   margin: 0;
   min-height: 100vh;
   width: 100vw;
 }
 
+#container {
+  position: relative;
+  max-width: 640px;
+  height: 100vw;
+  margin-inline:auto;
+}
+
 :root,
-#d1,
-#vtbag-hide-and-seek-front {
+#back,
+#front {
   background:
     linear-gradient(90deg, var(--dark-bg) 21px, #0000 1%) center,
     linear-gradient(var(--dark-bg) 21px, #0000 1%) center,
@@ -51,17 +60,25 @@ body {
   background-attachment: fixed;
 }
 
-#d1,
-#vtbag-hide-and-seek-front {
+#back,
+#front {
+  position: absolute;
   margin: 0px auto;
   padding: 32px;
-  max-width: 640px;
   min-height: calc(100vh - 64px);
 }
-
+#front {
+  view-transition-name: front;
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white" /><rect x="31" y="126" width="616" height="298" fill="black" /></svg>');
+  mask-mode: luminance;
+  pointer-events: none;
+}
+.button-link, a, button {
+  pointer-events: all;
+}
 h1 {
   color: var(--neon-blue);
-  margin:0;
+  margin: 0;
   text-align: center;
   font-size: 2.5rem;
   margin-bottom: 2rem;
@@ -79,9 +96,10 @@ a {
   transition: all 0.3s ease;
 }
 
-.cyber-list {
+ul {
   height: 300px;
-  overflow-y: auto;
+  width: 600px;
+  overflow-y: scroll;
   margin: 2rem 0;
   padding: 0;
   list-style: none;
@@ -89,20 +107,19 @@ a {
   border-radius: 4px;
 }
 
-.cyber-list::-webkit-scrollbar {
+ul::-webkit-scrollbar {
   width: 10px;
 }
-
-.cyber-list::-webkit-scrollbar-track {
+ul::-webkit-scrollbar-track {
   background: var(--dark-bg);
 }
 
-.cyber-list::-webkit-scrollbar-thumb {
+ul::-webkit-scrollbar-thumb {
   background: var(--neon-pink);
   border-radius: 5px;
 }
 
-.cyber-list li {
+ul li {
   padding: 1rem;
   margin: 0.5rem;
   background: var(--cyber-grid);
@@ -111,7 +128,7 @@ a {
   box-shadow: 2px 2px #00fff9;
 }
 
-.cyber-list li:hover {
+ul li:hover {
   transform: translateX(5px);
   background: rgba(0, 255, 249, 0.1);
   border-left-color: var(--neon-pink);

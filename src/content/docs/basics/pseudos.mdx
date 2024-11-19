@@ -235,7 +235,7 @@ With the one to one relation between groups and image pairs, the group looks a b
 
 
 
-## Creation  of Pseudo-Elements
+## Creation of Pseudo-Elements
 
 The `::view-transition-old` pseudo elements are created in a pre-order depth first traversal of the old DOM. When an element with a `view-transition-name` is encountered, its old image is captured. During this process, other elements with view transition names are effectively ignored, as if their `visibility` were set to `hidden`. This ensures that the images have "holes" where other images can be properly placed.
 
@@ -279,11 +279,11 @@ When examining the `::view-transition-groups` in order, the elements at the star
 
 ## Rendering Pseudo-Elements
 
-Before the view transition starts, the pseudo elements are rendered on top of the current page. For cross-document view transitions, this might start in the middle of the page load process.  But there are [techniques to delay the start of the view transition](#delaying-cross-document-transitions).
+Before the view transition starts, the pseudo elements are rendered on top of the current page.
 
-The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport and is full transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set     `pointer-events: none;` on it).
+The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport and is full transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set `pointer-events: none` on it).
 
-The transition groups are rendered in the order they appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
+The transition groups are rendered [in the order they were created](#creation-of-pseudo-elements) and appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
 
 There is a clear separation between regular DOM elements and the view transition pseudo-elements. The pseudo-elements form their own stacking context, known as the _view transition layer_. This one is special as it sits above all other elements of the page. As with regular elements, the `z-index` property can be used to alter how the pseudo-elements hide each other. However, no regular page elements can be forced into or above the view transition layer, even with high `z-index` values.
 
@@ -296,12 +296,12 @@ Just as pseudo-elements cannot be moved behind page elements, elements on the pa
 
 ## Delaying Cross Document Transitions
 
-With cross-document transitions the browser has to guess what would be a good time to start the view transition. It has do be able to load at least the html with the elements that should participate in a view transition. And it definitively needs to load the stylesheets that describe the view transition. But it would be a bad user experience if it would wait for a long page to load completely and await all scripts to run before the transition starts.
+With cross-document transitions the browser has to guess what would be a good time to start the animaitons of the view transition. It needs to load at least the HTML with the elements that should participate in a view transition. And it definitively needs to load the stylesheets that describe the view transition. But it would be a bad user experience if it would wait for a long page to load completely and await all scripts to run before the transition starts.
 
 Start of view transitions will always await the `<head>` to be loaded. External stylesheets inside the head will also be awaited for. If you want to make sure that view transitions wait for an external script, add the `blocking="render"` attribute to the script element. You can also instruct view transitions to wait until some fragment URL of the current page is loaded by adding a link to the `<head>`  like this:
 ```html
 <link rel="expect" href="#somewhere" blocking="render"/>
 ```
 
- haven't yet been able to wait for an image to load, but the View Transition API points toward a different approach.  [Example 5](https://drafts.csswg.org/css-view-transitions-2/#cross-doc-examples) suggests checking if an image has fully loaded, and if not, modifying the view transitions to handle the situation rather than waiting for the image to load.
+I haven't yet been able to wait for an image to load, but the View Transition API points toward a different approach.  [Example 5](https://drafts.csswg.org/css-view-transitions-2/#cross-doc-examples) suggests checking if an image has fully loaded, and if not, modifying the view transitions to handle the situation rather than waiting for the image to load.
 

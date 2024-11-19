@@ -54,6 +54,11 @@ import "./vtbag-bar.css";
   :active-view-transition-type(same) main {
     view-transition-name: none;
   }
+
+  main h1 {
+    view-transition-name: title-heading;
+  }
+
   ::view-transition-old(main) {
     animation: forwardsSwingOut 500ms ease-in-out;
   }
@@ -116,6 +121,7 @@ import "./vtbag-bar.css";
   @keyframes shake-old {
     to {
       transform: scale(25);
+      filter: blur(10px);
       opacity: 0;
     }
   }
@@ -123,12 +129,16 @@ import "./vtbag-bar.css";
     from {
       opacity: 0;
       transform: scale(0);
+      filter: blur(10px);
     }
   }
   ::view-transition-image-pair(main) {
     overflow: hidden;
   }
 
+  sl-sidebar-state-persist {
+    view-transition-name: sl-sidebar;
+  }
   header.header {
     view-transition-name: header;
   }

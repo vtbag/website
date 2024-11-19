@@ -23,7 +23,7 @@ The HTML of this example is very simple:
 The view transition swaps the two DOMs, each containing a background div and an image.
 
 
-The key to understanding this example lies in the order in which the `::view-transition-group` pseudo-elements [are created](/basics/pseudos/#creation--of-pseudo-elements) by the API and [hide each other](/basics/pseudos/#rendering-pseudo-elements).
+The key to understanding this example lies in the order in which the `::view-transition-group` pseudo-elements [are created](/basics/pseudos/#creation-of-pseudo-elements) by the API and [hide each other](/basics/pseudos/#rendering-pseudo-elements).
 
 
 When snapshots of the new images are taken in the new DOM, the `::view-transition-new` pseudo-elements are added to existing transition groups based on their transition names. These groups either already exist if there is an old image with the same name or they are created created on the fly. Elements that only exist in the new DOM will create new groups at the end of the list. When rendered, these late additions may obscure other images.

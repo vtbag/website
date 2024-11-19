@@ -45,14 +45,15 @@ import Bsky from "../../../components/Bsky.astro";
         "Quantum Phase Shifter",
       ];
 
+      // Fallback for browsers that don't support view transitions
       addEventListener("DOMContentLoaded", () => {
         if ("onpagereveal" in window) return;
         const itemList = document.querySelector("ul.cyber-list");
         itemList.innerHTML = createList(shuffleArray(cyberItems));
-        restorescrollPositions(itemList);
+        restoreScrollPositions(itemList);
       });
 
-      function restorescrollPositions(itemList) {
+      function restoreScrollPositions(itemList) {
         const scrollInfo = JSON.parse(
           sessionStorage.getItem("vtbag-hide-seek") ||
             '{"scrollTop":0, "scrollY":0}'
@@ -70,14 +71,13 @@ import Bsky from "../../../components/Bsky.astro";
             //event.viewTransition.skipTransition?.();
           }
         }
-        const itemList = document.querySelector("ul.cyber-list");
+        const itemList = document.querySelector("ul");
         itemList.innerHTML = createList(shuffleArray(cyberItems));
-        restorescrollPositions(itemList);
-        itemList.querySelectorAll("li").forEach((i) => {
-          i.style.viewTransitionName = i.innerText.replaceAll(" ", "-");
-        });
+        addViewTransitionNames();
+        restoreScrollPositions(itemList);
         setListener();
-        if (event.viewTransition) {
+
+        if (false && event.viewTransition) {
           fix(document.querySelector("#d1"), document.querySelector("ul"));
           document
             .querySelectorAll("#vtbag-hide-and-seek-front li")
@@ -88,9 +88,14 @@ import Bsky from "../../../components/Bsky.astro";
         }
       });
 
+      function addViewTransitionNames() {
+        document.querySelectorAll("li").forEach((i) => {
+          i.style.viewTransitionName = i.innerText.replaceAll(" ", "-");
+        });
+      }
       function setListener() {
         document.querySelector("button").addEventListener("click", () => {
-          const ul = document.querySelector("#d1 ul");
+          const ul = document.querySelector("ul");
           sessionStorage.setItem(
             "vtbag-hide-seek",
             JSON.stringify({ scrollTop: ul.scrollTop, scrollY })
@@ -107,75 +112,9 @@ import Bsky from "../../../components/Bsky.astro";
         return newArray;
       }
 
-      function createList(items, vt) {
+      function createList(items) {
         return items.map((item) => `<li>${item}</li>`).join("");
       }
-      function cutSVG(element, cutters) {
-        if (!element) return;
-        const masks = ['<rect width="100%" height="100%" fill="white" />'];
-        const outerRect = element.getBoundingClientRect();
-        cutters.forEach((cutter) => {
-          const inner = cutter.element;
-          const insets = cutter.inset.split(" ").map(parseFloat);
-          for (let i = 0; i < 4; i++) {
-            const len = insets.length;
-            insets[i] = isNaN(insets[i] ?? 0)
-              ? 0
-              : (insets[len === 3 && i === 3 ? 2 : i % len] ?? 0);
-          }
-          const innerRect = inner.getBoundingClientRect();
-          const innerStyle = getComputedStyle(inner);
-
-          const left = parseFloat(innerStyle.borderLeftWidth);
-          innerRect.width -=
-            left +
-            parseFloat(innerStyle.borderRightWidth) +
-            insets[1] +
-            insets[3];
-          innerRect.x += left + insets[3];
-          const top = parseFloat(innerStyle.borderTopWidth);
-          innerRect.height -=
-            top +
-            parseFloat(innerStyle.borderBottomWidth) +
-            insets[0] +
-            insets[2];
-          innerRect.y += top + insets[0];
-          masks.push(
-            `<rect x="${innerRect.x - outerRect.x}" y="${innerRect.y - outerRect.y}" width="${innerRect.width}" height="${innerRect.height}" fill="black" />`
-          );
-        });
-        const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${outerRect.width}" height="${outerRect.height}">${masks.join("")}</svg>`;
-        return svg;
-      }
-      function fix(larger, smaller) {
-        const front = larger.cloneNode(true);
-        stripViewTransitionNamesAndIds(front);
-        const svg = cutSVG(larger, [
-          {
-            element: smaller,
-            inset: "0 0px 0px 0",
-          },
-        ]);
-        front.style.pointerEvents = "none";
-        front.style.viewTransitionName = "vtbag-hide-and-seek-front";
-        front.id = "vtbag-hide-and-seek-front";
-        front.style.maskImage = `url('data:image/svg+xml;utf8,${svg}')`;
-        front.style.maskMode = "luminance";
-        front.style.position = "absolute";
-        const largerRect = larger.getBoundingClientRect();
-        larger.insertAdjacentElement("afterend", front);
-        front.style.top = `${largerRect.top + document.documentElement.scrollTop}px`;
-        front.style.left = `${largerRect.left + document.documentElement.scrollLeft}px`;
-        return front;
-      }
-      function stripViewTransitionNamesAndIds(element) {
-        element.querySelectorAll(":scope, :scope *").forEach((e) => {
-          e.removeAttribute("id");
-          e.removeAttribute("name");
-          e.style.viewTransitionName = "none";
-        });
-      }
-      addEventListener("resize", () => location.reload());
       addEventListener("pageswap", (event) => {
         // @ts-ignore
         if (event.viewTransition) {
@@ -186,10 +125,6 @@ import Bsky from "../../../components/Bsky.astro";
             // @ts-ignore
             //event.viewTransition.skipTransition?.();
           }
-          fix(document.querySelector("#d1"), document.querySelector("ul"));
-          document
-            .querySelectorAll("#vtbag-hide-and-seek-front li")
-            .forEach((i) => i.remove());
         }
       });
     </script>
@@ -200,19 +135,25 @@ import Bsky from "../../../components/Bsky.astro";
       )
     }
   </head>
-  <body id="body">
-    <div id="d1">
-      <h1><span class="glitch-effect">CYBERTECH INVENTORY</span></h1>
-      <ul class="cyber-list"></ul>
-      <button class="glitch-effect">RANDOMIZE</button>
-      <p style="max-width:640px">
-        Ok, not it works nicely! This is demo is rather elaborated solution.
-        Keep in mind that view transitions were introduced to make things
-        simple. This wasn't. Give us nested transition groups, please! ;-)<br
-        />[<a href="/basics/hide-and-seek/#playing-hide--seek"
-          >Back to the Hide and Seek page</a
-        >] <Bsky />
-      </p>
+  <body id="body"
+    ><div id="container">
+      <div id="back">
+        <h1>.</h1>
+        <ul></ul>
+      </div>
+      <div id="front">
+        <h1><span class="glitch-effect">CYBERTECH INVENTORY</span></h1>
+        <ul></ul>
+        <button class="glitch-effect">RANDOMIZE</button>
+        <p style="max-width:640px">
+          Ok, not it works nicely! This is demo is rather elaborated solution.
+          Keep in mind that view transitions were introduced to make things
+          simple. This wasn't. Give us nested transition groups, please! ;-)<br
+          />[<a href="/basics/hide-and-seek/#playing-hide--seek"
+            >Back to the Hide and Seek page</a
+          >] <Bsky />
+        </p>
+      </div>
     </div>
   </body>
 </html>

@@ -186,10 +186,6 @@ li a[aria-current="page"] {
   color: var(--sl-color-gray-2);
 }
 
-main h1 {
-  view-transition-name: title-heading;
-}
-
 main kbd {
   display: inline-block;
   padding: 0.1em 0.4em;
