@@ -48,9 +48,10 @@ import Bsky from "../../../components/Bsky.astro";
       // Fallback for browsers that don't support view transitions
       addEventListener("DOMContentLoaded", () => {
         if ("onpagereveal" in window) return;
-        const itemList = document.querySelector("ul.cyber-list");
+        const itemList = document.querySelector("ul");
         itemList.innerHTML = createList(shuffleArray(cyberItems));
         restoreScrollPositions(itemList);
+        setListener();
       });
 
       function restoreScrollPositions(itemList) {
