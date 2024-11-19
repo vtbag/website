@@ -21,6 +21,7 @@
 }
 ::view-transition-new(*) {
   animation: none;
+  height: calc(100% + 2px);
 }
 :root {
   --neon-pink: #ff2e88;
@@ -40,11 +41,12 @@ html,body {
   margin: 0;
   min-height: 100vh;
   width: 100vw;
+  overflow: clip;
 }
 
 #container {
   position: relative;
-  max-width: 640px;
+  width: min(600px, max(50%,300px));
   height: 100vw;
   margin-inline:auto;
 }
@@ -66,10 +68,11 @@ html,body {
   margin: 0px auto;
   padding: 32px;
   min-height: calc(100vh - 64px);
+  width: 100%;
 }
 #front {
   view-transition-name: front;
-  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white" /><rect x="31" y="126" width="616" height="298" fill="black" /></svg>');
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white" /><rect x="30" y="126" width="616" height="298" fill="black" /></svg>');
   mask-mode: luminance;
   pointer-events: none;
 }
@@ -98,7 +101,7 @@ a {
 
 ul {
   height: 300px;
-  width: 600px;
+  width: 100%;
   overflow-y: scroll;
   margin: 2rem 0;
   padding: 0;
