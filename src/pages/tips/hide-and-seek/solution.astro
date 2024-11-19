@@ -64,14 +64,6 @@ import Bsky from "../../../components/Bsky.astro";
       }
 
       addEventListener("pagereveal", (event) => {
-        if (event.viewTransition) {
-          if (
-            new URL(navigation.activation.from.url, location.href).pathname !==
-            "/tips/hide-and-seek/solution/"
-          ) {
-            //event.viewTransition.skipTransition?.();
-          }
-        }
         const itemList = document.querySelector("ul");
         itemList.innerHTML = createList(shuffleArray(cyberItems));
         addViewTransitionNames();
@@ -116,18 +108,6 @@ import Bsky from "../../../components/Bsky.astro";
       function createList(items) {
         return items.map((item) => `<li>${item}</li>`).join("");
       }
-      addEventListener("pageswap", (event) => {
-        // @ts-ignore
-        if (event.viewTransition) {
-          // @ts-ignore
-          const url = new URL(event.activation.entry.url, location.href);
-          console.log(url.pathname);
-          if (url.pathname !== "/tips/hide-and-seek/solution/") {
-            // @ts-ignore
-            //event.viewTransition.skipTransition?.();
-          }
-        }
-      });
     </script>
     {
       (

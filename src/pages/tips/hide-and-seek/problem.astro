@@ -132,7 +132,6 @@ import Bsky from "../../../components/Bsky.astro";
         if (event.viewTransition) {
           // @ts-ignore
           const url = new URL(event.activation.entry.url, location.href);
-          console.log(url.pathname);
           if (url.pathname !== "/tips/hide-and-seek/problem/") {
             // @ts-ignore
             event.viewTransition.skipTransition?.();
