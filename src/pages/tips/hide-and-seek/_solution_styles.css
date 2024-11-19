@@ -13,15 +13,11 @@
 ::view-transition-group(*) {
   animation-duration: 2s;
 }
-::view-transition-image-pair(*) {
-  transform: translateY(-1px);
-}
 ::view-transition-old(*) {
   display: none;
 }
 ::view-transition-new(*) {
   animation: none;
-  height: calc(100% + 2px);
 }
 :root {
   --neon-pink: #ff2e88;
