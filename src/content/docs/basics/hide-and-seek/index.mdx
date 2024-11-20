@@ -10,7 +10,10 @@ head:
 
 View transitions offer a unique capability: all images participating in the transition exist within a shared stacking context, separate from their original elements in the DOM. This setup is excellent for creating seamless morphing effects between elements, but it can introduce unexpected behavior. For example, elements that are clipped or partially obscured in the DOM might escape their visual boundaries during a view transition, breaking out of their intended constraints.
 
-Here, we'll explore techniques to regain control over such scenarios, ensuring your transitions are visually consistent.
+
+<a name="demo"></a>Images of elements clipped in the DOM will typically lose their clipping during view transitions. Here is [an example where list elements escape their list](/tips/hide-and-seek/problem/). The DOM view of the list will hide the overflowing elements because its `overflow` CSS property is set to `scroll`. But once the view transition starts, all images, also the ones for hidden elements, float all across the viewport.
+
+What is going on and can it be prevented? We'll explore techniques to regain control over such scenarios, ensuring your transitions are visually consistent.
 
 :::note
 This page is more of a rough draft than I'd usually share, but I couldn't wait to publish the [`overflow:scroll` demo](#improved-scrollable-list). For now, you'll have to put up with the work-in-progress state, but I promise to refine and complete it soon!
@@ -18,7 +21,7 @@ This page is more of a rough draft than I'd usually share, but I couldn't wait t
 
 Moving [view transition images](/basics/pseudos/#old-and-new-image-pseudos) into the [view transition layer](/basics/pseudos/#rendering-pseudo-elements:~:text=own%20stacking%20context%2C%20known%20as%20the%20view%20transition%20layer) above all other elements can lead to effects that are surprising but generally also easy to understand and resolve.
 
-This site features both subtle and striking examples. I'll guide you through some of them to highlight the issues and their solutions.
+This site features both subtle and striking examples. I’ll guide you through some of them to highlight the issues and their solutions.
 
 ## Restoring Original Paint Order
 
@@ -116,7 +119,7 @@ This overlap can be avoided by clipping the old and new images at the edges of t
   }
 ```
 
-Activating the Inspection Chamber (and temporarily disabling most of the view transition images for clarity) reveals that the visible portions of the main content are now confined within the dotted yellow box, which represents the boundary of the `::view-transition-group(main)` respectively the `::view-transition-image-pair(main)`. The panel on the left confirms that overflow is hidden for the image pair.
+Activating the Inspection Chamber (and temporarily disabling most of the view transition images for clarity) reveals that the visible portions of the main content are now confined within the dotted yellow box, which represents the boundary of the `::view-transition-image-pair(main)`. The CSS properties shown in the panel to the left confirm that overflow is hidden for the image pair.
 
 Since the main content areas occupy the same position on both the old and new pages, the browser's default animation for the `main` transition group has no effect during the transition. The group doesn't morph or move, it remains stationary. The combined effect with the clipping is that the view transition of the main content section seems to slide below the sidebars.
 
@@ -131,18 +134,20 @@ Since the main content areas occupy the same position on both the old and new pa
   </span>
 </div>
 
+### Clipping at the Group or Image Pair?
+
+tbd.
+
+### Nested Clipping
+
 As of today, the transition groups form a flat list of children of the `::view-transition` pseudo element. Nested view transition groups are already defined in the [Level 2 spec](/basics/api/#w3c-drafts), but to my knowledge they are [not yet supported](/basics/test-page/) by any browser. With nested transition groups you will be able clip images not only at their own group but can also specify the clipping on the parent or another ancestor further up the tree.
 
 Nested transition groups will introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy.
 
 
-## Simulate
+## Optimizing the Paint Order
 
-
-
-### Naive Scrollable List
-
-Here is a [demo](/tips/hide-and-seek/problem/) of what you get with the naive approach.
+tbd.
 
 ### Improved Scrollable List
 
