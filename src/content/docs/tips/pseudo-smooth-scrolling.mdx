@@ -8,7 +8,7 @@ head:
       content: "/pseudo-smooth-scrolling-og.png"
 ---
 
-Pseudo-smooth-scrolling is an effect that looks like smooth-scrolling, but in fact is the result of the browser’s default morph animation. It happens when a navigation involves instant scrolling and tall transitions groups.
+Pseudo-smooth-scrolling is an effect that looks like smooth-scrolling, but in fact is the result of the browser's default morph animation. It happens when a navigation involves instant scrolling and tall transitions groups.
 
 Take a look at the image below, showing an abstract website layout with a light blue header, a blue navigation panel, and a light yellow content area. The content area has a `view-transition-name` applied. If you scroll down and then navigate to another page, you might notice something strange: while the scrollbar jumps instantly, the content scrolls smoothly. What's going on here?
 
@@ -51,7 +51,7 @@ When you select the new page from the navigation panel, the scrollbar instantly 
   <rect fill="none" stroke="darkslateblue" stroke-width="3" x="70" y="160" width="220" height="118"></rect>
 </svg>
 
-So, it’s not the scrollbar slider that smoothly moves from the lower to the upper position, but rather the view transition images that slide down through the viewport.
+So, it's not the scrollbar slider that smoothly moves from the lower to the upper position, but rather the view transition images that slide down through the viewport.
 
 ## Interactive Demo
 [Explore an interactive demo of the effect](/shaft-demo/1/)
@@ -64,7 +64,7 @@ The pseudo-smooth-scrolling effect can be quite appealing if the pages are not t
 There are two ways to avoid the effect.
 
 ### Just Animate the Root
-The pseudo-smooth-scrolling effect only occurs when the `view-transition-name` is applied to an HTML element other than the top-level `<html>` element. The View Transition API [treats the `:root` element differently](https://drafts.csswg.org/css-view-transitions-1/#capture-the-image). The old and new images of the document element are always constrained to the size of the viewport, meaning the default group animation doesn’t transform the position and no scrolling happens at all.
+The pseudo-smooth-scrolling effect only occurs when the `view-transition-name` is applied to an HTML element other than the top-level `<html>` element. The View Transition API [treats the `:root` element differently](https://drafts.csswg.org/css-view-transitions-1/#capture-the-image). The old and new images of the document element are always constrained to the size of the viewport, meaning the default group animation doesn't transform the position and no scrolling happens at all.
 
 If possible, resist the temptation to apply a view transition name to large content elements. Instead, use the `root` transition group on the document's documentElement to achieve the desired effect. If you fear that your root group now obscures header, footer, and navbar, you can always assign view transition names to those elements, allowing them to enter the view transition layer and [cover portions of the root images](/basics/pseudos/#rendering-pseudo-elements) as needed.  Keep in mind that this technique is likely just a stopgap measure until nested transition groups become more broadly supported.
 

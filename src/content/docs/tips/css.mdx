@@ -31,7 +31,7 @@ This might come as a surprise, but it's simple to explain: Besides defining view
 
 The reason for this is that the animations are triggered by the appearance of the view transition pseudo-elements on the `:root` element of the new page. At that moment, only the styles from the new page are available.
 
-While it seems logical, it’s still somewhat counterintuitive that the CSS for an exit animation for an element that only exists on the old page needs to be defined on the new page. But keep in mind, that it is not the old element that is animated, but the _image_ of the old element that has been inserted as a pseudo-element on the new page.
+While it seems logical, it's still somewhat counterintuitive that the CSS for an exit animation for an element that only exists on the old page needs to be defined on the new page. But keep in mind, that it is not the old element that is animated, but the _image_ of the old element that has been inserted as a pseudo-element on the new page.
 
 If you're accustomed to building with components, it might not always be clear which page a component will end up on and where the corresponding CSS should be placed. Additionally, the requirement that view transition names must be unique on a page makes you reconsider whether it's wise to hardcode view transition names inside reusable components. But that is not much different from using `id` attributes.
 

@@ -1,6 +1,6 @@
 ---
 title: Pointer Flickering
-description: Your cursor can be a tricky shape-shifter during view transitions. Here’s how to keep it in line.
+description: Your cursor can be a tricky shape-shifter during view transitions. Here's how to keep it in line.
 head:
   - tag: meta
     attrs:
@@ -25,7 +25,7 @@ Setting the cursor on the pseudo-elements doesn't seem to work either. However, 
 
 Admittedly, this approach works much better with same-document view transitions than with cross-document ones, where there still seems to be a brief moment where the default cursor appears.
 
-One implementation might involve using an event like pageswap and the viewTransition.finished promise to get the timing right. For Level 2 compliant browsers, however, there’s a simpler solution:
+One implementation might involve using an event like pageswap and the viewTransition.finished promise to get the timing right. For Level 2 compliant browsers, however, there's a simpler solution:
 ```css
 :active-view-transition {
   cursor: pointer;

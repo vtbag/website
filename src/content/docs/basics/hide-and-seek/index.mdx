@@ -13,12 +13,12 @@ View transitions offer a unique capability: all images participating in the tran
 Here, we'll explore techniques to regain control over such scenarios, ensuring your transitions are visually consistent.
 
 :::note
-This page is more of a rough draft than I’d usually share, but I couldn’t wait to publish the [`overflow:scroll` demo](#improved-scrollable-list). For now, you’ll have to put up with the work-in-progress state, but I promise to refine and complete it soon!
+This page is more of a rough draft than I'd usually share, but I couldn't wait to publish the [`overflow:scroll` demo](#improved-scrollable-list). For now, you'll have to put up with the work-in-progress state, but I promise to refine and complete it soon!
 :::
 
 Moving [view transition images](/basics/pseudos/#old-and-new-image-pseudos) into the [view transition layer](/basics/pseudos/#rendering-pseudo-elements:~:text=own%20stacking%20context%2C%20known%20as%20the%20view%20transition%20layer) above all other elements can lead to effects that are surprising but generally also easy to understand and resolve.
 
-This site features both subtle and striking examples. I’ll guide you through some of them to highlight the issues and their solutions.
+This site features both subtle and striking examples. I'll guide you through some of them to highlight the issues and their solutions.
 
 ## Restoring Original Paint Order
 
@@ -108,9 +108,6 @@ Another powerful technique is clipping view transition images at their image pai
     ![View transition images for main content overlap with sidebars](./_main-unhidden-light.png)
   </span>
 </div>
-
-
-Here’s a polished version of the text:
 
 This overlap can be avoided by clipping the old and new images at the edges of their image pair (or at the boundary of their transition group, which has the same position and dimensions):
 ```css

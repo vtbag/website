@@ -28,10 +28,10 @@ The key to understanding this example lies in the order in which the `::view-tra
 
 When snapshots of the new images are taken in the new DOM, the `::view-transition-new` pseudo-elements are added to existing transition groups based on their transition names. These groups either already exist if there is an old image with the same name or they are created created on the fly. Elements that only exist in the new DOM will create new groups at the end of the list. When rendered, these late additions may obscure other images.
 
-If a large, single-color image fades in and covers the rest, it gives the appearance that the other images are fading out. This is what's happening here. Due to a typo, the new background image isn’t assigned to the existing transition group and instead covers the entire scene. This effect persists until the view transition completes, at which point all images are removed and the temporary “ghosting” effect disappears abruptly.
+If a large, single-color image fades in and covers the rest, it gives the appearance that the other images are fading out. This is what's happening here. Due to a typo, the new background image isn't assigned to the existing transition group and instead covers the entire scene. This effect persists until the view transition completes, at which point all images are removed and the temporary “ghosting” effect disappears abruptly.
 
 
-If a large unicolor image covers all the other images and fades in, this looks just the same as if the other images would fade out. This is exactly what happens above. Due to a typo, the new image for the monochrome background is not assigned to the existing `base` transition group in the background. Instead, it’s added to a new group at the end of the group list, causing it to render on top of all others groups. The background image fades over the scene, obscuring the view until the transition completes.
+If a large unicolor image covers all the other images and fades in, this looks just the same as if the other images would fade out. This is exactly what happens above. Due to a typo, the new image for the monochrome background is not assigned to the existing `base` transition group in the background. Instead, it's added to a new group at the end of the group list, causing it to render on top of all others groups. The background image fades over the scene, obscuring the view until the transition completes.
 
 
 

@@ -166,7 +166,7 @@ All these pseudo-elements only exist briefly during the transition effect, makin
 
 To make spotting pseudo-elements in the DOM easier, you can use the animation panel of the browser's Development Tools and press the pause button before you start the navigation. When you playback the animations, you can examine the DOM including the pseudo-elements.
 
-Alternatively, in the [Inspection Chamber](/tools/inspection-chamber/)'s Full Control Mode, time also freezes, allowing for detailed examination of the pseudo-elements. During an active view transition, click on a name in the Animation Groups panel to copy a command to your clipboard. You can then paste this command into the browser’s DevTools console for closer inspection.
+Alternatively, in the [Inspection Chamber](/tools/inspection-chamber/)'s Full Control Mode, time also freezes, allowing for detailed examination of the pseudo-elements. During an active view transition, click on a name in the Animation Groups panel to copy a command to your clipboard. You can then paste this command into the browser's DevTools console for closer inspection.
 
 ```console
 inspect(top.document.querySelector("#vtbag-main-frame").contentDocument.querySelector(":root"))
@@ -257,7 +257,7 @@ For same-document view transitions, the creation of old images is the first step
 
 The process for creating new images is similar to the creation of old image pseudos.  The key difference is that a `::view-transition-group` for a specific `view-transition-name` may already exist when the `::view-transition-new` image is created. In such cases, the new image is added to the existing `::view-transition-image-pair` of that group. The image pair will then contain both the old and new images, always in that order.
 
-If no existing group is found, a `new ::view-transition-image-pair` and `::view-transition-group` pseudo-element is created for the view-transition-name and added to the end of the `::view-transition` pseudo-element’s group list. This pair will then contain only the new image.
+If no existing group is found, a `new ::view-transition-image-pair` and `::view-transition-group` pseudo-element is created for the view-transition-name and added to the end of the `::view-transition` pseudo-element's group list. This pair will then contain only the new image.
 
 <div style="width: fit-content; margin: 0 auto">
 ```d2 width=600 sketch title="Addition of new images"

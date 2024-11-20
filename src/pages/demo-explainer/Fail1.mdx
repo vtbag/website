@@ -16,7 +16,7 @@ After hiding the old and new images of the root transition group, the Chamber sh
 <span class="light:sl-hidden">![Animation details](_Fail1-0-dark.png)</span>
 <span class="dark:sl-hidden">![Animation details](_Fail1-0-light.png)</span>
 
-By the end of the transition, the old image has morphed into the new image of the heading, outlined by its green bounding box. The orange box of the transition group has expanded to match the new image’s dimensions. It now spans the entire width of the headings parent, which is significantly wider than the text itself.
+By the end of the transition, the old image has morphed into the new image of the heading, outlined by its green bounding box. The orange box of the transition group has expanded to match the new image's dimensions. It now spans the entire width of the headings parent, which is significantly wider than the text itself.
 
 <span class="light:sl-hidden">![Animation details](_Fail1-100-dark.png)</span>
 <span class="dark:sl-hidden">![Animation details](_Fail1-100-light.png)</span>
@@ -27,7 +27,7 @@ The next image shows the transition at 40% of the timeline. The group's orange b
 <span class="light:sl-hidden">![Animation details](_Fail1-50-dark.png)</span>
 <span class="dark:sl-hidden">![Animation details](_Fail1-50-light.png)</span>
 
-As we have already seen with image morphs, both the old image’s and the new image’s bounding boxes are [constrained to share the width of the transition group](/demo/BasicIM2/) and the view transition preserves the aspect ratios of the original images.
+As we have already seen with image morphs, both the old image's and the new image's bounding boxes are [constrained to share the width of the transition group](/demo/BasicIM2/) and the view transition preserves the aspect ratios of the original images.
 
 Consequently, the link box that grows a lot in width gradually also gets a really large height before it fades. The heading image on the other side is forced into a very narrow box at the beginning, which forces the height to be real small while it fades in. Thus, the effect on the heading looks rather unspectacular.
 
