@@ -1,7 +1,5 @@
 ---
 import AnimatedSvg from "@/components/AnimatedSvg.astro";
-
-
 ---
 
 <p>
@@ -10,11 +8,10 @@ import AnimatedSvg from "@/components/AnimatedSvg.astro";
   single-page applications to your multi-page app.
 </p>
 
-
 <div class="animations">
-  <video controls width="200" loop autoplay>
-    <source src="/video.mp4" type="video/mp4" />Your browser does not support the
-    video tag.</video
+  <video width="200" height="112.5" controls loop autoplay playsinline>
+    <source src="/video.mp4" type="video/mp4" />Your browser does not support
+    the video tag.</video
   >
   <AnimatedSvg />
 </div>
@@ -40,7 +37,10 @@ import AnimatedSvg from "@/components/AnimatedSvg.astro";
     <li>
       The current playback time of media elements, including audio and video.
     </li>
-    <li>The current playback time of CSS animations, transitions and animated SVGs.</li>
+    <li>
+      The current playback time of CSS animations, transitions and animated
+      SVGs.
+    </li>
     <li>The state and content of input fields.</li>
     <li>The content of iframes.</li>
   </ul>

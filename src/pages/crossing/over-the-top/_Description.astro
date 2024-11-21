@@ -1,24 +1,35 @@
 ---
 import AnimatedSvg from "@/components/AnimatedSvg.astro";
-
-
 ---
-<p>This is a demonstration of the <b>over-the-top flavor</b> of the element crossing. This flavor is experimental technology and it is not certain whether it will ever be mature enough for production.</p>
+
+<p>
+  This is a demonstration of the <b>over-the-top flavor</b> of the element
+  crossing. This flavor is experimental technology and it is not certain whether
+  it will ever be mature enough for production.
+</p>
 <p>
   Enter data in the form fields, resize the text area, change the checkmarks,
   switch the color-scheme, collapse a group in the navigation sidebar on the
   left and reposition its scrollbar.
 </p>
 <p>
-  Then select the other page from the navigation sidebar to see whether your changes got preserved. Also check the playback time of the video and the animated SVG as well as the animation in the footer.
+  Then select the other page from the navigation sidebar to see whether your
+  changes got preserved. Also check the playback time of the video and the
+  animated SVG as well as the animation in the footer.
 </p>
 
-
 <div class="animations">
-  <video controls width="200" loop autoplay
-  data-vtbag-x="#video @currentTime">
-    <source src="/video.mp4" type="video/mp4" />Your browser does not support the
-    video tag.</video
+  <video
+    width="200"
+    height="112.5"
+    controls
+    loop
+    autoplay
+    playsinline
+    data-vtbag-x="#video @currentTime"
+  >
+    <source src="/video.mp4" type="video/mp4" />Your browser does not support
+    the video tag.</video
   >
   <AnimatedSvg expression="#svg ~/svg" />
 </div>
@@ -55,21 +66,11 @@ import AnimatedSvg from "@/components/AnimatedSvg.astro";
       <label for="interest1">Coding</label>
     </div>
     <div>
-      <input
-        type="checkbox"
-        id="interest2"
-        name="interests"
-        value="music"
-      />
+      <input type="checkbox" id="interest2" name="interests" value="music" />
       <label for="interest2">Music</label>
     </div>
     <div>
-      <input
-        type="checkbox"
-        id="interest3"
-        name="interests"
-        value="sports"
-      />
+      <input type="checkbox" id="interest3" name="interests" value="sports" />
       <label for="interest3">Sports</label>
     </div>
   </div>
@@ -86,21 +87,14 @@ import AnimatedSvg from "@/components/AnimatedSvg.astro";
       <label for="subscribeYes">Yes</label>
     </div>
     <div>
-      <input
-        type="radio"
-        id="subscribeNo"
-        name="subscribe"
-        value="no"
-      />
+      <input type="radio" id="subscribeNo" name="subscribe" value="no" />
       <label for="subscribeNo">No</label>
     </div>
   </div>
   <div class="form-group">
     <label for="comments">Comments:</label>
-    <textarea
-      id="comments"
-      name="comments"
-      placeholder="Enter your comments">This is a sample comment.</textarea
+    <textarea id="comments" name="comments" placeholder="Enter your comments"
+      >This is a sample comment.</textarea
     >
   </div>
 </form>
