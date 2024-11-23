@@ -15,6 +15,7 @@ import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
 export default defineConfig({
+  devToolbar: {enabled:false},
   experimental: { directRenderScript: true },
   site: 'https://vtbag.dev',
   compressHTML: false,
@@ -132,8 +133,8 @@ function sidebar() {
       { label: "Turn Signal Directions", link: "/signal-demo/bag/" },
       { label: "Pseudo-Smooth-Scrolling", link: "/shaft-demo/1/" },
       { label: "Instant scrolling with Cam-Shaft", link: "/shaft-demo2/1/" },
-      { label: "Can't confine List Elements", link: "/tips/hide-and-seek/problem/" },
-      { label: "Simulated Nested Transition Groups", link: "/tips/hide-and-seek/solution/" }
+      { label: "Can't confine List Elements", link: "/basics/hide-and-seek/problem/" },
+      { label: "Simulated Nested Transition Groups", link: "/basics/hide-and-seek/solution/" }
     ]
   }];
 }

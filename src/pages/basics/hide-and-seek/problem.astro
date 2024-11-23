@@ -15,7 +15,7 @@ import Bsky from "../../../components/Bsky.astro";
       content="Without nested groups, view transition images break out of their captivity as soon as the opportunity arises."
     />
     <meta property="og:image" content="/hide-and-seek-og.png" />
-    <meta property="og:url" content="/tips/hide-and-seek/" />
+    <meta property="og:url" content="/basics/hide-and-seek/" />
     <meta property="og:title" content="Hide and Seek" />
     <meta property="og:type" content="article" />
     <meta property="og:site_name" content="@vtbag" />
@@ -65,7 +65,7 @@ import Bsky from "../../../components/Bsky.astro";
         if (event.viewTransition) {
           if (
             new URL(navigation.activation.from.url, location.href).pathname !==
-            "/tips/hide-and-seek/problem/"
+            "/basics/hide-and-seek/problem/"
           ) {
             event.viewTransition.skipTransition?.();
           }
@@ -109,7 +109,7 @@ import Bsky from "../../../components/Bsky.astro";
           show how the items are shuffled. But with the start of the view
           transition, they are all thrown on the screen, even if they were
           transition, they are all thrown on the screen, even if they were
-          clipped before. Can we <a href="/tips/hide-and-seek/solution/"
+          clipped before. Can we <a href="/basics/hide-and-seek/solution/"
             >do better</a
           >?<br />
           [<a href="/basics/hide-and-seek/#demo"
@@ -125,14 +125,14 @@ import Bsky from "../../../components/Bsky.astro";
           "vtbag-hide-seek",
           JSON.stringify({ scrollTop: ul.scrollTop, scrollY })
         );
-        location.href = "/tips/hide-and-seek/problem/";
+        location.href = "/basics/hide-and-seek/problem/";
       });
       addEventListener("pageswap", (event) => {
         // @ts-ignore
         if (event.viewTransition) {
           // @ts-ignore
           const url = new URL(event.activation.entry.url, location.href);
-          if (url.pathname !== "/tips/hide-and-seek/problem/") {
+          if (url.pathname !== "/basics/hide-and-seek/problem/") {
             // @ts-ignore
             event.viewTransition.skipTransition?.();
           }
