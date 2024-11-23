@@ -8,10 +8,19 @@ head:
       content: "/hide-and-seek-og.png"
 ---
 
+import SidePicture from "@/components/SidePicture.astro"
+
 View transitions offer a unique capability: all images participating in the transition exist within a shared stacking context, separate from their original elements in the DOM. This setup is excellent for creating seamless morphing effects between elements, but it can introduce unexpected behavior. For example, elements that are clipped or partially obscured in the DOM might escape their visual boundaries during a view transition, breaking out of their intended constraints.
 
+Moving [view transition images](/basics/pseudos/#old-and-new-image-pseudos) into the [view transition layer](/basics/pseudos/#rendering-pseudo-elements:~:text=own%20stacking%20context%2C%20known%20as%20the%20view%20transition%20layer) above all other elements can lead to effects that are surprising but generally also easy to understand and resolve.
 
-<a name="demo"></a>Images of elements clipped in the DOM will typically lose their clipping during view transitions. Here is [an example where list elements escape their list](/tips/hide-and-seek/problem/). The DOM view of the list will hide the overflowing elements because its `overflow` CSS property is set to `scroll`. But once the view transition starts, all images, also the ones for hidden elements, float all across the viewport.
+<SidePicture>
+
+<a href="/basics/hide-and-seek/problem/" slot="pic"><iframe width="160" style="pointer-events:none; margin-right: 1em" src="/basics/hide-and-seek/problem/"></iframe></a>
+
+<a name="demo"></a>When using view transitions, elements that are clipped within the DOM often lose their clipping behavior during the transition animation. For instance, consider this [example where list items overflow their container](/basics/hide-and-seek/problem/). Before the transition, the list container enforces clipping due to its `overflow: scroll` property, ensuring only elements within the scrollable area are visible. However, as the view transition begins, all associated transition images, including those previously clipped, become unbounded and can freely span across the entire viewport.
+
+</SidePicture>
 
 What is going on and can it be prevented? We'll explore techniques to regain control over such scenarios, ensuring your transitions are visually consistent.
 
@@ -19,9 +28,7 @@ What is going on and can it be prevented? We'll explore techniques to regain con
 This page is more of a rough draft than I'd usually share, but I couldn't wait to publish the [`overflow:scroll` demo](#improved-scrollable-list). For now, you'll have to put up with the work-in-progress state, but I promise to refine and complete it soon!
 :::
 
-Moving [view transition images](/basics/pseudos/#old-and-new-image-pseudos) into the [view transition layer](/basics/pseudos/#rendering-pseudo-elements:~:text=own%20stacking%20context%2C%20known%20as%20the%20view%20transition%20layer) above all other elements can lead to effects that are surprising but generally also easy to understand and resolve.
-
-This site features both subtle and striking examples. I’ll guide you through some of them to highlight the issues and their solutions.
+This website features both subtle and striking examples. I’ll guide you through some of them to highlight the issues and their solutions.
 
 ## Restoring Original Paint Order
 
@@ -99,9 +106,10 @@ The paint order for old images in the view transition layer mirrors the paint or
 
 
 
-## Clipping Images at other Pseudo Elements
+## Clipping View Transition Images
 
-Another powerful technique is clipping view transition images at their image pair or transition group. This website defines a sliding view transition animation for the main content.  Without additional refinements, the content would overlap the sidebar on the left and the in-page navigation on the right:
+
+A powerful approach is to clip view transition images at their corresponding image pair or transition group. For example, this site uses a sliding view transition animation for the main content. Without specific adjustments, this animation would cause the main content to overlap the sidebar on the left and the in-page navigation on the right:
 
 <div class="large">
   <span class="light:sl-hidden">
@@ -112,14 +120,14 @@ Another powerful technique is clipping view transition images at their image pai
   </span>
 </div>
 
-This overlap can be avoided by clipping the old and new images at the edges of their image pair (or at the boundary of their transition group, which has the same position and dimensions):
+This overlap can be avoided by clipping the old and new images at the edges of their image pair:
 ```css
 ::view-transition-image-pair(main) {
     overflow: hidden;
   }
 ```
 
-Activating the Inspection Chamber (and temporarily disabling most of the view transition images for clarity) reveals that the visible portions of the main content are now confined within the dotted yellow box, which represents the boundary of the `::view-transition-image-pair(main)`. The CSS properties shown in the panel to the left confirm that overflow is hidden for the image pair.
+Activating the Inspection Chamber (and temporarily disabling most of the view transition images for clarity) reveals that the visible portions of the main content are now confined within the dotted yellow box, which represents the boundary of the `::view-transition-image-pair(main)`. The CSS properties shown in the panel to the left confirm that overflow is hidden for the .
 
 Since the main content areas occupy the same position on both the old and new pages, the browser's default animation for the `main` transition group has no effect during the transition. The group doesn't morph or move, it remains stationary. The combined effect with the clipping is that the view transition of the main content section seems to slide below the sidebars.
 
@@ -136,7 +144,11 @@ Since the main content areas occupy the same position on both the old and new pa
 
 ### Clipping at the Group or Image Pair?
 
-tbd.
+The browser’s user agent stylesheet aligns the `::view-transition-image-pair(...)` with its `::view-transition-transition-group(...)` in terms of position, size, and transform properties. This means you can use either pseudo-element for clipping purposes, and initially, they will produce the same result.
+
+But as this is all plain CSS, you can of course change the features of both these pseudo-elements. You might shrink or enlarge them, add margins, and what not. You might use that to your advantage for special effects. You might even keep the default morph animation on the transition group and add a custom one to the image-pair for clipping. Curious what you can come up with!
+
+Since these pseudo-elements are fully customizable through CSS, you can alter their properties as needed. You could resize them, add margins, or tweak other styles to create unique visual effects. For instance, you could retain the default morph animation on the transition group while applying a custom animation to the image-pair for clipping. Let your imagination run wild!
 
 ### Nested Clipping
 
@@ -149,7 +161,9 @@ Nested transition groups will introduce the ability to clip images not only with
 
 tbd.
 
+
+
 ### Improved Scrollable List
 
-And this is [what I got so far](/tips/hide-and-seek/solution/)
+And this is [what I got so far](/basics/hide-and-seek/solution/)
 as a solution.
