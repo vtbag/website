@@ -1,4 +1,5 @@
 /inspection-chamber/ /tools/inspection-chamber/ 301
 /overview/ /vtbag/ 301
 /about /vtbag/ 301
-/basics/testpage/ /basics/test-page/
+/basics/testpage/ /basics/test-page/ 301
+/tips/hide-and-seek/* /basics/hide-and-seek/:splat 301

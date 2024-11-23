@@ -5,7 +5,7 @@
 <script is:inline>
   const _ = document.documentElement;
   _.dataset.theme = _.style.colorScheme =
-    localStorage.getItem("starlight-theme") ||
+    top.localStorage.getItem("starlight-theme") ||
     (window.matchMedia("(prefers-color-scheme: dark)").matches
       ? "dark"
       : "light");
