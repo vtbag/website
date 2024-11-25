@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Utensil Drawer</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        width: 1280px;
+        height: 640px;
+        background: linear-gradient(135deg, #064d3e, #042716);
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        border-radius: 8px;
+      }
+      body::before {
+        content: "";
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.05) 1%,
+          transparent 50%
+        );
+        background-size: 20px 20px;
+      }
+      .drawer-image {
+        mask-image: radial-gradient(
+          ellipse at center,
+          white 35%,
+          transparent 71%
+        );
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(0%, -40%);
+        height: 600px;
+        width: auto;
+      }
+      h1 {
+        position: relative;
+        z-index: 10;
+        text-align: left;
+        left: 50px;
+        top: 0px;
+        color: #dfd;
+        font-size: 80px;
+        margin: 33px 50px 0 0;
+        font-weight: bold;
+        text-shadow:
+          1px 1px 2px orange,
+          0 0 1em green,
+          0 0 0.2em green;
+      }
+      h2 {
+        position: fixed;
+        z-index: 10;
+        text-align: left;
+        color: #6fc4;
+        font-size: 60px;
+        margin: 0;
+        bottom: 400px;
+        left: 50px;
+        paint-order: stroke fill;
+        text-shadow:
+          1px 1px 2px white,
+          0 0 0.5em green,
+          0 0 0.2em black;
+      }
+      b {
+        color: #6fc;
+        text-shadow:
+          1px 1px 2px black,
+          0 0 0.5em green,
+          0 0 0.2em white;
+      }
+      hr {
+        position: relative;
+        z-index: 0;
+        color: #dfd;
+        margin: 0;
+        top: 0px;
+        left: 33px;
+        width: 60%;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="drawer-image" src="/drawer.png" />
+    <h1>The Utensil Drawer</h1><hr />
+    <h2>
+      <b>Pull out</b> just<br />the <b>tools</b> you
+      <br />need to <b>craft</b><br />polished<br /><b>view transitions</b>
+    </h2>
+  </body>
+</html>

@@ -3,6 +3,7 @@ import type { Props } from "@astrojs/starlight/props";
 import StarlightHead from "@astrojs/starlight/components/Head.astro";
 import turnSignal from "@vtbag/turn-signal?url";
 import camShaft from "@vtbag/cam-shaft?url";
+import vtn from "@vtbag/utensil-drawer/vtn?url";
 import PagefindToTextFragments from "./PagefindToTextFragments.astro";
 import "./vtbag-bar.css";
 ---
@@ -25,24 +26,8 @@ import "./vtbag-bar.css";
 <script is:inline src={turnSignal} data-selector="header a, nav.sidebar li a"
 ></script>
 
-{
-  /* Make headings stand out during view transitions. Can be used to declaratively add view transition names which open a door to all kinds of funny thing. */
-}
-<script is:inline>
-  ["pageswap", "pagereveal"].forEach((eventName) =>
-    addEventListener(
-      eventName,
-      (event) =>
-        event.viewTransition &&
-        document
-          .querySelectorAll("h2, h3")
-          .forEach(
-            (heading, index) =>
-              (heading.style.viewTransitionName = `vtbag-h-${index}`)
-          )
-    )
-  );
-</script>
+{/* Make headings stand out during view transitions. */}
+<script is:inline src={vtn} data-spec="h2,h3: vtbag-h-"></script>
 
 <style is:global>
   @view-transition {

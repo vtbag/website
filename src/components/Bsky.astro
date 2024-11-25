@@ -39,8 +39,9 @@ const encodedText = encodeURIComponent(text);
     display: inline-block;
     margin-inline: auto;
     font-size: 1rem;
-    padding: 3px 10px;
+    padding-inline: 10px;
     text-decoration: none;
+    transform: translateY(-2px);
   }
   .button-link {
     view-transition-name: bsky;
@@ -50,6 +51,7 @@ const encodedText = encodeURIComponent(text);
     border: 2px solid var(--sl-color-accent, #888);
     color: var(--sl-color-accent, var(--color));
     border-radius: 8px;
+
     box-shadow:
       inset 1px 1px 5px var(--sl-color-gray-6),
       1px 1px 2px var(--sl-color-gray-1);
