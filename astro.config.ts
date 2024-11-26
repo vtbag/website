@@ -125,6 +125,7 @@ function sidebar() {
     ]
   }, {
     label: 'All Demos',
+    collapsed: true,
     items: [
       { label: 'Inspection Chamber in Action', link: "/inspection-chamber-demo/first-page/" },
       { label: 'State Loss on Navigation', link: "/crossing/plain/1/" },
