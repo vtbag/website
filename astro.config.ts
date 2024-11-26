@@ -15,7 +15,7 @@ import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
 export default defineConfig({
-  devToolbar: { enabled: true },
+  devToolbar: { enabled: false },
   experimental: { directRenderScript: true },
   site: 'https://vtbag.dev',
   compressHTML: false,
@@ -123,7 +123,7 @@ function sidebar() {
       { label: "Avoid Pointer Flickering", link: "/tips/pointer/" },
       { label: "Pseudo-smooth-scrolling?", link: "/tips/pseudo-smooth-scrolling/" },
     ]
-  }, {
+  }, { label: "BagLog", link: "/baglog" }, {
     label: 'All Demos',
     collapsed: true,
     items: [

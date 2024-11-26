@@ -65,6 +65,7 @@ body {
 }
 
 header,
+body,
 main,
 .sidebar-pane,
 .right-sidebar {
@@ -242,11 +243,11 @@ main kbd {
     transform: scale(3, 3) translate(3vw, -5vh);
   }
   70% {
-    transform: rotateZ(13deg) scale(1.75, 3.5) translate(3vw,-5vw);
+    transform: rotateZ(13deg) scale(1.75, 3.5) translate(3vw, -5vw);
   }
   80% {
     opacity: 1;
-    transform: scale(2, 4)  translate(5vw, -6vh);
+    transform: scale(2, 4) translate(5vw, -6vh);
   }
   90% {
     transform: rotateZ(-13deg) scale(2.25, 4.5) translate(5vw, -6vh);
@@ -300,4 +301,30 @@ main kbd {
 ::view-transition-group(bsky),
 ::view-transition-group(bskyText) {
   animation-duration: 500ms;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :root {
+    interpolate-size: allow-keywords;
+  }
+}
+details {
+  overflow: clip;
+}
+details::details-content {
+  transition: transform 0.2s, opacity 0.2s, block-size 0.2s, content-visibility .2s allow-discrete;
+  transition-timing-function: ease-in;
+  block-size: 0;
+  opacity: 0;
+  transform: translateX(-30px)
+}
+details[open]::details-content{
+  transition-timing-function: ease-out;
+  block-size: auto;
+  opacity: 1;
+  transform: none;
+}
+
+#starlight__sidebar {
+  scrollbar-gutter: stable;
 }

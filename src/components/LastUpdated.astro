@@ -22,13 +22,13 @@ const firstPublished = new Date(
 {
 	lastUpdated && (
 		<p style="display: flex; justify-content: space-between;">
-			<span>
+			<span style="view-transition-name: lastUpdated">
 				{'Last updated:'}{' '}
 				<time datetime={lastUpdated.toISOString()}>
 					{lastUpdated.toLocaleDateString(lang, { dateStyle: 'medium', timeZone: 'UTC' })}
 				</time>
 			</span>
-			<span>
+			<span style="view-transition-name: firstPublished">
 				{'First published:'}{' '}
 				<time datetime={firstPublished.toISOString()}>
 					{firstPublished.toLocaleDateString(lang, { dateStyle: 'medium', timeZone: 'UTC' })}

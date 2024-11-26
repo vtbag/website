@@ -26,7 +26,15 @@ const images = [bag, chamber, crossing, signal, shaft];
     <link rel="icon" href="/bag3.png" type="image/png" />
     <LightDark />
     <script is:inline data-selector="header a" src={turnSignal}></script>
-  </head>
+    <script is:inline type="speculationrules">
+      {
+        "prerender": [
+          {
+            "urls": ["/signal-demo/bag/","/signal-demo/chamber/","/signal-demo/crossing/","/signal-demo/signal/","/signal-demo/shaft/"]
+          }
+        ]
+      }
+      </script>  </head>
   <body>
     <header style="display:flex">
       <div style="width: 30vw"><h2>Turn-Signal Demo</h2></div>

@@ -1,0 +1,46 @@
+---
+title: The Bag's Bag-Log
+description: "The Bag of Tricks for View Transitions will be continuously extended. This is the pile of things to address when time permits."
+---
+
+import Bsky from "@/components/Bsky.astro";
+
+A place to add potential topics for the future when time permits to address them.
+Everybody is invited to suggest additional items for that list: <a class=" not-content" target="_blank" href={`https://bsky.app/intent/compose`}><span>Discuss on <b>🦋</b></span></a>
+
+<details name="log">
+  <summary>Explain the viewTransition promises</summary>
+  Explain what the updateCallbackDone, ready and finished promises are useful for,
+  and under what circumstances you should cleanup using finished after pageswap
+</details>
+<details name="log">
+  <summary>Make a note about the same-origin restriction</summary>
+  The browser wont do view transitions when navigating to a target with different
+  origin. Simple rule, but there are pitfalls.
+</details>
+<details name="log">
+  <summary>Browser-native, cross-document Starlight</summary>
+  Come up with a guide on how to add cross-document view transitions to a Starlight
+  site
+</details>
+<details name="log">
+  <summary>Speculation rules</summary>
+  Show sensible solutions to pre-render the new page before the cross-document view transition starts.
+</details>
+<details name="log">
+  <summary>Morph aspect ratio of button with stable text</summary>
+  The view transition API turns elements into bitmaps. If you stretch a button, you also stretch the button's text, don't you?
+</details>
+
+<style>{`
+
+main details {
+  border-left: 0pt !important;
+}
+main details::details-content {
+  transform: translateX(30px)
+}
+main summary {
+  margin-bottom: 0!important;
+}
+`}</style>
