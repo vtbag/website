@@ -1,0 +1,16 @@
+---
+layout: "@/layouts/ExplainerLayout.astro"
+---
+
+This example takes a rather unconventional approach. Instead of tweaking the old and new images until everything looks nice, it ignores them and sets a background image on the image pair pseudo element.
+```diff lang="css"
+    ::view-transition-image-pair(img) {
+      background-image: url("/landscape.webp");
+      background-position: center;
+      background-size: cover;
+    }
+    ::view-transition-old(img),
+    ::view-transition-new(img) {
+      display: none;
+    }
+```

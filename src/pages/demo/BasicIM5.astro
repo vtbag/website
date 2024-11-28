@@ -3,25 +3,24 @@ import Demo from "@/layouts/DemoLayout.astro";
 ---
 
 <Demo
-  title="View Transition Example: Covered Object Fit"
-  backlink="/basics/examples/#basicim4"
-  prev="/demo/BasicIM3/"
-  next="/demo/BasicIM5/"
+  title="View Transition Example: Same Image, changing Aspect Ratio"
+  backlink="/basics/examples/#basicim2"
+  prev="/demo/BasicIM/"
+  next="/demo/FailIM/"
 >
   <p>
-    We still have some options left on how to place and size the old and new
-    image during the morph transition. This examples uses `object-fit`.
+    In this example. the same picture is shown with different aspect ratio values.
   </p>
 
   <div id="DOM1" class="active">
     <div class="card">
-      <img src="/portrait.webp" />
+      <img src="/landscape.webp" />
       <div>
         <h4>Teaser Heading</h4>
         <p>This is a teaser text for the card. (Click to start)</p>
       </div>
     </div>
-    <div style="height: 3.5em"/>
+    <div style="height: 3.5em"></div>
   </div>
   <div id="DOM2">
     <article>
@@ -50,18 +49,25 @@ import Demo from "@/layouts/DemoLayout.astro";
     ::view-transition-group(*) {
       animation-duration: 1s;
     }
-    .card img,
-    article img {
-      view-transition-name: img;
+    ::view-transition-image-pair(img) {
+      background-image: url("/landscape.webp");
+      background-position: center;
+      background-size: cover;
     }
     ::view-transition-old(img),
     ::view-transition-new(img) {
-      overflow: clip;
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
-      object-position: 100% 40%;
+      display: none;
     }
+    .card img,
+    article img {
+      view-transition-name: img;
+      object-fit: cover;
+      object-position: center;
+    }
+    .card img {
+      height: 144px;
+    }
+
     #DOM1 {
       margin: auto;
       width: max(50%, 300px);

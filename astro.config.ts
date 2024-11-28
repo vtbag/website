@@ -15,7 +15,7 @@ import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
 export default defineConfig({
-  devToolbar: { enabled: false },
+  devToolbar: { enabled: true },
   experimental: { directRenderScript: true },
   site: 'https://vtbag.dev',
   compressHTML: false,
@@ -65,7 +65,7 @@ export default defineConfig({
     },
     social: {
       github: 'https://github.com/vtbag/website',
-      blueSky: 'https://bsky.app/profile/martr.app'
+      blueSky: 'https://bsky.app/profile/vtbag.dev'
     },
     editLink: {
       baseUrl: "https://github.com/vtbag/website/edit/main/"
