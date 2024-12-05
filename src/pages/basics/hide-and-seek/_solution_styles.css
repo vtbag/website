@@ -18,6 +18,7 @@
 }
 ::view-transition-new(*) {
   animation: none;
+  transform: scale(1.01)
 }
 :root {
   --neon-pink: #ff2e88;

@@ -1,38 +1,57 @@
 ---
-title: Hide and Seek
-description: How to render elements above and beneath of view transition images.
+title: Playing Hide and Seek
+description: How to clip or render above and beneath view transition images.
 head:
   - tag: meta
     attrs:
       property: "og:image"
       content: "/hide-and-seek-og.png"
+tableOfContents:
+  minHeadingLevel: 2
+  maxHeadingLevel: 3
 ---
 
-import SidePicture from "@/components/SidePicture.astro"
+import SidePicture from "@/components/SidePicture.astro";
+import ReloadOnThemeChange from "@/components/ReloadOnThemeChange.astro";
 
-View transitions offer a unique capability: all images participating in the transition exist within a shared stacking context, separate from their original elements in the DOM. This setup is excellent for creating seamless morphing effects between elements, but it can introduce unexpected behavior. For example, elements that are clipped or partially obscured in the DOM might escape their visual boundaries during a view transition, breaking out of their intended constraints.
+<ReloadOnThemeChange />
 
-Moving [view transition images](/basics/pseudos/#old-and-new-image-pseudos) into the [view transition layer](/basics/pseudos/#rendering-pseudo-elements:~:text=own%20stacking%20context%2C%20known%20as%20the%20view%20transition%20layer) above all other elements can lead to effects that are surprising but generally also easy to understand and resolve.
+View transitions offer a unique capability: all images participating in the transition exist within a shared stacking context, separate from their original elements in the DOM. This setup enables smooth morphing animations between elements found in different parts of the DOM but can also create unexpected behavior. For example, elements that were clipped or partially hidden in the DOM may "break free" of their boundaries during the transition, causing them to appear outside their intended constraints.
+
+Moving [view transition images](/basics/pseudos/#old-and-new-image-pseudos) into the [view transition layer](/basics/pseudos/#rendering-pseudo-elements:~:text=own%20stacking%20context%2C%20known%20as%20the%20view%20transition%20layer) above all other elements can lead to effects that are surprising but are generally also straightforward to address.
+
+## List Elements Gone Wild
 
 <SidePicture>
 
-<a href="/basics/hide-and-seek/problem/" slot="pic"><iframe width="160" style="pointer-events:none; margin-right: 1em" src="/basics/hide-and-seek/problem/"></iframe></a>
+<a href="/basics/hide-and-seek/problem/" slot="pic">
+  <iframe
+    width="160"
+    style="pointer-events:none; margin-right: 1em"
+    src="/basics/hide-and-seek/problem/"
+  ></iframe>
+</a>
 
-<a name="demo"></a>When using view transitions, elements that are clipped within the DOM often lose their clipping behavior during the transition animation. For instance, consider this [example where list items overflow their container](/basics/hide-and-seek/problem/). Before the transition, the list container enforces clipping due to its `overflow: scroll` property, ensuring only elements within the scrollable area are visible. However, as the view transition begins, all associated transition images, including those previously clipped, become unbounded and can freely span across the entire viewport.
+<a name="demo"></a>
+During a view transition, elements that were clipped in the DOM often lose their
+clipping properties. [Look at this demo](/basics/hide-and-seek/problem/), where
+all list items have view transition names. The `overflow: scroll` property
+ensures that only elements within the scrollable area are visible. However, as
+the view transition starts, all associated transition images, including those
+previously clipped, become unbounded and can freely move across the entire
+viewport.
 
 </SidePicture>
 
 What is going on and can it be prevented? We'll explore techniques to regain control over such scenarios, ensuring your transitions are visually consistent.
 
-:::note
-This page is more of a rough draft than I'd usually share, but I couldn't wait to publish the [`overflow:scroll` demo](#improved-scrollable-list). For now, you'll have to put up with the work-in-progress state, but I promise to refine and complete it soon!
-:::
+We'll dive into techniques to regain control over these scenarios, ensuring your view transitions maintain the visual consistency you expect.
 
-This website features both subtle and striking examples. I’ll guide you through some of them to highlight the issues and their solutions.
+This website features both subtle and striking examples where pseudo-images pop up in a surprising way. I’ll guide you through some of them to highlight the issues and their solutions.
 
-## Restoring Original Paint Order
+## Stacking Pseudo-Elements
 
-This is built with [Astro Starlight](https://starlight.astro.build/). Enabling cross-document view transitions for multi-page sites is surprisingly straightforward. [Most browsers](https://caniuse.com/?search=%40view-transition) support this feature; all you need to do is [add a simple CSS at-rule](/tips/css/) to your custom styles:
+This site is built with [Astro Starlight](https://starlight.astro.build/). Enabling cross-document view transitions for multi-page sites is surprisingly straightforward. [Most browsers](https://caniuse.com/?search=%40view-transition) support this feature; all you need to do is [add a simple CSS at-rule](/tips/css/) to your custom styles:
 
 ```css
 @view-transition {
@@ -59,7 +78,7 @@ Here is an interesting quirk: Scroll down a bit so part of the page content move
   </span>
 </div>
 
-Now navigate to a different page. During the view transition, the `::view-transition-group(main)` pseudo-element, along with its old and new images, enters the view transition layer. Since these images extend taller than the viewport, they obscure the search box momentarily.
+Now navigate to a different page. During the view transition, the `::view-transition-group(main)` pseudo-element, along with its old and new images, enters the view transition layer. Since these images are taller than the viewport, they obscure the search box momentarily.
 
 <div class="small">
   <span class="light:sl-hidden">
@@ -74,10 +93,11 @@ Now navigate to a different page. During the view transition, the `::view-transi
 div.small img,
 div.large img {
   border:#888 solid 1pt;
-  box-shadow: 1px 1px 5px #8884;
+  box-shadow: 0 0 5px 5px #8884;
+  background-color: #0000;
 }
 div.small img {
-  margin-top: 1ex;
+  margin: 0;
   height: 100px;
   object-fit: cover;
 }
@@ -102,68 +122,317 @@ mobile-starlight-toc nav {
 
 The first rule targets the header which holds the searchbox. The second line targets the page navigation of the mobile view.
 
-The paint order for old images in the view transition layer mirrors the paint order of their corresponding elements in the DOM. Images exclusive to the new page [are painted after that](/basics/pseudos/#rendering-pseudo-elements). If you need precise control over the stacking order within the view transition layer, you can adjust it using the `z-index` CSS property.
-
-
+The paint order for old images in the view transition layer mirrors the paint order of their corresponding elements in the DOM. Images exclusive to the new page [are painted after that](/basics/pseudos/#rendering-pseudo-elements). If you need precise control over the stacking order of the pseudo-elements within the view transition layer, you can adjust it using the `z-index` CSS property.
 
 ## Clipping View Transition Images
 
-
-A powerful approach is to clip view transition images at their corresponding image pair or transition group. For example, this site uses a sliding view transition animation for the main content. Without specific adjustments, this animation would cause the main content to overlap the sidebar on the left and the in-page navigation on the right:
+Another approach is to clip view transition images at their corresponding image pair or transition group. For example, this site uses a sliding view transition animation for the main content. Without specific adjustments, this animation would cause the main content to overlap the sidebar on the left and the in-page navigation on the right:
 
 <div class="large">
   <span class="light:sl-hidden">
-    ![View transition images for main content overlap with sidebars](./_main-unhidden-dark.png)
+    ![View transition images for main content overlap with
+    sidebars](./_main-unhidden-dark.png)
   </span>
   <span class="dark:sl-hidden">
-    ![View transition images for main content overlap with sidebars](./_main-unhidden-light.png)
+    ![View transition images for main content overlap with
+    sidebars](./_main-unhidden-light.png)
   </span>
 </div>
 
 This overlap can be avoided by clipping the old and new images at the edges of their image pair:
+
 ```css
 ::view-transition-image-pair(main) {
-    overflow: hidden;
-  }
+  overflow: hidden;
+}
 ```
 
-Activating the Inspection Chamber (and temporarily disabling most of the view transition images for clarity) reveals that the visible portions of the main content are now confined within the dotted yellow box, which represents the boundary of the `::view-transition-image-pair(main)`. The CSS properties shown in the panel to the left confirm that overflow is hidden for the .
+Activating the Inspection Chamber (and temporarily disabling most of the view transition images for clarity) reveals that the visible portions of the main content are now confined within the dotted yellow box, which represents the boundary of the `::view-transition-image-pair(main)`. The CSS properties shown in the panel to the left confirm that overflow is hidden for the image-pair of the transition group named `main`.
 
 Since the main content areas occupy the same position on both the old and new pages, the browser's default animation for the `main` transition group has no effect during the transition. The group doesn't morph or move, it remains stationary. The combined effect with the clipping is that the view transition of the main content section seems to slide below the sidebars.
 
-
-
 <div class="large">
   <span class="light:sl-hidden">
-    ![View transition images for main content get clipped to their original position](./_main-hidden-dark.png)
+    ![View transition images for main content get clipped to their original
+    position](./_main-hidden-dark.png)
   </span>
   <span class="dark:sl-hidden">
-    ![View transition images for main content get clipped to their original position](./_main-hidden-light.png)
+    ![View transition images for main content get clipped to their original
+    position](./_main-hidden-light.png)
   </span>
 </div>
 
 ### Clipping at the Group or Image Pair?
 
-The browser’s user agent stylesheet aligns the `::view-transition-image-pair(...)` with its `::view-transition-transition-group(...)` in terms of position, size, and transform properties. This means you can use either pseudo-element for clipping purposes, and initially, they will produce the same result.
-
-But as this is all plain CSS, you can of course change the features of both these pseudo-elements. You might shrink or enlarge them, add margins, and what not. You might use that to your advantage for special effects. You might even keep the default morph animation on the transition group and add a custom one to the image-pair for clipping. Curious what you can come up with!
+The browser’s user agent stylesheet aligns the `::view-transition-image-pair(...)` with its `::view-transition-transition-group(...)` in terms of geometry and transform properties. This means you can use either pseudo-element for clipping purposes, and initially, they will produce the same result.
 
 Since these pseudo-elements are fully customizable through CSS, you can alter their properties as needed. You could resize them, add margins, or tweak other styles to create unique visual effects. For instance, you could retain the default morph animation on the transition group while applying a custom animation to the image-pair for clipping. Let your imagination run wild!
 
-### Nested Clipping
+### Nested Transition Group Clipping
 
-As of today, the transition groups form a flat list of children of the `::view-transition` pseudo element. Nested view transition groups are already defined in the [Level 2 spec](/basics/api/#w3c-drafts), but to my knowledge they are [not yet supported](/basics/test-page/) by any browser. With nested transition groups you will be able clip images not only at their own group but can also specify the clipping on the parent or another ancestor further up the tree.
+As of today, the transition groups form a flat list of children of the `::view-transition` pseudo element. Nested view transition groups are already defined in the [Level 2 spec](/basics/api/#w3c-drafts), but to my knowledge they are [not yet supported](/basics/test-page/) by any browser.
 
 Nested transition groups will introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy.
 
+Until nested view transition groups arrive in the browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
 
-## Optimizing the Paint Order
+## Taming Images of Clipped Elements
 
-tbd.
+<SidePicture>
+
+<iframe
+  slot="pic"
+  style="height:250px; width:200px; border: none;  margin-right: 1em"
+  src="/basics/hide-and-seek/list-flat/"
+></iframe>
+
+Let’s be real: when an element has a view transition name, it will appear as an image in the view transition layer during the transition. Without support for nested view transition groups, it doesn't even matter if the original element was clipped by its container.
+
+This behavior can work well for elements that naturally feel like they should overflow their container as they glide to a new position. However, it can also result in unexpected outcomes, like images suddenly popping up in places they shouldn't, creating surprising visual effects.
+
+</SidePicture>
+
+If unwanted images appear during view transitions, there are currently two main ways to prevent this (with nested view transition groups as a third option when they become available):
 
 
+- **Dynamically Set View Transition Names:**
+Modify the view-transition-name property just before the transition starts. This allows you to selectively include or exclude elements from the transition, ensuring only the intended elements participate.
 
-### Improved Scrollable List
+- **Obscure Images with Overlapping Elements:**
+Place other pseudo-elements above the images you want to hide. These elements can be part of the view transition and strategically positioned to block unwanted visuals during the transition.
 
-And this is [what I got so far](/basics/hide-and-seek/solution/)
-as a solution.
+
+### Dynamically Named View Transition
+
+If you want to prevent images of elements popping up, do not assign them a view transition name. For the scrolled list example, visible list elements can be found by comparing their bounding rectangles to the rectangle of the list. You should only name elements that are completely visible. The images of partially visible elements would overlap the border of the list and adjacent elements.
+
+<SidePicture float="right">
+
+<iframe
+  slot="pic"
+  style="height:230px; width:150px; border: none;  margin-left: 1em"
+  src="/basics/hide-and-seek/list-names/"
+></iframe>
+
+To simplify things, the upcoming examples ensure that there are no partly visible list items by using scroll snap and adjusting the visible area of the list accordingly. They also do not animate the list elements and do not make them leave their box during view transitions.
+
+The demo to the right determines the first and the last element visible within in the scrolled area. Then exactly those and all elements in between are assigned a `view-transition-name`.
+
+In this example, the rotation is achieved by moving the first list item to the end of the list. Without adjustments, this would cause the first visible element to overflow the list container. To address this, we dynamically change the view-transition-name properties in the DOM. We remove the name from the first visible element and add one to the successor of the last visible element.
+
+By managing the view-transition-name in this way, the View Transition API creates entry and exit animations for the relevant elements, as they are named only in either the old or the new DOM state.
+
+</SidePicture>
+
+#### Limitations
+
+This approach to simulating a scrolling list doesn't perfectly mimic the effect of real scrolling. While the moving elements remain confined within the list's boundaries, there's a notable limitation: the disappearing item at the top and the appearing item at the bottom never transition partially into view. Instead, they just grow in and shrink out.
+
+You can improve this effect by crafting more sophisticated entry and exit animations. However, achieving a convincing clipped appearance requires some effort.
+
+While this method works well for rotations, it's impractical the number of elements entering and exiting gets too high. You can't use this to visualize a complex shuffle where lots of elements fly in, out and through the visible area of the container. For those cases, consider the approach described next.
+
+### Image Concealment with Stencils
+
+Another way to simulate `overflow: hidden` or nested view transition groups is to introduce new pseudo-elements that can hide unwanted images.
+
+<SidePicture>
+It might sound a bit weird, to fight unwanted images with even more images, but the idea is simple: put an [additional curtain](/basics/pseudos/#the-theater-curtain) in front of your stage to hide what you don't want the audience to see.
+
+In some cases it might be sufficient to have some rectangles colored in your site's background color, add a `view-transition-name`, and move their pseudo-images into place as part of the view transition. These rectangles might also have children like paragraphs or buttons, which will then show up on top.
+
+<iframe
+  slot="pic"
+  style="height:320px; width:150px; border: none;  margin-right: 1em"
+  src="/basics/hide-and-seek/list-stencil2/"
+></iframe>
+
+The list on the left contains two checkerboard `<div>` elements: one before and one after the list. A button is nested within the lower `<div>`. Both `<div>` elements are assigned view transition names, `stencil1` and `stencil2`. As a result, the `<div>`s produce pseudo-elements that act as visual blockers, effectively concealing any list items that overflow beyond their intended boundaries during the view transition.
+
+</SidePicture>
+
+#### Importance of Paint Order
+
+<SidePicture float="right">
+
+To bring pseudo-elements to the front during a view transition, you can adjust their stacking order using the `z-index` property. This allows the pseudo-elements to obscure other images in the view transition layer.
+
+However, keep the following in mind:Pseudo-elements are initially stacked [according to the DOM paint order](/basics/pseudos/#creation-of-pseudo-elements) of their originating elements. This can lead to flashes of unwanted images right at the start of the view transition as in the example to the right.
+
+Such effects can be prevented by just setting the `z-index` property on the DOM elements with the view transition name. A simpler solution is to position the stencils further down in the HTML, ensuring they are naturally higher in the stacking order. Elements that appear later in the DOM usually stack above earlier elements, reducing the need for complex z-index adjustments.
+
+<iframe
+  slot="pic"
+  style="height:320px; width:150px; border: none;  margin-left: 1em"
+  src="/basics/hide-and-seek/list-stencil1/"
+></iframe>
+
+#### Beyond Simple Stencils
+
+Stencils do not need to be simple rectangles. Especially when you want to cover all four sides of an area the following trick can come in handy: Here the stencil is a copy of the clipped area with some surrounding elements, featuring a hole in the middle to reveal the original elements.
+
+Stencils don't have to be limited to basic rectangles. Especially when covering all four sides of an area, one approach is to create a stencil that mimics the clipped content, including adjacent elements, but with a cut-out section in the middle. This design allows the stencil to mask unwanted areas while revealing the desired content through the central "window."
+</SidePicture>
+
+<SidePicture>
+
+<iframe
+  slot="pic"
+  scrolling="no"
+  style="height:260px; width:170px; border: none;  margin-right: 1em;"
+  src="/basics/hide-and-seek/list/"
+></iframe>
+
+
+In our scrollable list example, we overlay the list with a stencil that covers both the list and the surrounding area.  On top of the stencil is a copy of the list and a button. To ensure users interact with the original list beneath, we apply `pointer-events: none` to the stencil.
+
+
+The stencil has a transparent, rectangular cut-out aligned with the visible portion of the scrollable list, excluding the scrollbar. This effect is achieved by using a mask image on the stencil. As a result, only the list items within the scrollable area remain visible through the cut-out, while all other elements, including the original scrollbar, are hidden. JavaScript keeps the two scrollbars synchronized.
+
+
+The stencil gets a view transition name assigned to it. During the view transition, the stencil’s pseudo-element appears in front of everything else, as demonstrated when hovering over the orange sketch below.
+
+</SidePicture>
+
+<style>{`
+    .container {
+      position: relative;
+      height: 270px;
+      width: 300px;
+      margin: 0 auto;
+      transform-style: preserve-3d;
+      perspective: 50cm;
+      transition: transform 1s ease;
+      perspective-origin: center center;
+    }
+    .container:hover {
+      transform: rotate3d(1, 0.5, 0.5, -60deg)
+    }
+
+    .container div {
+      padding-left:0.25em;
+      position: absolute;
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      border: 2px solid #ff8000;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transform-origin: center;
+      font-size: 12px;
+    }
+    [data-theme=dark] .container div {
+      background-color: #000;
+    }
+
+    .container div.small {
+      width: auto;
+      height: auto;
+      background-color: rgba(255, 128, 0, 0.1);
+      border: 2px solid #ff8000;
+    }
+    [data-theme=dark] div.small {
+        background-color: rgba(255, 128, 0, 0.1);
+    }
+
+    .container div:nth-child(2) {
+      inset: 55px 70px 95px 70px;
+      transform: translateZ(20px);
+    }
+    .container div:nth-child(3) {
+      inset: 60px 75px 100px 210px;
+      transform: translateZ(20px);
+    }
+    .container div:nth-child(4) {
+      inset: 30px 100px 220px 80px;
+      transform: translateZ(40px);
+    }
+    .container div:nth-child(5) {
+      inset: 60px 100px 190px 80px;
+      transform: translateZ(40px);
+    }
+    .container div:nth-child(6) {
+      inset: 90px 100px 160px 80px;
+      transform: translateZ(40px);
+    }
+    .container div:nth-child(7) {
+      inset: 120px 100px 130px 80px;
+      transform: translateZ(40px);
+    }
+    .container div:nth-child(8) {
+      inset: 150px 100px 100px 80px;
+      transform: translateZ(40px);
+    }
+    .container div:nth-child(9) {
+      inset: 180px 100px 70px 80px;
+      transform: translateZ(40px);
+    }
+    .container div:nth-child(10) {
+      inset: 210px 100px 40px 80px;
+      transform: translateZ(40px);
+    }
+    .container div:nth-child(11) {
+      inset: 20px 60px 30px 60px;
+      transform: translateZ(75px);
+      background-color: #dddc;
+      mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white" /><rect x="10" y="37" width="133" height="117" fill="black" /></svg>');
+        mask-mode: luminance;
+    }
+    [data-theme=dark] .container div:nth-child(11) {
+      background-color: #333c;
+    }
+    .container div:nth-child(12) {
+      inset: 190px 80px 60px 150px;
+      border-radius: 5px;
+      border: 2px solid blue;
+      transform: translateZ(75px);
+    }
+    .container div:nth-child(13) {
+      inset: 55px 70px 95px 70px;
+      border: 2px solid blue;
+      transform: translateZ(75px);
+    }
+    .container div:nth-child(14) {
+      inset: 60px 75px 100px 210px;
+      border: 2px solid blue;
+      transform: translateZ(75px);
+    }
+
+`}</style>
+
+<div class="container not-content">
+  <div class="rectangle">DOM</div>
+  <div class="rectangle small"></div>
+  <div class="rectangle small"></div>
+  <div class="rectangle small">1</div>
+  <div class="rectangle small">2</div>
+  <div class="rectangle small">3</div>
+  <div class="rectangle small">4</div>
+  <div class="rectangle small">5</div>
+  <div class="rectangle small">6</div>
+  <div class="rectangle small">7</div>
+  <div class="rectangle small">Stencil</div>
+  <div class="rectangle small">Button</div>
+  <div class="rectangle small"></div>
+  <div class="rectangle small"></div>
+</div>
+
+These are the main ingredients of the stencil's styling:
+
+```css
+#stencil {
+  view-transition-name: stencil;
+  pointer-events: none;
+  mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white" /><rect x="1" y="1" width="130" height="200" fill="black" /></svg>');
+  mask-mode: luminance;
+  ...
+}
+```
+
+The mask image used is a white SVG with a black rectangle embedded in it. Thanks to the luminance mask mode, the mask becomes transparent where the black rectangle appears. In this example, the coordinates for the mask are static, but they could be dynamically calculated using the bounding client rectangle of the list for more flexibility.
+
+The overall effect is that the list items appear to float behind the scrollbar.
+
+## List Example Revisited
+
+Using the stencil approach on the original list examples now yields a [much better result](/basics/hide-and-seek/solution/).

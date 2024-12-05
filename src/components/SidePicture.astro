@@ -1,5 +1,10 @@
 ---
+export interface Props {
+  float: string;
+}
+const { float = "left" } = Astro.props;
 ---
+
 <div>
-  <span style="float:left"><slot name="pic"/></span><slot />
+  <span style=`float: ${float}`><slot name="pic" /></span><slot />
 </div>

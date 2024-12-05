@@ -1,0 +1,112 @@
+---
+import LightDark from "@/components/LightDark.astro";
+// demonstrate list rotation with a reduced set of named elements
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <LightDark />
+  </head><body>
+    <div id="stage">
+      <ul id="ul">
+        <li>Item 1</li>
+        <li>Item 2</li>
+        <li>Item 3</li>
+        <li>Item 4</li>
+        <li>Item 5</li>
+        <li>Item 6</li>
+        <li>Item 7</li>
+      </ul>
+      <button id="button">[Rotate]</button>
+    </div>
+    <script>
+      // @ts-ignore
+      const button = window.button;
+      // @ts-ignore
+      const ul = window.ul;
+      ul.scrollTop = 40;
+      button.addEventListener("click", () => {
+        let first = undefined as unknown as HTMLLIElement;
+        let last = undefined as unknown as HTMLLIElement;
+        const rect = ul.getBoundingClientRect();
+        ul.querySelectorAll<HTMLLIElement>("li").forEach(
+          (li: HTMLLIElement, idx: number) => {
+            const lire = li.getBoundingClientRect();
+            const inside = lire.top >= rect.top && lire.bottom <= rect.bottom;
+            li.style.viewTransitionName = inside ? `l${idx + 1}` : "none";
+            first ??= inside ? li : first;
+            last = inside ? li : last;
+          }
+        );
+        const update = () => {
+          first.style.viewTransitionName = "none";
+          const y = ul.scrollTop;
+          ul.insertBefore(ul.firstElementChild, null);
+          (last.nextElementSibling as HTMLElement).style.viewTransitionName =
+            "last";
+          ul.scrollTop = y;
+        };
+        document.startViewTransition
+          ? document.startViewTransition(update)
+          : update();
+      });
+    </script>
+    <style is:global>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: monospace;
+      }
+      #stage {
+        width: 150px;
+      }
+      ul {
+        margin: 0;
+        overflow-y: scroll;
+        height: 205px;
+        list-style: none;
+        border: 1px solid grey;
+        scroll-snap-type: y mandatory;
+        scroll-padding-top: 4px;
+      }
+      li {
+        padding: 10px;
+        color: black;
+        background-color: #dfd;
+        margin: 5px;
+        border-radius: 5px;
+        scroll-snap-align: start;
+      }
+      button {
+        width: 100%;
+        color: black;
+        background-color: #aca;
+      }
+      ::view-transition-group(*) {
+        animation-duration: 0.4s;
+      }
+      ::view-transition-old(*):only-child {
+        animation: shrink 0.3s ease-out;
+      }
+      ::view-transition-new(*):only-child {
+        animation: grow 0.4s ease-in-out;
+      }
+      @keyframes shrink {
+        to {
+          transform: scaleY(0);
+          transform-origin: top;
+        }
+      }
+      @keyframes grow {
+        from {
+          transform: scaleY(0);
+          transform-origin: bottom;
+        }
+      }
+    </style>
+  </body>
+</html>

@@ -50,7 +50,7 @@ Think of it like a theater: A curtain drops, painted with the last scene, while 
       background-color: #000;
     }
 
-    div.small {
+    .container div.small {
       width: auto;
       height: auto;
       background-color: rgba(255, 128, 0, 0.1);
@@ -237,10 +237,7 @@ With the one to one relation between groups and image pairs, the group looks a b
 
 ## Creation of Pseudo-Elements
 
-The `::view-transition-old` pseudo elements are created in a pre-order depth first traversal of the old DOM. When an element with a `view-transition-name` is encountered, its old image is captured. During this process, other elements with view transition names are effectively ignored, as if their `visibility` were set to `hidden`. This ensures that the images have "holes" where other images can be properly placed.
-
-The ::view-transition-old pseudo-elements are created during a pre-order depth-first traversal of the old DOM. When an element with a view-transition-name is encountered, its old image is rendered. During this process, other elements with view transition names are effectively ignored, as if their visibility were set to hidden. This ensures that the images have "holes" where other images can be properly placed.
-
+The `::view-transition-old` pseudo elements are created **in the paint-order** of the elements of the old DOM. When an element with a `view-transition-name` is encountered, its old image is captured. During this process, other elements with view transition names are effectively ignored, as if their `visibility` were set to `hidden`. This ensures that the images have "holes" where other images can be properly placed.
 
 The image of the `:root` element, if not [opted out](#opt-out), covers the whole viewport. Its view transition group is the first in the list of `::view-transition-group` children of the `::view-transition` pseudo-element.  Subsequent groups are added after the root group once their old images have been created.
 

@@ -1,0 +1,166 @@
+---
+import LightDark from "@/components/LightDark.astro";
+// demonstrate hiding with other images
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <LightDark />
+  </head><body>
+    <div id="stage">
+      <ul id="ul">
+        <li style="view-transition-name: l1">Item 1</li>
+        <li style="view-transition-name: l2">Item 2</li>
+        <li style="view-transition-name: l3">Item 3</li>
+        <li style="view-transition-name: l4">Item 4</li>
+        <li style="view-transition-name: l5">Item 5</li>
+        <li style="view-transition-name: l6">Item 6</li>
+        <li style="view-transition-name: l7">Item 7</li>
+      </ul>
+      <div id="front">
+        <ul id="ul2">
+          <li>1</li><li>1</li><li>1</li><li>1</li><li>1</li><li>1</li><li>1</li>
+        </ul>
+        <button>[Rotate]</button>
+      </div>
+    </div>
+    <script>
+      //@ts-expect-error
+      const { ul, ul2 } = window;
+
+      ul.scrollTop = ul2.scrollTop = 35;
+      document.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const update = () => {
+            const li = document.querySelector<HTMLLIElement>("li")!;
+            const y = li.parentElement!.scrollTop;
+            li.parentElement!.insertAdjacentElement("beforeend", li);
+            y && (li.parentElement!.scrollTop = y);
+          };
+          document.startViewTransition
+            ? document.startViewTransition(update)
+            : update();
+        });
+      });
+      ul.addEventListener("scroll", () => {
+        ul2.scrollTop = ul.scrollTop;
+      });
+    </script>
+    <style is:global>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      @view-transition {
+        navigation: auto;
+      }
+      #stage {
+        display: flex;
+        width: 150px;
+      }
+      #ul,
+      #front {
+        position: absolute;
+      }
+      #front > * {
+        pointer-events: auto;
+      }
+      #front ul {
+        pointer-events: none;
+      }
+      button {
+        width: 150px;
+        color: black;
+        background-color: #aca;
+      }
+      ul {
+        overflow-y: scroll;
+        height: 200px;
+        list-style: none;
+        width: 150px;
+        border: 1px solid grey;
+      }
+      li {
+        padding: 10px;
+        color: black;
+        background-color: #dfd;
+        margin: 5px;
+        border-radius: 5px;
+      }
+
+      #front {
+        view-transition-name: front;
+        pointer-events: none;
+        border: 0;
+        width: 220px;
+        height: 264px;
+        background-color: #888;
+        background-image: linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(255, 255, 255, 0.1) 75%,
+            rgba(255, 255, 255, 0.1)
+          ),
+          linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.1) 25%,
+            transparent 25%,
+            transparent 75%,
+            rgba(255, 255, 255, 0.1) 75%,
+            rgba(255, 255, 255, 0.1)
+          );
+        background-size: 20px 20px;
+        background-position:
+          0 0,
+          10px 10px;
+
+        mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white" /><rect x="1" y="1" width="130" height="200" fill="black" /></svg>');
+        mask-mode: luminance;
+      }
+      ::view-transition-old(*) {
+        display: none;
+      }
+      ::view-transition-new(*) {
+        animation: none;
+      }
+      ::view-transition-image-pair(front) {
+        transform: scale(1.01);
+      }
+      ::view-transition-group(*) {
+        animation-duration: 0.8s;
+      }
+      ::view-transition-image-pair(l1) {
+        animation: slide-left 0.8s 0s;
+      }
+      ::view-transition-image-pair(l2) {
+        animation: slide-left 0.7s 0.1s;
+      }
+      ::view-transition-image-pair(l3) {
+        animation: slide-left 0.6s 0.2s;
+      }
+      ::view-transition-image-pair(l4) {
+        animation: slide-left 0.5s 0.3s;
+      }
+      ::view-transition-image-pair(l5) {
+        animation: slide-left 0.4s 0.4s;
+      }
+      ::view-transition-image-pair(l6) {
+        animation: slide-left 0.3s 0.5s;
+      }
+      ::view-transition-image-pair(l7) {
+        animation: slide-left 0.2s 0.6s;
+      }
+      @keyframes slide-left {
+        50% {
+          transform: translateX(60px);
+        }
+      }
+    </style>
+  </body>
+</html>
