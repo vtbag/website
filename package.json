@@ -19,7 +19,7 @@
     "@vtbag/inspection-chamber": "^1.0.18",
     "@vtbag/turn-signal": "^1.1.0",
     "@vtbag/utensil-drawer": "^0.0.2",
-    "astro": "^4.16.17",
+    "astro": "^5.0.3",
     "astro-d2": "^0.6.0",
     "astro-vtbot": "^1.10.7",
     "rehype-autolink-headings": "^7.1.0",
