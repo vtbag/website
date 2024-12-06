@@ -46,6 +46,7 @@ import Bsky from "../../../components/Bsky.astro";
       ];
 
       addEventListener("DOMContentLoaded", () => {
+        ul.scrollTop = 500;
         if ("onpagereveal" in window) return;
         const itemList = document.querySelector("ul.cyber-list");
         itemList.innerHTML = createList(shuffleArray(cyberItems));
@@ -102,7 +103,7 @@ import Bsky from "../../../components/Bsky.astro";
     <div id="other">
       <div id="d1">
         <h1>INVENTORY</h1>
-        <ul class="cyber-list"></ul>
+        <ul id="ul" class="cyber-list"></ul>
         <button class="-glitch-effect">RANDOMIZE</button>
         <p style="max-width:640px">
           Oh what a mess! All items of the list define a transition group to

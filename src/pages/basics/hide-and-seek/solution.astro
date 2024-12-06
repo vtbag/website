@@ -47,6 +47,7 @@ import Bsky from "../../../components/Bsky.astro";
 
       // Fallback for browsers that don't support view transitions
       addEventListener("DOMContentLoaded", () => {
+        ul.scrollTop = 500;
         if ("onpagereveal" in window) return;
         const itemList = document.querySelector("ul");
         itemList.innerHTML = createList(shuffleArray(cyberItems));
@@ -120,7 +121,7 @@ import Bsky from "../../../components/Bsky.astro";
     ><div id="container">
       <div id="back">
         <h1>.</h1>
-        <ul></ul>
+        <ul id="ul"></ul>
       </div>
       <div id="front">
         <h1><span class="glitch-effect">INVENTORY</span></h1>
