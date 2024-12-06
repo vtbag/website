@@ -6,6 +6,13 @@
   color-scheme: dark;
 }
 
+:root {
+  view-transition-name: none;
+}
+
+::view-transition-image-pair(*) {
+  perspective: none;
+}
 ::view-transition-group(bsky),
 ::view-transition-group(bskyText) {
   display: none;
@@ -18,7 +25,6 @@
 }
 ::view-transition-new(*) {
   animation: none;
-  transform: scale(1.01)
 }
 :root {
   --neon-pink: #ff2e88;
@@ -64,7 +70,7 @@ html,body {
   position: absolute;
   margin: 0px auto;
   padding: 32px;
-  min-height: calc(100vh - 64px);
+  height: 100vh;
   width: 100%;
 }
 #front {
