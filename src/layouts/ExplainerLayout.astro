@@ -4,7 +4,9 @@ import LeaveDemoLink from "../components/LeaveDemoLink.astro";
 export const partial = true;
 const {title = "How does it work?"} = Astro.props.frontmatter;
 ---
-
+<head>
+  <link rel="canonical" href={Astro.url.href.replace("-explainer","")} />
+</head>
 <body>
   <h2 id="how"><a href="#how">{title}</a></h2>
   <p>
