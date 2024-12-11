@@ -1,0 +1,51 @@
+---
+const animals = "🦑🐙🐬🦈🐟🦐🐡🐠";
+---
+
+<portal-gate to="end:head">
+  <script is:inline data-animals={animals}>
+    const animals = Array.from(
+      document.currentScript.getAttribute("data-animals")
+    );
+
+    addEventListener("pagereveal", (e) => {
+      swim(animal1);
+      swim(animal2);
+      swim(animal3);
+
+      function swim(animal) {
+        animal.innerText = animals[Math.floor(Math.random() * animals.length)];
+        animal.style.left = `${Math.random() * 80}vw`;
+        animal.style.top = `${Math.random() * 80}vh`;
+        animal.style.setProperty("--origRot", `${Math.random() * 60 - 30}deg`);
+        animal.style.setProperty(
+          "--orig",
+          `rotateY(${Math.random() >= 0.5 ? 180 : 0}deg) scale(${
+            Math.random() * 1 + 0.5
+          })`
+        );
+      }
+    });
+  </script>
+</portal-gate>
+<span id="animal1"></span>
+<span id="animal2"></span>
+<span id="animal3"></span>
+<style is:global>
+  #animal1,
+  #animal2,
+  #animal3 {
+    font-size: 20vmin;
+    position: fixed;
+    view-transition-name: animal1;
+    animation: random 40s ease-in-out infinite;
+  }
+  #animal2 {
+    view-transition-name: animal2;
+    animation: random 40s -13s ease-in-out infinite;
+  }
+  #animal3 {
+    view-transition-name: animal3;
+    animation: random 40s -27s ease-in-out infinite;
+  }
+</style>

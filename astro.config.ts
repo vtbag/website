@@ -15,6 +15,7 @@ import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
 export default defineConfig({
+  image: {remotePatterns: [{ protocol: "https" }]},
   devToolbar: { enabled: true },
   experimental: { directRenderScript: true },
   site: 'https://vtbag.dev',
@@ -24,6 +25,12 @@ export default defineConfig({
   },
   prefetch: false,
   markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    },
     rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, {
       behavior: "wrap"
     }], [rehypeExternalLinks, {

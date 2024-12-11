@@ -1,0 +1,63 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  effect: string;
+}
+
+const { href, title, description, effect } = Astro.props;
+---
+
+<a href={href} class="transition-link" data-vtbag-link-types={effect}>
+  <div class="content">
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <span class="bubble-effect"></span>
+  </div>
+</a>
+
+<style is:global>
+  .transition-link {
+    display: block;
+    padding: 1rem;
+    margin: 1rem;
+    margin-top: 0;
+    background: rgba(0, 149, 199, 0.1);
+    border: 2px solid rgba(0, 195, 255, 0.3);
+    border-radius: 1rem;
+    color: #00c3ff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    view-transition-class: transition-link;
+  }
+
+  .transition-link:first-child {
+    margin-top: 1rem;
+  }
+  .content {
+    position: relative;
+    view-transition-class: transition-link-content;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+  }
+
+  p {
+    font-size: 1rem;
+    opacity: 0.8;
+    text-wrap: balance;
+  }
+
+  .transition-link:hover {
+    transform: translateY(-5px);
+    background: rgba(0, 195, 255, 0.2);
+    border-color: rgba(0, 195, 255, 0.8);
+    box-shadow: 0 0 20px rgba(0, 195, 255, 0.3);
+  }
+</style>

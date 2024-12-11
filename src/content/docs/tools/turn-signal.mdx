@@ -27,7 +27,7 @@ The Turn-Signal is a lightweight script for purely progressive enhancement of cr
 The Turn-Signal is designed for use with cross-document view transitions. It depends on the Navigation API and make the assumption that all browsers that support level 2 of the View Transition API also support the Navigation API.
 :::
 
-## Demo
+## Demos
 
 import { Card } from "@astrojs/starlight/components";
 
@@ -38,6 +38,7 @@ import { Card } from "@astrojs/starlight/components";
 Check out the [Turn-Signal Demo](/signal-demo/bag/) to see the Turn-Signal in action. Click the link to move to the next page, then use your browser's back button to return. Notice how the slide animation changes direction based on your navigation.
   </Card>
 
+Want to control the type of animations with your links? Here are a [fancy fishpond demo](/link-demo/) and a more down to earth [image viewer demo](/viewer-demo/). Both demonstrate the use of the [link-types](#link-types) script!
 
 
 ## Installation
@@ -82,9 +83,39 @@ import forcedTraversal from "@vtbag/turn-signal/forced-traversal?url"
 ```
 There are no configuration options and the `forced-traversal` script does not take any parameters.
 
+<a name="link-types"/>
+
+### Control Animation Type per Link!
+
+There is a third script in the turn-signal box!
+Install the `link-types` script and you can annotate every `<a>` element with view transition types!
+Use this script in the same way as the main script by inserting it inside the `<head>`.
+```jsx
+import linkTypes from "@vtbag/turn-signal/link-types?url"
+...
+  <script src={linkTypes} />
+</head>
+```
+
+The script finds anchor elements with a `data-vtbag-link-types` attribute and uses the identifiers to set up view transition types for that navigation.  The value can be a space separated list of identifiers. Even better, you can have two of those lists separated by a slash (/). If specified, the second list is used for backward history navigation.
+
+You can use the types in your CSS to select different animations and other CSS properties:
+
+```css
+:active-view-transition-type(shift-right) {
+  &::view-transition-old(main) {
+    animation: 200ms both slide-out-to-left;
+  }
+  &::view-transition-old(main) {
+    animation: 200ms both slide-in-from-right;
+  }
+}
+```
+That way you can have different animations for the same page depending on the specific user action.
+
 ## Configuration and Usage
 
-`@vtbag/turn-signal` main script accepts several config options. Those are specified as `data-*` attributes on the `<script>` element. They are all optional.
+The `@vtbag/turn-signal` main script accepts several config options. Those are specified as `data-*` attributes on the `<script>` element. They are all optional.
 
 If used without any explicit parameters, the Turn-Signal
 * sets the `backward` view transition type if it detects backwards history traversals.

@@ -1,15 +1,7 @@
 ---
-import LightDark from "@/components/LightDark.astro";
-// demonstrate hiding with other images
+import Layout from "@/layouts/Layout.astro";
 ---
-
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <LightDark />
-  </head><body>
+<Layout title="Document" description="" image="">
     <ul id="ul">
       <li style="view-transition-name: l1">Item 1</li>
       <li style="view-transition-name: l2">Item 2</li>
@@ -100,5 +92,4 @@ import LightDark from "@/components/LightDark.astro";
         }
       }
     </style>
-  </body>
-</html>
+</Layout>

@@ -101,11 +101,11 @@ test.describe("controls", () => {
 
     const colorScheme = async () => await page.evaluate(() => top!.document.documentElement.style.colorScheme);
 
-    expect(await colorScheme()).toBe("dark");
-    await page.click('#vtbag-ui-light-dark');
     expect(await colorScheme()).toBe("light");
     await page.click('#vtbag-ui-light-dark');
     expect(await colorScheme()).toBe("dark");
+    await page.click('#vtbag-ui-light-dark');
+    expect(await colorScheme()).toBe("light");
   });
 
   test('can turn', async ({ page }) => {

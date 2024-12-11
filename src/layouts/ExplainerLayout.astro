@@ -1,13 +1,11 @@
 ---
 import LeaveDemoLink from "../components/LeaveDemoLink.astro";
+import Layout from "@/layouts/Layout.astro";
 
 export const partial = true;
 const {title = "How does it work?"} = Astro.props.frontmatter;
 ---
-<head>
-  <link rel="canonical" href={Astro.url.href.replace("-explainer","")} />
-</head>
-<body>
+<Layout {title} description="" image="" canonical={Astro.url.href.replace("-explainer","")} />
   <h2 id="how"><a href="#how">{title}</a></h2>
   <p>
     <i
@@ -26,7 +24,7 @@ const {title = "How does it work?"} = Astro.props.frontmatter;
   </p>
   <hr />
   <section><slot /></section>
-</body>
+</Layout>
 <style>
   p {
     font-size: 0.8rem;

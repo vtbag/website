@@ -1,0 +1,35 @@
+---
+import Layout from "./_Layout.astro";
+import Navigation from "./_Navigation.astro";
+import Animals from "./_Animals.astro";
+import Panel from "./_Panel.astro";
+import WaveText from "./_WaveText.astro";
+import fishpond from "./_fish-pond.webp";
+import "./_vt.css";
+
+
+const here = parseInt(Astro.url.pathname.replace(/\/$/,"").split("/").pop() ?? "4", 10);
+---
+<Layout title="Fish Pond NE">
+  <main style={`background-image: url(${fishpond.src});`}>
+    <Animals/>
+    <Navigation here={here} />
+    <Panel>
+      <h1><WaveText text="Inside the Fishpond"/></h1>
+      <p>Check it out:</p><p><tt>&lt;a data-vtbag-link-types="left/right" ...&gt;</tt></p>
+      <p>(3/9)</p>
+    </Panel>
+  </main>
+</Layout>
+<style is:global>
+
+.panel {
+  bottom: 10vh;
+  left: 10vw;
+  width: 80vw;
+  max-width: 640px;
+  p {
+    font-size: 1.6rem;
+  }
+}
+</style>

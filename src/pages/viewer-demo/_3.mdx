@@ -1,0 +1,19 @@
+With the script and the annotations in place you can use the generated view transition types to guard your animation rules:
+```css
+  :active-view-transition-type(next) {
+    &::view-transition-old(img) {
+      animation: slide-out-left 0.5s ease-out;
+    }
+    &::view-transition-new(img) {
+      animation: slide-in-left 0.5s ease-out;
+    }
+  }
+  :active-view-transition-type(prev) {
+    &::view-transition-old(img) {
+      animation: slide-out-right 0.5s ease-out;
+    }
+    &::view-transition-new(img) {
+      animation: slide-in-right 0.5s ease-out;
+    }
+  }
+```

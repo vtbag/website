@@ -1,35 +1,27 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 import DemoNavigation from "@/components/DemoNavigation.astro";
 export interface Props {
   title: string;
+  description: string;
+  image:string;
   backlink: string;
   prev: string;
   next: string;
 }
 
-const { title, backlink, prev, next } = Astro.props;
-const script =
-  'const _=document.documentElement;_.dataset.theme=_.style.colorScheme=localStorage.getItem("starlight-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches? "dark":"light")';
+const { title, description, image, backlink, prev, next } = Astro.props;
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>{title}</title>
-    <link rel="canonical" href={Astro.url.href} />
-    <slot name="early-head" />
-    <link href="/demo-explainer/styles.css" rel="stylesheet" />
-    <script is:inline set:html={script} />
-    <script is:inline src="/chamber.js/"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/bag3.png" type="image/png" />
-    <slot name="late-head" />
-  </head>
-  <body>
+<Layout {title} {description} {image}>
+    <slot name="early-head" slot="head"/>
+    <link href="/demo-explainer/styles.css" rel="stylesheet" slot="head2"/>
+    <script is:inline src="/chamber.js/" slot="head2"></script>
+    <slot name="late-head" slot="head2"/>
+
     <h1>{title}</h1>
     <DemoNavigation {prev} {backlink} {next} />
     <slot />
     <div id="vtbag-spacer" style="min-height:100vh"></div>
     <DemoNavigation {prev} {backlink} {next} />
-  </body>
-</html>
+</Layout>

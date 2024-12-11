@@ -1,0 +1,75 @@
+---
+import BaseLayout from "@/layouts/Layout.astro";
+import "./_vt.css";
+import linkTypes from "@vtbag/turn-signal/link-types?raw";
+import vtn from "@vtbag/utensil-drawer/vtn?url";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<BaseLayout {title} description="Tech demo on how to control your view transition types with data-attributes on your links when doing browser-native cross-document view transitions!" image="/fishpond-og.png">
+    <script slot="head" is:inline set:html={linkTypes}/>
+    <script
+      slot="head" is:inline
+      src={vtn}
+      data-spec=".nav-btn: nav-btn-; .transition-link: transition-link-; .transition-link .content: transition-link-content-"
+    ></script>
+    <slot />
+  </BaseLayout>
+
+<style is:global>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: system-ui, sans-serif;
+    background: #001e2d;
+  }
+</style>
+
+<portal-gate to="end:head">
+  <script is:inline>
+    ["pagereveal", "pageswap"].forEach((e) =>
+      addEventListener(e, (event) => {
+        if (location.pathname === "/link-demo/") {
+          const transitionLink = sessionStorage.getItem("transition-link");
+          if (transitionLink) {
+            const link = document.querySelector(
+              `[style*="view-transition-name: ${transitionLink}"]`
+            );
+            if (link) {
+              link.style.viewTransitionName = "navigation";
+              event.viewTransition?.finished.then(
+                () => (link.style.viewTransitionName = transitionLink)
+              );
+            }
+          }
+        }
+      })
+    );
+  </script>
+</portal-gate>
+<script>
+  if (location.pathname === "/link-demo/") {
+    document
+      .querySelectorAll<HTMLDivElement>(".transition-link")
+      .forEach((e) => {
+        e.addEventListener("click", () =>
+          sessionStorage.setItem("transition-link", e.style.viewTransitionName)
+        );
+      });
+  }
+</script>

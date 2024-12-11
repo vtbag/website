@@ -1,0 +1,403 @@
+@view-transition {
+  navigation: auto;
+}
+
+.panel > div > p {
+  text-wrap: pretty
+}
+:root {
+  view-transition-name: none;
+}
+::view-transition-group(*) {
+  animation-duration: 1s;
+}
+::view-transition-old(transition-link-0),
+::view-transition-old(transition-link-content-0) {
+  animation: slideUp 1s 0ms ease-out both;
+}
+::view-transition-old(transition-link-1),
+::view-transition-old(transition-link-content-1) {
+  animation: slideUp 1s 100ms ease-out both;
+}
+::view-transition-old(transition-link-2),
+::view-transition-old(transition-link-content-2) {
+  animation: slideUp 1s 200ms ease-out both;
+}
+::view-transition-new(transition-link-0),
+::view-transition-new(transition-link-content-0) {
+  animation: slideDown 1s 0ms both;
+}
+::view-transition-new(transition-link-1),
+::view-transition-new(transition-link-content-1) {
+  animation: slideDown 1s 100ms both;
+}
+::view-transition-new(transition-link-2),
+::view-transition-new(transition-link-content-2) {
+  animation: slideDown 1s 200ms both;
+}
+
+::view-transition-new(.nav-btn):only-child {
+  animation: turnIn 0.3s 0.7s both;
+}
+::view-transition-old(.nav-btn):only-child {
+  animation: turnOut 0.7s both;
+}
+main {
+  view-transition-name: main;
+  width: 100vw;
+  height: 100vh;
+  background-size: 100vw 100vh;
+  animation: subtle-move 40s ease-in-out infinite;
+}
+
+::view-transition-group(panel) {
+  z-index: 5;
+  animation-delay: 300ms;
+}
+::view-transition-group(waveText) {
+  z-index: 6;
+}
+::view-transition-group(navigation) {
+  z-index: 7;
+  animation-delay: 100ms;
+}
+::view-transition-group(.transition-link) {
+  z-index: 8;
+}
+::view-transition-group(.transition-link-content) {
+  z-index: 9;
+}
+::view-transition-new(navigation),
+::view-transition-old(navigation),
+::view-transition-new(panel),
+::view-transition-old(panel) {
+  height: 100%;
+  width: 100%;
+  animation-timing-function: linear;
+}
+
+::view-transition-group(nav-btn-0) {
+  animation-delay: 60ms;
+}
+::view-transition-group(nav-btn-1) {
+  animation-delay: 80ms;
+}
+::view-transition-group(nav-btn-2) {
+  animation-delay: 140ms;
+}
+::view-transition-group(nav-btn-3) {
+  animation-delay: 120ms;
+}
+::view-transition-group(nav-btn-4) {
+  animation-delay: 100ms;
+}
+::view-transition-new(waveText) {
+  animation: none;
+}
+::view-transition-old(waveText) {
+  display: none;
+}
+::view-transition-group(.animal) {
+  z-index: 0;
+}
+
+:active-view-transition-type(right)::view-transition-new(main) {
+  animation: swimRightNew 1s ease-in-out;
+}
+:active-view-transition-type(right)::view-transition-old(main) {
+  animation: swimRightOld 1s ease-in-out;
+}
+:active-view-transition-type(left)::view-transition-new(main) {
+  animation: swimLeftNew 1s ease-in-out;
+}
+:active-view-transition-type(left)::view-transition-old(main) {
+  animation: swimLeftOld 1s ease-in-out;
+}
+:active-view-transition-type(down)::view-transition-new(main) {
+  animation: swimDownNew 1s ease-in-out;
+}
+:active-view-transition-type(down)::view-transition-old(main) {
+  animation: swimDownOld 1s ease-in-out;
+}
+:active-view-transition-type(up)::view-transition-new(main) {
+  animation: swimUpNew 1s ease-in-out;
+}
+:active-view-transition-type(up)::view-transition-old(main) {
+  animation: swimUpOld 1s ease-in-out;
+}
+
+@keyframes turnIn {
+  from {
+    transform: rotateX(90deg);
+  }
+}
+@keyframes turnOut {
+  to {
+    transform: rotateX(90deg);
+  }
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(-100vh);
+  }
+}
+@keyframes slideDown {
+  from {
+    transform: translateY(-100vh);
+  }
+}
+@keyframes swimRightOld {
+  to {
+    transform: translateX(-100vw);
+  }
+}
+@keyframes swimRightNew {
+  from {
+    transform: translateX(100vw);
+  }
+}
+@keyframes swimLeftOld {
+  to {
+    transform: translateX(100vw);
+  }
+}
+@keyframes swimLeftNew {
+  from {
+    transform: translateX(-100vw);
+  }
+}
+@keyframes swimDownOld {
+  to {
+    transform: translateY(-100vh);
+  }
+}
+@keyframes swimDownNew {
+  from {
+    transform: translateY(100vh);
+  }
+}
+@keyframes swimUpOld {
+  to {
+    transform: translateY(100vh);
+  }
+}
+@keyframes swimUpNew {
+  from {
+    transform: translateY(-100vh);
+  }
+}
+
+@keyframes subtle-move {
+  0%,
+  100% {
+    background-position: 0;
+  }
+  10% {
+    background-position: 20px 0px;
+  }
+  20% {
+    background-position: -20px 10px;
+  }
+  30% {
+    background-position: 0px 20px;
+  }
+  40% {
+    background-position: -20px 30px;
+  }
+  50% {
+    background-position: 10px 20px;
+  }
+  60% {
+    background-position: 10px 10px;
+  }
+  70% {
+    background-position: -20px 30px;
+  }
+  80% {
+    background-position: 10px 30px;
+  }
+  90% {
+    background-position: -10px 20px;
+  }
+}
+
+@keyframes random {
+  0%,
+  100% {
+    transform: var(--orig) translate(0, 0) rotate(calc(0deg + var(--origRot)));
+  }
+  10% {
+    transform: var(--orig) translate(10px, 0)
+      rotate(calc(10deg + var(--origRot)));
+  }
+  20% {
+    transform: var(--orig) translate(-10px, 10px)
+      rotate(calc(-10deg + var(--origRot)));
+  }
+  30% {
+    transform: var(--orig) translate(0, 20px)
+      rotate(calc(20deg + var(--origRot)));
+  }
+  40% {
+    transform: var(--orig) translate(-10px, 30px)
+      rotate(calc(-20deg + var(--origRot)));
+  }
+  50% {
+    transform: var(--orig) translate(10px, 20px)
+      rotate(calc(10deg + var(--origRot)));
+  }
+  60% {
+    transform: var(--orig) translate(10px, 10px)
+      rotate(calc(0deg + var(--origRot)));
+  }
+  70% {
+    transform: var(--orig) translate(-10px, 30px)
+      rotate(calc(20deg + var(--origRot)));
+  }
+  80% {
+    transform: var(--orig) translate(10px, 30px)
+      rotate(calc(-20deg + var(--origRot)));
+  }
+  90% {
+    transform: var(--orig) translate(-10px, 20px)
+      rotate(calc(10deg + var(--origRot)));
+  }
+}
+
+:active-view-transition-type(stumble) {
+  &::view-transition-new(*) {
+    display: none;
+  }
+  &::view-transition-old(*) {
+    animation: swimUpOld 1s ease-in-out both;
+  }
+  &::view-transition-old(main) {
+    animation: -ua-view-transition-fade-out 1s ease-in-out both;
+  }
+  &::view-transition-group(panel),
+  &::view-transition-group(navigation) {
+    animation-delay: 0s;
+  }
+  &::view-transition-new(main) {
+    display:block;
+    animation: stumble 2s ease-in-out both;
+  }
+}
+
+@keyframes stumble {
+  from {
+    opacity: 0;
+  }
+  25% {
+    mask-image: radial-gradient(circle, black 0%, transparent 50%);
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    mask-image: radial-gradient(circle, black 0%, transparent 50%);
+      transform: scale(1) rotate(2turn)
+  }
+}
+
+:active-view-transition-type(dive) {
+  &::view-transition-group(*) {
+    display: none;
+  }
+  &::view-transition-group(main) {
+    display: block;
+  }
+  &::view-transition-old(main) {
+    z-index: 1;
+    animation: 2500ms ease-in both growout;
+  }
+  &::view-transition-new(main) {
+    animation: 1s 2s ease-in growin;
+  }
+}
+
+@keyframes growout {
+  30% {
+    transform: translateX(1vw) scale(1.02);
+  }
+  60% {
+    transform: translateX(-1vw) scale(1.04);
+  }
+  80% {
+    transform: none;
+    opacity: 1;
+    mix-blend-mode: normal;
+  }
+  to {
+    transform: scale(4);
+    opacity: 0;
+    mix-blend-mode: plus-lighter;
+  }
+}
+@keyframes growin {
+  from {
+    transform: scale(0.25);
+    opacity: 0;
+    mix-blend-mode: plus-lighter;
+    mask-image: radial-gradient(circle, black 0%, transparent 50%);
+  }
+  50% {
+    mask-image: radial-gradient(circle, black 0%, transparent 50%);
+    opacity: 1;
+    transform: scale(0.5);
+    mix-blend-mode: plus-lighter;
+  }
+  55% {
+    mask-image: radial-gradient(circle, black 0%, black 10%, transparent 55%);
+  }
+  60% {
+    mask-image: radial-gradient(circle, black 0%, black 20%, transparent 60%);
+  }
+  65% {
+    mask-image: radial-gradient(circle, black 0%, black 30%, transparent 65%);
+  }
+  70% {
+    mask-image: radial-gradient(circle, black 0%, black 40%, transparent 70%);
+  }
+  75% {
+    mask-image: radial-gradient(circle, black 0%, black 50%, transparent 75%);
+  }
+  80% {
+    mask-image: radial-gradient(circle, black 0%, black 60%, transparent 80%);
+  }
+  85% {
+    mask-image: radial-gradient(circle, black 0%, black 70%, transparent 85%);
+    transform: scale(1.5)
+  }
+  90% {
+    mask-image: radial-gradient(circle, black 0%, black 80%, transparent 90%);
+  }
+  95% {
+    mask-image: radial-gradient(circle, black 0%, black 90%, transparent 95%);
+  }
+  100% {
+    mask-image: radial-gradient(circle, black 0%, black 100%, transparent 100%);
+    transform: scale(1);
+  }
+}
+
+:active-view-transition-type(rough) {
+  &::view-transition-image-pair(main) {
+    animation: rough 1s ease-in-out both;
+  }
+}
+
+@keyframes rough {
+  25% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  50% {
+    transform: scale(1.05) rotate(-5deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(5deg);
+  }
+}

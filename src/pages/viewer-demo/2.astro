@@ -1,0 +1,26 @@
+---
+import Layout from "./_Layout.astro";
+import { Image } from "astro:assets";
+import Content from "./_2.mdx";
+---
+
+<Layout title="Image Slider Demo">
+  <main>
+    <h1>Image 2</h1>
+    <a href="/viewer-demo/1/" data-vtbag-link-types="prev/next">Prev</a>
+    <a href="/viewer-demo/">All</a>
+    <a href="/viewer-demo/3/" data-vtbag-link-types="next/prev">Next</a>
+    <Image
+      src="https://picsum.photos/id/635/300/400"
+      alt="Image 2"
+      width="300"
+      height="400"
+    />
+    <Content />
+  </main>
+</Layout>
+<style is:global>
+  main > img {
+    view-transition-name: img2;
+  }
+</style>

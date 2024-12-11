@@ -1,0 +1,7 @@
+This page features links to a previous and a next page. The HTML for these two links has an additional `data-vtbag-link-types` attribute:
+```html
+<a href="/viewer-demo/3/" data-vtbag-link-types="prev/next">Prev</a>
+<a href="/viewer-demo/">All</a>
+<a href="/viewer-demo/2/" data-vtbag-link-types="next/prev">Next</a>
+```
+The identifiers before the slash (/) are set as view transition types on forward navigation. The identifiers after the slash are optional. If they are present, they are set as view transition types for history back traversals.

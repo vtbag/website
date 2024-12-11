@@ -1,0 +1,44 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<div class="wave-text">
+  {
+    text
+      .split("")
+      .map((char, index) => (
+        <span style={`--char-index: ${index}`}>{char}</span>
+      ))
+  }
+</div>
+
+<style>
+  .wave-text {
+    display: inline-block;
+    text-wrap: balance;
+    view-transition-name: waveText;
+  }
+
+  .wave-text span {
+    display: inline-block;
+    animation: wave 2s ease-in-out infinite;
+    animation-delay: calc(0.1s * var(--char-index));
+  }
+
+  @keyframes wave {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    25% {
+      transform: translateY(-3px) translateX(3px) rotate(-3deg);
+    }
+    75% {
+      transform: translateY(3px) translateX(-2px) rotate(2deg);
+    }
+  }
+</style>

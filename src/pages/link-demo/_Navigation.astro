@@ -1,0 +1,104 @@
+---
+export interface Props {
+  here: number;
+}
+const { here } = Astro.props;
+let x = "calc(50vw - 108px)";
+let y = "calc(50vh - 108px)";
+const up = here < 3 ? here + 6 : here - 3;
+const down = here > 5 ? here - 6 : here + 3;
+const left = here % 3 === 0 ? here + 2 : here - 1;
+const right = here % 3 === 2 ? here - 2 : here + 1;
+
+[0, 1, 2].includes(here) && (y = "2rem");
+[6, 7, 8].includes(here) && (y = "calc(100vh - 2rem - 216px)");
+[0, 3, 6].includes(here) && (x = "2rem");
+[2, 5, 8].includes(here) && (x = "calc(100vw - 2rem - 216px)");
+---
+
+<nav class="nav-container" style=`top:${y}; left:${x}`>
+  <div class="nav-grid">
+    <div class="nav-cell"></div>
+    <a href={`/link-demo/${up}/`} title="Swim north" class="nav-btn n" data-vtbag-link-types="up/down"
+      >⬆️</a
+    >
+    <div class="nav-cell"></div>
+    <a
+      href={`/link-demo/${left}/`}title="Swim west"
+      class="nav-btn w"
+      data-vtbag-link-types="left/right">⬅️</a
+    >
+    <a href="/link-demo/" title="Back to dry land" class="nav-btn center" data-vtbag-link-types="out/dive">↖</a>
+    <a
+      href={`/link-demo/${right}/`}title="Swim east"
+      class="nav-btn e"
+      data-vtbag-link-types="right/left rough">➡️</a
+    >
+    <div class="nav-cell"></div>
+    <a
+      href={`/link-demo/${down}/`}title="Swim south"
+      class="nav-btn s"
+      data-vtbag-link-types="down rough/up">⬇️</a
+    >
+    <div class="nav-cell"></div>
+  </div>
+</nav>
+
+<style is:global>
+  .nav-container {
+    view-transition-name: navigation;
+    position: fixed;
+    z-index: 10;
+  }
+
+  .nav-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    padding: 1rem;
+    background: rgba(0, 14, 36, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+  .nav-cell {
+    width: 4rem;
+    height: 4rem;
+  }
+
+  .nav-btn {
+    width: 4rem;
+    height: 4rem;
+    text-decoration: none;
+    border-radius: 20%;
+    border: 2px solid rgba(0, 195, 255, 0.3);
+    background: rgba(0, 149, 199, 0.1);
+    color: #00c3ff;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 0 10px rgba(0, 195, 255, 0.5);
+    font-weight: 900;
+    view-transition-class: nav-btn;
+  }
+
+  .nav-btn:hover {
+    background: rgba(0, 195, 255, 0.2);
+    border-color: rgba(0, 195, 255, 0.8);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 195, 255, 0.3);
+  }
+
+  .nav-btn.center {
+    background: rgba(0, 195, 255, 0.2);
+    border-color: rgba(0, 195, 255, 0.5);
+  }
+
+  .nav-btn.center:hover {
+    background: rgba(0, 195, 255, 0.3);
+  }
+</style>

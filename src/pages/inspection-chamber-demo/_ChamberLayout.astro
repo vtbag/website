@@ -8,7 +8,7 @@ export interface Props {
 const { title } = Astro.props;
 ---
 
-<Layout {title}>
+<Layout {title} description="A demo that let's you play with the @vtbag's Inspection Chamber" image="/chamber-og.png">
   <script slot="head" is:inline>
     sessionStorage.removeItem("vtbag-ui-standby");
   </script>

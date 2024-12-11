@@ -1,0 +1,21 @@
+---
+---
+
+<div class="panel"><div><slot/></div></div>
+
+<style is:global>
+  .panel {
+    position: fixed;
+    padding: 2rem;
+    color: lightskyblue;
+    z-index: 5;
+    background: rgba(0, 14, 36, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    view-transition-name: panel;
+    & > div {
+      view-transition-name: panel-content;
+    }
+  }
+</style>

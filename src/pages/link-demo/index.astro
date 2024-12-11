@@ -1,0 +1,103 @@
+---
+import Layout from "./_Layout.astro";
+import TransitionLink from "./_TransitionLink.astro";
+import WaveText from "./_WaveText.astro";
+---
+
+<Layout title="Welcome to the Fish Pond">
+  <main class="landing">
+    <div class="content-wrapper">
+      <div>
+        <h1><WaveText text="Welcome to the Fishpond" /></h1>
+        <header>
+          Control different view transition animations by annotating your links!
+        </header>
+        <div class="links-container">
+          <TransitionLink
+            href="./4/"
+            title="Dive"
+            description="Plunge into the depths with a diving action"
+            effect="dive/out"
+          />
+          <TransitionLink
+            href="./4/"
+            title="Glide"
+            description="Elegantly glide into the underwater world"
+            effect=""
+          />
+          <TransitionLink
+            href="./4/"
+            title="Stumble"
+            description="Your vision fades shortly before you submerge"
+            effect="stumble/crawl"
+          />
+        </div>
+        <footer><a href="/tools/turn-signal/#link-types">Get the <b>link-types script</b>!</a></footer>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .landing {
+    width: 100vw;
+    height: 100vh;
+    background-image: url("./_pond.webp");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: subtle-waves 20s ease-in-out infinite;
+  }
+
+  .content-wrapper {
+    background: rgba(0, 14, 36, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 2rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 800px;
+    width: 90%;
+    color: aqua;
+    view-transition-name: panel;
+    & > div {
+      view-transition-name: panel-content0;
+    }
+  }
+
+  h1 {
+    color: #00c3ff;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 20px rgba(0, 195, 255, 0.5);
+  }
+
+  .links-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  header,
+  footer {
+    width: fit-content;
+    margin-inline: auto;
+    max-width: 80%;
+  }
+  a:visited {
+    color: aqua;
+  }
+
+  @media (max-width: 600px) {
+    .content-wrapper {
+      padding: 1rem;
+      width: 95%;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

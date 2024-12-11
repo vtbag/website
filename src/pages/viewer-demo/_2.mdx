@@ -1,0 +1,16 @@
+You need to install the `link-types` script of the `@vtbag/turn-signal` package to make `data-vtbag-link-types` work. Here is a example how you embed the script after installing the package using `npm i @vtbag/turn-signal`:
+
+```astro
+---
+import linkTypes from "@vtbag/turn-signal/link-types?url"
+---
+<html>
+  <head>
+    <script src={linkTypes} />
+    ...
+  </head>
+  ...
+</html>
+```
+
+Details of embedding will depend on you bundler. As an alternative you can load the script remotely from one the CDNs that provide npm packages like jsdelivr, unpgk or others: `<script src="https://..." />`

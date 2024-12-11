@@ -1,15 +1,9 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 import bag from "../../assets/bag.png?url";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:description" content="" />
-    <meta property="og:image" content="/social.png" />
-  </head>
-  <body>
+<Layout title="Document" description="" image="">
     <div style="background-color: #181008; width:42vw">
       <img src={bag} alt="bag" />
     </div>
@@ -20,7 +14,7 @@ import bag from "../../assets/bag.png?url";
       </h2>
     </div>
     <h1>The Bag of Tricks for View Transitions</h1>
-  </body>
+</Layout>
   <style is:global>
     h1,
     h2,
@@ -80,4 +74,4 @@ import bag from "../../assets/bag.png?url";
       border-color: #ffc4;
     }
   </style>
-</html>
+

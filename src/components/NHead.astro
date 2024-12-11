@@ -131,3 +131,10 @@ import "./vtbag-bar.css";
     view-transition-name: mobile-starlight-toc-nav;
   }
 </style>
+<script>
+  addEventListener(
+    "popstate",
+    (e) => e.hasUAVisualTransition && location.reload()
+  );
+</script>
+
