@@ -12,12 +12,9 @@ const { title } = Astro.props;
 ---
 
 <BaseLayout {title} description="Tech demo on how to control your view transition types with data-attributes on your links when doing browser-native cross-document view transitions!" image="/fishpond-og.png">
-    <script slot="head" is:inline set:html={linkTypes}/>
-    <script
-      slot="head" is:inline
-      src={vtn}
-      data-spec=".nav-btn: nav-btn-; .transition-link: transition-link-; .transition-link .content: transition-link-content-"
-    ></script>
+    <script slot="head" is:inline set:html={linkTypes}></script>
+    <script slot="head" is:inline src={vtn}
+      data-spec=".nav-btn: nav-btn-; .transition-link: transition-link-; .transition-link .content: transition-link-content-"></script>
     <slot />
   </BaseLayout>
 
