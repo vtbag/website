@@ -25,30 +25,33 @@
       sessionStorage.setItem("vtbag-pageswap", JSON.stringify(d));
     });
     addEventListener("load", () => {
-      if (location.search !== "?pagereveal") {
-        location.href = "/basics/test-page/?pagereveal";
-      } else {
-        const reveal = JSON.parse(sessionStorage.getItem("vtbag-pagereveal"));
-        const swap = JSON.parse(sessionStorage.getItem("vtbag-pageswap"));
-        reveal && document.documentElement.setAttribute("cdvt", "");
-        reveal?.viewTransition &&
-          document.documentElement.setAttribute("rvt", "");
-        reveal?.activation && document.documentElement.setAttribute("ract", "");
-        swap?.viewTransition &&
-          document.documentElement.setAttribute("svt", "");
-        swap?.activation && document.documentElement.setAttribute("sact", "");
-        swap?.activation?.from?.idx !== -1 &&
-          document.documentElement.setAttribute("idx", "");
-        "startViewTransition" in document &&
-          document.documentElement.setAttribute("sdvt", "");
-        "navigation" in window &&
-          document.documentElement.setAttribute("nav", "");
-        CSS.supports("view-transition-name", "auto") &&
-          document.documentElement.setAttribute("vtna", "");
-        CSS.supports("view-transition-group", "g") &&
-          document.documentElement.setAttribute("vtg", "");
-        history.replaceState(history.state, "", "/basics/test-page/");
-      }
+      setTimeout(() => {
+        if (location.search !== "?pagereveal") {
+          location.href = "/basics/test-page/?pagereveal";
+        } else {
+          const reveal = JSON.parse(sessionStorage.getItem("vtbag-pagereveal"));
+          const swap = JSON.parse(sessionStorage.getItem("vtbag-pageswap"));
+          reveal && document.documentElement.setAttribute("cdvt", "");
+          reveal?.viewTransition &&
+            document.documentElement.setAttribute("rvt", "");
+          reveal?.activation &&
+            document.documentElement.setAttribute("ract", "");
+          swap?.viewTransition &&
+            document.documentElement.setAttribute("svt", "");
+          swap?.activation && document.documentElement.setAttribute("sact", "");
+          swap?.activation?.from?.idx !== -1 &&
+            document.documentElement.setAttribute("idx", "");
+          "startViewTransition" in document &&
+            document.documentElement.setAttribute("sdvt", "");
+          "navigation" in window &&
+            document.documentElement.setAttribute("nav", "");
+          CSS.supports("view-transition-name", "auto") &&
+            document.documentElement.setAttribute("vtna", "");
+          CSS.supports("view-transition-group", "g") &&
+            document.documentElement.setAttribute("vtg", "");
+          history.replaceState(history.state, "", "/basics/test-page/");
+        }
+      }, 1000);
     });
   </script>
 </portal-gate>
