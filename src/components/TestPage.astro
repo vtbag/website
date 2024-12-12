@@ -1,0 +1,54 @@
+<portal-gate to="end:head">
+  <script is:inline>
+    const activation = (act) => {
+      copy = {};
+      copy.from = {};
+      copy.from.url = act?.from?.url;
+      copy.from.index = act?.from?.index;
+      copy.entry = {};
+      copy.entry.url = act?.entry?.url;
+      copy.entry.index = act?.entry?.index;
+      copy.navigationType = act?.navigationType;
+      return copy;
+    };
+    addEventListener("pagereveal", (e) => {
+      const d = {};
+      d.viewTransition = e?.viewTransition;
+      d.activation = activation(navigation?.activation);
+      sessionStorage.setItem("vtbag-pagereveal", JSON.stringify(d));
+    });
+
+    addEventListener("pageswap", (e) => {
+      const d = {};
+      d.viewTransition = e?.viewTransition;
+      d.activation = activation(e?.activation);
+      sessionStorage.setItem("vtbag-pageswap", JSON.stringify(d));
+    });
+    addEventListener("DOMContentLoaded", () => {
+      if (location.search !== "?pagereveal") {
+        location.href = "/basics/test-page/?pagereveal";
+      } else {
+        const reveal = JSON.parse(sessionStorage.getItem("vtbag-pagereveal"));
+        const swap = JSON.parse(sessionStorage.getItem("vtbag-pageswap"));
+        reveal && document.documentElement.setAttribute("cdvt", "");
+        reveal?.viewTransition &&
+          document.documentElement.setAttribute("rvt", "");
+        reveal?.activation && document.documentElement.setAttribute("ract", "");
+        swap?.viewTransition &&
+          document.documentElement.setAttribute("svt", "");
+        swap?.activation && document.documentElement.setAttribute("sact", "");
+        swap?.activation?.from?.idx !== -1 &&
+          document.documentElement.setAttribute("idx", "");
+        "startViewTransition" in document &&
+          document.documentElement.setAttribute("sdvt", "");
+        "navigation" in window &&
+          document.documentElement.setAttribute("nav", "");
+        CSS.supports("view-transition-name", "auto") &&
+          document.documentElement.setAttribute("vtna", "");
+        CSS.supports("view-transition-group", "g") &&
+          document.documentElement.setAttribute("vtg", "");
+        history.replaceState(history.state, "", "/basics/test-page/");
+      }
+    });
+  </script>
+</portal-gate>
