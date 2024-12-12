@@ -40,13 +40,15 @@ export function addBar(first:number) {
 const storedWidth = () => ~~sessionStorage.getItem("vtbag-bar")!;
 
 // @ts-expect-error
-navigation.addEventListener("navigate", (e) => {
+(window.navigation as EventTarget)?.addEventListener("navigate", (event) => {
+  // @ts-expect-error
+  const e = event as NavigateEvent;
   console.log("event:", "navigate", e);
 
   const back =
     e.navigationType === "traverse" &&
     // @ts-expect-error
-    e.destination.index < navigation.currentEntry.index;
+    e.destination.index < window.navigation?.currentEntry.index;
 
   if (
     !e.downloadRequest &&
@@ -54,7 +56,7 @@ navigation.addEventListener("navigate", (e) => {
     (!e.destination.sameDocument ||
       (!back && !e.hashChange) ||
     // @ts-expect-error
-    (back && !new URL(navigation.currentEntry.url).hash))
+    (back && !new URL(window.navigation?.currentEntry.url).hash))
   ) {
     document.documentElement.classList.add("vtbag-bar-loading", "vtbag-bar-old");
     width = -1;

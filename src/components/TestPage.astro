@@ -14,7 +14,7 @@
     addEventListener("pagereveal", (e) => {
       const d = {};
       d.viewTransition = e?.viewTransition;
-      d.activation = activation("navigation" in window ? window.navigation?.activation : undefined);
+      d.activation = activation(window.navigation?.activation);
       sessionStorage.setItem("vtbag-pagereveal", JSON.stringify(d));
     });
 

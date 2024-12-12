@@ -24,6 +24,7 @@
 <portal-gate to="end:head">
   <script is:inline>
     const mark = (entry) => {
+      if (!entry) return null;
       const elem = document.querySelector(
         `#toolsbar > div:has(a[href="${
           new URL(entry.url).pathname
@@ -42,7 +43,7 @@
     });
     addEventListener("pagereveal", (e) => {
       if (e.viewTransition) {
-        const elem = mark(navigation.activation.from);
+        const elem = mark(window.navigation?.activation.from);
         e.viewTransition.finished.then(() =>
           elem?.style.removeProperty("view-transition-name")
         );

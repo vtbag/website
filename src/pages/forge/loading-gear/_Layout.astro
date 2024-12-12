@@ -25,7 +25,7 @@ const { title } = Astro.props;
         }
       });
       // @ts-expect-error
-      window.navigation.addEventListener("navigate", (e) => {
+      window.navigation?.addEventListener("navigate", (e) => {
         console.log(new Date().getTime(), "navigate");
       });
       addEventListener("DOMContentLoaded", (_e) => {
