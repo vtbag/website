@@ -14,16 +14,14 @@ import TestPage from "../../../components/TestPage.astro";
 
 This page shows whether your current browser has native support for view transitions.
 
-| Feature                                 | Support?          |
-| --------------------------------------- | ----------------- |
-| Same-document view transitions          | <span id="sdvt"/> |
-| Cross-document view transitions         | <span id="cdvt"/> |
-| Navigation API                          | <span id="nav"/>  |
-| NavigationHistoryEntry.idx on pageswap  | <span id="idx"/>  |
-| viewTransition accessible on pageswap   | <span id="svt"/>  |
-| viewTransition accessible on pagereveal | <span id="rvt"/>  |
-| Auto-generated names                    | <span id="vtna"/> |
-| Nested transition groups                | <span id="vtg"/>  |
+| Feature                              | Support?          |
+| ------------------------------------ | ----------------- |
+| Same-document view transitions       | <span id="sdvt"/> |
+| Cross-document view transitions      | <span id="cdvt"/> |
+| Navigation API                       | <span id="nav"/>  |
+| pageswap.activation.from.index       | <span id="idx"/>  |
+| Auto-generated view-transition-names | <span id="vtna"/> |
+| Nested transition groups             | <span id="vtg"/>  |
 
 The W3C Draft for [Level 1](https://drafts.csswg.org/css-view-transitions-1/) of the View Transition API defines view transitions within th same document.\
 The W3C Draft for [Level 2](https://drafts.csswg.org/css-view-transitions-2/) of the View Transition API covers cross-document view transitions.
