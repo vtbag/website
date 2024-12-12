@@ -24,7 +24,7 @@
       d.activation = activation(e?.activation);
       sessionStorage.setItem("vtbag-pageswap", JSON.stringify(d));
     });
-    addEventListener("DOMContentLoaded", () => {
+    addEventListener("load", () => {
       if (location.search !== "?pagereveal") {
         location.href = "/basics/test-page/?pagereveal";
       } else {
