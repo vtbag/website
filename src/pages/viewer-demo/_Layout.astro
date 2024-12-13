@@ -8,8 +8,22 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<BasicLayout {title} description="Make each link have a different view transition animation" image="">
+<BasicLayout
+  {title}
+  description="Make each link have a different view transition animation"
+  image=""
+>
   <script slot="head" is:inline src={linkTypes}></script>
+  <script slot="head" is:inline type="speculationrules">
+    {
+      "prerender": [
+        {
+          "urls": ["/viewer-demo/, "/viewer-demo/1/", "/viewer-demo/2/", "/viewer-demo/3/"]
+        }
+      ]
+    }
+  </script>
+
   <slot />
 </BasicLayout>
 

@@ -30,11 +30,18 @@ const images = [bag, chamber, crossing, signal, shaft];
       {
         "prerender": [
           {
-            "urls": ["/signal-demo/bag/","/signal-demo/chamber/","/signal-demo/crossing/","/signal-demo/signal/","/signal-demo/shaft/"]
+            "urls": [
+              "/signal-demo/bag/",
+              "/signal-demo/chamber/",
+              "/signal-demo/crossing/",
+              "/signal-demo/signal/",
+              "/signal-demo/shaft/"
+            ]
           }
         ]
       }
-      </script>  </head>
+    </script>
+  </head>
   <body>
     <header style="display:flex">
       <div style="width: 30vw"><h2>Turn-Signal Demo</h2></div>
@@ -63,128 +70,131 @@ const images = [bag, chamber, crossing, signal, shaft];
       });
     </script>
     <main>
-      <hr/><p>
+      <hr /><p>
         This is a demo of the Turn-Signal script.<br />
-        Click the round buttons in the header above to navigate to another page.<br />
-        Use your browser's back and forward buttons to navigate between pages.<br
+         Click the round buttons in the header above to navigate to another
+        page.<br />
+         Use your browser's back and forward buttons to navigate between pages.<br
         />
-        See how the direction of the view transitions changes based on the
+         See how the direction of the view transitions changes based on the
         order of pages and your history traversals.
-      </p><Bsky/><hr/>
+      </p><Bsky /><hr />
       <slot />
     </main>
-  </body>
-</html>
-
-<style is:global>
-  @view-transition {
-    navigation: auto;
-  }
-  @keyframes slideFromRight {
-    from {
-      transform: translateX(100vw);
+  </body><style is:global>
+    @view-transition {
+      navigation: auto;
     }
-  }
-  @keyframes slideFromLeft {
-    from {
-      transform: translateX(-100vw);
+    @keyframes slideFromRight {
+      from {
+        transform: translateX(100vw);
+      }
     }
-  }
-  @keyframes slideToRight {
-    to {
-      transform: translateX(100vw);
+    @keyframes slideFromLeft {
+      from {
+        transform: translateX(-100vw);
+      }
     }
-  }
-  @keyframes slideToLeft {
-    to {
-      transform: translateX(-100vw);
+    @keyframes slideToRight {
+      to {
+        transform: translateX(100vw);
+      }
     }
-  }
-  @keyframes stepBackUp {
-    50% {
-      transform: scale(0.8);
+    @keyframes slideToLeft {
+      to {
+        transform: translateX(-100vw);
+      }
     }
-  }
-
-  ::view-transition-old(img) {
-    animation: slideToLeft both 0.5s;
-  }
-  ::view-transition-new(img) {
-    animation: slideFromRight both 0.5s;
-  }
-
-  :active-view-transition-type(backward) {
-    &::view-transition-old(img) {
-      animation: slideToRight both 0.5s;
+    @keyframes stepBackUp {
+      50% {
+        transform: scale(0.8);
+      }
     }
-    &::view-transition-new(img) {
-      animation: slideFromLeft both 0.5s;
+
+    ::view-transition-old(img) {
+      animation: slideToLeft both 0.5s;
     }
-  }
-
-  :active-view-transition-type(same) {
-    &::view-transition-old(img),
-    &::view-transition-new(img) {
-      animation: stepBackUp both 0.5s;
+    ::view-transition-new(img) {
+      animation: slideFromRight both 0.5s;
     }
-  }
 
-  ::view-transition-group(img) {
-    overflow: clip;
-  }
+    :active-view-transition-type(backward) {
+      &::view-transition-old(img) {
+        animation: slideToRight both 0.5s;
+      }
+      &::view-transition-new(img) {
+        animation: slideFromLeft both 0.5s;
+      }
+    }
 
-  body {
-    font-family: sans-serif;
-  }
-  header img {
-    mask-image: radial-gradient(ellipse at center, white 35%, transparent 71%);
-  }
+    :active-view-transition-type(same) {
+      &::view-transition-old(img),
+      &::view-transition-new(img) {
+        animation: stepBackUp both 0.5s;
+      }
+    }
 
-  a.selected {
-    background: radial-gradient(
-      circle at center,
-      #0008 50%,
-      #fff8 55%,
-      #0008 60%,
-      #0000 66%
-    );
-  }
-  [data-theme="dark"] a.selected {
-    background: radial-gradient(
-      circle at center,
-      #fff8 50%,
-      #0008 55%,
-      #fff8 60%,
-      #0000 66%
-    );
-  }
+    ::view-transition-group(img) {
+      overflow: clip;
+    }
 
-  main {
-    width: fit-content;
-    margin: 0 auto;
-  }
-  main img {
-    height: 66vh;
-    width: auto;
-    view-transition-name: img;
-  }
-  @media (orientation: portrait) {
+    body {
+      font-family: sans-serif;
+    }
+    header img {
+      mask-image: radial-gradient(
+        ellipse at center,
+        white 35%,
+        transparent 71%
+      );
+    }
+
+    a.selected {
+      background: radial-gradient(
+        circle at center,
+        #0008 50%,
+        #fff8 55%,
+        #0008 60%,
+        #0000 66%
+      );
+    }
+    [data-theme="dark"] a.selected {
+      background: radial-gradient(
+        circle at center,
+        #fff8 50%,
+        #0008 55%,
+        #fff8 60%,
+        #0000 66%
+      );
+    }
+
+    main {
+      width: fit-content;
+      margin: 0 auto;
+    }
     main img {
-      width: 100%;
-      height: auto;
-      margin-top: 10vh;
+      height: 66vh;
+      width: auto;
+      view-transition-name: img;
     }
-  }
-  #back {
-    display: inline-block;
-    color: black;
-    border-radius: 8px;
-    padding: 1rem;
-    margin: 1rem;
-    background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
-    box-shadow: 0 4px 6px #8888;
-  }
-  hr {
-    border-color: #8888;
-  }
-</style>
+    @media (orientation: portrait) {
+      main img {
+        width: 100%;
+        height: auto;
+        margin-top: 10vh;
+      }
+    }
+    #back {
+      display: inline-block;
+      color: black;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem;
+      background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+      box-shadow: 0 4px 6px #8888;
+    }
+    hr {
+      border-color: #8888;
+    }
+  </style>
+</html>

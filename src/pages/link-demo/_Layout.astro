@@ -15,6 +15,16 @@ const { title } = Astro.props;
     <script slot="head" is:inline set:html={linkTypes}></script>
     <script slot="head" is:inline src={vtn}
       data-spec=".nav-btn: nav-btn-; .transition-link: transition-link-; .transition-link .content: transition-link-content-"></script>
+      <script slot="head" is:inline type="speculationrules">
+        {
+          "prerender": [
+            {
+              "urls": ["/link-demo/", "/link-demo/0/", "/link-demo/1/", "/link-demo/2/","/link-demo/3/", "/link-demo/4/", "/link-demo/5/","/link-demo/6/", "/link-demo/7/", "/link-demo/8/"]
+            }
+          ]
+        }
+      </script>
+
     <slot />
   </BaseLayout>
 

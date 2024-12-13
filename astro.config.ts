@@ -17,7 +17,6 @@ import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 export default defineConfig({
   image: {remotePatterns: [{ protocol: "https" }]},
   devToolbar: { enabled: true },
-  experimental: { directRenderScript: true },
   site: 'https://vtbag.dev',
   compressHTML: false,
   redirects: {
