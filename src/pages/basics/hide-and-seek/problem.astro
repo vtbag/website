@@ -65,7 +65,7 @@ import Bsky from "../../../components/Bsky.astro";
       addEventListener("pagereveal", (event) => {
         if (event.viewTransition) {
           if (
-            new URL(window.navigation?.activation.from.url, location.href).pathname !==
+            new URL("navigation" in window && window.navigation?.activation.from.url, location.href).pathname !==
             "/basics/hide-and-seek/problem/"
           ) {
             event.viewTransition.skipTransition?.();

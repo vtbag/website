@@ -1,52 +1,43 @@
 ---
 import Layout from "./_Layout.astro";
 import { Image } from "astro:assets";
+import i1 from "./_200_1.webp";
+import i2 from "./_200_2.webp";
+import i3 from "./_200_3.webp";
 ---
 
 <Layout title="Image Slider Demo">
-  <main>
+  <main style="max-width:910px;">
     <h1>Image Slider Demo</h1>
     <p>
       This tech demo uses <b>links annotated with view transition types</b> for
-      fine grained control over <b>browser-native cross-document</b> view transitions.
-      Click an image!
+      fine grained control over <b>browser-native cross-document</b> view
+      transitions. Click an image!
     </p>
     <a href="/viewer-demo/1/"
-      ><Image
-        src="https://picsum.photos/id/534/300/200"
-        alt="Image 1"
-        width="300"
-        height="200"
-      /></a
+      ><Image src={i1} alt="Image 1" width="300" height="200" /></a
     ><a href="/viewer-demo/2/">
-      <Image
-        src="https://picsum.photos/id/635/300/200"
-        alt="Image 2"
-        width="300"
-        height="200"
-      /></a
+      <Image src={i2} alt="Image 2" width="300" height="200" /></a
     ><a href="/viewer-demo/3/">
-      <Image
-        src="https://picsum.photos/id/625/300/200"
-        alt="Image 3"
-        width="300"
-        height="200"
-      /></a
-    ><p>[Return to the <a href="/tools/turn-signal/#link-types">turn-signal page</a>]</p>
+      <Image src={i3} alt="Image 3" width="300" height="200" /></a
+    ><p>
+      [Return to the <a href="/tools/turn-signal/#link-types"
+        >turn-signal page</a
+      >]
+    </p>
   </main>
 </Layout>
 
 <style is:global>
   main {
-    margin-inline: auto;
-    padding: 1rem;
-    max-width: 910px;
     text-align: center;
   }
   p {
     text-align: justify;
   }
-a img {display: inline}
+  a img {
+    display: inline;
+  }
   h1 {
     font-size: 2.5rem;
     font-weight: 700;

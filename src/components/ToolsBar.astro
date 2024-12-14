@@ -43,7 +43,7 @@
     });
     addEventListener("pagereveal", (e) => {
       if (e.viewTransition) {
-        const elem = mark(window.navigation?.activation.from);
+        const elem = mark("navigation" in window && window.navigation?.activation.from);
         e.viewTransition.finished.then(() =>
           elem?.style.removeProperty("view-transition-name")
         );

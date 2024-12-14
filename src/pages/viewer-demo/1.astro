@@ -2,6 +2,7 @@
 import Layout from "./_Layout.astro";
 import { Image } from "astro:assets";
 import Content from "./_1.mdx";
+import i1 from "./_400_1.webp";
 ---
 
 <Layout title="Image Slider Demo">
@@ -11,12 +12,12 @@ import Content from "./_1.mdx";
     <a href="/viewer-demo/">All</a>
     <a href="/viewer-demo/2/" data-vtbag-link-types="next/prev">Next</a>
     <Image
-      src="https://picsum.photos/id/534/300/400"
+      src={i1}
       alt="Image 1"
       width="300"
       height="400"
     />
-    <Content/>
+    <div style="max-width: 600px; margin-inline:auto"><Content/></div>
   </main>
 </Layout>
 <style is:global>
