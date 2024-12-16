@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/starlight": "^0.30.0",
+    "@astrojs/starlight": "^0.30.2",
     "@inox-tools/portal-gun": "^1.0.1",
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.2",
