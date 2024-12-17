@@ -60,7 +60,8 @@ export default defineConfig({
       attrs: {
         property: "og:image",
         content: "https://vtbag.dev/social.png"
-      },{
+      }
+    }, {
       tag: "link",
       attrs: {
         rel: "me",
