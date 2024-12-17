@@ -49,6 +49,8 @@
             document.documentElement.setAttribute("vtna", "");
           CSS.supports("view-transition-group", "g") &&
             document.documentElement.setAttribute("vtg", "");
+          "prerendering" in document &&
+            document.documentElement.setAttribute("spec", "");
           history.replaceState(history.state, "", "/basics/test-page/");
         }
       }, 1000);

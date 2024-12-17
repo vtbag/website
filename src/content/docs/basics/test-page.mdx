@@ -22,6 +22,7 @@ This page shows whether your current browser has native support for view transit
 | [PageSwapEvent.activation.\*.index](https://drafts.csswg.org/css-view-transitions-2/#old-doc-event)           | <span id="idx"/>  |
 | [Auto-generated view-transition-names](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name) | <span id="vtna"/> |
 | [Nested transition groups](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-prop)       | <span id="vtg"/>  |
+| [Speculation Rules](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)                   | <span id="spec"/> |
 
 Browser compatibility data: https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API#browser_compatibility
 
@@ -35,7 +36,8 @@ Browser compatibility data: https://developer.mozilla.org/en-US/docs/Web/API/Vie
 	#rvt,
 	#vtna,
 	#vtg,
-	#idx {
+	#idx,
+	#spec {
 		&::before {
 			content: 'Not supported';
 		}
@@ -48,7 +50,8 @@ Browser compatibility data: https://developer.mozilla.org/en-US/docs/Web/API/Vie
 	:root[rvt] #rvt,
 	:root[vtg] #vtg,
 	:root[vtna] #vtna,
-	:root[idx] #idx
+	:root[idx] #idx,
+	:root[spec] #spec
 	 {
 		&::before {
 			content: 'Supported';
