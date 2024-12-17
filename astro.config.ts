@@ -15,7 +15,7 @@ import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 // https://astro.build/config
 export default defineConfig({
-  image: {remotePatterns: [{ protocol: "https" }]},
+  image: { remotePatterns: [{ protocol: "https" }] },
   devToolbar: { enabled: true },
   site: 'https://vtbag.dev',
   compressHTML: false,
@@ -60,6 +60,11 @@ export default defineConfig({
       attrs: {
         property: "og:image",
         content: "https://vtbag.dev/social.png"
+      },{
+      tag: "link",
+      attrs: {
+        rel: "me",
+        href: "https://mastodon.social/@martrapp"
       }
     }],
     customCss: ["./src/styles/custom.css"],
