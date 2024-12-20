@@ -1,39 +1,50 @@
 ---
-import { spawnSync } from 'child_process';
-import { basename, dirname } from 'path';
+import { spawnSync } from "child_process";
+import { basename, dirname } from "path";
 
 const { lang, lastUpdated } = Astro.props;
-const file = `src/content/${Astro.props.entry.collection}/${Astro.props.entry.id}`;
-
+const gitDate = (f: string) =>
+  spawnSync(
+    "git",
+    [
+      "log",
+      "--format=%ct",
+      "--follow",
+      "--diff-filter=A",
+      "--max-count=1",
+      basename(f),
+    ],
+    {
+      cwd: dirname(f),
+      encoding: "utf-8",
+    }
+  ).stdout.trim();
 const firstPublished = new Date(
-	Number(
-		spawnSync(
-			'git',
-			['log', '--format=%ct', '--follow', '--diff-filter=A', '--max-count=1', basename(file)],
-			{
-				cwd: dirname(file),
-				encoding: 'utf-8',
-			}
-		).stdout.trim() + '000'
-	)
+  Number(gitDate(Astro.props.entry.filePath) + "000")
 );
 ---
 
 {
-	lastUpdated && (
-		<p style="display: flex; justify-content: space-between;">
-			<span style="view-transition-name: lastUpdated">
-				{'Last updated:'}{' '}
-				<time datetime={lastUpdated.toISOString()}>
-					{lastUpdated.toLocaleDateString(lang, { dateStyle: 'medium', timeZone: 'UTC' })}
-				</time>
-			</span>
-			<span style="view-transition-name: firstPublished">
-				{'First published:'}{' '}
-				<time datetime={firstPublished.toISOString()}>
-					{firstPublished.toLocaleDateString(lang, { dateStyle: 'medium', timeZone: 'UTC' })}
-				</time>
-			</span>
-		</p>
-	)
+  lastUpdated && (
+    <p style="display: flex; justify-content: space-between;">
+      <span style="view-transition-name: lastUpdated">
+        {"Last updated:"}{" "}
+        <time datetime={lastUpdated.toISOString()}>
+          {lastUpdated.toLocaleDateString(lang, {
+            dateStyle: "medium",
+            timeZone: "UTC",
+          })}
+        </time>
+      </span>
+      <span style="view-transition-name: firstPublished">
+        {"First published:"}{" "}
+        <time datetime={firstPublished.toISOString()}>
+          {firstPublished.toLocaleDateString(lang, {
+            dateStyle: "medium",
+            timeZone: "UTC",
+          })}
+        </time>
+      </span>
+    </p>
+  )
 }
