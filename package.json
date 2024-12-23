@@ -20,7 +20,7 @@
     "@vtbag/turn-signal": "^1.2.2",
     "@vtbag/utensil-drawer": "^0.0.3",
     "astro": "^5.0.5",
-    "astro-d2": "^0.6.0",
+    "astro-d2": "^0.7.0",
     "astro-vtbot": "^1.10.7",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
