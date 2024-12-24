@@ -26,7 +26,7 @@
     });
     addEventListener("load", () => {
       setTimeout(() => {
-        if (location.search !== "?pagereveal") {
+        if (!new URL(location,location.href).searchParams.has("pagereveal")) {
           location.href = "/basics/test-page/?pagereveal";
         } else {
           const reveal = JSON.parse(sessionStorage.getItem("vtbag-pagereveal"));
