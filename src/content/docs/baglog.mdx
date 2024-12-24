@@ -6,7 +6,7 @@ description: "The Bag of Tricks for View Transitions will be continuously extend
 import Bsky from "@/components/Bsky.astro";
 
 A place to add potential topics for the future when time permits to address them.
-Everybody is invited to suggest additional items for that list: <a class=" not-content" target="_blank" href={`https://bsky.app/intent/compose`}><span>Discuss on <b>🦋</b></span></a>
+Everybody is invited to suggest additional items for that list: <a class=" not-content" target="\_blank" href={`https://bsky.app/intent/compose`}><span>Discuss on <b>🦋</b></span></a>
 
 In no particular order:
 
@@ -27,19 +27,32 @@ In no particular order:
 </details>
 <details name="log">
   <summary>Speculation rules</summary>
-  Show sensible solutions to pre-render the new page before the cross-document view transition starts.
+  Show sensible solutions to pre-render the new page before the cross-document view
+  transition starts.
+</details>
+<details name="log">
+  <summary>Bfcache & view transitions</summary>
+  How to cleanup behind you when using the bfcache with view transitions.
+</details>
+<details name="log">
+  <summary>Bfcache vs. view transitions</summary>
+  How to switch off view transitions on history traversals to get snappy navigation
+  with pages from the bfcache.
 </details>
 <details name="log">
   <summary>Morph aspect ratio of button with stable text</summary>
-  The view transition API turns elements into bitmaps. If you stretch a button, you also stretch the button's text, don't you?
+  The view transition API turns elements into bitmaps. If you stretch a button, you
+  also stretch the button's text, don't you?
 </details>
 <details name="log">
   <summary>How to debug view transitions</summary>
-  Give a quick tour on how to use the animation section in Chrome's Developer Tools and the Inspection Chamber to debug view transitions.
+  Give a quick tour on how to use the animation section in Chrome's Developer Tools
+  and the Inspection Chamber to debug view transitions.
 </details>
 <details name="log">
   <summary>How you can style your filtered items</summary>
-  You have articles with tags or products in categories? Filter your items and add some nice entry and exit animations.
+  You have articles with tags or products in categories? Filter your items and add
+  some nice entry and exit animations.
 </details>
 
 <style>{`

@@ -299,6 +299,7 @@ Start of view transitions will always await the `<head>` to be loaded. External 
 ```html
 <link rel="expect" href="#somewhere" blocking="render"/>
 ```
+If the fragment used in the `href` attribute does not exist on the page, view transitions will wait for the whole page to load before they start. But be aware that the browser might cancel view transitions anyhow if that takes too long.
 
 I haven't yet been able to wait for an image to load, but the View Transition API points toward a different approach.  [Example 5](https://drafts.csswg.org/css-view-transitions-2/#cross-doc-examples) suggests checking if an image has fully loaded, and if not, modifying the view transitions to handle the situation rather than waiting for the image to load.
 
