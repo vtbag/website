@@ -292,11 +292,9 @@ This might best be combined with dynamically (per script) added view transition 
 
 Often you want to support different animations for a given view transition pseudo-element and select one of those alternatives depending on some condition. The concept that the View Transition API provides for this use case is called _active view transition types_.
 
-:::note
-This feature is available beginning with Level 2 of the View Transition API.
-:::
+While it is active, a view transition might have a set of identifiers called _types_ that can be used in CSS pseudo-classes to select different rules. During the view transition, the set can be altered at any time by assigning to the `types` property of the viewTransition object.
 
-While it is active, a view transition might have a set of identifiers called _types_ that can be used in CSS pseudo-classes to select different rules. During the view transition, the set can be altered at any time by assigning to the `types` property of the viewTransition object. The initial set of types can be set when calling `startViewTransition()` or it might be specified using the `types` property inside a `@view-transition` rule.
+The initial set of types can be set when calling `startViewTransition()` or it might be specified using the `types` property inside a `@view-transition` rule.
 
 ```ts title="Level 2 signature of startViewTranstion()"
 document.startViewTransition({types: ['boom'], update: changeTheDOM})
@@ -308,7 +306,20 @@ or
   types: boom, var(--special)
 }
 ```
+Another typical pattern for cross-document view transitions is to (conditionally) set the types in the `pagereveal` or `pageswap` handlers.
+```js
+listener(event) {
+  ...
+  event.viewTransition.types.add("effect");
+  ...
+}
+```
 
+Types set during `pageswap` are only available on the old page. You can not use them to guide the styling of `::view-transition` pseudos because that CSS is always taken from the new page. But you can use the `pageswap` types to conditionally [set or remove view transition names](/basics/styling/#conditional-view-transitions) on the old page.
+
+Types set during `pagereveal` can be used for both: setting and removing view transition names on the new page and for styling the view transition pseudo elements.
+
+#### Active View Transition Types
 The pseudo-class that can check for types is `:active-view-transition-type()`. It takes a comma separated list of types. If at least one of these types is set on the active view transition, the pseudo-class matches the documents root element.
 
 Thus, the typical patterns to use `:active-view-transition-type()` are:
@@ -357,7 +368,7 @@ See the [Turn-Signal documentation](/tools/turn-signal/#css-for-reverse-animatio
 
 The pseudo-classes can not only be used to define different animations for different situations. It is also possible to let the existence of a view transition group depend on view transitions types. So on some transitions, an element can have its own animation and on others it is just part of some parent and its animation.
 
-You can find an example for this behavior on this site. When you visit the page about [flickers during morph animations](/tips/over-exposure/#root-causes-for-flashes) and visit it directly again be selecting it in the site navigation, you will see that for navigations to the same page, the `<main>` section does not have its own view transition. Also when you click the images on that page, you start view transitions where the `<main>` section is not animated.
+You can find an example for this behavior on this site. When you visit the page about [flickers during morph animations](/tips/over-exposure/#root-causes-for-flashes) and visit it directly again be selecting it in the site navigation, you will see that for a navigation to the same page, the `<main>` section does not have its own view transition. Also when you click the images on that page, you start view transitions where the `<main>` section is not animated.
 See the [Turn-Signal documentation](/tools/turn-signal/#switching-transition-names) on how this effect is achieved and how you could get even more specific and cancel single images instead of whole transition groups.
 
 ## Prefix Pseudo-Elements with `:root`?
