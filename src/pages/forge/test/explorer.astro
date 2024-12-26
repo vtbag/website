@@ -10,20 +10,24 @@ import Layout from "@/layouts/Layout.astro";
   <script slot="head">
     let out = [];
     addEventListener("pageswap", (e) => {
-      if (!history.state) history.replaceState({index: history.length}, "");
+      if (!history.state) history.replaceState({ index: history.length }, "");
       const current = history.state.index;
-      out.push(`pageswap: ${current} ${e.activation?.navigationType}  ${e.activation?.from?.index} -> ${e.activation?.entry?.index}`);
+      out.push(
+        `pageswap: ${current} ${e.activation?.navigationType}  ${e.activation?.from?.index} -> ${e.activation?.entry?.index}`
+      );
       out.push(` ${e.activation?.from?.url} -> ${e.activation?.entry?.url}`);
+      out.push(e.viewTransition?.types?.length ?? "-");
       out.push(``);
       sessionStorage.setItem("vtbag-out", JSON.stringify(out));
     });
-    addEventListener("pagereveal",()=>{
-      out = JSON.parse(sessionStorage.getItem("vtbag-out")??"[]");
-      if (!history.state) history.replaceState({index: history.length}, "");
+    addEventListener("pagereveal", () => {
+      out = JSON.parse(sessionStorage.getItem("vtbag-out") ?? "[]");
+      if (!history.state) history.replaceState({ index: history.length }, "");
       const current = history.state.index;
       out.push(`pagereveal: ${current}`);
+      out.push(e.viewTransition?.types?.length ?? "-");
       output.innerHTML = out.join("<br>");
-      out=[];
+      out = [];
       a.href = `/forge/test/explorer/?x=${Math.random()}`;
     });
   </script>
