@@ -1,0 +1,35 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+  title="Explorer"
+  description="An explorer for iphone vt support"
+  image="/bag.png"
+>
+  <script slot="head">
+    let out = [];
+    addEventListener("pageswap", (e) => {
+      if (!history.state) history.replaceState({index: history.length}, "");
+      const current = history.state.index;
+      out.push(`pageswap: ${current} ${e.activation?.navigationType}  ${e.activation?.from?.index} -> ${e.activation?.entry?.index}`);
+      out.push(` ${e.activation?.from?.url} -> ${e.activation?.entry?.url}`);
+      out.push(``);
+      sessionStorage.setItem("vtbag-out", JSON.stringify(out));
+    });
+    addEventListener("pagereveal",()=>{
+      out = JSON.parse(sessionStorage.getItem("vtbag-out")??"[]");
+      if (!history.state) history.replaceState({index: history.length}, "");
+      const current = history.state.index;
+      out.push(`pagereveal: ${current}`);
+      output.innerHTML = out.join("<br>");
+      out=[];
+      a.href = `/forge/test/explorer/?x=${Math.random()}`;
+    });
+  </script>
+  <main>
+    <h1>Explorer</h1>
+    <p id="output"></p>
+    <a id="a">Click</a>
+  </main>
+</Layout>
