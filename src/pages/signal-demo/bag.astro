@@ -7,3 +7,8 @@ import bag from "../../assets/cards/bag.png";
 <Layout title="The Bag of Tricks">
   <a href="/vtbag/"><Image src={bag} alt="The Bafg of Tricks" /></a>
 </Layout>
+<style is:global>
+    :active-view-transition-type(open)::view-transition-group(*) {
+    animation-duration: 1s;
+  }
+</style>

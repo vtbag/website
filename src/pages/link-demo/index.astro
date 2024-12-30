@@ -100,4 +100,8 @@ import WaveText from "./_WaveText.astro";
       font-size: 2rem;
     }
   }
+
+  :active-view-transition-type(open)::view-transition-group(*) {
+    animation-duration: 1s;
+  }
 </style>

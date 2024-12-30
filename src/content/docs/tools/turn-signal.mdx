@@ -51,10 +51,18 @@ The Turn-Signal scripts are designed for use with cross-document view transition
 
 import { Card } from "@astrojs/starlight/components";
 import { CardGrid } from "@astrojs/starlight/components";
+import { Image } from 'astro:assets';
+import viewer from "@/assets/viewer-demo.png"
+import fishpond from "@/assets/pond.png"
+import forced from "@/assets/ft.png"
+import dark_signal from "@/pages/demo-explainer/_TurnSignalDemo-dark.png"
+import light_signal from "@/pages/demo-explainer/_TurnSignalDemo-light.png"
 
 <CardGrid>
 <Card title="Turn-Signal Demo">
-<div id="signal">[<span class="light:sl-hidden">![Turn Signal Demo](@/pages/demo-explainer/_TurnSignalDemo-dark.png)</span><span class="dark:sl-hidden">![Turn Signal Demo](@/pages/demo-explainer/_TurnSignalDemo-light.png)</span>](/signal-demo/bag/)</div>
+
+<span id="signal"><a href="/signal-demo/bag/" data-vtbag-link-types="same/open"><span class="light:sl-hidden"><Image src={dark_signal} alt="signal" data-zoom-off/></span><span class="dark:sl-hidden"><Image src={light_signal} alt="signal" data-zoom-off/></span></a></span>
+
 Try the [Turn-Signal Demo](/signal-demo/bag/) to see the _directions script_ in action. Click on the icons to navigate the pages. Then use your browser's back button to return.
 
 Notice how the slide animation changes direction based on the order of the pages.
@@ -63,7 +71,7 @@ Notice how the slide animation changes direction based on the order of the pages
 
 <Card title="Image Viewer Demo">
 
-<div id="viewer">[![Image Viewer Demo](@/assets/viewer-demo.png)](/viewer-demo/)</div>
+<div id="viewer"><a href="/viewer-demo/" data-vtbag-link-types="same/open"><Image src={viewer} alt="viewer" data-zoom-off/></a></div>
 
 The [Image Viewer Demo](/viewer-demo/) showcases various animations for the same page: sliding  from  right or left, resizing, and changing its aspect ratio.
 
@@ -72,7 +80,7 @@ Thanks to the _link-types_ script, you can control which animation to use by add
 </Card>
 
 <Card title="Fish Pond Demo">
-<div id="fishpond">[![Fishpond Demo](@/assets/pond.png)](/link-demo/)</div>
+<div id="fishpond"><a href="/link-demo/" data-vtbag-link-types="same / open"><Image src={fishpond} alt="fishpond" data-zoom-off/></a></div>
 
 Looking for a more dramatic example of how to control view transition types with your links?
 
@@ -84,7 +92,8 @@ Explore the pond to learn more about how the demo was implemented.
 
 <Card title="Forced Traversal">
 
-<div id="forced">[![forced navigatiom](@/assets/ft.png)](https://events-3bg.pages.dev/signal-demo/forcedTraversal/blog/)</div>
+<div id="forced"><a href="https://events-3bg.pages.dev/signal-demo/forcedTraversal/blog/" data-vtbag-link-types="same / open"><Image src={forced} alt="forced transition" data-zoom-off/></a></div>
+
 
 To see the _forced traversal_ script in action alongside the _directions script_, head over to the [Vtbot Demo](https://events-3bg.pages.dev/signal-demo/forcedTraversal/blog/)! No matter how many times you click the tabs in the header, your browser history will always have just three or less entries.
 

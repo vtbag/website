@@ -14,14 +14,14 @@ import i3 from "./_200_3.webp";
       fine grained control over <b>browser-native cross-document</b> view
       transitions. Click the left image!
     </p>
-    <div style="view-transition-name: viewer;">
+    <span style="view-transition-name: viewer;width: fit-content">
       <a href="/viewer-demo/1/"
         ><Image src={i1} alt="Image 1" width="300" height="200" /></a
       ><a href="/viewer-demo/2/">
         <Image src={i2} alt="Image 2" width="300" height="200" /></a
       ><a href="/viewer-demo/3/">
         <Image src={i3} alt="Image 3" width="300" height="200" /></a>
-    </div><p>
+      </span><p>
       [Return to the <a href="/tools/turn-signal/#link-types"
         >turn-signal page</a
       >]
@@ -55,4 +55,8 @@ import i3 from "./_200_3.webp";
   a:nth-of-type(3) img {
     view-transition-name: img3;
   }
+  :active-view-transition-type(open)::view-transition-group(*) {
+    animation-duration: 1s;
+  }
+
 </style>
