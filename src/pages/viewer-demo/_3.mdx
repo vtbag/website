@@ -2,19 +2,23 @@ With the script and the annotations in place you can use the generated view tran
 
 ```css
   :active-view-transition-type(next) {
-    &::view-transition-old(img) {
+    &::view-transition-old(.img) {
       animation: slide-out-left 0.5s ease-out;
     }
-    &::view-transition-new(img) {
+    &::view-transition-new(.img) {
       animation: slide-in-left 0.5s ease-out;
     }
   }
+  :active-view-transition-type(same)::view-transition-image-pair(.img) {
+    animation: blink 0.5s;
+  }
   :active-view-transition-type(prev) {
-    &::view-transition-old(img) {
+    &::view-transition-old(.img) {
       animation: slide-out-right 0.5s ease-out;
     }
-    &::view-transition-new(img) {
+    &::view-transition-new(.img) {
       animation: slide-in-right 0.5s ease-out;
     }
   }
 ```
+The definitions asume that all the images have the view tranition class `img`.

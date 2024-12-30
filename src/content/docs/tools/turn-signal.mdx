@@ -1,109 +1,186 @@
 ---
 title: The Turn-Signal
-description: "@vtbag/turn-signal simplifies directional (back/forward) view transitions for intuitive history traversal navigation."
+description: "@vtbag/turn-signal simplifies directional view transitions for intuitive history traversal navigation."
 head:
   - tag: meta
     attrs:
       property: "og:image"
       content: "/signal-og.png"
 ---
+
 import { Steps } from "@astrojs/starlight/components";
 import Logo from "../../../components/Logo.astro";
 import CTA from "../../../components/CTA.astro";
-import signal from "../../../assets/signal.png"
+import signal from "../../../assets/signal.png";
 
 <Logo alt="The Turn-Signal" image={signal}>
 Backward/forward view transitions for intuitive history navigation.
 
-The Turn-Signal is a lightweight script for purely progressive enhancement of cross-document view transitions.  It detects the direction of browser navigation and signal it with view transition types or html attributes to guide directional styling. This enables developers to create smooth, responsive transitions that adjust based on forward or backward navigation, delivering a more intuitive user experience.
+The Turn-Signal package is a set of scripts for enhancement of cross-document view transitions. They automatically detect direction of navigation or let you set view transition types. The current tricks are
+
+- the _directions_ script that derives directions from the history or a known set of pages
+- the _link-type_ script, that let's you define view-transition-types on a per link basis
+- the _forced-traversal_ script that jumps back in browser history when you reach a page that's on your current browser history
 
 </Logo>
 
-<CTA>[Move ← & →](/signal-demo/bag/)</CTA>
+<CTA>[View the Demos](#demos)</CTA>
 
 ## PREREQUISITE
 
-:::danger[Dependency on Browser APIs]
-The Turn-Signal is designed for use with cross-document view transitions. It also depends on the Navigation API and made the assumption that all browsers that support level 2 of the View Transition API also support the Navigation API, which is actually not true for current versions of Safari. [Test](/basics/test-page/) your browser.
-
-Thus Safari support is still under continuous improvement. Please open an issue at [github](https://github.com/vtbag/turn-signal/issues) if you face problems.
+:::info
+The Turn-Signal scripts are designed for use with cross-document view transitions. With the exception of the _forced_traversal_ script, all scripts will even work with none or only small limitations on browsers that do not support the Navigation API. Looking at you, Safari.
 :::
 
 ## Demos
 
 import { Card } from "@astrojs/starlight/components";
+import { CardGrid } from "@astrojs/starlight/components";
 
-  <Card title="Turn-Signal Demo">
-<span class="light:sl-hidden">![Animation details](@/pages/demo-explainer/_TurnSignalDemo-dark.png)</span>
-<span class="dark:sl-hidden">![Animation details](@/pages/demo-explainer/_TurnSignalDemo-light.png)</span>
+<CardGrid>
+<Card title="Turn-Signal Demo">
+<span class="light:sl-hidden">![Turn Signal Demo](@/pages/demo-explainer/_TurnSignalDemo-dark.png)</span>
+<span class="dark:sl-hidden">![Turn Signal Demo](@/pages/demo-explainer/_TurnSignalDemo-light.png)</span>
+Try the [Turn-Signal Demo](/signal-demo/bag/) to see the _directions script_ in action. Click on the icons to navigate the pages. Then use your browser's back button to return.
 
-Check out the [Turn-Signal Demo](/signal-demo/bag/) to see the Turn-Signal in action. Click the link to move to the next page, then use your browser's back button to return. Notice how the slide animation changes direction based on your navigation.
-  </Card>
+Notice how the slide animation changes direction based on the order of the pages.
 
-Want to control the type of animations with your links? Here are a [fancy fishpond demo](/link-demo/) and a more down to earth [image viewer demo](/viewer-demo/). Both demonstrate the use of the [link-types](#link-types) script!
+</Card>
+<Card title="Image Viewer Demo">
+<span>![Image Viewer Demo](@/assets/viewer-demo.png)</span>
+The [Image Viewer Demo](/viewer-demo/) showcases various animations for the same page: sliding  from  right or left, resizing, and changing its aspect ratio.
 
+Thanks to the _link-types_ script, you can control which animation to use by adding annotations to the links that navigate to the page.
+
+</Card>
+
+<Card title="Fish Pond Demo">
+<span>![Fishpond Demo](@/assets/pond.png)</span>
+
+Looking for a more dramatic example of how to control view transition types with your links?
+
+Check out the [Fishpond Demo](/link-demo/)! Glide smoothly into the water or take a bold dive.
+
+Explore the pond to learn more about how the demo was implemented.
+
+</Card>
+
+<Card title="Forced Traversal">
+<span>![forced navigatiom](@/assets/ft.png)</span>
+
+To see the _forced traversal_ script in action alongside the _directions script_, head over to the [Vtbot Demo](https://events-3bg.pages.dev/signal-demo/forcedTraversal/blog/)! No matter how many times you click the tabs in the header, your browser history will always have just three or less entries.
+
+You can skip the Astro-specific details on the demo page. Script details are explained [below](#forced-transition)
+
+</Card>
+
+</CardGrid>
 
 ## Installation
+
 :::tip
 If you want to use the TurnSignal with an Astro project, see [astro-vtbot](https://events-3bg.pages.dev/library/TurnSignal/) for reusable components you can easily use in your project.
 :::
 
-To use the Turn-Signal, you can install the npm package in your project. Alternatively you can load the script from one of the global content delivery networks that provide npm packages.
+The scripts provided by the turn-signal package run entirely in the browser during navigation. Since they hook into events triggered early in the page load process, they must be included as classic[^1] JavaScript `<script>` elements within the `<head>` of any HTML page you want to enhance with these effects.
+
+[^1]: In other words, module scripts can't be used because their deferred loading would make them too late to capture the early events.
+
+All scripts are used the same way:
 
 <Steps>
 1. Install `@vtbag/turn-signal` from npm.
-2. In your project, add `@vtbag/turn-signal/index.js` as an external script at the beginning of the `<head>` element on all pages of your site.
+2. In your project, add scripts from the package to the `<head>` element on all pages of your site.
 </Steps>
 
 Details depend on your project setup and the frameworks used, but with a bundler like `vite` it can be as simple as:
 
 ```jsx
-import signal from "@vtbag/turn-signal?url";
+import signal from "@vtbag/turn-signal/directions?url";
 <html>
   <head>
     <script src={signal} />
     ...
   </head>
   ...
-</html>
+</html>;
 ```
+
+The scripts offered by the turn-signal package are:
+|Script|Module Specifier|Package Path
+|---|---|---|
+|directions|@vtbag/turn-signal/directions|lib/directions.js|
+|link types|@vtbag/turn-signal/link-types|lib/link-types.js|
+|forced traversal|@vtbag/turn-signal/forced-traversal|lib/forced-traversal.js|
+|directions + link types|@vtbag/turn-signal|lib/index.js|
+|same as above with debug output|@vtbag/turn-signal/debug|lib/debug.js|
+
+## How to Configure the Scripts
+
+The scripts can be configured or guided by attributes on the script element itself or anchor elements in case of the _link types_ script.
+
+### Directions Script
+
+The `@vtbag/turn-signal/directions` script accepts several config options. Those are specified as `data-*` attributes on the `<script>` element. They are all optional.
+
+If used without any explicit parameters, the Turn-Signal
+
+- sets the `backward` view transition type if it detects backwards history traversals.
+- For navigation to the current page, it sets a view transition type called `same`.
+- For all other navigation, the `forward` type is set.
+- On the old page, the `old` type is added, and on the new page the `new` type is added.
+
+If you want to tell the script about the order of the pages on your site, use the `data-selector` attribute to select links to all pages using CSS selectors. This site uses
+
+```html
+<script ... data-selector="header a, nav.sidebar li a"></script>
+```
+
+Here the first CSS selector selects the home page and the second all pages from the global site navigation. This selector will fit for all Starlight sites.
+
+| Config option            | Type                                                      | Effect                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| ------------------------ | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| data-selector            | a CSS selector                                            | <p>If your site has a concept of _previous_ and _next_ page, use this to tell the Turn-Signal about your pages and their order. One selector _to find them all_.</p><p>The selector should return one element per page of your site, and each element must have an href attribute. Typically, you would select `<a>` elements from your navigation bar, such as `data-selector="nav a"`.</p><p>If your site doesn't already have a suitable structure, consider generating a list of pages in a non-intrusive way. For example, you could use `<a>` elements inside a `<template>` element or `<link>` elements with a custom `rel` attribute.</p><p> The sequence of selected URLs is used to derive the navigation direction. Navigation to a page that comes later in the sequence of selected URLs will be a _forward_ navigation. Navigation to a page that comes earlier in the sequence of selected URLs will be a _backward_ navigation.</p> |
+| data-direction-types     | backward-value, same-value, forward-value                 | <p>The Turn-Signal sets view transition types to convey the derived direction in a form that can easily be used for styling your animations.</p><p>By default, the types are `backward`, `same`, and `forward`, i.e. as if set using `data-direction-types="backward, same, forward"`. </p><p>An alternative would be `data-direction-types="reverse,,"` This would do nothing for same page and forward navigation, but would set the `reverse` type on backward navigation.</p><p>On the old page, the Turn-Signal also sets a type called `old` and on the new page it sets a type called `new`. This behavior can not be customized.</p>                                                                                                                                                                                                                                                                                                         |
+| data-direction-attribute | attribute-name, backward-value, same-value, forward-value | <p>For compatibility with existing code you might want to use attributes rather than view transition types to select different styling for your animations.</p><p>You can specify what attribute to use and what values to set. Here is an example of how to make Turn-Signal directions compatible with the CSS Astro generates for `transition:animate`: `data-direction-attribute="data-astro-transition, back, forward, forward"`.</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+
+<a name="link-types" />
+### Link Types
+
+If you install the `link-types` script, you can annotate every `<a>` element with view transition types!
+
+The script finds anchor elements with a `data-vtbag-link-types` attribute and uses the identifiers to set up view transition types for that navigation. The value can be a space separated list of identifiers. Even better, you can have two or even three of those lists separated by a slash (/). If multiple lists are specified, they are used for backward history navigation and re-visits of the current page
+
+| Pattern | Meaning                                                                                                                |
+| ------- | ---------------------------------------------------------------------------------------------------------------------- |
+| z       | Use `z` for all navigation types                                                                                       |
+| x/z     | Use `x` for backward history traversals, and `z` for all other navigation types                                        |
+| x/y/z   | Use `x` for backward history traversals, `y` for re-visits to the current page, and `z` for all other navigation types |
+
+Like the _directions script_, the _link types_ script also applies the `old` type to the old page and the `new` type to the new page.
 
 ### Forced Traversal
 
-`@vtbag/turn-signal` also defines a second script that can be used with the main functionality or independent of it: It is called `forced-traversal` and replaces forward navigation with history traversals if the target pages has been visited before.
+The `forced-traversal` script replaces forward navigation with history traversals if the target pages has been visited before.
 
-Users may be annoyed when a website messes up their history entries, but there are situations where replacing navigation with traversals has its appeal.  Use at your own discretion.
+Users may be annoyed when a website messes up their history entries, but there are situations where replacing navigation with traversals has its appeal. Use at your own discretion.
 
-The `forced-traversal` feature is not covered by the example above. But the there is another demo on the [astro-vtbot-website](https://events-3bg.page.dev/signal-demo/forcedTraversal/blog/) that demonstrates the replacement.
-
-Use this script in the same way as the main script by inserting it inside the `<head>`.
-```jsx
-import forcedTraversal from "@vtbag/turn-signal/forced-traversal?url"
-...
-  <script src={forceTraversal} />
-</head>
-```
 There are no configuration options and the `forced-traversal` script does not take any parameters.
 
-<a name="link-types"/>
+## How to Use View Transition Types
 
-### Control Animation Type per Link!
+You can use the view transition types set by the scripts in your CSS to select different animations and other CSS properties. For information on the basic mechanisms see the [styling page](/basics/styling/#-with-types).
 
-There is a third script in the turn-signal box!
-Install the `link-types` script and you can annotate every `<a>` element with view transition types!
-Use this script in the same way as the main script by inserting it inside the `<head>`.
-```jsx
-import linkTypes from "@vtbag/turn-signal/link-types?url"
-...
-  <script src={linkTypes} />
-</head>
-```
+### Select Animations
 
-The script finds anchor elements with a `data-vtbag-link-types` attribute and uses the identifiers to set up view transition types for that navigation.  The value can be a space separated list of identifiers. Even better, you can have two of those lists separated by a slash (/). If specified, the second list is used for backward history navigation.
-
-You can use the types in your CSS to select different animations and other CSS properties:
-
+This example shows how to use a cross-fade effect by default and to replace that with a sliding animation iff a view transition type called `shift-right` is set.
 ```css
+::view-transition-old(main) {
+  animation: 200ms both fade-out;
+}
+::view-transition-new(main) {
+  animation: 200ms both fade-in;
+}
 :active-view-transition-type(shift-right) {
   &::view-transition-old(main) {
     animation: 200ms both slide-out-to-left;
@@ -113,72 +190,61 @@ You can use the types in your CSS to select different animations and other CSS p
   }
 }
 ```
+
 That way you can have different animations for the same page depending on the specific user action.
-
-## Configuration and Usage
-
-The `@vtbag/turn-signal` main script accepts several config options. Those are specified as `data-*` attributes on the `<script>` element. They are all optional.
-
-If used without any explicit parameters, the Turn-Signal
-* sets the `backward` view transition type if it detects backwards history traversals.
-* For navigation to the current page, it sets a view transition type called `same`.
-* For all other navigation, the `forward` type is set.
-
-If you want to tell the script about the order of the pages on your site, use the `data-selector` attribute to select links to all pages using CSS selectors. This site uses
-```html
-<script ... data-selector="header a, nav.sidebar li a"></script>
-```
-Here the first CSS selector selects the home page and the second all pages from the global site navigation. This selector will fit for all Starlight sites.
-
-For a detailed description of `data-selector` and on how to instruct Turn-Style to set different types or even set attributes on the root element, see the [config options](/tools/turn-signal/#config-options) below.
-
-Let's see how you can use these view transition types to style different animations dependent on the direction of the navigation or even switch transition groups on and off.
-
 
 ### CSS for Reverse Animation
 
 Chances are more often then not that you can not simply revert the direction of your animation for the `backward` effect. Assume you have `slideOutToLeft` for the old image and `slideInFromRight` for the new image.
 
 ```css title="Example for forward animations"
-  ::view-transition-old(main) {
-    animation-name: slideOutToLeft;
-  }
-  ::view-transition-new(main) {
-    animation-name: slideInFromRight;
-  }
+::view-transition-old(main) {
+  animation-name: slideOutToLeft;
+}
+::view-transition-new(main) {
+  animation-name: slideInFromRight;
+}
 
-  @keyframes slideOutToLeft {
-    to {
-      transform: translateX(-100%);
-    }
+@keyframes slideOutToLeft {
+  to {
+    transform: translateX(-100%);
   }
-  @keyframes slideInFromRight {
-    from {
-      transform: translateX(100%);
-    }
+}
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
   }
+}
 ```
+
 Just changing the direction of the animations would lead to something best named `slideInFromLeft` for the old image and `slideOutToRight` for the new image. While the animations are about right, just setting `animation-direction: reverse` would apply them to the wrong images. You do not want to slide in the old image or slide out the new image. So better you swap the keyframes, too &hellip;
 
 ```css title="Example for fitting backward animations"
-  :active-view-transition-type(backward) {
-    &::view-transition-old(main) {
-      animation-name: slideInFromRight;
-      animation-direction: reverse;
-    }
-    &::view-transition-new(main) {
-      animation-name: slideOutToLeft;
-      animation-direction: reverse;
-    }
+:active-view-transition-type(backward) {
+  &::view-transition-old(main) {
+    animation-name: slideInFromRight;
+    animation-direction: reverse;
   }
+  &::view-transition-new(main) {
+    animation-name: slideOutToLeft;
+    animation-direction: reverse;
+  }
+}
 ```
+
 &hellip; or even explicitly define keyframes for `slideOutToRight` and `slideInFromLeft` if you feel that is clearer.
 
 &hellip; and you can also define different animations for `:active-view-transition-type(same)`, i.e. for links to the current page, e.g. in a navigation bar by using the same pattern.
 
 ### Switching Transition Names
 
-Transition types and direction attributes are determined on the old page and the new page of the cross-document view transition. Even though CSS for animating cross-document view transitions is [always taken from the new page](/tips/css/#animations), there is an important use case for directions on the old page: You can exclude elements from view transitions depending on the direction. With directions on the old page you can not only exclude new images but also old images!
+The scripts set transition types and direction attributes on the old page and the new page of the cross-document view transition. Even though CSS for animating cross-document view transitions is [always taken from the new page](/tips/css/#animations), there is an important use case for directions on the old page: You can exclude elements from view transitions depending on the direction.
+
+:::note[Limitations on Safari]
+The current versions of Safari support cross-document view transitions, but they do not support the Navigation API and consequently will not set the index properties in the `activation` object of th `pageswap` event. As a consequence, the turn-signal scripts can not determine types on the old page during history traversals (forward/backward navigation using browser buttons) and only set the `old` type on Safari. On the new page, types are set the same way as for all other browsers.
+:::
+
+With directions on the old page you can not only exclude new images but also old images!
 
 ```css title="How to switch off a view transition group based on direction"
 main {
@@ -190,20 +256,11 @@ main {
 }
 ```
 
-The Turn-Signal also always sets view transition type `old` on the old page and `new` on the new page. So you can be even more specific:
+The scripts also always sets view transition type `old` on the old page and `new` on the new page. So you can be even more specific:
 
-```css title="How to switch off the old image, only"
-:active-view-transition-type(same):active-view-transition-type(old) main {
+```css title="How to switch off the new image, only"
+:active-view-transition-type(same):active-view-transition-type(new) main {
   view-transition-name: none; /* but only a new image for links to the same page */
 }
 ```
-
-
-### Config Options
-|Config option|Type|Effect|
-|--|--|--|
-|data-selector|a CSS selector|<p>If your site has a concept of _previous_ and _next_ page, use this to tell the Turn-Signal about your pages and their order. One selector _to find them all_.</p><p>The selector should return one element per page of your site, and each element must have an href attribute. Typically, you would select `<a>` elements from your navigation bar, such as `data-selector="nav a"`.</p><p>If your site doesn't already have a suitable structure, consider generating a list of pages in a non-intrusive way. For example, you could use `<a>` elements inside a `<template>` element or `<link>` elements with a custom `rel` attribute.</p><p> The sequence of selected URLs is used to derive the navigation direction. Navigation to a page that comes later in the sequence of selected URLs will be a _forward_ navigation. Navigation to a page that comes earlier in the sequence of selected URLs will be a _backward_ navigation.</p>|
-|data-direction-types|backward-value, same-value, forward-value|<p>The Turn-Signal sets view transition types to convey the derived direction in a form that can easily be used for styling your animations.</p><p>By default, the types are `backward`, `same`, and `forward`, i.e. as if set using `data-direction-types="backward, same, forward"`. </p><p>An alternative would be `data-direction-types="reverse,,"` This would do nothing for same page and forward navigation, but would set the `reverse` type on backward navigation.</p><p>On the old page, the Turn-Signal also sets a type called `old` and on the new page it sets a type called `new`. This behavior can not be customized.</p>
-|data-direction-attribute|attribute-name, backward-value, same-value, forward-value|<p>For compatibility with existing code you might want to use attributes rather than view transition types to select different styling for your animations.</p><p>You can specify what attribute to use and what values to set. Here is an example of how to make Turn-Signal directions compatible with the CSS Astro generates for `transition:animate`: `data-direction-attribute="data-astro-transition, back, forward, forward"`.</p>
-
 

@@ -144,6 +144,8 @@ function sidebar() {
       { label: "Preserved State", link: "/crossing/vanilla/1/" },
       { label: "Preserved State (exp.)", link: "/crossing/over-the-top/1/" },
       { label: "Turn Signal Directions", link: "/signal-demo/bag/" },
+      { label: "Image Viewer Demo", link: "/viewer-demo/" },
+      { label: "Fishpond Demo", link: "/link-demo/" },
       { label: "Pseudo-Smooth-Scrolling", link: "/shaft-demo/1/" },
       { label: "Instant scrolling with Cam-Shaft", link: "/shaft-demo2/1/" },
       { label: "Can't confine List Elements", link: "/basics/hide-and-seek/problem/" },

@@ -7,21 +7,18 @@ import i3 from "./_400_3.webp";
 
 <Layout title="[3/3] Image Viewer Demo">
   <main>
-    <h1>Image 3</h1>
-    <a href="/viewer-demo/2/" data-vtbag-link-types="prev/next">Prev</a>
-    <a href="/viewer-demo/">All</a>
-    <a href="/viewer-demo/1/" data-vtbag-link-types="next/prev">Next</a>
-    <Image
-      src={i3}
-      alt="Image 3"
-      width="300"
-      height="400"
-    />
-    <div style="max-width: 600px; margin-inline:auto"><Content/></div>
+    <h1>Image 3</h1><a href="/viewer-demo/">Back</a><br/>
+    <a href="/viewer-demo/2/" data-vtbag-link-types="next/prev">Prev</a>
+    <a href="." data-vtbag-link-types="same">Same</a>
+    <a href="/viewer-demo/1/" data-vtbag-link-types="prev/next">Next</a>
+    <a href="." data-vtbag-link-types="same">
+      <Image src={i3} alt="Image 3" width="300" height="400" /></a
+    >
+    <div style="max-width: 600px; margin-inline:auto"><Content /></div>
   </main>
 </Layout>
 <style is:global>
-  main > img {
+  main  img {
     view-transition-name: img3;
   }
 </style>

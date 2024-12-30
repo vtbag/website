@@ -16,8 +16,8 @@ const here = parseInt(Astro.url.pathname.replace(/\/$/,"").split("/").pop() ?? "
     <Navigation here={here} />
     <Panel>
       <h1><WaveText text="Inside the Fishpond"/></h1>
-      <p>A second value after the slash? That's for backward navigation.</p>
-      <p>(6/9)</p>
+      <p>Use a/b/c for backward / same / forward navigation</p>
+      <p>(6/9) Swim west &hellip;</p>
     </Panel>
   </main>
 </Layout>

@@ -31,6 +31,10 @@ const { title } = Astro.props;
   html {
     font-family: sans-serif;
   }
+  h1 {
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
   code {
     font-family: monospace;
   }
@@ -68,12 +72,20 @@ const { title } = Astro.props;
       animation: slide-in-left 0.5s ease-out;
     }
   }
+  :active-view-transition-type(same)::view-transition-image-pair(.img) {
+      animation: blink 0.5s ease-out;
+  }
   :active-view-transition-type(prev) {
     &::view-transition-old(.img) {
       animation: slide-out-right 0.5s ease-out;
     }
     &::view-transition-new(.img) {
       animation: slide-in-right 0.5s ease-out;
+    }
+  }
+  @keyframes blink {
+    50% {
+      transform: scale(0.8);
     }
   }
   @keyframes slide-out-left {
