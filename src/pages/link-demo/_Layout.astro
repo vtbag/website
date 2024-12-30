@@ -11,22 +11,41 @@ interface Props {
 const { title } = Astro.props;
 ---
 
-<BaseLayout {title} description="Tech demo on how to control your view transition types with data-attributes on your links when doing browser-native cross-document view transitions!" image="/fishpond-og.png">
-    <script slot="head" is:inline set:html={linkTypes}></script>
-    <script slot="head" is:inline src={vtn}
-      data-spec=".nav-btn: nav-btn-; .transition-link: transition-link-; .transition-link .content: transition-link-content-"></script>
-      <script slot="head" is:inline type="speculationrules">
+<BaseLayout
+  {title}
+  description="Tech demo on how to control your view transition types with data-attributes on your links when doing browser-native cross-document view transitions!"
+  image="/fishpond-og.png"
+>
+  <script slot="head" is:inline set:html={linkTypes} />
+  <script
+    slot="head"
+    is:inline
+    src={vtn}
+    data-spec=".nav-btn: nav-btn-; .transition-link: transition-link-; .transition-link .content: transition-link-content-"
+  ></script>
+  <script slot="head" is:inline type="speculationrules">
+    {
+      "prerender": [
         {
-          "prerender": [
-            {
-              "urls": ["/link-demo/", "/link-demo/0/", "/link-demo/1/", "/link-demo/2/","/link-demo/3/", "/link-demo/4/", "/link-demo/5/","/link-demo/6/", "/link-demo/7/", "/link-demo/8/"]
-            }
+          "urls": [
+            "/link-demo/",
+            "/link-demo/0/",
+            "/link-demo/1/",
+            "/link-demo/2/",
+            "/link-demo/3/",
+            "/link-demo/4/",
+            "/link-demo/5/",
+            "/link-demo/6/",
+            "/link-demo/7/",
+            "/link-demo/8/"
           ]
         }
-      </script>
+      ]
+    }
+  </script>
 
-    <slot />
-  </BaseLayout>
+  <slot />
+</BaseLayout>
 
 <style is:global>
   * {

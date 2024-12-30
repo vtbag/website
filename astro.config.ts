@@ -16,7 +16,7 @@ import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 // https://astro.build/config
 export default defineConfig({
   image: { remotePatterns: [{ protocol: "https" }] },
-  devToolbar: { enabled: true },
+  devToolbar: { enabled: false },
   site: 'https://vtbag.dev',
   compressHTML: false,
   redirects: {

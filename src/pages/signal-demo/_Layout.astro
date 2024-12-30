@@ -46,7 +46,7 @@ const images = [bag, chamber, crossing, signal, shaft];
     <header style="display:flex">
       <div style="width: 30vw"><h2>Turn-Signal Demo</h2></div>
       <div
-        style="width: calc(100% - 100px); display:flex; overflow: auto; align-items:center"
+        style="view-transition-name: signal; width: calc(100% - 100px); display:flex; overflow: auto; align-items:center"
       >
         {
           pages.map((page, idx) => (
@@ -81,120 +81,121 @@ const images = [bag, chamber, crossing, signal, shaft];
       </p><Bsky /><hr />
       <slot />
     </main>
-  </body><style is:global>
-    @view-transition {
-      navigation: auto;
-    }
-    @keyframes slideFromRight {
-      from {
-        transform: translateX(100vw);
+    <style is:global>
+      @view-transition {
+        navigation: auto;
       }
-    }
-    @keyframes slideFromLeft {
-      from {
-        transform: translateX(-100vw);
+      @keyframes slideFromRight {
+        from {
+          transform: translateX(100vw);
+        }
       }
-    }
-    @keyframes slideToRight {
-      to {
-        transform: translateX(100vw);
+      @keyframes slideFromLeft {
+        from {
+          transform: translateX(-100vw);
+        }
       }
-    }
-    @keyframes slideToLeft {
-      to {
-        transform: translateX(-100vw);
+      @keyframes slideToRight {
+        to {
+          transform: translateX(100vw);
+        }
       }
-    }
-    @keyframes stepBackUp {
-      50% {
-        transform: scale(0.8);
+      @keyframes slideToLeft {
+        to {
+          transform: translateX(-100vw);
+        }
       }
-    }
+      @keyframes stepBackUp {
+        50% {
+          transform: scale(0.8);
+        }
+      }
 
-    ::view-transition-old(img) {
-      animation: slideToLeft both 0.5s;
-    }
-    ::view-transition-new(img) {
-      animation: slideFromRight both 0.5s;
-    }
-
-    :active-view-transition-type(backward) {
-      &::view-transition-old(img) {
-        animation: slideToRight both 0.5s;
+      ::view-transition-old(img) {
+        animation: slideToLeft both 0.5s;
       }
-      &::view-transition-new(img) {
-        animation: slideFromLeft both 0.5s;
+      ::view-transition-new(img) {
+        animation: slideFromRight both 0.5s;
       }
-    }
 
-    :active-view-transition-type(same) {
-      &::view-transition-old(img),
-      &::view-transition-new(img) {
-        animation: stepBackUp both 0.5s;
+      :active-view-transition-type(backward) {
+        &::view-transition-old(img) {
+          animation: slideToRight both 0.5s;
+        }
+        &::view-transition-new(img) {
+          animation: slideFromLeft both 0.5s;
+        }
       }
-    }
 
-    ::view-transition-group(img) {
-      overflow: clip;
-    }
+      :active-view-transition-type(same) {
+        &::view-transition-old(img),
+        &::view-transition-new(img) {
+          animation: stepBackUp both 0.5s;
+        }
+      }
 
-    body {
-      font-family: sans-serif;
-    }
-    header img {
-      mask-image: radial-gradient(
-        ellipse at center,
-        white 35%,
-        transparent 71%
-      );
-    }
+      ::view-transition-group(img) {
+        overflow: clip;
+      }
 
-    a.selected {
-      background: radial-gradient(
-        circle at center,
-        #0008 50%,
-        #fff8 55%,
-        #0008 60%,
-        #0000 66%
-      );
-    }
-    [data-theme="dark"] a.selected {
-      background: radial-gradient(
-        circle at center,
-        #fff8 50%,
-        #0008 55%,
-        #fff8 60%,
-        #0000 66%
-      );
-    }
+      body {
+        font-family: sans-serif;
+      }
+      header img {
+        mask-image: radial-gradient(
+          ellipse at center,
+          white 35%,
+          transparent 71%
+        );
+      }
 
-    main {
-      width: fit-content;
-      margin: 0 auto;
-    }
-    main img {
-      height: 66vh;
-      width: auto;
-      view-transition-name: img;
-    }
-    @media (orientation: portrait) {
+      a.selected {
+        background: radial-gradient(
+          circle at center,
+          #0008 50%,
+          #fff8 55%,
+          #0008 60%,
+          #0000 66%
+        );
+      }
+      [data-theme="dark"] a.selected {
+        background: radial-gradient(
+          circle at center,
+          #fff8 50%,
+          #0008 55%,
+          #fff8 60%,
+          #0000 66%
+        );
+      }
+
+      main {
+        width: fit-content;
+        margin: 0 auto;
+      }
       main img {
-        width: 100%;
-        height: auto;
-        margin-top: 10vh;
+        height: 66vh;
+        width: auto;
+        view-transition-name: img;
       }
-    }
-    #back {
-      display: inline-block;
-      color: black;
-      border-radius: 8px;
-      padding: 1rem;
-      margin: 1rem;
-      background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
-      box-shadow: 0 4px 6px #8888;
-    }
-    hr {
-      border-color: #8888;
-    }
-  </style>
+      @media (orientation: portrait) {
+        main img {
+          width: 100%;
+          height: auto;
+          margin-top: 10vh;
+        }
+      }
+      #back {
+        display: inline-block;
+        color: black;
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 1rem;
+        background: linear-gradient(45deg, #ff6b6b, #f06595, #cc5de8);
+        box-shadow: 0 4px 6px #8888;
+      }
+      hr {
+        border-color: #8888;
+      }
+    </style>
+  </body>
 </html>

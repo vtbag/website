@@ -13,6 +13,21 @@ import Logo from "../../../components/Logo.astro";
 import CTA from "../../../components/CTA.astro";
 import signal from "../../../assets/signal.png";
 
+<style>{`
+:active-view-transition-type(old) #signal {
+  view-transition-name: signal;
+}
+:active-view-transition-type(old) #viewer {
+  view-transition-name: viewer;
+}
+:active-view-transition-type(old) #fishpond {
+  view-transition-name: panel;
+}
+:active-view-transition-type(old) #forced {
+  view-transition-name: forced;
+}
+`}</style>
+
 <Logo alt="The Turn-Signal" image={signal}>
 Backward/forward view transitions for intuitive history navigation.
 
@@ -39,15 +54,17 @@ import { CardGrid } from "@astrojs/starlight/components";
 
 <CardGrid>
 <Card title="Turn-Signal Demo">
-<span class="light:sl-hidden">![Turn Signal Demo](@/pages/demo-explainer/_TurnSignalDemo-dark.png)</span>
-<span class="dark:sl-hidden">![Turn Signal Demo](@/pages/demo-explainer/_TurnSignalDemo-light.png)</span>
+<div id="signal">[<span class="light:sl-hidden">![Turn Signal Demo](@/pages/demo-explainer/_TurnSignalDemo-dark.png)</span><span class="dark:sl-hidden">![Turn Signal Demo](@/pages/demo-explainer/_TurnSignalDemo-light.png)</span>](/signal-demo/bag/)</div>
 Try the [Turn-Signal Demo](/signal-demo/bag/) to see the _directions script_ in action. Click on the icons to navigate the pages. Then use your browser's back button to return.
 
 Notice how the slide animation changes direction based on the order of the pages.
 
 </Card>
+
 <Card title="Image Viewer Demo">
-<span>![Image Viewer Demo](@/assets/viewer-demo.png)</span>
+
+<div id="viewer">[![Image Viewer Demo](@/assets/viewer-demo.png)](/viewer-demo/)</div>
+
 The [Image Viewer Demo](/viewer-demo/) showcases various animations for the same page: sliding  from  right or left, resizing, and changing its aspect ratio.
 
 Thanks to the _link-types_ script, you can control which animation to use by adding annotations to the links that navigate to the page.
@@ -55,7 +72,7 @@ Thanks to the _link-types_ script, you can control which animation to use by add
 </Card>
 
 <Card title="Fish Pond Demo">
-<span>![Fishpond Demo](@/assets/pond.png)</span>
+<div id="fishpond">[![Fishpond Demo](@/assets/pond.png)](/link-demo/)</div>
 
 Looking for a more dramatic example of how to control view transition types with your links?
 
@@ -66,11 +83,12 @@ Explore the pond to learn more about how the demo was implemented.
 </Card>
 
 <Card title="Forced Traversal">
-<span>![forced navigatiom](@/assets/ft.png)</span>
+
+<div id="forced">[![forced navigatiom](@/assets/ft.png)](https://events-3bg.pages.dev/signal-demo/forcedTraversal/blog/)</div>
 
 To see the _forced traversal_ script in action alongside the _directions script_, head over to the [Vtbot Demo](https://events-3bg.pages.dev/signal-demo/forcedTraversal/blog/)! No matter how many times you click the tabs in the header, your browser history will always have just three or less entries.
 
-You can skip the Astro-specific details on the demo page. Script details are explained [below](#forced-transition)
+You can skip the Astro-specific details on the demo page. Script details are explained [below](#forced-traversal)
 
 </Card>
 
@@ -162,6 +180,10 @@ Like the _directions script_, the _link types_ script also applies the `old` typ
 ### Forced Traversal
 
 The `forced-traversal` script replaces forward navigation with history traversals if the target pages has been visited before.
+
+:::note
+This script only works on browser that [support the Navigation API](https://caniuse.com/mdn-api_navigation ).
+:::
 
 Users may be annoyed when a website messes up their history entries, but there are situations where replacing navigation with traversals has its appeal. Use at your own discretion.
 
