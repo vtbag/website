@@ -15,7 +15,7 @@
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.2",
     "@vtbag/cam-shaft": "^1.0.3",
-    "@vtbag/element-crossing": "^1.0.3",
+    "@vtbag/element-crossing": "^1.1.0-RC1",
     "@vtbag/inspection-chamber": "^1.0.18",
     "@vtbag/turn-signal": "^1.2.2",
     "@vtbag/utensil-drawer": "^0.0.3",
