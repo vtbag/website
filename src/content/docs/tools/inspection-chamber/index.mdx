@@ -24,11 +24,11 @@ You can thoroughly examine each transition: play it in slow motion, examine timi
 
 ## PREREQUISITE
 
-:::danger[Dependency on View Transition API]
-The Inspection Chamber requires a current **Chrome browser version 126 or higher**, and on some versions you must also manually activate **chrome://flags/#view-transition-on-navigation-iframe**  .
+:::note[Dependency on View Transition API]
+Inspection Chamber requires a current browser with native support for the View Transition API.[^1]
 :::
+[^1]: For some older versions of Chrome it might be necessary to manually activate chrome://flags/#view-transition-on-navigation-iframe.
 
-The Inspection Chamber currently only works with **Chromium browser (Chrome, Edge, \hellip;), starting from version 126**. Additionally, you **might need to enable the _"viewTransition API for sub-frame navigations"_ feature**, because the Chamber will only work if cross-document view transitions are also supported inside iframes. If you have to enable this feature manually, enter `chrome://flags/#view-transition-on-navigation-iframe` into the browser's address bar and select `Enabled` from the drop-down menu.
 
 
 ## Installation

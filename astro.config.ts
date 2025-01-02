@@ -89,6 +89,9 @@ export default defineConfig({
     skipGeneration: process.env.GITHUB_ACTIONS === "true"
   }), vtbot({ autoLint: false, loadingIndicator: false }), inoxToolsPortalGun()],
   vite: {
+    build: {
+      assetsInlineLimit: 0,
+    },
     server: {
       fs: {
         allow: ['..']
