@@ -16,7 +16,7 @@
     "@types/node": "^22.10.3",
     "@vtbag/cam-shaft": "^1.0.5",
     "@vtbag/element-crossing": "^1.1.0",
-    "@vtbag/inspection-chamber": "^1.0.19",
+    "@vtbag/inspection-chamber": "1.0.19-RC1",
     "@vtbag/turn-signal": "^1.2.2",
     "@vtbag/utensil-drawer": "^0.0.3",
     "astro": "^5.1.1",
