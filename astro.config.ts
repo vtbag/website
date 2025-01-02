@@ -90,7 +90,7 @@ export default defineConfig({
   }), vtbot({ autoLint: false, loadingIndicator: false }), inoxToolsPortalGun()],
   vite: {
     build: {
-      assetsInlineLimit: 0,
+      assetsInlineLimit: 4096,
     },
     server: {
       fs: {
