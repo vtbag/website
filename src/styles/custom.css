@@ -328,3 +328,17 @@ details[open]::details-content{
 #starlight__sidebar {
   scrollbar-gutter: stable;
 }
+
+a[aria-current="page"] {
+  view-transition-name: current-page;
+}
+
+::view-transition-image-pair(current-page) {
+  animation: 250ms ease-in-out both current-page;
+}
+
+@keyframes current-page {
+  50% {
+    transform: translateX(-30%);
+  }
+}

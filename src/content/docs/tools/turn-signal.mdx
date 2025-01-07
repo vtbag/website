@@ -272,7 +272,7 @@ Just changing the direction of the animations would lead to something best named
 The scripts set transition types and direction attributes on the old page and the new page of the cross-document view transition. Even though CSS for animating cross-document view transitions is [always taken from the new page](/tips/css/#animations), there is an important use case for directions on the old page: You can exclude elements from view transitions depending on the direction.
 
 :::note[Limitations on Safari]
-The current versions of Safari support cross-document view transitions, but they do not support the Navigation API and consequently will not set the index properties in the `activation` object of th `pageswap` event. As a consequence, the turn-signal scripts can not determine types on the old page during history traversals (forward/backward navigation using browser buttons) and only set the `old` type on Safari. On the new page, types are set the same way as for all other browsers.
+The current versions of Safari support cross-document view transitions, but they do not support the Navigation API and consequently will not set the index properties in the `activation` object of the `pageswap` event. As a consequence, the turn-signal scripts can not determine types on the old page during history traversals (forward/backward navigation using browser buttons) and only set the `old` type on Safari. On the new page, types are set the same way as for all other browsers.
 :::
 
 With directions on the old page you can not only exclude new images but also old images!
