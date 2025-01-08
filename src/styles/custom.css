@@ -312,13 +312,17 @@ details {
   overflow: clip;
 }
 details::details-content {
-  transition: transform 0.2s, opacity 0.2s, block-size 0.2s, content-visibility .2s allow-discrete;
+  transition:
+    transform 0.2s,
+    opacity 0.2s,
+    block-size 0.2s,
+    content-visibility 0.2s allow-discrete;
   transition-timing-function: ease-in;
   block-size: 0;
   opacity: 0;
-  transform: translateX(-30px)
+  transform: translateX(-30px);
 }
-details[open]::details-content{
+details[open]::details-content {
   transition-timing-function: ease-out;
   block-size: auto;
   opacity: 1;
@@ -329,8 +333,29 @@ details[open]::details-content{
   scrollbar-gutter: stable;
 }
 
-a[aria-current="page"] {
+li :has(> a[aria-current="page"]) {
+  display: inline-block;
+}
+li a[aria-current="page"] {
+  background-color: transparent;
+  border-radius: 0;
   view-transition-name: current-page;
+  &:hover {
+    border-radius: 0;
+    background-color: transparent;
+  }
+  border-bottom: 1pt solid var(--sl-color-accent);
+  &:after {
+    content: "🌟";
+    margin-left: 0.5em;
+    position: absolute;
+    view-transition-name: current-page-star;
+  }
+}
+::view-transition-old(current-page),
+::view-transition-new(current-page) {
+  height: auto;
+  width: auto;
 }
 
 ::view-transition-image-pair(current-page) {

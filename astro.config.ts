@@ -128,6 +128,8 @@ function sidebar() {
       { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
       { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" },
       { label: 'Styling View Transitions', link: "/basics/styling/" },
+      { label: 'JavaScript API', link: "/basics/javascript/" },
+
       { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/" }
     ]
   }, {

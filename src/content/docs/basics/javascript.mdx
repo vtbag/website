@@ -1,0 +1,29 @@
+---
+title: View Transition JavaScript API
+description: How to interact with view transitions from JavaScript
+---
+
+Browser-native cross-document view transitions can be implemented entirely in CSS without JavaScript. However, JavaScript becomes essential for advanced functionality, such as
+- starting same-page view transitions with `startViewTransition()`,
+- programmatically modifying CSS properties like `view-transition-name`,
+- setting view transition types,
+- or running code when transitions start or finish.
+
+
+## Same-Document View Transitions
+For a detailed guide on the API and the processing of same-document view transitions, refer to the[vtbot site](https://events-3bg.pages.dev/jotter/api/details/).
+
+## Cross-Document View Transitions
+
+Cross-document view transitions work similarly to same-document ones but are triggered by navigation. Two key events enable JavaScript interaction: `pageswap`, dispatched just before leaving the old page, and pagereveal, dispatched before the new page renders.
+
+Both events include a `viewTransition` property, which holds a `ViewTransition` object if the transition is part of a cross-document view transition. For `pagereveal`, when `viewTransition` is defined, its `updateCallbackDone` promise is immediately settled.
+
+The events allow you to manipulate the DOM or CSS properties right before snapshots are taken or the new page's live images are captured. In particular, they allow for [setting view transition types](/basics/styling/#-with-types) for the current view transition.
+
+In a `pageswap` listener, you can define view transition types by adding them to `event.viewTransition.types`, which are then only applied to the old page. The types can be used to [control via CSS](/tools/turn-signal/#switching-transition-names) what view transition names are defined on the old page. You can also directly modify view transition names in the listener as snapshots for the `::view-transition-old` pseudo elements are not taken taken before this event is dispatched.
+
+Similarly, `pagereveal` listeners allow you to tweak view transition names and types for the new page. Again, live images for the `::view-transition-new` pseudo-elements are being captured after the event.
+
+
+The `pageswap` event also provides a `NavigationActivation` object via its `activation` property, offering details about the current page (`from`) and next page (`entry`). While the `pagereveal` event does not include this property, in browsers supporting the Navigation API, you can use `navigation.activation` to access information about the previous page (`from`) and current page (`entry`).
