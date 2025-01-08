@@ -123,7 +123,7 @@ function sidebar() {
       //      { label: 'Step by Step Tutorial', link: "/basics/step-by-step/" },
       { label: 'View Transition API', link: "/basics/api/" },
       {
-        label: 'View Transition Examples', link: "/basics/examples/", badge: { text: '🢀', variant: 'success' } as Badge,
+        label: 'View Transition Examples', link: "/basics/examples/", badge: { text: '⮨', variant: 'success' } as Badge,
       },
       { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
       { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" },

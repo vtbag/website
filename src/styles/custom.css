@@ -56,6 +56,7 @@ body {
   --sl-color-gray-6-rgb: 255, 240, 224;
   --sl-color-gray-7: #f8f6f5;
   --sl-color-black: #ffffff;
+  --sl-color-hairline-light: #ccc;
   --vtbag-bg-color: var(--sl-color-bg-nav);
   --vtbag-glow: radial-gradient(circle, #c0d0e0 50%, #d8e8f8 100%);
   --vtbag-glow-shadow: 0 0 20px #cccc, 0 0 40px #ca88, 0 0 50px #c966,
@@ -344,9 +345,9 @@ li a[aria-current="page"] {
     border-radius: 0;
     background-color: transparent;
   }
-  border-bottom: 1pt solid var(--sl-color-accent);
+  border-bottom: 1pt solid var(--sl-color-hairline-light);
   &:after {
-    content: "🌟";
+    content: "⭐";
     margin-left: 0.5em;
     position: absolute;
     view-transition-name: current-page-star;
