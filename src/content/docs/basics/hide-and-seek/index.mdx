@@ -122,7 +122,12 @@ mobile-starlight-toc nav {
 
 The first rule targets the header which holds the searchbox. The second line targets the page navigation of the mobile view.
 
-The paint order for old images in the view transition layer mirrors the paint order of their corresponding elements in the DOM. Images exclusive to the new page [are painted after that](/basics/pseudos/#rendering-pseudo-elements). If you need precise control over the stacking order of the pseudo-elements within the view transition layer, you can adjust it using the `z-index` CSS property.
+The paint order for old images in the view transition layer mirrors the paint order of their corresponding elements in the DOM. Images exclusive to the new page [are painted after that](/basics/pseudos/#rendering-pseudo-elements). If you need precise control over the stacking order of the pseudo-elements within the view transition layer, you can adjust it by assigning a `z-index` to the group pseudo-element. This is not needed for our Starlight example, as the header renders after the main area and thus the header's pseudo-element will render above that of the main area. But if you are looking for an example, here it is:
+```css
+::view-transition-group(header) {
+  z-index: 1;
+}
+```
 
 ## Clipping View Transition Images
 
