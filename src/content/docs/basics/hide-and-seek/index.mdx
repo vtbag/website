@@ -191,11 +191,23 @@ Since these pseudo-elements are fully customizable through CSS, you can alter th
 
 ### Nested Transition Group Clipping
 
-As of today, the transition groups form a flat list of children of the `::view-transition` pseudo element. Nested view transition groups are already defined in the [Level 2 spec](/basics/api/#w3c-drafts), but to my knowledge they are [not yet supported](/basics/test-page/) by any browser.
 
-Nested transition groups will introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy.
+<SidePicture  float="right">
+<iframe
+  slot="pic"
+  style="height:250px; width:200px; border: none;  margin-right: 1em"
+  src="/basics/hide-and-seek/list-nested/"
+></iframe>
 
-Until nested view transition groups arrive in the browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
+In the early versions of the View Transition APi, the transition groups form a flat list of children of the `::view-transition` pseudo element. Nested view transition groups are already defined in the [Level 2 spec](/basics/api/#w3c-drafts), but are [not yet widely supported](/basics/test-page/) by browsers.
+
+Nested transition groups introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy. The example to the right is built with nested transition groups. When you press the button, and thi demo behaves the same as the one in the next section, your browser does not support nested transition group, yet.
+
+If your browser supports the nested `view-transition-group` property, at least the early implementations do not clip the view transition pseudo-elements while the tree is being built. This leads to a flash of elements escaping the box in the first frame.
+
+So Until nested view transition groups are widely and well supported by browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
+
+</SidePicture>
 
 ## Taming Images of Clipped Elements
 
