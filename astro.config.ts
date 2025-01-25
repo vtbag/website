@@ -50,9 +50,9 @@ export default defineConfig({
       PageFrame: "./src/components/PageFrame.astro",
       Sidebar: "./src/components/Sidebar.astro"
     },
-// plugins: [
-      //     ion({ overrides: { Head: false } }),
-  //    starlightImageZoom()],
+    // plugins: [
+    //     ion({ overrides: { Head: false } }),
+    //    starlightImageZoom()],
     tableOfContents: {
       minHeadingLevel: 2,
       maxHeadingLevel: 4
@@ -130,10 +130,9 @@ function sidebar() {
     label: 'Basics',
     items: [
       { label: 'Test Your Browser', link: "/basics/test-page/" },
-      //      { label: 'Step by Step Tutorial', link: "/basics/step-by-step/" },
       { label: 'View Transition API', link: "/basics/api/" },
       {
-        label: 'View Transition Examples', link: "/basics/examples/", badge: { text: '⮨', variant: 'success' } as Badge,
+        label: 'View Transition Examples', link: "/basics/examples/",
       },
       { label: 'Names and Pseudo-Elements', link: "/basics/pseudos/" },
       { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" },
@@ -150,7 +149,9 @@ function sidebar() {
       { label: "Avoid Pointer Flickering", link: "/tips/pointer/" },
       { label: "Pseudo-smooth-scrolling?", link: "/tips/pseudo-smooth-scrolling/" },
     ]
-  }, { label: 'Fun with View Transitions', link: "/fwvt/welcome/" }, { label: "BagLog", link: "/baglog" }, {
+  },
+  { label: 'Fun with View Transitions', link: "/fwvt/welcome/", badge: { text: 'New!', variant: 'success' } as Badge},
+  { label: "BagLog", link: "/baglog" }, {
     label: 'All Demos',
     collapsed: true,
     items: [
