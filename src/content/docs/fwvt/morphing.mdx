@@ -1,0 +1,225 @@
+---
+title: Make Your Images Glide Across the Screen
+description: Let's add the morph animations that have made the View Transition API so renowned.
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/fwvt-og.png"
+---
+
+import { Image } from "astro:assets";
+import Media from "@/components/Media.astro";
+import EpisodeNav from "@/components/EpisodeNav.astro";
+import wb from "@/assets/wb.png";
+import "@/styles/fwvt.css";
+
+<EpisodeNav>
+  <a href="/fwvt/enabling/">Episode 1</a>
+  <a href="/fwvt/customizing/">Episode 2</a>
+  <a class="selected" href="/fwvt/morphing/">
+    Episode 3
+  </a>
+</EpisodeNav>
+
+<div id="intro">
+<Media>
+  <Image src={wb} alt="Fun with The Bag of Tricks and View Transitions" />
+  <p slot="caption">Fun with View Transitions</p>
+  </Media>
+  <div>
+Hello and welcome to the third episode of _Fun with View Transitions_, where we navigate through the enchanting world of the View Transition API.
+
+Today, we dive into the captivating animations that have made the View Transition API so famous: group animations a.k.a. morph animations.
+Here's what we'll explore:
+
+
+
+- Transforming a thumbnail into a full-size image
+- Excluding specific elements from animations
+- Assigning view transition names to (nearly) everything
+- Caution when morphing text sections
+
+</div>
+</div>
+
+Here's how we'll refine the example project. From the custom full-viewport animation to a transition with many independent animations. I'm curious! What kind of magic can you conjure up with your own project?
+
+<Media>
+  <span class="not-content light:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/episode3-dark.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <span class="not-content dark:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/episode3-light.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <p slot="caption">
+    A custom, whole viewport view transition with a simple bounce effect
+  </p>
+</Media>
+<Media>
+  <span class="not-content light:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/solved3-dark.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <span class="not-content dark:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/solved3-light.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <p slot="caption">
+    Same navigation going crazy with view transitions everywhere
+  </p>
+</Media>
+
+<style>{`
+  video {
+    width: 340px;
+    display: inline;
+  }
+`}</style>
+
+And here we go!
+
+## Independent Animations!
+
+There can be only one? Nope.
+
+We ended [the last episode](/fwvt/customizing/#what-is-root) with the discovery that there can be more than one view transition group for a cross-document transition. This means a view transition not limited to animating only the viewport. Multiple independent animations can participate in the same transition.
+
+But how do we leverage a specific transition group to add those iconic morph transitions, like the moving whiteboard image shown in the video above?
+
+## Morphing a Thumbnail Into a Larger Image
+Want to experiment with morphing a thumbnail into a full-size image on your own multi-page project? Make sure you have two pages displaying the same image with the same aspect ratio but in different sizes and/or positions. These pages should also include links to navigate between them. Don’t have a suitable setup? No worries. Follow along with the [exercise repository](https://github.com/vtbag/fun-with-view-transitions)!
+
+
+To enable the morph animation for the image, assign the same view transition name to the `<img>` elements on both pages. You can do this directly in the HTML code using a style attribute:
+
+```html
+<img style="view-transition-name: whiteboard" src="..." alt="..." ...
+```
+Alternatively, you can achieve this in CSS:
+```css
+#whiteboard {
+  view-transition-name: whiteboard;
+}
+```
+Of course, the selector might be more complex in your own project. Let's slow things down a bit by adding a duration to the effect in your [global stylesheet](/fwvt/enabling/#including-css-on-all-pages):
+```css
+::view-transition-group(whiteboard) {
+  animation-duration: 1000ms;
+}
+```
+
+**That's it!**  You should now see the image smoothly morph during the view transition, starting at its original size and position on the old page and transitioning seamlessly to its new size and position on the new page. The size and position change gradually throughout the animation.
+
+Feel free to dive deeper into the [mechanics of morph animations](/basics/default-animations/#morphing-animation-details), or simply enjoy the effect for now and keep adding view transition names!
+
+Just make sure the names are unique within the page. A simple rule of thumb is to use letters (`A`-`Z`, `a`-`z`), digits (`0`-`9`), hyphens, and underscores, but avoid starting with a number. Here is a [more precise version](/basics/pseudos/#escaping).
+
+## Exempt Elements From Animations
+
+This might sound contradictory at first, but it’s a clever trick you’ll want to have up your sleeve.
+
+Assign a view transition name to an element that exists on both the old page and the new page, positioned identically and with the same size on each. For example, in the exercise repository, you could use the back link at the top of the page. Let's go ahead and assign a name to the entire `<nav>` element that contains this link.
+
+```css
+nav {
+  view-transition-name: nav;
+}
+```
+
+Now, let's see what happens &hellip; drum rolls &hellip; _Nothing_.
+
+
+You are right. Nothing happens. The old image of the link cross-fades into the identical new image. And it slides from the old position to the identical new position. And it adapts its size to just the same size as before. There are actually three animations running (fade-out, fade-in, morph) but the combined effect is not observable at all.
+
+So, when might this actually be useful?
+
+* You want to exclude an element from the animation. Note that elements that have their own view-transition-name property are removed from other images. A typical examples is when you have a slide animation of the entire viewport and you want the navigation bar to remain static, like in the example above. In this case, the navigation bar is no longer part of the root image. While the viewport slides in, the navigation bar is stays in place from the previous page.
+
+  you may want an animation to slide beneath an element, or in other words, you want that element to stay in the foreground above others. By adding a view transition name, you create both old and new images of the element, raising it into the view transition layer. This is the fundamental mechanism behind various reordering strategies.
+
+* You may want an animation to slide beneath an element, or in other words, you want that element to stay in the foreground above others. By adding a view transition name, you create both old and new images of the element, raising it into the view transition layer. This is the fundamental mechanism behind various [reordering strategies](/basics/hide-and-seek/).
+
+## More Morphing Magic
+Give your navigation a boost! Mark elements on both the old and new pages with the same view transition name to bring even more elements into motion. Look for things like recurring icons, logos, and markers. You might find inspiration in the videos above:
+
+* Have you spotted that fish? Not only does it move from the old position to the new, but it also rotates! Yes, the morph animation doesn't just interpolate between sizes. It considers everything that can be transformed by the `matrix3D` transformation of the `transform` CSS property, including `scale`, `rotate`, and `skew`.
+* The link in the content section moves faster than the content section itself.
+* The arrow in that link moves independently the link text.
+* The `<h1>` heading is the only element that remains within the `root` group
+
+
+I don't know the styling required to enhance your side. But if you'd like to experiment with the exercise repository, here are some transition name definitions:
+```css
+#fish {
+  view-transition-name: fish;
+}
+#content {
+  view-transition-name: content;
+  a {
+    view-transition-name: link;
+  }
+  .arrow {
+  view-transition-name: arrow;
+  }
+}
+```
+and timing setting:
+```css
+::view-transition-group(fish) {
+  animation-duration: 800ms;
+}
+::view-transition-group(content) {
+  animation-duration: 800ms;
+}
+::view-transition-group(arrow) {
+  animation-duration: 1000ms;
+}
+```
+
+## Caveats!
+You can morph anything into everything. The elements don’t need to be the same on the old and new page, or even the same type of HTML tag. You can morph an `<img>` into a `<video>`, or transform a sun icon into a moon icon.
+
+You can even morph the text of a link into a headline &hellip;
+
+**&hellip; oh, wait, hold on!**
+
+Be cautious when morphing text section that have different content or styling. Chances are good that you get [unsatisfiable results](/basics/examples/#strange-text-morph-examples), quickly.
+
+To avoid these issues entirely, we've replaced the morph animation for the transition from "Page One" to "Page Two" with a simple _slide-through_ animation:
+
+```css
+h2 {
+  view-transition-name: subtitle;
+}
+::view-transition-group(subtitle) {
+  overflow: hidden;
+}
+::view-transition-old(subtitle) {
+  animation: turn-out 500ms linear both;
+}
+::view-transition-new(subtitle) {
+  animation: turn-in 500ms 100ms linear both;
+}
+@keyframes turn-out { to { transform: translateX(-100%)}}
+@keyframes turn-in { from { transform: translateX(100%)}}
+```
+
+We'll dive into text morphs in a future episode. I promise!
+
+For now, thank you for joining on this journey through the exciting world of view transitions. I hope you had as much fun experimenting on your own website! Until next time, keep animating, keep experimenting, and most importantly, keep having fun &hellip; with view transitions!
+

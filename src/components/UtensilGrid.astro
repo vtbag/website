@@ -1,0 +1,13 @@
+---
+---
+<div class="card-grid not-content">
+  <slot />
+</div>
+
+<style is:global>
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+</style>

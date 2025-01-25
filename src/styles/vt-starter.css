@@ -11,18 +11,13 @@
 */
 
 /*  Enable cross-document view transitions.
-    This at-rule has to be included on the old page and on the new page */
-@view-transition {
-  navigation: auto;
-}
-
-/* Switch off view transitions for users who prefer reduced motion */
-@media (prefers-reduced-motion) {
+    This at-rule has to be included on the old page and on the new page
+    But not for users who prefer reduced motion */
+@media not (prefers-reduced-motion) {
   @view-transition {
-    navigation: none;
+	  navigation: auto;
   }
 }
-
 /* Change the default duration of 250ms to 500ms */
 ::view-transition-group(*) {
   transition-duration: 500ms;
@@ -36,5 +31,3 @@
 ::view-transition-new(*) {
   animation: none;
 }
-
-/* Force images to same

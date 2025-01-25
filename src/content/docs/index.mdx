@@ -33,6 +33,15 @@ head:
 import Bsky from "../../components/Bsky.astro";
 
 <style>{`
+  :root {
+    --sl-content-width: 80%;
+  }
+  main .hero img {
+    view-transition-name: logo;
+  }
+  aside.right-sidebar-container {
+    display: none;
+  }
   .hero h1 {
     text-align: left;
     font-size: var(--sl-text-h1);

@@ -8,9 +8,10 @@ head:
       content: "/drawer-og.png"
 ---
 import { Steps } from "@astrojs/starlight/components";
-import Logo from "../../../components/Logo.astro";
-import CTA from "../../../components/CTA.astro";
-import drawer from "../../../assets/drawer.png";
+import Logo from "@/components/Logo.astro";
+import drawer from "@/assets/drawer.png";
+import UtensilGrid from "@/components/UtensilGrid.astro"
+import Utensil from "@/components/Utensil.astro"
 
 <Logo alt="The Utensil Drawer" image={drawer}>
 Pull out just the tools you need to craft polished transitions.
@@ -22,7 +23,13 @@ The Utensil Drawer is a collection of functions that might come in handy when pr
 
 ## What is it?
 
+The Drawer holds JavaScript functions that you can use to simplify your view transition code. Most functions are meant to be imported and used in your own code. Some generic functions are also bundled ready for use as scripts on your site.
 
 
-## Installation
+<UtensilGrid>
+<Utensil title="declarative-names" description="Use CSS selectors to assign view transition names to HtmL elements."/>
+</UtensilGrid>
 
+## Declarative Names
+
+The `@vtbag/utensil-drawer/declarative

@@ -1,0 +1,60 @@
+---
+
+export interface Props {
+  title: string;
+  description: string;
+  href: string;
+}
+const { title, description, href } = Astro.props;
+---
+
+<a class="utensil" {href}>
+  <div class="utensil-content">
+    <h2 class="utensil-title">{title}</h2>
+    <p class="utensil-description">{description}</p>
+  </div>
+</a>
+
+<style is:global>
+  :root {
+    --utensil-bg: light-dark(#fff, #333);
+    --utensil-border: light-dark(#ddd, #444);
+    --utensil-shadow: light-dark(
+      rgba(128, 128, 128, 0.5),
+      rgba(128, 128, 128, 0.9)
+    );
+    --utensil-title: light-dark(#000, #fff);
+    --utensil-description: light-dark(#555, #ccc);
+    --utensil-date: light-dark(#777, #bbb);
+  }
+
+  .utensil {
+    background-color: var(--utensil-bg);
+    border: 1px solid var(--utensil-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px var(--utensil-shadow);
+    transition: all 0.15s ease;
+    text-decoration: none;
+    &:hover {
+      box-shadow: 3px 4px 8px var(--utensil-shadow);
+      transform: translate(-4px,-4px);
+    }
+  }
+
+
+  .utensil-content {
+    padding: 16px;
+  }
+
+  .utensil-title {
+    margin: 0;
+    font-size: 1.5em;
+    color: var(--utensil-title);
+  }
+
+  .utensil-description {
+    margin: 8px 0 0;
+    color: var(--utensil-description);
+  }
+</style>

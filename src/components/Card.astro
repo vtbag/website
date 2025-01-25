@@ -1,0 +1,85 @@
+---
+export interface Props {
+  number: number;
+  title: string;
+  description: string;
+  icon?: any;
+  from: string;
+  href: string;
+}
+const { title, description, icon, number = 1, from, href } = Astro.props;
+---
+
+<a class="card" {href}>
+  <div class="card-content">
+    <span class="card-number">{number}</span>
+    <p class="card-date">Episode from {from}</p>
+    <h2 class="card-title">{icon} {title}</h2>
+    <p class="card-description">{description}</p>
+  </div>
+</a>
+
+<style is:global>
+  :root {
+    --card-bg: light-dark(#fff, #333);
+    --card-border: light-dark(#ddd, #444);
+    --card-shadow: light-dark(
+      rgba(128, 128, 128, 0.5),
+      rgba(128, 128, 128, 0.9)
+    );
+    --card-title: light-dark(#000, #fff);
+    --card-description: light-dark(#555, #ccc);
+    --card-date: light-dark(#777, #bbb);
+  }
+
+  .card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px var(--card-shadow);
+    transition: all 0.15s ease;
+    text-decoration: none;
+    &:hover {
+      box-shadow: 3px 4px 8px var(--card-shadow);
+      transform: translate(-4px, -4px);
+    }
+  }
+
+
+  .card-content {
+    padding: 16px;
+    position: relative;
+  }
+
+  .card-number {
+    border-radius: 50%;
+    display: inline-block;
+    background-color: var(--card-border);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  .card-title {
+    margin: 0;
+    font-size: 1.5em;
+    color: var(--card-title);
+  }
+
+  .card-description {
+    margin: 8px 0 0;
+    color: var(--card-description);
+  }
+
+  .card-date {
+    margin: 8px 0 0;
+    color: var(--card-date);
+    font-size: 0.8em;
+  }
+</style>

@@ -1,0 +1,166 @@
+---
+import EpisodeGrid from "./EpisodeGrid.astro";
+---
+
+<div class="episode-player not-content">
+  <div class="player">
+    <div class="selected"></div>
+    <div class="controls">
+      <button>Select an episode, then click to start</button>
+    </div>
+  </div>
+  <EpisodeGrid><slot /></EpisodeGrid>
+</div>
+
+<style is:global>
+  .episode-player {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+
+  .player {
+    --player-bg: light-dark(#f4f1f0, #0c1e30);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--player-bg);
+    color: light-dark(black, white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+    background-size: cover;
+    background-blend-mode: multiply;
+  }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    align-self: flex-end;
+  }
+
+  .controls button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 100%;
+    background-color: light-dark(#e4e1e0, #1c2e40);
+  }
+
+  @media (min-width: 1150px) {
+    .episode-player {
+      flex-direction: row;
+    }
+
+    .player {
+      flex: 1;
+    }
+
+    .episode-grid {
+      flex: 1;
+    }
+  }
+</style>
+<script>
+  const selected = document.querySelector(".selected")!;
+  const episodes = document.querySelector(".episode-grid")!;
+  const styleElement = document.head.appendChild(
+    document.createElement("style")
+  );
+  const episodeIndex = localStorage.getItem("fwvt-idx") ?? "1";
+  const episode =
+    [...episodes.querySelectorAll(".episode-number")]
+      .find((e) => e.textContent === episodeIndex)
+      ?.closest(".episode") ?? episodes.firstElementChild!;
+  const main = document.querySelector("main")!;
+  selected.appendChild(episodes.removeChild(episode)!);
+  selected.querySelector("details")!.open = true;
+
+  selected.parentElement?.addEventListener("click", () =>
+    open(selected.firstElementChild as HTMLElement, main)
+  );
+  document.querySelectorAll<HTMLElement>(".episode").forEach((e) =>
+    e.addEventListener("click", () => {
+      if (e.parentElement === selected) {
+        return open(e, main);
+      }
+      main.style.viewTransitionName = "none";
+      let n: HTMLElement = e.parentElement?.firstElementChild as HTMLElement;
+      let count = 0;
+      while (n) {
+        n.style.viewTransitionName = "none";
+        n === e && (count = 0);
+        ++count;
+        n = n.nextElementSibling as HTMLElement;
+      }
+      let id = 0;
+      n = e;
+      let style = "";
+      while (n) {
+        n.style.viewTransitionName = `episode-${++id}`;
+        style += `::view-transition-group(episode-${id}){animation-delay: ${
+          (id - 1) * (250 / count)
+        }ms;}\n`;
+        n = n.nextElementSibling as HTMLElement;
+      }
+
+      style += `
+        ::view-transition-new(episode-${++id}){
+          animation-fill-mode: both;
+          animation-delay: 250ms;
+        }
+        ::view-transition-old(episode-1) {
+          display: none;
+        }
+        ::view-transition-new(episode-1) {
+          animation-name: none;
+          width: 100%;
+          height: 100%;
+        }
+          `;
+      styleElement.textContent = style;
+      const s = selected.firstElementChild as HTMLElement;
+      s.style.viewTransitionName = "episode-0";
+      e.style.transition = "";
+      e.style.width = getComputedStyle(e).width;
+      document.startViewTransition
+        ? document.startViewTransition(update)
+        : update();
+
+      function update() {
+        selected.querySelector("details")!.open = false;
+        (s.style.viewTransitionName = `episode-${id}`) &&
+          episodes?.appendChild(selected.removeChild(s));
+        selected.appendChild(episodes.removeChild(e)!);
+        e.style.width = getComputedStyle(e).width;
+        setTimeout(() => (e.style.wordBreak = "break-all"), 100);
+        setTimeout(() => (e.style.wordBreak = ""), 400);
+        setTimeout(() => (e.querySelector("details")!.open = true), 600);
+
+        e.style.width = "";
+        if (window.matchMedia("(orientation: portrait)").matches) {
+          selected.scrollIntoView({
+            behavior: "instant",
+            block: "nearest",
+            inline: "nearest",
+          });
+        }
+      }
+    })
+  );
+
+  function open(e: HTMLElement, main: HTMLElement) {
+    localStorage.setItem(
+      "fwvt-idx",
+      e.querySelector(".episode-number")!.textContent ?? "1"
+    );
+    main.style.viewTransitionName = "main";
+    const introText = document.querySelector<HTMLElement>("#intro-text");
+    introText && (introText.style.viewTransitionName = "intro-text");
+    location.assign(e.dataset.href!);
+  }
+</script>

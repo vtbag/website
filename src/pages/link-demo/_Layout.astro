@@ -2,7 +2,7 @@
 import BaseLayout from "@/layouts/Layout.astro";
 import "./_vt.css";
 import linkTypes from "@vtbag/turn-signal/link-types?raw";
-import vtn from "@vtbag/utensil-drawer/vtn?url";
+import declarativeNames from "@vtbag/utensil-drawer/declarative-names?url";
 
 interface Props {
   title: string;
@@ -20,8 +20,8 @@ const { title } = Astro.props;
   <script
     slot="head"
     is:inline
-    src={vtn}
-    data-spec=".nav-btn: nav-btn-; .transition-link: transition-link-; .transition-link .content: transition-link-content-"
+    src={declarativeNames}
+    data-vtbag-decl=".nav-btn = nav-btn-; .transition-link = transition-link-; .transition-link .content = transition-link-content-"
   ></script>
   <script slot="head" is:inline type="speculationrules">
     {

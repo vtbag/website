@@ -1,21 +1,118 @@
 ---
 title: View Transition JavaScript API
-description: How to interact with view transitions from JavaScript
+description: How to interact with view transitions using JavaScript
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/javascript-og.png"
 ---
 
 Browser-native cross-document view transitions can be implemented entirely in CSS without JavaScript. However, JavaScript becomes essential for advanced functionality, such as
+
 - starting same-page view transitions with `startViewTransition()`,
 - programmatically modifying CSS properties like `view-transition-name`,
 - setting view transition types,
 - or running code when transitions start or finish.
 
-
 ## Same-Document View Transitions
-For a detailed guide on the API and the processing of same-document view transitions, refer to the[vtbot site](https://events-3bg.pages.dev/jotter/api/details/).
+
+Same document view transitions are awesome! You assign view transition names to the HTML elements that should be animated during the transition. The transition is from your current state of the DOM to a future version, which is built by calling and awaiting an update function.
+
+### startViewTransition()
+
+Typically, you start a same-document view transition with an update callback that transforms the current DOM to a future state. The View Transition API then generates and runs animations that morph from the now old state to the current state.
+
+```js
+if (window.matchMedia('(prefers-reduced-motion: reduce)') || !document.startViewTransition) {
+  updateCallback()
+} else {
+  document.startViewTransition(updateCallback);
+}
+```
+For users that prefer reduced motion or for browsers that do not support the View Transition API, the code above directly executes the update function.
+
+The update callback is a synchronous or asynchronous function. In the asynchronous case, the View Transition API will wait for it to settle. But you should try not to spend too much time inside the callback. For one thing, the browser freezes the renderer while the update callback executes. And browsers may impose time limits. For Chrome this seem to be 4 seconds before it loses its temper. If you have expensive preparation, like loading and parsing a new DOM from file, you better do that before you call `startViewTransition()`. The update callback is optional, so you can even transition to the same version of the DOM by omitting the update function, which might make sense with custom animations.
+
+You can also call the function with an options object to define [view transition types](/basics/styling/#-with-types) that should be active during the transition.
+
+```js
+document.startViewTransition({
+  types: ["boom", "backward"],
+  update: changeTheDOM,
+});
+```
+
+Here is the complete signature of `startViewTransition`
+
+```ts
+type UpdateCallback = undefined | (() => void | Promise<void>);
+type StartViewTransitionOptions = {
+  types?: string[] | Set<string>;
+  update?: UpdateCallback;
+};
+
+interface Document {
+  startViewTransition(
+    param?: StartViewTransitionOptions | UpdateCallback
+  ): ViewTransition;
+}
+```
+
+### ViewTransition Object
+
+The `startViewTransition()` function returns an object with promises, the current types, and a function to skip the animations.
+
+```ts
+interface ViewTransition {
+  readonly updateCallbackDone: Promise<undefined>;
+  readonly ready: Promise<undefined>;
+  readonly finished: Promise<undefined>;
+  readonly types: Set<string>;
+  skipTransition(): void;
+}
+```
+
+#### Promises
+
+With the promises, you can hook into the processing of the view transition. The `updateCallbackDone` resolves with the update callback. You can use this promise for synchronous last minute changes. If it rejects, processing ends and the finished promise also rejects. The `ready` promise settles after the pseudo-elements got inserted into the DOM. This triggers the animations. For example, you can use the promise to add own JavaScript animations using the Web Animation API. The `ready` promise rejects if there had been errors like duplicate view transition names. Finally, the `finished` promise settles after animations end and the pseudo-elements were removed. It resolves the same way as `updateCallbackDone`.
+
+#### skipTransition()
+
+Calling `skipTransition()` ends the current view transition animations or prevents their start if the `ready` promise is not yet settled. If the function is called during the update callback, this doesn't have any effect on the update itself, neither on its processing nor on the outcome of the `updateCallbackDone` promise.
+
+#### Types
+
+You can dynamically add or remove view transition types during the view transition by altering the `types` object. This will directly affect CSS rules that use the `:active-view-transition-type` pseudo-class.
+
+### Omitting View Transitions
+
+```js
+if (document.startViewTransition && window.matchMedia('(prefers-reduced-motion: no-preference)')) {
+  const viewTransition = document.startViewTransition({update: updateCallback, types: ...});
+  viewTransition.updateCallbackDone.catch(err => ...);
+  viewTransition.ready.catch(err => ...);
+  viewTransition.finished.finally(() => ... clean up ...)
+} else {
+  updateCallback();
+}
+```
+
+### Canceling and Chaining
+
+Calling `startViewTransition()` while some view transition is active will interrupt the ongoing view transition, fast forward to the end state of the animations and start the new view transition from there.
+
+Currently browser behavior differs for the effects that occur when `startViewTransition` is called before `updateCallbackDone` resolves. You should better avoid this situation. Either chain the update callback functions and provide the chained callback to a single call of `startViewTransition()` or chain multiple calls to `startViewTransition()` by awaiting the `finished` promise before starting the next view transition.
 
 ## Cross-Document View Transitions
 
-Cross-document view transitions work similarly to same-document ones but are triggered by navigation. Two key events enable JavaScript interaction: `pageswap`, dispatched just before leaving the old page, and pagereveal, dispatched before the new page renders.
+Cross-document view transitions work similarly to [same-document](#same-document-view-transitions) ones but are triggered by navigation. In particular you can get access to the [view transition object](#viewtransition-object) in event listeners for the new `pageswap` and `pagereveal` events.
+
+### Pageswap and Pagereveal Events
+
+Two key events enable JavaScript interaction: `pageswap`, dispatched just before leaving the old page, and `pagereveal`, dispatched before the new page renders.
+
+### ViewTransition Object
 
 Both events include a `viewTransition` property, which holds a `ViewTransition` object if the transition is part of a cross-document view transition. For `pagereveal`, when `viewTransition` is defined, its `updateCallbackDone` promise is immediately settled.
 
@@ -25,5 +122,6 @@ In a `pageswap` listener, you can define view transition types by adding them to
 
 Similarly, `pagereveal` listeners allow you to tweak view transition names and types for the new page. Again, live images for the `::view-transition-new` pseudo-elements are being captured after the event.
 
+### Activation Object
 
 The `pageswap` event also provides a `NavigationActivation` object via its `activation` property, offering details about the current page (`from`) and next page (`entry`). While the `pagereveal` event does not include this property, in browsers supporting the Navigation API, you can use `navigation.activation` to access information about the previous page (`from`) and current page (`entry`).

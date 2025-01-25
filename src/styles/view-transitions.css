@@ -1,0 +1,210 @@
+@media not (prefers-reduced-motion) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+main {
+  view-transition-name: main;
+}
+:active-view-transition-type(same) main {
+  view-transition-name: none;
+}
+
+main h1 {
+  view-transition-name: title-heading;
+}
+
+::view-transition-old(main) {
+  animation: forwardsSwingOut 500ms ease-in-out;
+}
+::view-transition-new(main) {
+  animation: forwardsSwingIn 500ms ease-in-out;
+}
+:active-view-transition-type(backward)::view-transition-old(main) {
+  animation: backwardsSwingOut 500ms ease-in-out;
+}
+:active-view-transition-type(backward)::view-transition-new(main) {
+  animation: backwardsSwingIn 500ms ease-in-out;
+}
+:active-view-transition-type(same)::view-transition-old(root) {
+  animation: shake-old 500ms ease-in-out;
+}
+:active-view-transition-type(same)::view-transition-new(root) {
+  animation: shake-new 500ms ease-in-out;
+}
+
+@keyframes forwardsSwingOut {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+@keyframes forwardsSwingIn {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes backwardsSwingOut {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+@keyframes backwardsSwingIn {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes shake-old {
+  to {
+    transform: scale(0);
+    filter: blur(10px);
+    opacity: 0;
+  }
+}
+@keyframes shake-new {
+  from {
+    opacity: 0;
+    transform: scale(0);
+    filter: blur(10px);
+  }
+}
+::view-transition-group(main) {
+  overflow: hidden;
+}
+
+sl-sidebar-state-persist {
+  view-transition-name: sl-sidebar;
+}
+header.header {
+  view-transition-name: header;
+}
+mobile-starlight-toc nav {
+  view-transition-name: mobile-starlight-toc-nav;
+}
+
+
+::view-transition-group(butterfly1),
+::view-transition-group(butterfly2) {
+  z-index: 10;
+}
+
+::view-transition-old(butterfly1) {
+  animation: 1s ease-in both butterfly1;
+}
+::view-transition-old(butterfly2) {
+  animation: 1s ease-out both butterfly2;
+}
+
+@keyframes butterfly1 {
+  10% {
+    transform: rotateZ(-13deg) scale(0.5, 1);
+  }
+  20% {
+    transform: scale(1, 1) translate(2vw, -2vh);
+  }
+  30% {
+    transform: rotateZ(13deg) scale(0.75, 1.5) translate(4vw, -4vh);
+  }
+  40% {
+    transform: scale(2, 2) scale(3vw, -4vw);
+  }
+  50% {
+    transform: rotateZ(-13deg) scale(1.25, 2.5) translate(3vw, -4vw);
+  }
+  60% {
+    transform: scale(3, 3) translate(3vw, -5vh);
+  }
+  70% {
+    transform: rotateZ(13deg) scale(1.75, 3.5) translate(3vw, -5vw);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(2, 4) translate(5vw, -6vh);
+  }
+  90% {
+    transform: rotateZ(-13deg) scale(2.25, 4.5) translate(5vw, -6vh);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(4, 4) translate(5vw, -6vh);
+  }
+}
+@keyframes butterfly2 {
+  10% {
+    transform: rotateZ(-13deg) scale(0.5, 1);
+  }
+  20% {
+    transform: scale(1, 1);
+  }
+  30% {
+    transform: rotateZ(13deg) scale(0.75, 1.5) translate(-30%, -30%);
+  }
+  40% {
+    transform: scale(2, 2);
+  }
+  50% {
+    transform: rotateZ(-13deg) scale(1.25, 2.5);
+  }
+  60% {
+    transform: scale(3, 3) translate(30%, -30%);
+  }
+  70% {
+    transform: rotateZ(13deg) scale(1.75, 3.5);
+  }
+  80% {
+    opacity: 1;
+    transform: scale(2, 4);
+  }
+  90% {
+    transform: rotateZ(-13deg) scale(2.25, 4.5) translate(-30%, -30%);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(5, 5) translate(-30%, -100%);
+  }
+}
+::view-transition-old(bsky),
+::view-transition-new(bsky) {
+  height: 100%;
+  width: 100%;
+}
+
+::view-transition-group(sl-sidebar),
+::view-transition-group(bsky),
+::view-transition-group(bskyText) {
+  animation-duration: 500ms;
+}
+
+.pagination-links a[rel="prev"] {
+  view-transition-name: pagination-link-prev;
+}
+.pagination-links a[rel="next"] {
+  view-transition-name: pagination-link-next;
+}
+
+button[data-open-modal] {
+  view-transition-name: modal;
+}
+
+footer div a {
+  view-transition-name: footer-link;
+}

@@ -1,0 +1,56 @@
+#vtbag-bar-outer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background-color: var(--sl-color-black);
+  z-index: 1000;
+  view-transition-name: vtbag-bar-outer;
+}
+#vtbag-bar {
+  background-color: var(--sl-color-accent);
+  height: 100%;
+}
+:root.vtbag-bar-old #vtbag-bar-inner {
+  height: 100%;
+  width: 25%;
+  background-color: var(--sl-color-white);
+  animation: slide 0.5s ease-in-out alternate infinite;
+}
+
+:root.vtbag-bar-old :is(#vtbag-bar, #vtbag-bar-inner) {
+  border-radius: 3pt;
+  transition: opacity 0.25s 0.25s;
+
+  @starting-style {
+    opacity: 0;
+  }
+
+}
+@keyframes slide {
+  0% {
+    transform: translateX(30%);
+  }
+  100% {
+    transform: translateX(75%);
+  }
+}
+
+:root.vtbag-bar-freeze #vtbag-bar {
+  background-color: red;
+}
+:root.vtbag-bar-new #vtbag-bar {
+  background-color: var(--sl-color-white);
+}
+
+::view-transition-old(vtbag-bar-outer),
+::view-transition-new(vtbag-bar-outer) {
+  animation: none;
+}
+
+:active-view-transition,
+:root.vtbag-bar-loading *,
+:root.vtbag-bar-loading {
+  cursor: pointer !important;
+}

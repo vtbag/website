@@ -1,0 +1,226 @@
+---
+title: Ladies and Gentlemen, Start Your Engines!
+description: How to enable browser-native cross-document view transitions on your multi-page site.
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/fwvt-og.png"
+---
+
+import { Image } from "astro:assets";
+import Media from "@/components/Media.astro";
+import EpisodeNav from "@/components/EpisodeNav.astro";
+import wb from "@/assets/wb.png";
+import "@/styles/fwvt.css";
+
+<EpisodeNav>
+  <a class="selected" href="/fwvt/enabling/">Episode 1</a>
+  <a href="/fwvt/customizing/">Episode 2</a>
+  <a href="/fwvt/morphing/">Episode 3</a>
+</EpisodeNav>
+
+<div id="intro">
+  <Media>
+  <Image src={wb} alt="Fun with The Bag of Tricks and View Transitions" />
+  <p slot="caption">Fun with View Transitions</p>
+  </Media>
+
+  <div>
+Hello and welcome to the very first episode of _Fun with View Transitions_, where we explore the magic of the View Transition API.
+
+To give you a bit of a smoother entry , this episode covers the essentials to get started with view transitions for your multi-page site.
+
+- Enabling cross-document view transitions
+- Respecting users' preferences for reduced motion
+- Including necessary CSS on all relevant pages
+- Waiting for the main content of the page to load
+</div>
+</div>
+
+Here’s what the difference between a full load and cross-document view transitions looks like. The effect may not seem groundbreaking yet, but it lays the foundation for the episodes ahead.
+
+<Media>
+  <span class="not-content light:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/episode1-dark.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <span class="not-content dark:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/episode1-light.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <p slot="caption">Video showing normal page load without view transitions</p>
+</Media>
+<Media>
+  <span class="not-content light:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/solved1-dark.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <span class="not-content dark:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/solved1-light.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <p slot="caption">Video showing view transitions as a smooth alternative to normal page load</p>
+</Media>
+
+:::tip
+If you don't have a suitable project at hand to follow along with, no worries! Jump into this [exercise repository](https://github.com/vtbag/fun-with-view-transitions) to do the experiments and get hands-on experience with the View Transition API!
+:::
+
+
+<style>{`
+  video {
+    width: 340px;
+    display: inline;
+  }
+`}</style>
+
+Let's dive in!
+
+## Enabling Cross-Document View Transitions
+
+In this episode, we will focus on sites made up of individual HTML pages connected by links.[^1] During navigation, you typically see the old page replaced by an empty page that gradually loads its content. We are going to replace this traditional page-loading experience with a smooth cross-fade effect that seamlessly blends the pages as you navigate the site.
+
+One of the fascinating things about cross-document view transitions is how they act as a true progressive enhancement for your website.
+Ensure your site functions perfectly without them, then enable them for browsers that natively support the feature.
+
+Users with browsers lacking view transition support will just see regular page loads.
+
+Rumor has it that it only takes a single line of CSS to enable view transitions across all navigations in a multi-page site.
+
+Here's the magic spell:
+
+```css
+@view-transition {
+  navigation: auto;
+}
+```
+
+This will add the View Transition API's full-viewport cross-fade whenever you navigate between two pages that include this rule and share the same origin.[^0]
+
+In later episodes, we will see how to add more individual animations. Keep in mind not to go overboard with view transition effects.[^o] Your site should remain fully understandable even without them. Remember, it's not just that some browsers don't support view transitions at all. Even for those that do, many users are on older versions without this feature. Plus, some users might simply prefer not to see your view transitions at all.
+
+[^o]: Alright, I may have gone a little overboard on vtbag.dev, but I swear, there's a perfectly good explanation for all of it...
+
+
+## Respecting Reduced Motion Preferences
+
+Some users set a switch to inform their Operating System that they prefer reduced motion. All major browsers are aware of those switches on different operating systems and offer to query the setting with media queries. So instead of just pouring view transitions over your site, you better restrict it when the user prefers reduced motion.
+
+You can do the media query with CSS. One way would be just to not enable view transitions in that case:
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+```
+
+If you'd like to implement reduced motion by keeping browser-generated cross-fade animations while disabling morph animations, you can enable view transitions like this:
+
+```css
+@view-transition {
+  navigation: auto;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*) {
+    animation-name: none;
+  }
+}
+```
+
+## Including CSS on All Pages
+
+Both pages of a navigation, the old one and the new one, must be enabled for view transitions for the View Transition API to work its magic. Typically, you would include the `@view-transition` at-rule on every page of your multi page site.
+
+If you're working with plain HTML pages, you'll need to modify each one individually.
+
+If you are using a component framework or template mechanism, there is probably a common location where you define the global structure of your pages, the `<head>` component, or recurring elements of the `<head>`.
+
+In any case, your `@view-transition` at-rule belongs in the `<head>` element on every page. You can include it as an inline stylesheet or as a link to an external stylesheet. If there isn't a single component or template where you can add the at-rule to all `<head>` elements at once, I would strongly recommend using an external stylesheet.
+
+For this and the following episodes we will go with a shared `view-transition.css` stylesheet like so:
+
+```html {5}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/styles/view-transitions.css" />
+    ...
+  </head>
+</html>
+```
+
+where `/styles/view-transitions.css` holds the definition
+
+```css title="/styles/view-transitions.css"
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
+}
+```
+
+Having a global stylesheet for view transitions might not feel very componentized at first glance, but it will turn out to be a solid decision for cross-document view transitions.
+
+Be aware that the CSS defining the animations must be present on the new page you are navigating to. Did you notice the butterflies on this site's home page? **The CSS rules** needed to animate them during navigation **must be included on the destination page**. Since you can navigate away from the home page to almost any other page of the site, the butterfly animation styles need to be included on all of them.
+
+So at least for a site with random access to most pages, a global `view-transition.css` makes a lot of sense for the exit animations. However, if your pages have a limited set of possible predecessors and successors, using multiple, more localized stylesheets might be a better choice for maintainability.
+
+## Waiting for the Content to Load
+
+Before we dive into a practical look at what we’ve achieved so far, let’s ensure we achieve buttery-smooth transitions without any hint of the incremental page rendering typical of standard navigation.
+
+The View Transition API will wait for content to load before the transition starts. But having view transitions **won't change the incremental rendering** of web pages. This means that some parts of the new page might not been loaded yet when the animation starts. These elements could load during the animation or appear after it finishes, which can look quite awkward.
+
+The browser might need a bit of guidance to determine which part of the page should be ready before starting the animations. A new `<link>` type allows us to [specify what to wait for](/basics/pseudos/#delaying-cross-document-transitions). Ideally, we'd only wait for the content "above the fold".[^2] Since we can fine-tune this later, we'll start with a straightforward approach that waits for the entire body to load.
+
+```html {4,6  }
+<html>
+  <head>
+    ...
+    <link rel="expect" href="#body" blocking="render" />
+  </head>
+  <body id="body">
+    ...
+  </body>
+  <html></html>
+</html>
+```
+
+For your own site, you will have more specific knowledge of what to wait for. You might have a main content area, like this site has. You want that to be loaded before the transition starts, but everything that comes after it can be loaded incrementally. Give that `<main>` element an `id` attribute with a value of `main` and change the `href` attribute value in the fragment above from `#body` to `#main`. The names you use are up to you, of course.
+
+## Reviewing Our Progress So Far
+
+If you've been following along, you'll be rewarded with a site that delivers smooth page transitions across all your navigations.
+
+These are the default settings the Navigation API applies when used without additional configuration:
+
+- A single animation spans the entire viewport.
+- The animation lasts 250 milliseconds using CSS's default `ease` timing function.
+- The animation is a cross-fade: the opacity of the old page fades out from 1 to 0, while the opacity of the new page fades in from 0 to 1.
+- The animation kicks in when you follow links and if you traverse through the browser history using backward / forward navigation.
+- Loading a page via the address bar or explicitly reloading a page (pressing <kbd>F5</kbd> or <kbd>Cmd</kbd>-<kbd>R</kbd>) will not show view transitions.
+
+In the next episode, we'll dive deeper into tweaking the defaults and adding custom animations.
+
+Thank you for joining on this journey through the exciting world of view transitions.
+Until next time, keep animating, keep experimenting, and most importantly, keep having fun &hellip; with view transitions!
+
+[^0]: "origin" is the name for the `protocol` + `host` + `port` part of an URL, e.g. `https://vtbag.dev`.
+[^1]: If you have a single page application, be patient. You or your framework have to trigger view transitions by calling [`startViewTransition()`](/basics/javascript/#same-document-view-transitions). We will cover that in another episode.
+[^2]: Like the fold of a printed newspaper. The part of the page you see without scrolling.

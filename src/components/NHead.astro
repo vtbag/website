@@ -3,21 +3,13 @@ import type { Props } from "@astrojs/starlight/props";
 import StarlightHead from "@astrojs/starlight/components/Head.astro";
 import turnSignal from "@vtbag/turn-signal?url";
 import camShaft from "@vtbag/cam-shaft?url";
-import vtn from "@vtbag/utensil-drawer/vtn?url";
+import declarativeNames from "@vtbag/utensil-drawer/declarative-names?url";
 import PagefindToTextFragments from "./PagefindToTextFragments.astro";
-import "./vtbag-bar.css";
 ---
 
 <StarlightHead {...Astro.props}><slot /></StarlightHead>
 
 <PagefindToTextFragments />
-
-{
-  (
-    // @ts-ignore
-    <link rel="expect" href="#the_unexpected" blocking="render" />
-  )
-}
 
 {/* Decent transitions for scrolled down pages */}
 <script is:inline src={camShaft}></script>
@@ -27,114 +19,7 @@ import "./vtbag-bar.css";
 ></script>
 
 {/* Make headings stand out during view transitions. */}
-<script is:inline src={vtn} data-spec="h2,h3: vtbag-h-"></script>
-
-<style is:global>
-  @view-transition {
-    navigation: auto;
-  }
-  main {
-    view-transition-name: main;
-  }
-  :active-view-transition-type(same) main {
-    view-transition-name: none;
-  }
-
-  main h1 {
-    view-transition-name: title-heading;
-  }
-
-  ::view-transition-old(main) {
-    animation: forwardsSwingOut 500ms ease-in-out;
-  }
-  ::view-transition-new(main) {
-    animation: forwardsSwingIn 500ms ease-in-out;
-  }
-  :active-view-transition-type(backward)::view-transition-old(main) {
-    animation: backwardsSwingOut 500ms ease-in-out;
-  }
-  :active-view-transition-type(backward)::view-transition-new(main) {
-    animation: backwardsSwingIn 500ms ease-in-out;
-  }
-  :active-view-transition-type(same)::view-transition-old(root) {
-    animation: shake-old 500ms ease-in-out;
-  }
-  :active-view-transition-type(same)::view-transition-new(root) {
-    animation: shake-new 500ms ease-in-out;
-  }
-
-  @keyframes forwardsSwingOut {
-    0% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-  }
-  @keyframes forwardsSwingIn {
-    0% {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  @keyframes backwardsSwingOut {
-    0% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-  }
-  @keyframes backwardsSwingIn {
-    0% {
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  @keyframes shake-old {
-    to {
-      transform: scale(25);
-      filter: blur(10px);
-      opacity: 0;
-    }
-  }
-  @keyframes shake-new {
-    from {
-      opacity: 0;
-      transform: scale(0);
-      filter: blur(10px);
-    }
-  }
-  ::view-transition-group(main) {
-    overflow: hidden;
-  }
-
-  sl-sidebar-state-persist {
-    view-transition-name: sl-sidebar;
-  }
-  header.header {
-    view-transition-name: header;
-  }
-  mobile-starlight-toc nav {
-    view-transition-name: mobile-starlight-toc-nav;
-  }
-</style>
-<script>
-  addEventListener(
-    "popstate",
-    (e) => e.hasUAVisualTransition && location.reload()
-  );
-</script>
-
+<script
+  is:inline
+  src={declarativeNames}
+  data-vtbag-decl=":is(h2, h3):not(.no-vtbag-decl *) = vtbag-h-; :is(starlight-toc span):not(.no-vtbag-decl *) = vtbag-toc~"></script>

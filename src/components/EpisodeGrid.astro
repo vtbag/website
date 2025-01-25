@@ -1,0 +1,15 @@
+---
+---
+<div class="episode-grid not-content">
+  <slot />
+</div>
+
+<style is:global>
+  .episode-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    overflow: auto;
+    min-height: 25lh;
+  }
+</style>

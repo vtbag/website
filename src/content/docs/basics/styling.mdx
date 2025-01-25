@@ -24,37 +24,8 @@ There are three parts that you influence with CSS when it comes to view transiti
 
 ### Add DOM Elements to View Transition
 
-If you want a DOM element to participate in view transitions with an individual animation, you assign a value to the `view-transition-name` CSS property of the element. The browser will then generate three or four pseudo-elements for each DOM element with a view transition name. These are [a transition group, an image pair](/basics/pseudos/#groups-and-image-pairs) and at least one of [the old or new image pseudos](/basics/pseudos/#old-and-new-image-pseudos).
+If you want a DOM element to participate in view transitions with an individual animation, you assign a value to the [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property of the element. The browser will then generate three or four [pseudo-elements](/basics/pseudos/#types-of-pseudo-elements) for each _visible_ DOM element with a view transition name. These are a transition group, an image pair, and at least one of the old or new image pseudos.
 
-```html title="Assigning a view transition name using inline styling"
-<main style="view-transition-name: main">...</main>
-```
-
-```html title="Assigning a view transition name with a stylesheet"
-main { view-transition-name: main; }
-```
-
-Do not quote the names. They are not strings but [custom-ident](https://developer.mozilla.org/de/docs/Web/CSS/custom-ident) values. Ensure proper escaping of special characters. The simplest, most portable approach is to just use upper and lower case letters from A to Z, digits from 0 to 9, an underscore `_` or a hyphen `-` character. But don't start the name with a digit. While all other characters with a code < 128 need to be escaped, codes > 127 like 😄 seem to work just fine in view transition names.
-
-It is not important to have much imagination when choosing names. They can be the similar to the `id` of an element or name of a unique tag like `body` or `footer`.
-
-At the start of the view transition, the **view transition names have to be unique** in the DOM. You can exempt an element from this uniqueness check by setting its (or one of its parent's) styling to `visibility: hidden` or `display: none`. For those elements, the browser won't generate pseudos.
-
-#### Auto-Generated Names
-The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](https://events-3bg.pages.dev/image-gallery/). However, it will also be possible to do this with only CSS, no JavaScript needed. [Check if your current browser already supports it](/basics/test-page/). And don't expect matching values on cross-document navigation. For that use case you need a JavaScript solution.
-
-```css
-.tile {
-  view-transition-name: auto;
-}
-```
-
-The browser automatically assigns the view transition name `root` to the `:root` element, i.e. the top-level `<html>` element for an HTML document. If you prefer another name, you can override it. If you do not want the `<html>` element to participate in the view transition with own pseudo-elements, you explicitly have to remove the `root` name by [overriding it with `none`](/basics/pseudos/#opt-out).
-
-#### Dynamic Names
-Of course view transition names do not need to be static. You can assign them conditionally, e.g. inside a media query or with a selector that checks for a special CSS class further up the DOM. Another interesting way for conditional assignment of view transition names is to let them [depend on view transition types](/basics/styling/#conditional-view-transitions).
-
-Because they are animatable CSS properties, view transition names can even be changed using other animations. So if you like you could automatically change a name over time or depending on the scroll position with scroll-driven animations.
 
 ### Define Animations for View Transitions
 

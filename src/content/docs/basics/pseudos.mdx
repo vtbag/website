@@ -1,5 +1,5 @@
 ---
-title: "Pseudo-Elements of the View Transition API"
+title: "View Transition Names and Generated Pseudo-Elements"
 description: "What are those pseudo-elements of the View Transition API and how can I style and animate them?"
 head:
   - tag: meta
@@ -7,6 +7,8 @@ head:
       property: "og:image"
       content: "/pseudos-og.png"
 ---
+
+import Media from "@/components/Media.astro"
 
 What are those pseudo-elements of the View Transition API and how can I style and animate them?
 
@@ -146,6 +148,60 @@ But that's about it.
 
 Now that we've covered the general concept, we can move on from the magic and dive into the technical details.
 
+## View Transition Names
+
+You tell the view transition API which elements should be animated by assigning `view-transition-name` CSS properties to the HTML elements.
+
+```html title="Assigning a view transition name using inline styling"
+<main style="view-transition-name: main">
+```
+
+```css title="Assigning a view transition name with a stylesheet"
+main {
+  view-transition-name: main;
+}
+```
+
+The static user agent stylesheet provides one default name for the document, called `root`.
+```css title="static user agent stylesheet"
+:root {
+  view-transition-name: root;
+}
+```
+This default defines an animation for the current viewport. If you want to animate only parts of the document, you can opt out of the global transition by overriding that default in your own styles by setting the value to `none`.
+```css
+:root {
+  view-transition-name: none;
+}
+```
+
+### Escaping
+Do not quote the names. They are not strings but [custom-ident](https://developer.mozilla.org/de/docs/Web/CSS/custom-ident) values. Ensure proper escaping of special characters. The simplest, most portable approach is to just use upper and lower case letters from A to Z, digits from 0 to 9, an underscore `_` or a hyphen `-` character. But don't start the name with a digit. While all other characters with a code < 128 need to be escaped, codes > 127 like 😄 seem to work just fine in view transition names.
+
+It is not important to have much imagination when choosing names. They can be the similar to the `id` of an element or name of a unique tag like `body` or `footer`.
+
+At the start of the view transition, the **view transition names have to be unique** in the DOM. You can exempt an element from this uniqueness check by setting its (or one of its parent's) styles to `display: none`. For those elements, the browser won't generate pseudos.
+
+### Auto-Generated Names
+The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](https://events-3bg.pages.dev/image-gallery/). However, it will also be possible to do this with only CSS by using the `auto` value, no JavaScript needed.
+
+```css
+.tile {
+  view-transition-name: auto;
+}
+```
+
+[Check if your current browser already supports it](/basics/test-page/). Auto copies the name of the `id` attribute if defined. Otherwise, it makes up some name like `-ua-auto-....`.
+
+Using `auto` with `id` can be used to define elements with the same view transition name for cross-document navigation. But automatically generated names will always be different for two documents.
+
+
+
+### Dynamic Names
+Of course view transition names do not need to be static. You can assign them conditionally, e.g. inside a media query or with a selector that checks for a special CSS class further up the DOM. Another interesting way for conditional assignment of view transition names is to let them [depend on view transition types](/basics/styling/#conditional-view-transitions).
+
+Because they are animatable CSS properties, view transition names can even be changed using other animations. So if you like you could automatically change a name over time or depending on the scroll position with scroll-driven animations.
+
 ## Types of Pseudo-Elements
 
 The components that form the "curtain" are called _view transition pseudo-elements_. While they aren't real DOM elements, they can be targeted with CSS selectors and styled using CSS rules. You may already be familiar with other HTML pseudo-elements like `::before` or `::first-letter`.
@@ -187,7 +243,7 @@ Here `root` is the automatically assigned `view-transition-name` for the documen
 
 ### Old and New Image Pseudos
 
-Introducing images for parts of the DOM allows you to display how the DOM looked even if it has changed or disappeared.
+Introducing pseudo-elements for parts of the DOM allows the View Transition API to display images of how the DOM looked even if it has changed or disappeared.
 
 Each element in the old DOM with a `view-transition-name: someName` CSS property generates a `::view-transition-old(someName)` pseudo-element with the same name. Similarly, for elements in the new DOM with a `view-transition-name: someName` CSS property, `::view-transition-new(someName)` pseudo-elements are created with the corresponding name.
 
@@ -197,14 +253,6 @@ The `::view-transition-new` images are no simple screenshots but _replaced eleme
 
 This might be confusing, as the original element is usually hidden behind the `::view-transition` pseudo-element (the “curtain”). Here's the key difference: old images are immutable. For example, if you show the _old image_ of a video player during a view transition, the image is frozen. Replaced elements, however, are _live_. If you display a _new image_ of a video player, the video will continue to play during the transition.
 
-DOM elements without an explicit `view-transition-name` won't generate their own images, with one exception: the document's `:root` element. The View Transition API automatically assigns `view-transition-name: root` to it. <a id="opt-out" />You can override this with your own name or **opt out** entirely by assigning the special value `none`:
-
-```css
-:root {
-  view-transition-name: none;
-}
-```
-This removes the view transition name from the document's `:root` element.
 
 ### Groups and Image-Pairs
 
@@ -242,12 +290,15 @@ The `::view-transition-old` pseudo elements are created **in the paint-order** o
 The image of the `:root` element, if not [opted out](#opt-out), covers the whole viewport. Its view transition group is the first in the list of `::view-transition-group` children of the `::view-transition` pseudo-element.  Subsequent groups are added after the root group once their old images have been created.
 
 <div style="width: fit-content; margin: 0 auto">
+<Media>
 ```d2 width=450 sketch title="Creation of old images"
 "::view-transition" -> "::view-transition-group(root)" -> "::view-transition-image-pair(root)" -> "::view-transition-old(root)"
 "::view-transition" -> "::view-transition-group(other)" -> "::view-transition-image-pair(other)" -> "::view-transition-old(other)"
 "::view-transition" -> "::view-transition-group(third)" -> "::view-transition-image-pair(third)" -> "::view-transition-old(third)"
 ...@../../../common
 ```
+<p slot="caption">Pseudo-element tree after creation of the old images</p>
+</Media>
 </div>
 
 For same-document view transitions, the creation of old images is the first step after calling `startViewTransition()`. For cross-document view transitions, creation of old images occurs right after the `pageswap` event is fired. The new images are processed when the `updateCallbackDone` promise resolves (for same-document view transitions) or right after the `pagereveal` event fires (for cross-document view transitions).
@@ -257,6 +308,7 @@ The process for creating new images is similar to the creation of old image pseu
 If no existing group is found, a `new ::view-transition-image-pair` and `::view-transition-group` pseudo-element is created for the view-transition-name and added to the end of the `::view-transition` pseudo-element's group list. This pair will then contain only the new image.
 
 <div style="width: fit-content; margin: 0 auto">
+<Media>
 ```d2 width=600 sketch title="Addition of new images"
 "::view-transition" -> "::view-transition-group(root)" -> "::view-transition-image-pair(root)" -> "::view-transition-old(root)"
 "::view-transition-image-pair(root)" -> "::view-transition-new(root)"
@@ -266,6 +318,8 @@ If no existing group is found, a `new ::view-transition-image-pair` and `::view-
 "::view-transition" -> "::view-transition-group(fourth)" -> "::view-transition-image-pair(fourth)" -> "::view-transition-new(forth)"
 ...@../../../common
 ```
+<p slot="caption">Pseudo-element tree after creation of the new images</p>
+</Media>
 </div>
 
 As with the old DOM, the pre-order depth-first traversal of the new DOM typically identifies the `:root` element as the first to have its image captured.

@@ -1,5 +1,5 @@
 ---
-title: Flickering during Morph Animations?
+title: Flickering during Cross-Fade Animations?
 description: Why custom fade animations for view transitions might flash.
 head:
   - tag: meta
@@ -169,7 +169,7 @@ You might even drop the marked lines, as only the blending of the new image into
 
 ## Reusing the User Agent Stylesheet
 
-As the [names of the keyframes](/basics/styling/#the-user-agent-stylesheet) are defined in the [specification](https://events-3bg.pages.dev/jotter/api/references/#w3c-drafts) of the View Transition API they are part of the interface. Hence you can refer to them from your own stylesheets, reducing the amount of new definitions.
+As the [names of the keyframes](/basics/styling/#the-user-agent-stylesheet) are defined in the [specification](/basics/api/#w3c-drafts) of the View Transition API they are part of the interface. Hence you can refer to them from your own stylesheets, reducing the amount of new definitions.
 
 ```css
 ::view-transition-old(img) {

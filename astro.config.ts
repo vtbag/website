@@ -4,14 +4,14 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 //import remarkHeadingID from 'remark-heading-id';
-import starlightImageZoom from 'starlight-image-zoom';
+//import starlightImageZoom from 'starlight-image-zoom';
 import { visualizer } from "rollup-plugin-visualizer";
 
 import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
 import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
-//import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
+//import { ion } from "starlight-ion-theme";
 
 // https://astro.build/config
 export default defineConfig({
@@ -50,7 +50,9 @@ export default defineConfig({
       PageFrame: "./src/components/PageFrame.astro",
       Sidebar: "./src/components/Sidebar.astro"
     },
-    plugins: [starlightImageZoom()],
+// plugins: [
+      //     ion({ overrides: { Head: false } }),
+  //    starlightImageZoom()],
     tableOfContents: {
       minHeadingLevel: 2,
       maxHeadingLevel: 4
@@ -67,8 +69,16 @@ export default defineConfig({
         rel: "me",
         href: "https://mastodon.social/@martrapp"
       }
+    }, {
+      tag: "link",
+      attrs: {
+        rel: "expect",
+        href: "#the_unexpected",
+        blocking: "render"
+      }
     }],
-    customCss: ["./src/styles/custom.css"],
+    customCss: ["./src/styles/custom.css", "./src/styles/sidebar.css", "./src/styles/view-transitions.css",
+      "./src/styles/vtbag-bar.css"],
     lastUpdated: true,
     pagination: true,
     favicon: "/bag4.png",
@@ -90,7 +100,7 @@ export default defineConfig({
   }), vtbot({ autoLint: false, loadingIndicator: false }), inoxToolsPortalGun()],
   vite: {
     build: {
-      assetsInlineLimit: 4096,
+      assetsInlineLimit: 0,
     },
     server: {
       fs: {
@@ -125,7 +135,7 @@ function sidebar() {
       {
         label: 'View Transition Examples', link: "/basics/examples/", badge: { text: '⮨', variant: 'success' } as Badge,
       },
-      { label: 'Structure of Pseudo-Elements', link: "/basics/pseudos/" },
+      { label: 'Names and Pseudo-Elements', link: "/basics/pseudos/" },
       { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" },
       { label: 'Styling View Transitions', link: "/basics/styling/" },
       { label: 'JavaScript API', link: "/basics/javascript/" },
@@ -136,11 +146,11 @@ function sidebar() {
     label: 'CSS Tips & Tricks',
     items: [
       { label: 'Where to place the CSS', link: "/tips/css/" },
-      { label: "Flickering during morph animations?", link: "/tips/over-exposure/" },
+      { label: "Flickering during fade animations?", link: "/tips/over-exposure/" },
       { label: "Avoid Pointer Flickering", link: "/tips/pointer/" },
       { label: "Pseudo-smooth-scrolling?", link: "/tips/pseudo-smooth-scrolling/" },
     ]
-  }, { label: "BagLog", link: "/baglog" }, {
+  }, { label: 'Fun with View Transitions', link: "/fwvt/welcome/" }, { label: "BagLog", link: "/baglog" }, {
     label: 'All Demos',
     collapsed: true,
     items: [

@@ -1,0 +1,250 @@
+---
+title: Check and Control the Image Animations!
+description: How to override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements.
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/fwvt-og.png"
+---
+
+
+import { Image } from "astro:assets";
+import Media from "@/components/Media.astro";
+import EpisodeNav from "@/components/EpisodeNav.astro";
+import wb from "@/assets/wb.png";
+import "@/styles/fwvt.css"
+
+
+
+<EpisodeNav>
+  <a href="/fwvt/enabling/">Episode 1</a>
+  <a class="selected" href="/fwvt/customizing/">Episode 2</a>
+  <a href="/fwvt/morphing/">Episode 3</a>
+</EpisodeNav>
+
+
+<div id="intro">
+  <Media>
+  <Image src={wb} alt="Fun with The Bag of Tricks and View Transitions" />
+  <p slot="caption">Fun with View Transitions</p>
+  </Media>
+
+  <div>
+Hello and welcome back to _Fun with View Transitions_, the series where we dive into the wonders of the View Transition API!
+
+In the [first episode](/fwvt/enabling/), we set up a multi-page site with built-in view transitions for navigation.
+Today, we are taking it a step further by exploring the defaults animations used during page transitions and learning how to fine-tune them to fit your needs.
+
+Here's what we'll cover:
+
+- Examining the pseudo-elements involved in view transitions
+- Breaking down the default cross-fade effect
+- Configuring a custom cross-fade
+- Crafting animations that go beyond cross-fades
+
+
+</div>
+</div>
+
+What will change on the example site?
+
+<Media>
+  <span class="not-content light:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/episode2-dark.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <span class="not-content dark:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/episode2-light.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <p slot="caption">Video showing normal page load without view transitions</p>
+</Media>
+<Media>
+  <span class="not-content light:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/solved2-dark.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <span class="not-content dark:sl-hidden">
+    <video
+      src="http://fun-with-view-transitions.pages.dev/videos/solved2-light.mp4"
+      autoplay
+      loop
+    />
+  </span>
+  <p slot="caption">Video showing view transitions as a smooth alternative to normal page load</p>
+</Media>
+
+
+
+<style>{`
+
+  video {
+    width: 340px;
+    display: inline;
+  }
+`}</style>
+
+Let’s jump in!
+
+## Meet the Pseudo-Elements
+
+
+Our journey begins by uncovering what happens behind the scenes when navigating between pages on a multi-page site with cross-document view transitions enabled.
+
+By applying the `@view-transition { navigation: auto }` CSS at-rule to all pages of your site, the View Transition API dynamically generates five [pseudo-elements](/basics/pseudos/) and injects them as a sub-tree within the document root.
+
+
+```txt title="Pseudo-elements created by the View Transition API"
+<html>
+  ::view-transition
+    ::view-transition-group(root)
+      ::view-transition-image-pair(root)
+        ::view-transition-old(root)
+        ::view-transition-new(root)
+```
+
+These pseudo-elements actually cover your entire viewport, concealing the original page behind them.
+
+* The `::view-transition-old(root)` is a snapshot image of the viewport as it appeared  right before you navigated away from the old page.
+* The `::view-transition-new(root)` is an image that shows the new page's viewport. Nice thing here is, that it is not a static snapshot. While it exists it dynamically reflects any changes happening on the new page.
+* The remaining three pseudo-elements are simple containers, similar to `<div>` elements. We'll revisit their role and how they animate in a future episode.
+
+Despite their unconventional names, these pseudo-elements behave like any other HTML pseudo-elements, making them fully customizable with CSS.
+
+## Cross-Fade Rules
+We can select them like a `<div>` or `<img>` elements and animate them. For example, we could fade out the old image with the following CSS rule.
+
+We can select and animate these pseudo-elementsJ just like `<img>` or `<div>` elements. For instance, we can fade out the old image using the following CSS rule:
+
+```css
+::view-transition-old(root) {
+  animation: 250ms ease 0ms 1 normal both -ua-view-transition-fade-out;
+  animation-duration: inherit;
+}
+```
+
+
+
+Fortunately, we don't need to define this ourselves. This exact[^1] animation is already applied by the View Transition API through the browser's built-in user-agent stylesheet as the default behavior.
+
+[^1]: Well, not _exaclty_ this, but very close. [See for yourself!](/basics/styling/#cross-fade-of-the-images)!
+
+Similarly, the API provides a built-in animation to fade in the new image:
+
+```css
+::view-transition-new(root) {
+  animation: 250ms ease 0ms 1 normal both -ua-view-transition-fade-in;
+  animation-duration: inherit;
+}
+```
+
+
+The animation duration of 0.25s is set on the `::view-transition-group(root)` and inherited through the `::view-transition-image-pair(root)`. This explains why we noted _"The animation lasts 250 milliseconds using CSS’s default ease timing function."_ at the [end of Episode One](/fwvt/enabling/#reviewing-our-progress-so-far#:~:text=The%20animation%20lasts,function.).
+
+
+## Can We Modify those Values?
+
+Absolutely! Since it's all pure CSS, there's no obscure magic here. As we discussed in Episode One, you know where to place [global CSS rules](/fwvt/enabling/#including-css-on-all-pages) for your site.
+
+:::tip
+If you don't have a suitable personal project to try things out, you can also follow along using this [exercise repository](https://github.com/vtbag/fun-with-view-transitions).
+:::
+
+To override the default animation and change the duration of the view transition, add this definition to your stylesheet:
+
+```css
+::view-transition-group(root) {
+  animation-duration: 10s;
+}
+```
+Okay, 10 seconds is far too long for a practical transition, but this exaggerated value serves a few purposes:
+
+* It makes the **effect obvious** enough to demonstrate the point clearly.
+
+* It highlights the **thoughtfulness behind the default rules**, crafted for consistency and developer experience, by letting you change the duration of two animations with a single change.
+
+* It gives you **time to inspect the pseudo-elements** in your browser's developer tools. These elements are temporarily attached to the `<html>` element and only exist for the duration of the animation.
+
+* This also gives you first-hand **experience with one limitation[^2]** of the View Transition API: although you can see the new page during the animation, you can’t interact with it until the transition ends.
+
+Manually setting long animation durations isn't the best way to inspect or debug view transitions, though. In a later episode, we will explore how to delay and pause view transitions using your browser's developer tools and the [Inspection Chamber](/tools/inspection-chamber/).
+
+
+Before you move on, don't forget to reset the overall animation duration to a more practical value, like the default 0.25 seconds or perhaps 0.2 seconds if you prefer a snappier cross-fade effect.
+
+
+**A Quick Tip:** When experimenting with animation parameters, resist the urge to push the fade-out and fade-in out of sync. Using different timings for concurrent  opacity changes can cause [odd visual effects](/tips/over-exposure/) when the browser combines the partially transparent images.
+
+[^2]: Rumors suggest that _scoped_ view transitions might eventually restore some interactivity during transitions. Stay tuned for updates!
+
+
+## Are There Alternatives to Cross-Fade?
+
+Definitively! Let's replace the cross-fade with a more dynamic animation where the old image fades away and the new image slides in with a subtile upward motion:
+
+```css
+::view-transition-old(root) {
+  animation-duration: 150ms;
+}
+::view-transition-new(root) {
+  animation: 150ms 100ms both slide-up;
+}
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10vh);
+  }
+}
+```
+
+In this example:
+
+* Both fade animations are sped up to just 150 milliseconds.
+* The animation for the new image is delayed by 100 milliseconds, so it begins only after the old image is almost fully faded out.
+* The combined effect creates a smooth animation that runs for 0.25 seconds overall.
+
+We also introduce a custom animation, `slide-up`, which blends a fade-in effect with slight upward movement. The possibilities are endless: move, stretch, rotate in 3D, or anything else CSS can do with images! All of it works seamlessly with the pseudo-elements provided by the View Transition API.
+
+You can even combine these animations with CSS transitions and the Web Animation API, opening up even more creative possibilities. But we'll leave that for another episode.
+
+Ready for another experiment? Try adding the following easing function to your animation for the new image
+`linear(0, 1.2 50%, 0.8 75%, 1)` and increase all duration values for a slower effect.
+
+If you want, you can compare your styles against the [sample solution](https://github.com/vtbag/fun-with-view-transitions/blob/main/examples/episode2/view-transition-solution.css).
+
+Here is what it looks at [fun-with-view-transitions.pages.dev](https://fun-with-view-transitions.pages.dev/examples/episode2/page1.html) with those changes applied.
+
+
+## What is "(root)"?
+
+Now it is time to ask why all the pseudo-element names we saw in this episode end with "(root)". The identifier `root` is a view transition name.
+
+View transition names tell the View Transition API to generate a `::view-transition-group` pseudo element for the DOM element the name is assigned to. So with more view transition names, there will be multiple `:view-transition-group` elements and the view transition name  is used to distinguish them. Therefore, the view transition names, for which the API generates groups, must be unique on a page. The API won't generate groups for invisible elements[^i]. So the rule in truth is: View transition names for visible DOM elements must be unique on a page.
+
+[^i]: "invisible" here means `display: none`. Just being clipped or hidden by `visibility: hidden`, `overflow: ...` or being obscured by other elements does not hinder group generation.
+
+That the whole view port is assigned the `root` name is another default from the useragent stylesheet:
+
+```css
+:root {
+  view-transition-name: root;
+}
+```
+As with any thing from the useragent stylesheet you can override it with a different name, and especially with the special ident `none`, which will remove the view-transition-name from the root element and prevent the generation of a view transition group for the document's `<html>` element.
+
+
+So what _are_ these additional groups then? This, my dear reader, is the topic of the next episode!
+
+
+Thank you for joining on this journey through the exciting world of view transitions.
+Until next time, keep animating, keep experimenting, and most importantly, keep having fun &hellip; with view transitions!

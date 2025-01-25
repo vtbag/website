@@ -1,0 +1,133 @@
+---
+
+---
+
+<span>
+  <span class="media"><slot /></span>
+  <dialog class="media">
+    <span><slot /></span>
+    <slot name="caption" />
+  </dialog>
+</span>
+
+<portal-gate to="end:head">
+  <script>
+    document
+      .querySelectorAll<HTMLSpanElement>("span.media")
+      .forEach((e) => {
+//        e.parentElement!.style.viewTransitionName = `media-${idx}`;
+//        e.parentElement!.style.viewTransitionClass = "nonewanim";
+        const dialog = e.nextElementSibling as HTMLDialogElement;
+        const content = dialog.firstElementChild as HTMLSpanElement;
+
+        e.addEventListener("click", () => {
+          const path = (current: HTMLElement) => {
+            const path = [];
+            while (current !== e) {
+              path.unshift(
+                [...current.parentElement!.children].indexOf(current)
+              );
+              current = current.parentElement!;
+            }
+            return path;
+          };
+
+          const walk = (current: HTMLElement, path: number[]) => {
+            for (const i of path) {
+              current = current.children[i] as HTMLElement;
+            }
+            return current;
+          };
+
+          const smallMedia = [
+            ...e.querySelectorAll<HTMLImageElement | HTMLVideoElement>(
+              "img,video"
+            ),
+          ].find((e) => e.offsetHeight > 0 && e.offsetWidth > 0);
+          if (!smallMedia) return;
+
+          smallMedia.style.viewTransitionName = "media";
+          const aspectRatio =
+            (smallMedia instanceof HTMLImageElement &&
+              smallMedia.naturalWidth / smallMedia.naturalHeight) ||
+            (smallMedia instanceof HTMLVideoElement &&
+              smallMedia.videoWidth / smallMedia.videoHeight) ||
+            1;
+          const viewportAspectRatio = window.innerWidth / window.innerHeight;
+
+          const bigMedia = walk(content, path(smallMedia))!;
+
+          if (aspectRatio > viewportAspectRatio) {
+            // Scale width, set height to auto
+            bigMedia.style.width = "80vw";
+            bigMedia.style.height = "auto";
+          } else {
+            // Scale height, set width to auto
+            bigMedia.style.width = "auto";
+            bigMedia.style.height = "80vh";
+          }
+          bigMedia.style.marginInline = "auto";
+          //@ts-ignore
+          bigMedia.style.viewTransitionClass =
+          //@ts-ignore
+            smallMedia.style.viewTransitionClass = "media";
+
+          document.startViewTransition(() => {
+            e.style.visibility = "hidden";
+            dialog.style.viewTransitionName = `dialog`;
+            smallMedia.style.viewTransitionName = "none";
+            bigMedia.style.viewTransitionName = "media";
+            dialog.showModal();
+          });
+          dialog.addEventListener(
+            "click",
+            () => {
+              document
+                .startViewTransition(() => {
+                  bigMedia.style.viewTransitionName = "none";
+                  smallMedia.style.viewTransitionName = "media";
+                  dialog.close();
+                })
+                .finished.finally(() => {
+                  e.style.visibility = "visible";
+                  smallMedia.style.viewTransitionName =
+                    dialog.style.viewTransitionName = "none";
+                });
+            },
+            { once: true }
+          );
+        });
+      });
+  </script>
+</portal-gate>
+
+<style is:global>
+  span.media {
+    cursor: zoom-in;
+  }
+  dialog {
+    margin: auto;
+    &::backdrop {
+      backdrop-filter: blur(5px);
+    }
+  }
+  span.media,
+  dialog.media span {
+    display: inline-block;
+  }
+  dialog.media {
+    border: dotted 1px gray;
+    border-radius: 1em;
+    box-shadow: 0 0 1em #8888;
+  }
+  ::view-transition-group(dialog) {
+    z-index: 1;
+  }
+  ::view-transition-group(.media) {
+    z-index: 2;
+  }
+  ::view-transition-new(.media),
+  ::view-transition-new(.nonewanim) {
+    animation-name: none;
+  }
+</style>

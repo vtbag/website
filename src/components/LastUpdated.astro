@@ -18,7 +18,7 @@ const gitDate = (f: string) =>
       cwd: dirname(f),
       encoding: "utf-8",
     }
-  ).stdout.trim();
+  ).stdout?.trim();
 const firstPublished = new Date(
   Number(gitDate(Astro.props.entry.filePath) + "000")
 );

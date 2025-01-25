@@ -104,7 +104,6 @@ function stop(where: string, extend: boolean) {
     if (e.viewTransition) {
       let bar = document.getElementById("vtbag-bar");
       width = storedWidth();
-      console.log("width :>> ", width);
       if (bar) {
         // pageswap
         if (width < 1) {

@@ -11,6 +11,7 @@ tableOfContents:
   maxHeadingLevel: 3
 ---
 
+import Media from "@/components/Media.astro";
 import SidePicture from "@/components/SidePicture.astro";
 import ReloadOnThemeChange from "@/components/ReloadOnThemeChange.astro";
 
@@ -69,6 +70,7 @@ main {
 
 Here is an interesting quirk: Scroll down a bit so part of the page content moves beneath the fixed search box at the top of the page.
 
+<Media>
 <div class="small">
   <span class="light:sl-hidden">
     ![Searchbox hides main area](./_hidden-dark.png)
@@ -77,9 +79,13 @@ Here is an interesting quirk: Scroll down a bit so part of the page content move
     ![Searchbox hides main area](./_hidden-light.png)
   </span>
 </div>
+<p slot="caption">Text scrolls beneath the header</
+p>
+</Media>
 
 Now navigate to a different page. During the view transition, the `::view-transition-group(main)` pseudo-element, along with its old and new images, enters the view transition layer. Since these images are taller than the viewport, they obscure the search box momentarily.
 
+<Media>
 <div class="small">
   <span class="light:sl-hidden">
     ![View transition image hides searchbox](./_unhidden-dark.png)
@@ -88,6 +94,8 @@ Now navigate to a different page. During the view transition, the `::view-transi
     ![iew transition image hides searchbox](./_unhidden-light.png)
   </span>
 </div>
+<p slot="caption">Header is obscured by text</p>
+</Media>
 
 <style>{`
 div.small img,
@@ -134,6 +142,7 @@ The paint order for old images in the view transition layer mirrors the paint or
 Another approach is to clip view transition images at their corresponding image pair or transition group. For example, this site uses a sliding view transition animation for the main content. Without specific adjustments, this animation would cause the main content to overlap the sidebar on the left and the in-page navigation on the right:
 
 <div class="large">
+<Media>
   <span class="light:sl-hidden">
     ![View transition images for main content overlap with
     sidebars](./_main-unhidden-dark.png)
@@ -142,6 +151,9 @@ Another approach is to clip view transition images at their corresponding image 
     ![View transition images for main content overlap with
     sidebars](./_main-unhidden-light.png)
   </span>
+  <p slot="caption">View transition images for main content overlap with
+    sidebars</p>
+</Media>
 </div>
 
 This overlap can be avoided by clipping the old and new images at the edges of their image pair:
@@ -157,6 +169,7 @@ Activating the Inspection Chamber (and temporarily disabling most of the view tr
 Since the main content areas occupy the same position on both the old and new pages, the browser's default animation for the `main` transition group has no effect during the transition. The group doesn't morph or move, it remains stationary. The combined effect with the clipping is that the view transition of the main content section seems to slide below the sidebars.
 
 <div class="large">
+<Media>
   <span class="light:sl-hidden">
     ![View transition images for main content get clipped to their original
     position](./_main-hidden-dark.png)
@@ -165,6 +178,9 @@ Since the main content areas occupy the same position on both the old and new pa
     ![View transition images for main content get clipped to their original
     position](./_main-hidden-light.png)
   </span>
+  <p slot="caption">View transition images for main content get clipped to their original
+    position</p>
+  </Media>
 </div>
 
 ### Clipping at the Group or Image Pair?

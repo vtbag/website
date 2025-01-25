@@ -1,0 +1,49 @@
+---
+
+---
+
+<nav class="episodes" style="view-transition-name: episode-nav">
+  <slot />
+</nav>
+
+<portal-gate to="end:head">
+<style is:global>
+  nav.episodes {
+    background-color: light-dark(var(--sl-color-gray-6),var(--sl-color-gray-4));
+    padding: 4px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 2lh;
+    box-shadow: 0 4px 8px #8888;
+    a {
+      color:var(--sl-color-white)
+      text-decoration: none;
+      padding: 14px 20px;
+      position:relative;
+      &.selected::before {
+        box-shadow: 0 0  2px #f884;
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: #8888;
+        border-radius: 2lh;
+        view-transition-name: roller;
+      }
+      &.selected {
+        color: light-dark(black, white);
+      }
+    }
+  }
+  ::view-transition-group(roller) {
+    animation-duration: 500ms;
+  }
+
+</style>
+
+<script>
+  document
+    .querySelector("h1")
+    ?.insertAdjacentElement("beforebegin", document.querySelector("nav.episodes")!);
+</script>
+</portal-gate>

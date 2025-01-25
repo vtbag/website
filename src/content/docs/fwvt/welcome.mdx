@@ -1,0 +1,142 @@
+---
+title: Welcome to "Fun with View Transitions"!
+description: Quick and fun exercises to add some visual flair to your MPA website with view transitions.
+---
+
+<script>{`document.querySelector("h1").innerHTML="Welcome to<br/><i>Fun with View Transitions</i>!"`}</script>
+
+import { Image } from "astro:assets";
+import Media from "@/components/Media.astro";
+import Episode from "@/components/Episode.astro";
+import EpisodePlayer from "@/components/EpisodePlayer.astro";
+import wb from "@/assets/wb.png";
+
+<div id="intro">
+  <Media>
+  <Image src={wb} alt="Fun with The Bag of Tricks and View Transitions" />
+  <p slot="caption">Fun with View Transitions</p>
+  </Media>
+  <div id="intro-text">
+    Hello, and welcome to _Fun with View Transitions!_
+
+    If you are anything like me, you are excited
+    to bring some life and polish to your website. In this little series we are
+    diving into the wonderful world of view transitions, where smooth animations
+    and fluent page updates can turn your site from _meh_ to _marvelous_.
+
+Whether you're new to view transitions or looking to level up your skills, this series will guide you step by step. If your browser does not support native view transitions (yes, we are looking at you, Firefox 👀) this may not be for you.
+
+Through quick, fun exercises, we'll explore how to add some serious visual flair to your web projects. Each episode will break down examples from this site, showing you step-by-step how to recreate them for your own view transition adventures adventures.
+
+So, let’s get started because view transitions are _seriously_ fun!
+
+  </div>
+  </div>
+
+<div class="no-vtbag-decl">
+  <EpisodePlayer>
+    <Episode
+        number={1}
+        title="Ladies and Gentlemen, Start Your Engines!"
+        description="We enable browser-native cross-document view transitions globally on your multi-page site."
+        details=""
+        href="/fwvt/enabling/"
+        from="January 19, 2025"
+      >
+
+In this first episode of the series, we'll cover the **essentials to get started** with view transitions for **MPA sites**:
+
+<div>
+
+  - Enabling cross-document view transitions
+  - Respecting users' preferences for reduced motion
+  - Including necessary CSS on all relevant pages
+  - Waiting for the main content of the page to load
+
+</div>
+
+      </Episode>
+    <Episode
+      number={2}
+      title="Check and Control the Image Animations!"
+      description="Let's override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements."
+      href="/fwvt/customizing/"
+      from="January 22, 2025">
+
+     Taking a closer look behind the scenes to explore how the View Transition API's built-in page transitions work, and how to tweak the default settings:
+
+<div>
+
+  - Examining the pseudo-elements involved in view transitions
+  - Breaking down the default cross-fade effect
+  - Configuring a custom cross-fade
+  - Crafting animations that go beyond cross-fades
+
+</div>
+
+      </Episode>
+    <Episode
+      number={3}
+      title="Make Your Images Glide Across the Screen!"
+      description="Today we add these morphing animations the View Transition API is famous for!"
+      href="/fwvt/morphing/"
+      from="January 25, 2025"
+    >
+
+
+     Time to add those iconic morph animations the View Transition API is famous for!
+
+     - Add `view-transition-name` properties to create additional animations
+     - Assign individual animation durations
+     - Morph anything into everything
+     - Be cautious when morphing small text sections with different content and styling
+
+
+</Episode>
+
+  </EpisodePlayer>
+</div>
+
+:::tip
+Don't have a suitable project to serve as a playground for your view transition experiments?
+
+No worries, the Bag has you covered! Clone this [exercise repository](https://github.com/vtbag/fun-with-view-transitions) and gain first-hand experience as you follow along with the examples from the episodes.
+:::
+
+<portal-gate to="end:head">
+
+<style>{`
+  .episode {
+    view-transition-class: episode;
+  }
+  #intro  {
+    display: flex;
+    flex-direction: column;
+    div {
+      flex: 1;
+    }
+    &>span {
+      margin-left: auto;
+      img {
+        display: inline-block;
+        height: 11lh;
+        width: auto;
+        view-transition-name: logo;
+      }
+    }
+  }
+  @media(min-width:450px) {
+    #intro {
+      flex-direction: row-reverse;
+    }
+  }
+  :root {
+    --sl-content-width: 100%;
+  }
+  aside.right-sidebar-container {
+    display: none;
+  }
+
+`}</style>
+
+</portal-gate>

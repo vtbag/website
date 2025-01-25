@@ -1,0 +1,66 @@
+::view-transition-new(main) {
+  animation: 250ms 250ms both ease-in shiftUp !important;
+}
+::view-transition-old(main) {
+  animation: 250ms 0ms both ease-in shiftDown !important;
+}
+
+::view-transition-image-pair(intro-text) {
+  perspective: 50cm;
+  transform-origin: center top;
+}
+::view-transition-old(intro-text) {
+  animation: 250ms forwards ease-out liftUp;
+}
+::view-transition-new(intro-text) {
+  animation: 250ms 250ms both ease-in dropDown;
+}
+
+@keyframes liftUp {
+  to {
+    transform: rotateX(-66deg);
+    opacity: 0;
+  }
+}
+@keyframes dropDown {
+  from {
+    transform: rotateX(-66deg);
+    opacity: 0;
+  }
+}
+@keyframes shiftDown {
+  to {
+    transform: translateY(20vh);
+    opacity: 0;
+  }
+}
+@keyframes shiftUp {
+  from {
+    transform: translateY(20vh);
+    opacity: 0;
+  }
+}
+#intro {
+  display: flex;
+  flex-direction: column;
+  div {
+    flex: 1;
+  }
+  & > span {
+    margin-left: auto;
+    img {
+      height: 10lh;
+      width: auto;
+      margin-left: auto;
+      view-transition-name: logo;
+    }
+  }
+  > div {
+    view-transition-name: intro-text;
+  }
+}
+@media (min-width: 450px) {
+  #intro {
+    flex-direction: row-reverse;
+  }
+}

@@ -1,0 +1,106 @@
+---
+export interface Props {
+  number: number;
+  title: string;
+  description: string;
+  icon?: any;
+  from: string;
+  href: string;
+}
+const { title, description, icon, href, number = 1, from } = Astro.props;
+---
+
+<div class="episode" data-href={href}>
+  <div class="episode-content">
+    <span class="episode-number">{number}</span><p class="episode-date">
+      Episode from {from}
+    </p><h2 class="episode-title">{icon} {title}</h2><p
+      class="episode-description"
+    >
+      {description}
+    </p>
+    <details>
+      <summary></summary>
+      <slot />
+    </details>
+  </div>
+</div>
+
+<style is:global>
+  summary {
+    list-style: none;
+  }
+  .episode details {
+    margin-top: 1rem;
+    p {
+      margin-bottom: 0.5lh;
+    }
+  }
+  :root {
+    --episode-bg: light-dark(#fff, #333);
+    --episode-border: light-dark(#ddd, #444);
+    --episode-shadow: light-dark(
+      rgba(128, 128, 128, 0.5),
+      rgba(128, 128, 128, 0.9)
+    );
+    --episode-title: light-dark(#333, #ccc);
+    --episode-description: light-dark(#335, #cce);
+    --episode-date: light-dark(#777, #bbb);
+  }
+
+  .episode {
+    cursor: pointer;
+    display: block;
+    background-color: var(--episode-bg);
+    border: 1px solid var(--episode-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px var(--episode-shadow);
+    transition: all 0.5s;
+    text-decoration: none;
+    &:hover {
+      box-shadow: 3px 4px 8px var(--episode-shadow);
+      transform: translate(-4px, -4px);
+    }
+  }
+
+  .episode-content {
+    padding: 16px;
+    position: relative;
+  }
+
+  .episode-number {
+    border-radius: 50%;
+    display: inline-block;
+    background-color: color-mix(
+      in sRGB,
+      var(--episode-border) 40%,
+      transparent
+    );
+    width: 2em;
+    height: 2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+
+  .episode-title {
+    margin: 0;
+    font-size: 1.5em;
+    color: var(--episode-title);
+  }
+
+  .episode-description {
+    margin: 8px 0 0;
+    color: var(--episode-description);
+  }
+
+  .episode-date {
+    margin: 8px 0 0;
+    color: var(--episode-date);
+    font-size: 0.8em;
+  }
+</style>
