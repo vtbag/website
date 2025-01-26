@@ -123,7 +123,10 @@ Two key events enable JavaScript interaction: `pageswap`, dispatched just before
 
 ### ViewTransition Object
 
-Both events include a `viewTransition` property, which holds a `ViewTransition` object if the transition is part of a cross-document view transition. This is the [same object](/basics/javascript/#viewtransition-object) as for same-document view transitions. For `pagereveal`, when `viewTransition` is defined, its `updateCallbackDone` promise is immediately settled.
+Both events include a `viewTransition` property, which holds a `ViewTransition` object if the transition is part of a cross-document view transition. The object has the [same structure](/basics/javascript/#viewtransition-object) as for same-document view transitions.
+
+For `pageswap`, if `viewTransition` is defined, its promises will never settle because the page is unloaded before it is "updated".
+For `pagereveal`, if `viewTransition` is defined, its `updateCallbackDone` promise is immediately settled.
 
 The events allow you to manipulate the DOM or CSS properties right before snapshots are taken or the new page's live images are captured. In particular, they allow for [setting view transition types](/basics/styling/#-with-types) for the current view transition.
 
