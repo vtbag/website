@@ -290,7 +290,7 @@ The list on the left contains two checkerboard `<div>` elements: one before and 
 
 To bring pseudo-elements to the front during a view transition, you can adjust their stacking order using the `z-index` property. This allows the pseudo-elements to obscure other images in the view transition layer.
 
-However, keep the following in mind:Pseudo-elements are initially stacked [according to the DOM paint order](/basics/pseudos/#creation-of-pseudo-elements) of their originating elements. This can lead to flashes of unwanted images right at the start of the view transition as in the example to the right.
+However, keep the following in mind: Pseudo-elements are initially stacked [according to the DOM paint order](/basics/pseudos/#creation-of-pseudo-elements) of their originating elements. This can lead to flashes of unwanted images right at the start of the view transition as in the example to the right.
 
 Such effects can be prevented by just setting the `z-index` property on the DOM elements with the view transition name. A simpler solution is to position the stencils further down in the HTML, ensuring they are naturally higher in the stacking order. Elements that appear later in the DOM usually stack above earlier elements, reducing the need for complex z-index adjustments.
 

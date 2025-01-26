@@ -2,6 +2,7 @@
 import type { Props } from "@astrojs/starlight/props";
 import StarlightHead from "@astrojs/starlight/components/Head.astro";
 import turnSignal from "@vtbag/turn-signal?url";
+import linkTypes from "@vtbag/turn-signal/link-types?url";
 import camShaft from "@vtbag/cam-shaft?url";
 import declarativeNames from "@vtbag/utensil-drawer/declarative-names?url";
 import PagefindToTextFragments from "./PagefindToTextFragments.astro";
@@ -17,6 +18,8 @@ import PagefindToTextFragments from "./PagefindToTextFragments.astro";
 {/* Make animation direction based on the order of the pages in the sidebar */}
 <script is:inline src={turnSignal} data-selector="header a, nav.sidebar li a"
 ></script>
+{/* annotate links with view transition types */}
+<script is:inline src={linkTypes}></script>
 
 {/* Make headings stand out during view transitions. */}
 <script

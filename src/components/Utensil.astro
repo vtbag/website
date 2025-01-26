@@ -1,16 +1,16 @@
 ---
-
 export interface Props {
   title: string;
   description: string;
+  icon?: any;
   href: string;
 }
-const { title, description, href } = Astro.props;
+const { title, description, icon, href } = Astro.props;
 ---
 
 <a class="utensil" {href}>
   <div class="utensil-content">
-    <h2 class="utensil-title">{title}</h2>
+    <h2 class="utensil-title">{icon} {title}</h2>
     <p class="utensil-description">{description}</p>
   </div>
 </a>
@@ -23,12 +23,14 @@ const { title, description, href } = Astro.props;
       rgba(128, 128, 128, 0.5),
       rgba(128, 128, 128, 0.9)
     );
-    --utensil-title: light-dark(#000, #fff);
-    --utensil-description: light-dark(#555, #ccc);
+    --utensil-title: light-dark(333, #ccc);
+    --utensil-description: light-dark(#335, #cce);
     --utensil-date: light-dark(#777, #bbb);
   }
 
   .utensil {
+    display: block;
+    text-wrap: balance;
     background-color: var(--utensil-bg);
     border: 1px solid var(--utensil-border);
     border-radius: 8px;
@@ -38,10 +40,9 @@ const { title, description, href } = Astro.props;
     text-decoration: none;
     &:hover {
       box-shadow: 3px 4px 8px var(--utensil-shadow);
-      transform: translate(-4px,-4px);
+      transform: translate(-4px, -4px);
     }
   }
-
 
   .utensil-content {
     padding: 16px;

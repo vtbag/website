@@ -12,9 +12,10 @@ head:
 ---
 
 import { Steps } from "@astrojs/starlight/components";
-import Logo from "../../../components/Logo.astro";
-import crossing from "../../../assets/crossing.png";
-import CTA from "../../../components/CTA.astro";
+import Logo from "@/components/Logo.astro";
+import crossing from "@/assets/crossing.png";
+import CTA from "@/components/CTA.astro";
+import Media from "@/components/Media.astro";
 
 <Logo alt="The Element Crossing" image={crossing}>
 Transfer selected element states across cross-document view transitions.
@@ -28,8 +29,10 @@ This also works independent of view transitions as long as all pages have the sa
 
 ## PREREQUISITE
 
-:::danger[Dependency on View Transition API]
-The Element Crossing is designed for use with cross-document view transitions. While it can also be used independently of view transitions and on browsers without native support for Level 2 of the View Transition API. In that case, the fallback might appear jumpy, depending on the element state it's applied to.
+:::note[Best when used with the View Transition API]
+The Element Crossing is designed for use with cross-document view transitions.
+
+It might also be used independently of view transitions and on browsers without native support for Level 2 of the View Transition API. In that case, the fallback might appear jumpy, depending on the element state it's applied to.
 :::
 
 ## State Loss on Cross-Document Transitions
@@ -105,15 +108,21 @@ To move state to the next page, you need to tell the Element Crossing for which 
 
 The `data-vtbag-x` attribute accepts a string that has to fullfil the following grammar:
 
-<div style="width: min(100%, 555px); margin:0 auto">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 217" width="100%">
-    {/*
-data-vtbag-x ::= "id:" identifier ( space+ "prop:" name | space+ "class:" name | space+ "style:" name | space+ "anim:" name )*+
-*/}
+<div style="width:fit-content; margin-inline:auto">
+<Media>
+<p slot="caption">
+```awk
+ data-vtbag-x ::= 'id:' identifier specification ;
+specification ::= ( space+ ( 'prop:' | 'class:' | 'style:' | 'anim:' ) name )* ;
+```
+</p>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 217" style="width: 600px">
+    {/* bottlecaps.de/rr/ui */}
     <defs>
       <style>
         {`
     .line                 {fill: none; stroke: #888888; stroke-width: 1;}
+    polygon              {fill: #888888;}
     text.terminal         {font-family: Verdana, Sans-serif;
                             font-size: 12px;
                             fill: #141000;
@@ -192,7 +201,12 @@ data-vtbag-x ::= "id:" identifier ( space+ "prop:" name | space+ "class:" name |
    <polygon points="573 49 581 45 581 53"/>
    <polygon points="573 49 565 45 565 53"/>
 </svg>
+</Media>
 </div>
+```awk
+d ata-vtbag-x ::= 'id:' identifier specification ;
+specification ::= ( space+ ( 'prop:' | 'class:' | 'style:' | 'anim:' ) name )* ;
+```
 
 #### id
 

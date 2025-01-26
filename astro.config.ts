@@ -123,8 +123,9 @@ function sidebar() {
     items: [
       { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" },
       { label: 'Element Crossing', link: "/tools/element-crossing/" },
-      { label: 'Turn-Signal', link: "/tools/turn-signal/" },
-      { label: 'Cam-Shaft', link: "/tools/cam-shaft/" }
+      { label: 'Turn Signal', link: "/tools/turn-signal/" },
+      { label: 'Cam-Shaft', link: "/tools/cam-shaft/" },
+      { label: 'Utensil Drawer', link: "/tools/utensil-drawer/" }
     ],
   }, {
     label: 'Basics',

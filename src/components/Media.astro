@@ -12,92 +12,102 @@
 
 <portal-gate to="end:head">
   <script>
-    document
-      .querySelectorAll<HTMLSpanElement>("span.media")
-      .forEach((e) => {
-//        e.parentElement!.style.viewTransitionName = `media-${idx}`;
-//        e.parentElement!.style.viewTransitionClass = "nonewanim";
-        const dialog = e.nextElementSibling as HTMLDialogElement;
-        const content = dialog.firstElementChild as HTMLSpanElement;
+    document.querySelectorAll<HTMLSpanElement>("span.media").forEach((e) => {
+      //        e.parentElement!.style.viewTransitionName = `media-${idx}`;
+      //        e.parentElement!.style.viewTransitionClass = "nonewanim";
+      const dialog = e.nextElementSibling as HTMLDialogElement;
+      const content = dialog.firstElementChild as HTMLSpanElement;
 
-        e.addEventListener("click", () => {
-          const path = (current: HTMLElement) => {
-            const path = [];
-            while (current !== e) {
-              path.unshift(
-                [...current.parentElement!.children].indexOf(current)
-              );
-              current = current.parentElement!;
-            }
-            return path;
-          };
-
-          const walk = (current: HTMLElement, path: number[]) => {
-            for (const i of path) {
-              current = current.children[i] as HTMLElement;
-            }
-            return current;
-          };
-
-          const smallMedia = [
-            ...e.querySelectorAll<HTMLImageElement | HTMLVideoElement>(
-              "img,video"
-            ),
-          ].find((e) => e.offsetHeight > 0 && e.offsetWidth > 0);
-          if (!smallMedia) return;
-
-          smallMedia.style.viewTransitionName = "media";
-          const aspectRatio =
-            (smallMedia instanceof HTMLImageElement &&
-              smallMedia.naturalWidth / smallMedia.naturalHeight) ||
-            (smallMedia instanceof HTMLVideoElement &&
-              smallMedia.videoWidth / smallMedia.videoHeight) ||
-            1;
-          const viewportAspectRatio = window.innerWidth / window.innerHeight;
-
-          const bigMedia = walk(content, path(smallMedia))!;
-
-          if (aspectRatio > viewportAspectRatio) {
-            // Scale width, set height to auto
-            bigMedia.style.width = "80vw";
-            bigMedia.style.height = "auto";
-          } else {
-            // Scale height, set width to auto
-            bigMedia.style.width = "auto";
-            bigMedia.style.height = "80vh";
+      e.addEventListener("click", () => {
+        const path = (current: HTMLElement | SVGSVGElement) => {
+          const path = [];
+          while (current !== e) {
+            path.unshift([...current.parentElement!.children].indexOf(current));
+            current = current.parentElement!;
           }
-          bigMedia.style.marginInline = "auto";
-          //@ts-ignore
-          bigMedia.style.viewTransitionClass =
-          //@ts-ignore
-            smallMedia.style.viewTransitionClass = "media";
+          return path;
+        };
 
-          document.startViewTransition(() => {
-            e.style.visibility = "hidden";
+        const walk = (current: HTMLElement, path: number[]) => {
+          for (const i of path) {
+            current = current.children[i] as HTMLElement;
+          }
+          return current;
+        };
+
+        const smallMedia = [
+          ...e.querySelectorAll<
+            HTMLImageElement | HTMLVideoElement | SVGSVGElement
+          >("img,video,svg"),
+        ].find(
+          (e) =>
+            (!(e instanceof SVGSVGElement) &&
+              e.offsetHeight > 0 &&
+              e.offsetWidth > 0) ||
+            (e instanceof SVGSVGElement &&
+              e.height.baseVal.value > 0 &&
+              e.width.baseVal.value > 0)
+        );
+        if (!smallMedia) return;
+
+        smallMedia.style.viewTransitionName = "media";
+        const aspectRatio =
+          (smallMedia instanceof HTMLImageElement &&
+            smallMedia.naturalWidth / smallMedia.naturalHeight) ||
+          (smallMedia instanceof HTMLVideoElement &&
+            smallMedia.videoWidth / smallMedia.videoHeight) ||
+          (smallMedia instanceof SVGSVGElement &&
+            smallMedia.width.baseVal.value / smallMedia.height.baseVal.value) ||
+          1;
+        const viewportAspectRatio = window.innerWidth / window.innerHeight;
+
+        const bigMedia = walk(content, path(smallMedia))!;
+
+        if (aspectRatio > viewportAspectRatio) {
+          // Scale width, set height to auto
+          bigMedia.style.width = "80vw";
+          bigMedia.style.height = "auto";
+        } else {
+          // Scale height, set width to auto
+          bigMedia.style.width = "auto";
+          bigMedia.style.height = "80vh";
+        }
+        bigMedia.style.marginInline = "auto";
+        //@ts-ignore
+        bigMedia.style.viewTransitionClass =
+          //@ts-ignore
+          smallMedia.style.viewTransitionClass = "media";
+
+        document.startViewTransition({
+          update: () => {
             dialog.style.viewTransitionName = `dialog`;
             smallMedia.style.viewTransitionName = "none";
             bigMedia.style.viewTransitionName = "media";
             dialog.showModal();
-          });
-          dialog.addEventListener(
-            "click",
-            () => {
-              document
-                .startViewTransition(() => {
+          },
+          types: ["media"],
+        });
+        dialog.addEventListener(
+          "click",
+          () => {
+            document
+              .startViewTransition({
+                update: () => {
                   bigMedia.style.viewTransitionName = "none";
                   smallMedia.style.viewTransitionName = "media";
                   dialog.close();
-                })
-                .finished.finally(() => {
-                  e.style.visibility = "visible";
-                  smallMedia.style.viewTransitionName =
-                    dialog.style.viewTransitionName = "none";
-                });
-            },
-            { once: true }
-          );
-        });
+                },
+                types: ["media"],
+              })
+              .finished.finally(() => {
+                smallMedia.style.viewTransitionName =
+                  dialog.style.viewTransitionName = "none";
+              });
+          },
+          { once: true }
+        );
       });
+    });
   </script>
 </portal-gate>
 
@@ -127,6 +137,7 @@
     z-index: 2;
   }
   ::view-transition-new(.media),
+  ::view-transition-old(.media),
   ::view-transition-new(.nonewanim) {
     animation-name: none;
   }

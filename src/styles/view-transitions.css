@@ -14,10 +14,10 @@ main h1 {
   view-transition-name: title-heading;
 }
 
-::view-transition-old(main) {
+:active-view-transition-type(forward)::view-transition-old(main) {
   animation: forwardsSwingOut 500ms ease-in-out;
 }
-::view-transition-new(main) {
+:active-view-transition-type(forward)::view-transition-new(main) {
   animation: forwardsSwingIn 500ms ease-in-out;
 }
 :active-view-transition-type(backward)::view-transition-old(main) {
