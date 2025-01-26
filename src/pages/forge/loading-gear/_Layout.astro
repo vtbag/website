@@ -13,13 +13,11 @@ const { title } = Astro.props;
     <title>{title}</title>
     <script>
       addEventListener("pageswap", (e) => {
-        // @ts-expect-error
         if (e.viewTransition) {
           console.log(new Date().getTime(), "pageswap");
         }
       });
       addEventListener("pagereveal", (e) => {
-        // @ts-expect-error
         if (e.viewTransition) {
           console.log(new Date().getTime(), "pagereveal");
         }
