@@ -8,13 +8,16 @@ head:
       content: "/fwvt-og.png"
 ---
 
-<script>{`document.querySelector("h1").innerHTML="Welcome to<br/><i>Fun with View Transitions</i>!"`}</script>
+<portal-gate to="end:head">
+<script>{`addEventListener('pagereveal',()=>document.querySelector("h1").innerHTML="Welcome to<br/><i>Fun with View Transitions</i>!")`}</script>
+</portal-gate>
 
 import { Image } from "astro:assets";
 import Media from "@/components/Media.astro";
 import Episode from "@/components/Episode.astro";
 import EpisodePlayer from "@/components/EpisodePlayer.astro";
 import wb from "@/assets/wb.png";
+import "@/styles/fwvt.css";
 
 <div id="intro">
   <Media>
@@ -36,7 +39,7 @@ Through quick, fun exercises, we'll explore how to add some serious visual flair
 So, let’s get started because view transitions are _seriously_ fun!
 
   </div>
-  </div>
+</div>
 
 <div class="no-vtbag-decl">
   <EpisodePlayer>
@@ -48,20 +51,14 @@ So, let’s get started because view transitions are _seriously_ fun!
         href="/fwvt/enabling/"
         from="January 19, 2025"
       >
+      In this first episode of the series, we'll cover the **essentials to get started** with view transitions for **MPA sites**:
 
-In this first episode of the series, we'll cover the **essentials to get started** with view transitions for **MPA sites**:
-
-<div>
-
-  - Enabling cross-document view transitions
-  - Respecting users' preferences for reduced motion
-  - Including necessary CSS on all relevant pages
-  - Waiting for the main content of the page to load
-
-</div>
-
-      </Episode>
-    <Episode
+- Enabling cross-document view transitions
+- Respecting users' preferences for reduced motion
+- Including necessary CSS on all relevant pages
+- Waiting for the main content of the page to load
+</Episode>
+<Episode
       number={2}
       title="Check and Control the Image Animations!"
       description="Let's override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements."
@@ -70,16 +67,11 @@ In this first episode of the series, we'll cover the **essentials to get started
 
      Taking a closer look behind the scenes to explore how the View Transition API's built-in page transitions work, and how to tweak the default settings:
 
-<div>
-
   - Examining the pseudo-elements involved in view transitions
   - Breaking down the default cross-fade effect
   - Configuring a custom cross-fade
   - Crafting animations that go beyond cross-fades
-
-</div>
-
-      </Episode>
+</Episode>
     <Episode
       number={3}
       title="Make Your Images Glide Across the Screen!"
@@ -88,18 +80,14 @@ In this first episode of the series, we'll cover the **essentials to get started
       from="January 25, 2025"
     >
 
-
      Time to add those iconic morph animations the View Transition API is famous for!
 
      - Add `view-transition-name` properties to create additional animations
      - Assign individual animation durations
      - Morph anything into everything
      - Be cautious when morphing small text sections with different content and styling
-
-
 </Episode>
-
-  </EpisodePlayer>
+</EpisodePlayer>
 </div>
 
 :::tip

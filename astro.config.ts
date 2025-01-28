@@ -46,13 +46,10 @@ export default defineConfig({
     title: '@vtbag',
     components: {
       Head: "./src/components/NHead.astro",
+      MarkdownContent: "./src/components/MarkdownContent.astro",
       PageTitle: "./src/components/PageTitle.astro",
-      PageFrame: "./src/components/PageFrame.astro",
       Sidebar: "./src/components/Sidebar.astro"
     },
-    // plugins: [
-    //     ion({ overrides: { Head: false } }),
-    //    starlightImageZoom()],
     tableOfContents: {
       minHeadingLevel: 2,
       maxHeadingLevel: 4
@@ -73,10 +70,11 @@ export default defineConfig({
       tag: "link",
       attrs: {
         rel: "expect",
-        href: "#the_unexpected",
+        href: "#sl-main-content",
         blocking: "render"
       }
     }],
+
     customCss: ["./src/styles/custom.css", "./src/styles/sidebar.css", "./src/styles/view-transitions.css",
       "./src/styles/vtbag-bar.css"],
     lastUpdated: true,
@@ -151,7 +149,7 @@ function sidebar() {
       { label: "Pseudo-smooth-scrolling?", link: "/tips/pseudo-smooth-scrolling/" },
     ]
   },
-  { label: 'Fun with View Transitions', link: "/fwvt/welcome/", badge: { text: 'New!', variant: 'success' } as Badge},
+  { label: 'Fun with View Transitions', link: "/fwvt/welcome/", badge: { text: 'New!', variant: 'success' } as Badge },
   { label: "BagLog", link: "/baglog" }, {
     label: 'All Demos',
     collapsed: true,

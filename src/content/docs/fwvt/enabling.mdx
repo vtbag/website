@@ -14,6 +14,8 @@ import EpisodeNav from "@/components/EpisodeNav.astro";
 import wb from "@/assets/wb.png";
 import "@/styles/fwvt.css";
 
+<script type="module">{`setTimeout(()=>{document.querySelectorAll("video").forEach(v=>v.style.visibility="visible")},1000)`}</script>
+
 <EpisodeNav>
   <a class="selected" href="/fwvt/enabling/">Episode 1</a>
   <a href="/fwvt/customizing/">Episode 2</a>
@@ -43,14 +45,14 @@ Here’s what the difference between a full load and cross-document view transit
 <Media>
   <span class="not-content light:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/episode1-dark.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/episode1-dark.mp4"
       autoplay playsinline controls
       loop
     />
   </span>
   <span class="not-content dark:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/episode1-light.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/episode1-light.mp4"
       autoplay playsinline controls
       loop
     />
@@ -60,14 +62,14 @@ Here’s what the difference between a full load and cross-document view transit
 <Media>
   <span class="not-content light:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/solved1-dark.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/solved1-dark.mp4"
       autoplay playsinline controls
       loop
     />
   </span>
   <span class="not-content dark:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/solved1-light.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/solved1-light.mp4"
       autoplay playsinline controls
       loop
     />

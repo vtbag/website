@@ -66,6 +66,7 @@ import EpisodeGrid from "./EpisodeGrid.astro";
   }
 </style>
 <script>
+  import { vtbagNavigate } from "./navigate";
   const selected = document.querySelector(".selected")!;
   const episodes = document.querySelector(".episode-grid")!;
   const styleElement = document.head.appendChild(
@@ -77,16 +78,20 @@ import EpisodeGrid from "./EpisodeGrid.astro";
       .find((e) => e.textContent === episodeIndex)
       ?.closest(".episode") ?? episodes.firstElementChild!;
   const main = document.querySelector("main")!;
+  main.style.viewTransitionName = "main";
+
   selected.appendChild(episodes.removeChild(episode)!);
   selected.querySelector("details")!.open = true;
 
-  selected.parentElement?.addEventListener("click", () =>
-    open(selected.firstElementChild as HTMLElement, main)
-  );
+  selected.parentElement?.addEventListener("click", (event) => {
+    event.stopPropagation();
+    open(selected.firstElementChild as HTMLElement);
+  });
   document.querySelectorAll<HTMLElement>(".episode").forEach((e) =>
-    e.addEventListener("click", () => {
+    e.addEventListener("click", (event) => {
       if (e.parentElement === selected) {
-        return open(e, main);
+        event.stopPropagation();
+        return open(e);
       }
       main.style.viewTransitionName = "none";
       let n: HTMLElement = e.parentElement?.firstElementChild as HTMLElement;
@@ -153,14 +158,13 @@ import EpisodeGrid from "./EpisodeGrid.astro";
     })
   );
 
-  function open(e: HTMLElement, main: HTMLElement) {
+  function open(e: HTMLElement) {
     localStorage.setItem(
       "fwvt-idx",
       e.querySelector(".episode-number")!.textContent ?? "1"
     );
-    main.style.viewTransitionName = "main";
     const introText = document.querySelector<HTMLElement>("#intro-text");
     introText && (introText.style.viewTransitionName = "intro-text");
-    location.assign(e.dataset.href!);
+    vtbagNavigate({ href: e.dataset.href!, dataVtbagLinkTypes: "direct" });
   }
 </script>

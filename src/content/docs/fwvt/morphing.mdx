@@ -14,6 +14,8 @@ import EpisodeNav from "@/components/EpisodeNav.astro";
 import wb from "@/assets/wb.png";
 import "@/styles/fwvt.css";
 
+<script type="module">{`setTimeout(()=>{document.querySelectorAll("video").forEach(v=>v.style.visibility="visible")},1000)`}</script>
+
 <EpisodeNav>
   <a href="/fwvt/enabling/">Episode 1</a>
   <a href="/fwvt/customizing/">Episode 2</a>
@@ -48,14 +50,14 @@ Here's how we'll refine the example project. From the custom full-viewport anima
 <Media>
   <span class="not-content light:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/episode3-dark.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/episode3-dark.mp4"
       autoplay playsinline controls
       loop
     />
   </span>
   <span class="not-content dark:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/episode3-light.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/episode3-light.mp4"
       autoplay playsinline controls
       loop
     />
@@ -67,14 +69,14 @@ Here's how we'll refine the example project. From the custom full-viewport anima
 <Media>
   <span class="not-content light:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/solved3-dark.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/solved3-dark.mp4"
       autoplay playsinline controls
       loop
     />
   </span>
   <span class="not-content dark:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/solved3-light.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/solved3-light.mp4"
       autoplay playsinline controls
       loop
     />

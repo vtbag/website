@@ -15,6 +15,7 @@ import EpisodeNav from "@/components/EpisodeNav.astro";
 import wb from "@/assets/wb.png";
 import "@/styles/fwvt.css"
 
+<script type="module">{`setTimeout(()=>{document.querySelectorAll("video").forEach(v=>v.style.visibility="visible")},1000)`}</script>
 
 
 <EpisodeNav>
@@ -52,14 +53,14 @@ What will change on the example site?
 <Media>
   <span class="not-content light:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/episode2-dark.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/episode2-dark.mp4"
       autoplay playsinline controls
       loop
     />
   </span>
   <span class="not-content dark:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/episode2-light.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/episode2-light.mp4"
       autoplay playsinline controls
       loop
     />
@@ -69,14 +70,14 @@ What will change on the example site?
 <Media>
   <span class="not-content light:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/solved2-dark.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/solved2-dark.mp4"
       autoplay playsinline controls
       loop
     />
   </span>
   <span class="not-content dark:sl-hidden">
     <video
-      src="http://fun-with-view-transitions.pages.dev/videos/solved2-light.mp4"
+      src="https://fun-with-view-transitions.pages.dev/videos/solved2-light.mp4"
       autoplay playsinline control
       loop
     />

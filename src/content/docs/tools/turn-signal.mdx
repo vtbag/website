@@ -142,6 +142,10 @@ The scripts offered by the turn-signal package are:
 |directions + link types|@vtbag/turn-signal|lib/index.js|
 |same as above with debug output|@vtbag/turn-signal/debug|lib/debug.js|
 
+:::note
+The index.js file combines directions and link types. The view transition type set will hold types from both features. You can prioritize types by ordering the CSS rules that use them.
+:::
+
 ## How to Configure the Scripts
 
 The scripts can be configured or guided by attributes on the script element itself or anchor elements in case of the _link types_ script.
