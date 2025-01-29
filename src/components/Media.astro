@@ -118,6 +118,7 @@
   dialog {
     margin: auto;
     &::backdrop {
+      view-transition-name: dialog-backdrop;
       backdrop-filter: blur(5px);
     }
   }
@@ -129,6 +130,9 @@
     border: dotted 1px gray;
     border-radius: 1em;
     box-shadow: 0 0 1em #8888;
+  }
+  ::view-transition-group(dialog-backdrop) {
+    animation-duration: 500ms;
   }
   ::view-transition-group(dialog) {
     z-index: 1;
