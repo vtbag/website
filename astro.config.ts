@@ -5,7 +5,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 //import remarkHeadingID from 'remark-heading-id';
 //import starlightImageZoom from 'starlight-image-zoom';
-import { visualizer } from "rollup-plugin-visualizer";
+//import { visualizer } from "rollup-plugin-visualizer";
 
 import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
@@ -98,16 +98,16 @@ export default defineConfig({
   }), vtbot({ autoLint: false, loadingIndicator: false }), inoxToolsPortalGun()],
   vite: {
     build: {
-      assetsInlineLimit: 0,
+      assetsInlineLimit: 4096,
     },
     server: {
       fs: {
         allow: ['..']
       }
-    },
+    },/*
     plugins: [visualizer({
       brotliSize: true
-    })]
+    })]*/
   }
 });
 

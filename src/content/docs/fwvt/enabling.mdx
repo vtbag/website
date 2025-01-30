@@ -17,9 +17,15 @@ import "@/styles/fwvt.css";
 <script type="module">{`setTimeout(()=>{document.querySelectorAll("video").forEach(v=>v.style.visibility="visible")},1000)`}</script>
 
 <EpisodeNav>
-  <a class="selected" href="/fwvt/enabling/">Episode 1</a>
-  <a href="/fwvt/customizing/">Episode 2</a>
-  <a href="/fwvt/morphing/">Episode 3</a>
+  <span class="selected">
+    <a href="/fwvt/enabling/">Episode 1</a>
+  </span>
+  <span>
+    <a href="/fwvt/customizing/">Episode 2</a>
+  </span>
+  <span>
+    <a href="/fwvt/morphing/">Episode 3</a>
+  </span>
 </EpisodeNav>
 
 <div id="intro">
@@ -28,7 +34,7 @@ import "@/styles/fwvt.css";
   <p slot="caption">Hello, and welcome to _Fun with View Transitions_</p>
   </Media>
 
-  <div>
+<div>
 Hello and welcome to the very first episode of _Fun with View Transitions_, where we explore the magic of the View Transition API.
 
 To give you a bit of a smoother entry , this episode covers the essentials to get started with view transitions for your multi-page site.
@@ -46,14 +52,18 @@ Here’s what the difference between a full load and cross-document view transit
   <span class="not-content light:sl-hidden">
     <video
       src="https://fun-with-view-transitions.pages.dev/videos/episode1-dark.mp4"
-      autoplay playsinline controls
+      autoplay
+      playsinline
+      controls
       loop
     />
   </span>
   <span class="not-content dark:sl-hidden">
     <video
       src="https://fun-with-view-transitions.pages.dev/videos/episode1-light.mp4"
-      autoplay playsinline controls
+      autoplay
+      playsinline
+      controls
       loop
     />
   </span>
@@ -63,18 +73,24 @@ Here’s what the difference between a full load and cross-document view transit
   <span class="not-content light:sl-hidden">
     <video
       src="https://fun-with-view-transitions.pages.dev/videos/solved1-dark.mp4"
-      autoplay playsinline controls
+      autoplay
+      playsinline
+      controls
       loop
     />
   </span>
   <span class="not-content dark:sl-hidden">
     <video
       src="https://fun-with-view-transitions.pages.dev/videos/solved1-light.mp4"
-      autoplay playsinline controls
+      autoplay
+      playsinline
+      controls
       loop
     />
   </span>
-  <p slot="caption">Video showing view transitions as a smooth alternative to normal page load</p>
+  <p slot="caption">
+    Video showing view transitions as a smooth alternative to normal page load
+  </p>
 </Media>
 
 :::tip
@@ -224,5 +240,7 @@ Thank you for joining on this journey through the exciting world of view transit
 Until next time, keep animating, keep experimenting, and most importantly, keep having fun &hellip; with view transitions!
 
 [^0]: "origin" is the name for the `protocol` + `host` + `port` part of an URL, e.g. `https://vtbag.dev`.
+
 [^1]: If you have a single page application, be patient. You or your framework have to trigger view transitions by calling [`startViewTransition()`](/basics/javascript/#same-document-view-transitions). We will cover that in another episode.
+
 [^2]: Like the fold of a printed newspaper. The part of the page you see without scrolling.

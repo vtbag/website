@@ -3,47 +3,83 @@
 ---
 
 <nav class="episodes" style="view-transition-name: episode-nav">
-  <slot />
+  <div>
+    <slot />
+  </div>
 </nav>
 
 <portal-gate to="end:head">
-<style is:global>
-  nav.episodes {
-    background-color: light-dark(var(--sl-color-gray-6),var(--sl-color-gray-4));
-    padding: 4px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    border-radius: 2lh;
-    box-shadow: 0 4px 8px #8888;
-    a {
-      color:var(--sl-color-white)
-      text-decoration: none;
-      padding: 14px 20px;
-      position:relative;
-      &.selected::before {
-        box-shadow: 0 0  2px #f884;
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-color: #8888;
-        border-radius: 2lh;
-        view-transition-name: roller;
-      }
-      &.selected {
-        color: light-dark(black, white);
+  <style is:global>
+    nav.episodes {
+      background-color: light-dark(
+        var(--sl-color-gray-6),
+        var(--sl-color-gray-6)
+      );
+      border-radius: 2em;
+      padding: 1.5em 1em;
+      box-shadow: 0 4px 8px #8888;
+      & div {
+        width: fit-content;
+        margin-inline: auto;
+        background-color: var(--sl-color-gray-5);
+        border-radius: 1em;
+        padding: 0em 0.33em;
       }
     }
-  }
-  ::view-transition-group(roller) {
-    animation-duration: 500ms;
-  }
 
-</style>
+    nav.episodes span {
+      margin: 0.5em;
+      border-radius: 2em;
+      padding: 10px 20px;
+      background-color: var(--sl-color-gray-4);
+      color: light-dark(#fff, #000);
 
-<script>
-  document
-    .querySelector("h1")
-    ?.insertAdjacentElement("beforebegin", document.querySelector("nav.episodes")!);
-</script>
+      &.selected {
+        background-color: var(--sl-color-gray-1);
+        view-transition-name: episode-nav-selected;
+      }
+      a {
+        color:var(--sl-color-white)
+        view-transition-class: episode-nav-a;
+        text-decoration: none;
+      }
+    }
+    nav span {
+      view-transition-class: nav-span;
+    }
+    nav span a {
+  view-transition-class: nav-a;
+}
+::view-transition-group(episode-nav-selected) {
+  animation-duration: 0.5s  ;
+}
+::view-transition-group(.nav-a) {
+  z-index: 1;
+}
+::view-transition-old(.nav-span),
+::view-transition-new(.nav-span) {
+  animation-duration: 0;
+}
+nav.episodes span:nth-of-type(1) a {
+  view-transition-name: episode-nav-a-1;
+}
+nav.episodes span:nth-of-type(2) a {
+  view-transition-name: episode-nav-a-2;
+}
+nav.episodes span:nth-of-type(3) a {
+  view-transition-name: episode-nav-a-3;
+}
+  </style>
+
+  <script is:inline>
+      addEventListener("pagereveal", () => {
+      const newLocal = document.querySelector("nav.episodes");
+      document
+        .querySelector("h1")
+        ?.insertAdjacentElement(
+          "beforebegin",
+          newLocal
+        );
+    });
+  </script>
 </portal-gate>

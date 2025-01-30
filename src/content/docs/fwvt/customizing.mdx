@@ -15,13 +15,18 @@ import EpisodeNav from "@/components/EpisodeNav.astro";
 import wb from "@/assets/wb.png";
 import "@/styles/fwvt.css"
 
-<script type="module">{`setTimeout(()=>{document.querySelectorAll("video").forEach(v=>v.style.visibility="visible")},1000)`}</script>
 
 
 <EpisodeNav>
-  <a href="/fwvt/enabling/">Episode 1</a>
-  <a class="selected" href="/fwvt/customizing/">Episode 2</a>
-  <a href="/fwvt/morphing/">Episode 3</a>
+  <span >
+    <a href="/fwvt/enabling/">Episode 1</a>
+  </span>
+  <span class="selected">
+    <a href="/fwvt/customizing/">Episode 2</a>
+  </span>
+  <span>
+    <a href="/fwvt/morphing/">Episode 3</a>
+  </span>
 </EpisodeNav>
 
 
