@@ -16,6 +16,7 @@ import wb from "@/assets/wb.png";
 import "@/styles/fwvt.css"
 
 
+<script type="module">{`setTimeout(()=>{document.querySelectorAll("video").forEach(v=>v.style.visibility="visible")},1000)`}</script>
 
 <EpisodeNav>
   <span >
@@ -29,13 +30,23 @@ import "@/styles/fwvt.css"
   </span>
 </EpisodeNav>
 
+<portal-gate to="end:head">
+ <script is:inline type="speculationrules">{`
+    {
+      "prerender": [
+        {
+          "urls": ["/fwvt/enabling/", "/fwvt/morphing/"]
+        }
+      ]
+    }
+  `}</script>
+</portal-gate>
 
 <div id="intro">
   <Media>
   <Image src={wb} alt="Fun with The Bag of Tricks and View Transitions" />
   <p slot="caption">Hello, and welcome to _Fun with View Transitions_</p>
   </Media>
-
   <div>
 Hello and welcome back to _Fun with View Transitions_, the series where we dive into the wonders of the View Transition API!
 

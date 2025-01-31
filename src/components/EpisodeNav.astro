@@ -1,8 +1,4 @@
----
-
----
-
-<nav class="episodes" style="view-transition-name: episode-nav">
+<nav class="episodes">
   <div>
     <slot />
   </div>
@@ -10,7 +6,11 @@
 
 <portal-gate to="end:head">
   <style is:global>
+    :root {
+      view-transition-name: none;
+    }
     nav.episodes {
+      view-transition-name: episode-nav;
       background-color: light-dark(
         var(--sl-color-gray-6),
         var(--sl-color-gray-6)
@@ -31,54 +31,53 @@
       margin: 0.5em;
       border-radius: 2em;
       padding: 10px 20px;
-      background-color: var(--sl-color-gray-4);
-      color: light-dark(#fff, #000);
-
+      background-color: transparent;
+      color: light-dark(#000, #fff);
       &.selected {
         background-color: var(--sl-color-gray-1);
         view-transition-name: episode-nav-selected;
+        a {
+          color: var(--sl-color-black);
+        }
       }
       a {
-        color:var(--sl-color-white)
+        color: var(--sl-color-white);
         view-transition-class: episode-nav-a;
         text-decoration: none;
       }
     }
-    nav span {
-      view-transition-class: nav-span;
-    }
+
     nav span a {
-  view-transition-class: nav-a;
-}
-::view-transition-group(episode-nav-selected) {
-  animation-duration: 0.5s  ;
-}
-::view-transition-group(.nav-a) {
-  z-index: 1;
-}
-::view-transition-old(.nav-span),
-::view-transition-new(.nav-span) {
-  animation-duration: 0;
-}
-nav.episodes span:nth-of-type(1) a {
-  view-transition-name: episode-nav-a-1;
-}
-nav.episodes span:nth-of-type(2) a {
-  view-transition-name: episode-nav-a-2;
-}
-nav.episodes span:nth-of-type(3) a {
-  view-transition-name: episode-nav-a-3;
-}
+    }
+    ::view-transition-group(episode-nav-selected) {
+      animation-duration: 0.5s;
+      animation-timing-function: ease-in-out;
+    }
+    ::view-transition-group(.episode-nav-a) {
+      z-index: 1;
+    }
+    ::view-transition-group(episode-nav) {
+      animation-duration: 0s;
+    }
+
+    nav.episodes span:nth-of-type(1) a {
+      view-transition-name: episode-nav-a-1;
+    }
+    nav.episodes span:nth-of-type(2) a {
+      view-transition-name: episode-nav-a-2;
+    }
+    nav.episodes span:nth-of-type(3) a {
+      view-transition-name: episode-nav-a-3;
+    }
   </style>
 
   <script is:inline>
-      addEventListener("pagereveal", () => {
-      const newLocal = document.querySelector("nav.episodes");
+    addEventListener("pagereveal", () => {
       document
         .querySelector("h1")
         ?.insertAdjacentElement(
           "beforebegin",
-          newLocal
+          document.querySelector("nav.episodes")
         );
     });
   </script>

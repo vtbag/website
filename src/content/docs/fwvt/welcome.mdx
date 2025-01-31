@@ -10,6 +10,18 @@ head:
 
 <portal-gate to="end:head">
 <script>{`addEventListener('pagereveal',()=>document.querySelector("h1").innerHTML="Welcome to<br/><i>Fun with View Transitions</i>!")`}</script>
+
+ <script is:inline type="speculationrules">{`
+    {
+      "prerender": [
+        {
+          "urls": ["/fwft/enabling", "/fwvt/customizing/", "/fwvt/morphing/"]
+        }
+      ]
+    }
+  `}</script>
+
+
 </portal-gate>
 
 import { Image } from "astro:assets";

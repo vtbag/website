@@ -28,6 +28,19 @@ import "@/styles/fwvt.css";
   </span>
 </EpisodeNav>
 
+<portal-gate to="end:head">
+ <script is:inline type="speculationrules">{`
+    {
+      "prerender": [
+        {
+          "urls": ["/fwvt/customizing/", "/fwvt/morphing/"]
+        }
+      ]
+    }
+  `}</script>
+</portal-gate>
+
+
 <div id="intro">
   <Media>
   <Image src={wb} alt="Fun with The Bag of Tricks and View Transitions" />
