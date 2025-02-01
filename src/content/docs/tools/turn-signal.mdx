@@ -252,7 +252,7 @@ Chances are more often then not that you can not simply revert the direction of 
 }
 ```
 
-Just changing the direction of the animations would lead to something best named `slideInFromLeft` for the old image and `slideOutToRight` for the new image. While the animations are about right, just setting `animation-direction: reverse` would apply them to the wrong images. You do not want to slide in the old image or slide out the new image. So better you swap the keyframes, too &hellip;
+Just changing the direction of the animations would lead to something best named `slideInFromLeft` for the old image and `slideOutToRight` for the new image. While the animations are about right, just setting `animation-direction: reverse` would apply them to the wrong images. You do not want to slide in the old image or slide out the new image. So better you swap the keyframes, too&hellip;
 
 ```css title="Example for fitting backward animations"
 :active-view-transition-type(backward) {
@@ -267,9 +267,9 @@ Just changing the direction of the animations would lead to something best named
 }
 ```
 
-&hellip; or even explicitly define keyframes for `slideOutToRight` and `slideInFromLeft` if you feel that is clearer.
+&hellip;or even explicitly define keyframes for `slideOutToRight` and `slideInFromLeft` if you feel that is clearer.
 
-&hellip; and you can also define different animations for `:active-view-transition-type(same)`, i.e. for links to the current page, e.g. in a navigation bar by using the same pattern.
+&hellip;and you can also define different animations for `:active-view-transition-type(same)`, i.e. for links to the current page, e.g. in a navigation bar by using the same pattern.
 
 ### Switching Transition Names
 

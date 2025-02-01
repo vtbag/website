@@ -200,9 +200,9 @@ Of course styling view transition pseudo-elements is not limited to animations. 
 }
 ```
 
-## Selecting Pseudo-Elements &hellip;
+## Selecting Pseudo-Elements&hellip;
 
-### &hellip; with Names
+### &hellip;with Names
 
 In the examples above you saw the patterns for addressing an individual pseudo-element: The view transition name is used as a parameter of the pseudo-element selector:
 
@@ -228,7 +228,7 @@ Also seen above: You can address the root of all view transition pseudo-elements
 }
 ```
 
-### &hellip; with Classes
+### &hellip;with Classes
 
 When you have CSS rules for a large number of view transition names, you can use the `(*)` pattern to address a pseudo-element for _all_ transition names and use specific rules with the (`(name-x)`) pattern to handle the exception. There might be situations where you wish for a better developer experience. This is where view transition classes come in.
 
@@ -261,7 +261,7 @@ This is an example on how to assign the class:
 
 This might best be combined with dynamically (per script) added view transition names or tooling where you declaratively assign view transition names.
 
-### &hellip; with Types
+### &hellip;with Types
 
 Often you want to support different animations for a given view transition pseudo-element and select one of those alternatives depending on some condition. The concept that the View Transition API provides for this use case is called _active view transition types_.
 
@@ -297,7 +297,7 @@ The pseudo-class that can check for types is `:active-view-transition-type()`. I
 
 Thus, the typical patterns to use `:active-view-transition-type()` are:
 
-Directly prepend the pseudo-class to a pseudo-element selector &hellip;
+Directly prepend the pseudo-class to a pseudo-element selector&hellip;
 
 ```css
 :active-view-transition-type(type)::view-transition-group(main) {
@@ -305,7 +305,7 @@ Directly prepend the pseudo-class to a pseudo-element selector &hellip;
 }
 ```
 
-&hellip; or equivalently use it with a nested CSS rule.
+&hellip;or equivalently use it with a nested CSS rule.
 
 ```css
 :active-view-transition-type(type) {
