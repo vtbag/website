@@ -23,8 +23,10 @@ import Demo from "@/layouts/DemoLayout.astro";
   <a class="nav-button right" href="/demo/BasicMC2/">Next</a>
 
   <style is:inline slot="late-head">
-    @view-transition {
-      navigation: auto;
+    @media (prefers-reduced-motion: no-preference) {
+      @view-transition {
+        navigation: auto;
+      }
     }
     h2 + img {
       view-transition-name: img;

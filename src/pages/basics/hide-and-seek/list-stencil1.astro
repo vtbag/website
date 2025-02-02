@@ -80,8 +80,10 @@ import Layout from "@/layouts/Layout.astro";
       padding: 0;
       font-family: monospace;
     }
-    @view-transition {
-      navigation: auto;
+    @media (prefers-reduced-motion: no-preference) {
+      @view-transition {
+        navigation: auto;
+      }
     }
     body {
       padding-top: 20px;

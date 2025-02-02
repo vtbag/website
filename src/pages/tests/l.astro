@@ -52,79 +52,83 @@
   <body>
     <div class="container">
       <div class="back">
-      <ul>
-        <li>a</li>
-        <li>b</li>
-        <li>c</li>
-        <li>d</li>
-        <li>e</li>
-        <li>f</li>
-        <li>g</li>
-        <li>h</li>
-        <li>i</li>
-      </ul>
-    </div>
+        <ul>
+          <li>a</li>
+          <li>b</li>
+          <li>c</li>
+          <li>d</li>
+          <li>e</li>
+          <li>f</li>
+          <li>g</li>
+          <li>h</li>
+          <li>i</li>
+        </ul>
+      </div>
       <div class="front">
-      <ul></ul>
-      <a href=".">navigate --></a></main>
-    </div></div>
-    <style is:global>
-      * {
-        box-sizing: border-box;
-      }
-      .container {
-        position: relative;
-        margin-inline: auto;
-        width: 500px;
-        height: 500px;
-      }
-      .back, .front {
-        background-color: rgb(120, 88, 55);
-        position: absolute;
-        top: 0;
-        height:100%;
-        width:100%;
-      }
-      .front {
-        mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white" /><rect x="15" y="15" width="400" height="300" fill="black" /></svg>');
-        mask-mode: luminance;
-        view-transition-name: front;
-      }
-      :root,
-      body {
-        margin: 0;
-        height: 100cqh;
-      }
+        <ul></ul>
+        <a href=".">navigate --></a>
+      </div>
+    </div></body
+  >
+  <style is:global>
+    * {
+      box-sizing: border-box;
+    }
+    .container {
+      position: relative;
+      margin-inline: auto;
+      width: 500px;
+      height: 500px;
+    }
+    .back,
+    .front {
+      background-color: rgb(120, 88, 55);
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+    }
+    .front {
+      mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect width="100%" height="100%" fill="white" /><rect x="15" y="15" width="400" height="300" fill="black" /></svg>');
+      mask-mode: luminance;
+      view-transition-name: front;
+    }
+    :root,
+    body {
+      margin: 0;
+      height: 100cqh;
+    }
+    @media (prefers-reduced-motion: no-preference) {
       @view-transition {
         navigation: auto;
       }
-      ::view-transition-group(*) {
-        animation-duration: 2s;
-      }
-      ::view-transition-new(*) {
-        animation: none;
-      }
+    }
+    ::view-transition-group(*) {
+      animation-duration: 2s;
+    }
+    ::view-transition-new(*) {
+      animation: none;
+    }
 
-      :root {
-        color-scheme: dark;
-        background-color: #123;
-      }
+    :root {
+      color-scheme: dark;
+      background-color: #123;
+    }
 
-      main {
-        padding: 1em;
-          position: relative;
-      }
-      ul {
-        height: 300px;
-        width: 400px;
-        margin: 16px;
-        border: 1px dashed;
-        overflow: visible;
-      }
-      li,
-      a {
-        font-size: 36px;
-      }
-    </style>
-  </body>
+    main {
+      padding: 1em;
+      position: relative;
+    }
+    ul {
+      height: 300px;
+      width: 400px;
+      margin: 16px;
+      border: 1px dashed;
+      overflow: visible;
+    }
+    li,
+    a {
+      font-size: 36px;
+    }
+  </style>
 </html>

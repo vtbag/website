@@ -9,17 +9,15 @@
     <meta property="og:title" content="Crossing" />
     <meta property="og:description" content="More Context" />
     <meta property="og:image" content="/social.png" />
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="@vtbag">
-    <meta property="og:url" content="/cards/Crossing/">
-    <meta name="twitter:card" content="summary_large_image">
-    </head>
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="@vtbag" />
+    <meta property="og:url" content="/cards/Crossing/" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
   <body>
     <img width="640" src="/crossing.png" />
     <h1>The Element Crossing</h1>
-    <h2>
-      Transfer selected state across cross-document view transitions!
-    </h2>
+    <h2>Transfer selected state across cross-document view transitions!</h2>
   </body>
 </html>
 <style is:global>
@@ -33,16 +31,20 @@
     background: #000;
   }
   body::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(110, 110, 255, 0.5) 2px, transparent 1px);
+    background: radial-gradient(
+      circle,
+      rgba(110, 110, 255, 0.5) 2px,
+      transparent 1px
+    );
     background-size: 50px 50px;
     opacity: 0.3;
-    transform: scale(1.1) rotateZ(-10deg)
+    transform: scale(1.1) rotateZ(-10deg);
   }
 
   img {
@@ -72,7 +74,9 @@
     color: aqua;
   }
 
-  @view-transition {
-    navigation: auto;
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
 </style>

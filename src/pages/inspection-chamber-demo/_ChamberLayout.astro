@@ -8,7 +8,11 @@ export interface Props {
 const { title } = Astro.props;
 ---
 
-<Layout {title} description="A demo that let's you play with the @vtbag's Inspection Chamber" image="/chamber-og.png">
+<Layout
+  {title}
+  description="A demo that let's you play with the @vtbag's Inspection Chamber"
+  image="/chamber-og.png"
+>
   <script slot="head" is:inline>
     sessionStorage.removeItem("vtbag-ui-standby");
   </script>
@@ -29,8 +33,10 @@ const { title } = Astro.props;
     font-family: sans-serif;
     view-transition-name: none;
   }
-  @view-transition {
-    navigation: auto;
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
   #back {
     display: inline-block;

@@ -111,8 +111,10 @@ const { title } = Astro.props;
     background-color: var(--accent-background);
     color: darkred;
   }
-  @view-transition {
-    navigation: auto;
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
   ::view-transition-group(root) {
     animation: none;

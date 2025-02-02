@@ -48,8 +48,10 @@ import Layout from "@/layouts/Layout.astro";
       margin: 0;
       padding: 0;
     }
-    @view-transition {
-      navigation: auto;
+    @media (prefers-reduced-motion: no-preference) {
+      @view-transition {
+        navigation: auto;
+      }
     }
     #stage {
       display: flex;

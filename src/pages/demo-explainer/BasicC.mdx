@@ -10,21 +10,33 @@ The HTML structure is straight forward:
 
 ```html
 <body>
-  <h1>View Transition Example<br>Basic Cross-Document</h1>
+  <h1>View Transition Example<br />Basic Cross-Document</h1>
   <p>...</p>
   <h2>My lovely picture</h2>
-  <img id=image width=400 height=400 src="/chamber.webp" alt="The Inspection Chamber">
+  <img
+    id="image"
+    width="400"
+    height="400"
+    src="/chamber.webp"
+    alt="The Inspection Chamber"
+  />
   <a class="nav-button right" href="/demo/BasicC2/">Next</a>
 </body>
 ```
+
 For the styling see the source of this page.
 
 ### View Transition specific CSS
 
-The only code to enable view transitions for this example consists of a single `@view-transition` rule:
+The only code needed to enable view transitions for this example consists of a single `@view-transition` rule:
+
 ```css
-@view-transition {
-  navigation: auto;
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
 }
 ```
-It instructs the browser to do a cross-document transition. The @-rule has to be present on the old and the new page. In this example, no specific view-transition-name properties are defined. Instead, the example relies on the default view transition name, `root`, which the browser automatically applies to the `<html>` element. This means that the old and new images are those of the viewport before and after the transition.
+It instructs the browser to do a cross-document transition. The @-rule has to be present on the old and the new page and both pages must share the same origin. Wrapping it in a media query respects the users who prefer reduced motion.
+
+In this example, no specific view-transition-name properties are defined. Instead, the example relies on the default view transition name, `root`, which the browser automatically applies to the `<html>` element. This means that the old and new images are those of the viewport before and after the transition.

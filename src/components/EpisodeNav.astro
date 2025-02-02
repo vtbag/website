@@ -33,8 +33,9 @@
       padding: 10px 20px;
       background-color: transparent;
       color: light-dark(#000, #fff);
+      view-transition-class: episode-nav-span;
       &.selected {
-        background-color: var(--sl-color-gray-1);
+        background-color: var(--sl-color-gray-3);
         view-transition-name: episode-nav-selected;
         a {
           color: var(--sl-color-black);
@@ -47,32 +48,54 @@
       }
     }
 
-    nav span a {
-    }
     ::view-transition-group(episode-nav-selected) {
-      animation-duration: 0.5s;
+      animation-duration: 0.25s;
       animation-timing-function: ease-in-out;
-    }
-    ::view-transition-group(.episode-nav-a) {
       z-index: 1;
     }
-    ::view-transition-group(episode-nav) {
-      animation-duration: 0s;
+    ::view-transition-old(episode-nav-selected),
+    ::view-transition-new(episode-nav-selected) {
+      height: 100%;
+      width: auto;
     }
-
-    nav.episodes span:nth-of-type(1) a {
-      view-transition-name: episode-nav-a-1;
+    ::view-transition-group(.episode-nav-a) {
+      animation-duration: 0.5s;
+      animation-timing-function: ease-in-out;
+      z-index: 2;
     }
-    nav.episodes span:nth-of-type(2) a {
-      view-transition-name: episode-nav-a-2;
+    ::view-transition-old(.episode-nav-a):only-child {
+      animation: 0.5s shrink both;
     }
-    nav.episodes span:nth-of-type(3) a {
-      view-transition-name: episode-nav-a-3;
+    ::view-transition-new(.episode-nav-a):only-child {
+      animation: 0.5s grow both;
+    }
+    @keyframes shrink {
+      to {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+    @keyframes grow {
+      from {
+        transform: scale(0);
+        opacity: 0;
+      }
+      25% {
+        transform: scale(0);
+        opacity: 0;
+      }
+      75% {
+        transform: scale(1.5);
+        opacity: 1;
+      }
     }
   </style>
 
   <script is:inline>
     addEventListener("pagereveal", () => {
+      document.querySelectorAll("nav.episodes span a").forEach((a) => {
+        a.style.viewTransitionName = `episode-nav-a-${a.textContent.toLowerCase()}`;
+      });
       document
         .querySelector("h1")
         ?.insertAdjacentElement(

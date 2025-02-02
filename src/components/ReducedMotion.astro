@@ -1,0 +1,27 @@
+<h2 class="reduced-motion">We honor your request for reduced motion. View transitions are switched off on this site.</h2>
+
+<style is:global>
+  .reduced-motion {
+    color: var(--accent-text);
+    background-color: light-dark(#fffa,#000a);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    position: fixed;
+    top: 10vh;
+    right: 10vw;
+    width: 50vw;
+    text-wrap: balance;
+    transform: rotateZ(5deg);
+    border: 2pt solid green;
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reduced-motion {
+      display: block;
+    }
+  }
+  :root[data-no-view-transitions] .reduced-motion {
+    display: none;
+  }
+</style>

@@ -72,8 +72,10 @@ import Layout from "@/layouts/Layout.astro";
         0 0,
         10px 10px;
     }
-    @view-transition {
-      navigation: auto;
+    @media (prefers-reduced-motion: no-preference) {
+      @view-transition {
+        navigation: auto;
+      }
     }
     body {
       padding-top: 20px;

@@ -1,5 +1,4 @@
 ---
-
 export interface Props {
   title: string;
 }
@@ -38,11 +37,13 @@ const { title } = Astro.props;
   <body>
     <h1>{title}</h1>
     <slot />
-    <img style="width:200vw" src="/chamber_action.png" alt=""/>
+    <img style="width:200vw" src="/chamber_action.png" alt="" />
   </body>
 </html>
 <style>
-  @view-transition {
-    navigation: auto;
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
 </style>

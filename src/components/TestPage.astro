@@ -14,7 +14,9 @@
     addEventListener("pagereveal", (e) => {
       const d = {};
       d.viewTransition = e?.viewTransition;
-      d.activation = activation("navigation" in window ? window.navigation?.activation : undefined);
+      d.activation = activation(
+        "navigation" in window ? window.navigation?.activation : undefined
+      );
       sessionStorage.setItem("vtbag-pagereveal", JSON.stringify(d));
     });
 
@@ -26,7 +28,7 @@
     });
     addEventListener("load", () => {
       setTimeout(() => {
-        if (!new URL(location,location.href).searchParams.has("pagereveal")) {
+        if (!new URL(location, location.href).searchParams.has("pagereveal")) {
           location.href = "/basics/test-page/?pagereveal";
         } else {
           const reveal = JSON.parse(sessionStorage.getItem("vtbag-pagereveal"));
@@ -39,7 +41,8 @@
           swap?.viewTransition &&
             document.documentElement.setAttribute("svt", "");
           swap?.activation && document.documentElement.setAttribute("sact", "");
-          (swap?.activation?.entry?.index !== -1 || swap?.activation?.from?.index !== -1) &&
+          ((swap?.activation?.entry?.index ?? -1) !== -1 ||
+            (swap?.activation?.from?.index ?? -1) !== -1) &&
             document.documentElement.setAttribute("idx", "");
           "startViewTransition" in document &&
             document.documentElement.setAttribute("sdvt", "");

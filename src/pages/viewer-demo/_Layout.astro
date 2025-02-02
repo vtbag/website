@@ -18,7 +18,12 @@ const { title } = Astro.props;
     {
       "prerender": [
         {
-          "urls": ["/viewer-demo/", "/viewer-demo/1/", "/viewer-demo/2/", "/viewer-demo/3/"]
+          "urls": [
+            "/viewer-demo/",
+            "/viewer-demo/1/",
+            "/viewer-demo/2/",
+            "/viewer-demo/3/"
+          ]
         }
       ]
     }
@@ -51,8 +56,10 @@ const { title } = Astro.props;
     view-transition-class: img;
   }
 
-  @view-transition {
-    navigation: auto;
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
 
   ::view-transition-old(.img),
@@ -73,7 +80,7 @@ const { title } = Astro.props;
     }
   }
   :active-view-transition-type(same)::view-transition-image-pair(.img) {
-      animation: blink 0.5s ease-out;
+    animation: blink 0.5s ease-out;
   }
   :active-view-transition-type(prev) {
     &::view-transition-old(.img) {

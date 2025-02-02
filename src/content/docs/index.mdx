@@ -30,7 +30,12 @@ head:
     content: '{"@context": "https://schema.org", "@type": "WebSite", "name": "@vtbag", "url": "https://vtbag.dev/"}'
 ---
 
-import Bsky from "../../components/Bsky.astro";
+import Bsky from "@/components/Bsky.astro";
+import NoViewTransitions from "@/components/NoViewTransitions.astro"
+import ReducedMotion from "@/components/ReducedMotion.astro"
+
+<NoViewTransitions/>
+<ReducedMotion/>
 
 <style>{`
   :root {
@@ -116,4 +121,6 @@ Code samples are licensed under the ISC License
       transform: translateX(-100vw)
     }
   }
+
+
 `}</style>

@@ -2,10 +2,18 @@
 import Demo from "@/layouts/DemoLayout.astro";
 ---
 
-<Demo title="View Transition Example: Basic Cross-Document, Page 1 of 2"  backlink='/basics/examples/#basicc' prev="/demo/BasicMS/" next="/demo/BasicAC1/" description="Example of a basic cross-document view transition." image="/bag-og.png">
+<Demo
+  title="View Transition Example: Basic Cross-Document, Page 1 of 2"
+  backlink="/basics/examples/#basicc"
+  prev="/demo/BasicMS/"
+  next="/demo/BasicAC1/"
+  description="Example of a basic cross-document view transition."
+  image="/bag-og.png"
+>
   <link rel="preload" href="/bag.webp" as="image" slot="early-head" />
   <p>
-    This example uses basic cross-document view transitions. Press the blue [Next] button to the right halfway down the page to see the next picture.
+    This example uses basic cross-document view transitions. Press the blue
+    [Next] button to the right halfway down the page to see the next picture.
   </p>
   <h2>My lovely picture</h2>
   <img
@@ -18,8 +26,10 @@ import Demo from "@/layouts/DemoLayout.astro";
   <a class="nav-button right" href="/demo/BasicC2/">Next</a>
 
   <style is:inline slot="late-head">
-    @view-transition {
-      navigation: auto;
+    @media (prefers-reduced-motion: no-preference) {
+      @view-transition {
+        navigation: auto;
+      }
     }
     ::view-transition-image-pair(root) {
       animation-duration: 0.75s;

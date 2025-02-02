@@ -1,0 +1,31 @@
+<script is:inline>
+  document.startViewTransition ||
+    (document.documentElement.dataset.noViewTransitions = "");
+</script>
+
+<h2 class="no-view-transitions">
+  Your browser does not support view transitions. For details visit the <a href="basics/test-page/">test page</a>.
+</h2>
+
+<style is:global>
+  .no-view-transitions {
+    color: var(--accent-text);
+    background-color: light-dark(#fffa,#000a);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    position: fixed;
+    top: 10vh;
+    right: 10vw;
+    width: 50vw;
+    text-wrap: balance;
+    transform: rotateZ(5deg);
+    border: 2pt solid green;
+    display: none;
+    a {
+      text-decoration: wavy underline;
+    }
+  }
+  :root[data-no-view-transitions] .no-view-transitions {
+    display: block;
+  }
+</style>

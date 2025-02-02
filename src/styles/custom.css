@@ -12,6 +12,7 @@
 :root {
   transition: --sl-color-text 2s;
   scrollbar-gutter: stable;
+  hyphens: auto;
 }
 
 body {

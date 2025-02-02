@@ -82,8 +82,10 @@ const images = [bag, chamber, crossing, signal, shaft];
       <slot />
     </main>
     <style is:global>
-      @view-transition {
-        navigation: auto;
+      @media (prefers-reduced-motion: no-preference) {
+        @view-transition {
+          navigation: auto;
+        }
       }
       @keyframes slideFromRight {
         from {

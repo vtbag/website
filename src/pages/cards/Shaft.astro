@@ -10,10 +10,9 @@
     <meta property="og:image" content="/social.png" />
     <meta property="og:url" content="/cards/Shaft/" />
     <meta property="og:title" content="Shaft" />
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="@vtbag">
-    <meta name="twitter:card" content="summary_large_image">
-
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="@vtbag" />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <img width="640" src="/shaft.png" />
@@ -73,14 +72,16 @@
   }
 
   span {
-    color:white;
+    color: white;
   }
   a {
     text-decoration: none;
     color: aqua;
   }
 
-  @view-transition {
-    navigation: auto;
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
 </style>

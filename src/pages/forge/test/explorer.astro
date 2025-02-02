@@ -8,8 +8,10 @@ import Layout from "@/layouts/Layout.astro";
   image="/bag.png"
 >
   <style slot="head">
-    @view-transition {
-      navigation: auto;
+    @media (prefers-reduced-motion: no-preference) {
+      @view-transition {
+        navigation: auto;
+      }
     }
   </style>
   <script is:inline slot="head">
@@ -21,7 +23,7 @@ import Layout from "@/layouts/Layout.astro";
         `pageswap: ${current} ${e.activation?.navigationType}  ${e.activation?.from?.index} -> ${e.activation?.entry?.index}`
       );
       out.push(` ${e.activation?.from?.url} -> ${e.activation?.entry?.url}`);
-      out.push(e.viewTransition? e.viewTransition?.types?.size : "-");
+      out.push(e.viewTransition ? e.viewTransition?.types?.size : "-");
       out.push(``);
       sessionStorage.setItem("vtbag-out", JSON.stringify(out));
     });
@@ -30,8 +32,8 @@ import Layout from "@/layouts/Layout.astro";
       if (!history.state) history.replaceState({ index: history.length }, "");
       const current = history.state.index;
       out.push(`pagereveal: ${current}`);
-      out.push(e.viewTransition? e.viewTransition?.types?.size : "-");
-      out.push(Math.random().toString().slice(2,7));
+      out.push(e.viewTransition ? e.viewTransition?.types?.size : "-");
+      out.push(Math.random().toString().slice(2, 7));
       output.innerHTML = out.join("<br>");
       out = [];
       a.href = location.href;
@@ -41,7 +43,7 @@ import Layout from "@/layouts/Layout.astro";
   <main>
     <h1>Explorer</h1>
     <p id="output"></p>
-    <a id="a">Click</a><br>
+    <a id="a">Click</a><br />
     <a id="b">Click</a>
   </main>
 </Layout>

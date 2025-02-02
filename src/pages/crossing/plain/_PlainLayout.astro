@@ -1,5 +1,4 @@
 ---
-
 export interface Props {
   title: string;
 }
@@ -93,14 +92,16 @@ const { title } = Astro.props;
       }
     });
   </script>
-  </html>
+</html>
 <style is:global>
   #limited {
     background-color: var(--accent-background);
     color: darkred;
   }
-  @view-transition {
-    navigation: auto;
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
 
   ::view-transition-group(root) {
@@ -119,7 +120,7 @@ const { title } = Astro.props;
 
   ::view-transition-new(video),
   ::view-transition-new(svg) {
-    animation: 500ms both reveal ;
+    animation: 500ms both reveal;
   }
   ::view-transition-old(video),
   ::view-transition-old(svg) {
@@ -138,7 +139,7 @@ const { title } = Astro.props;
   }
   @keyframes reveal {
     from {
-      opacity:0;
+      opacity: 0;
     }
     14.99% {
       opacity: 0;

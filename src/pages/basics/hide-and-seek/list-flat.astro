@@ -1,95 +1,98 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 ---
+
 <Layout title="Document" description="" image="">
-    <ul id="ul">
-      <li style="view-transition-name: l1">Item 1</li>
-      <li style="view-transition-name: l2">Item 2</li>
-      <li style="view-transition-name: l3">Item 3</li>
-      <li style="view-transition-name: l4">Item 4</li>
-      <li style="view-transition-name: l5">Item 5</li>
-      <li style="view-transition-name: l6">Item 6</li>
-      <li style="view-transition-name: l7">Item 7</li>
-    </ul>
-    <button>[Rotate]</button>
-    <script>
-      // @ts-expect-error
-      ul.scrollTop = 40;
-      document.querySelectorAll("button").forEach((button) => {
-        button.addEventListener("click", () => {
-          const update = () => {
-            const li = document.querySelector<HTMLLIElement>("li")!;
-            const y = li.parentElement!.scrollTop;
-            li.parentElement!.insertAdjacentElement("beforeend", li);
-            y && (li.parentElement!.scrollTop = y);
-          };
-          document.startViewTransition
-            ? document.startViewTransition(update)
-            : update();
-        });
+  <ul id="ul">
+    <li style="view-transition-name: l1">Item 1</li>
+    <li style="view-transition-name: l2">Item 2</li>
+    <li style="view-transition-name: l3">Item 3</li>
+    <li style="view-transition-name: l4">Item 4</li>
+    <li style="view-transition-name: l5">Item 5</li>
+    <li style="view-transition-name: l6">Item 6</li>
+    <li style="view-transition-name: l7">Item 7</li>
+  </ul>
+  <button>[Rotate]</button>
+  <script>
+    // @ts-expect-error
+    ul.scrollTop = 40;
+    document.querySelectorAll("button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const update = () => {
+          const li = document.querySelector<HTMLLIElement>("li")!;
+          const y = li.parentElement!.scrollTop;
+          li.parentElement!.insertAdjacentElement("beforeend", li);
+          y && (li.parentElement!.scrollTop = y);
+        };
+        document.startViewTransition
+          ? document.startViewTransition(update)
+          : update();
       });
-    </script>
-    <style is:global>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        font-family: monospace;
-      }
+    });
+  </script>
+  <style is:global>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: monospace;
+    }
+    @media (prefers-reduced-motion: no-preference) {
       @view-transition {
         navigation: auto;
       }
-      body {
-        padding-top: 20px;
-      }
-      button {
-        width: 150px;
-        color: black;
-        background-color: #aca;
-      }
-      ul {
-        overflow-y: scroll;
-        height: 200px;
-        list-style: none;
-        width: 150px;
-        border: 1px solid grey;
-      }
-      li {
-        padding: 10px;
-        color: white;
-        background-color: #822;
-        margin: 5px;
-        border-radius: 5px;
-      }
+    }
+    body {
+      padding-top: 20px;
+    }
+    button {
+      width: 150px;
+      color: black;
+      background-color: #aca;
+    }
+    ul {
+      overflow-y: scroll;
+      height: 200px;
+      list-style: none;
+      width: 150px;
+      border: 1px solid grey;
+    }
+    li {
+      padding: 10px;
+      color: white;
+      background-color: #822;
+      margin: 5px;
+      border-radius: 5px;
+    }
 
-      ::view-transition-group(*) {
-        animation-duration: 0.8s;
+    ::view-transition-group(*) {
+      animation-duration: 0.8s;
+    }
+    ::view-transition-image-pair(l1) {
+      animation: slide-left 0.8s 0s;
+    }
+    ::view-transition-image-pair(l2) {
+      animation: slide-left 0.7s 0.1s;
+    }
+    ::view-transition-image-pair(l3) {
+      animation: slide-left 0.6s 0.2s;
+    }
+    ::view-transition-image-pair(l4) {
+      animation: slide-left 0.5s 0.3s;
+    }
+    ::view-transition-image-pair(l5) {
+      animation: slide-left 0.4s 0.4s;
+    }
+    ::view-transition-image-pair(l6) {
+      animation: slide-left 0.3s 0.5s;
+    }
+    ::view-transition-image-pair(l7) {
+      animation: slide-left 0.2s 0.6s;
+    }
+    @keyframes slide-left {
+      50% {
+        transform: translateX(60px);
       }
-      ::view-transition-image-pair(l1) {
-        animation: slide-left 0.8s 0s;
-      }
-      ::view-transition-image-pair(l2) {
-        animation: slide-left 0.7s 0.1s;
-      }
-      ::view-transition-image-pair(l3) {
-        animation: slide-left 0.6s 0.2s;
-      }
-      ::view-transition-image-pair(l4) {
-        animation: slide-left 0.5s 0.3s;
-      }
-      ::view-transition-image-pair(l5) {
-        animation: slide-left 0.4s 0.4s;
-      }
-      ::view-transition-image-pair(l6) {
-        animation: slide-left 0.3s 0.5s;
-      }
-      ::view-transition-image-pair(l7) {
-        animation: slide-left 0.2s 0.6s;
-      }
-      @keyframes slide-left {
-        50% {
-          transform: translateX(60px);
-        }
-      }
-    </style>
+    }
+  </style>
 </Layout>

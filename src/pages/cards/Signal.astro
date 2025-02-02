@@ -23,7 +23,12 @@
     width: 1280px;
     height: 640px;
     overflow: hidden;
-    background: linear-gradient(115deg, #000000 30%, #ff000010 40%, #ffff0010 50%);
+    background: linear-gradient(
+      115deg,
+      #000000 30%,
+      #ff000010 40%,
+      #ffff0010 50%
+    );
     background-size: 200% 100%;
   }
   img {
@@ -53,7 +58,9 @@
     color: aqua;
   }
 
-  @view-transition {
-    navigation: auto;
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
 </style>
