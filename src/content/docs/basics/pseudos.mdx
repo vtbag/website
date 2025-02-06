@@ -274,7 +274,9 @@ Because view transition names must be unique[^unique] inside their DOM, there ca
 
 The term "pair" might be a bit misleading here: it refers to having _at least one_ and _at most two_ children, but there can be instances where only an old image or only a new image is present.
 
-The image-pairs are the direct parents of the `::view-transition-old` and `::view-transition-new` images. They allow you to apply common styling to both images, set CSS isolation (default is isolate) for the pair, and to use `:only-child` to style [exit/entry transition different from morph](/basics/default-animations/) transitions.
+The image-pairs are the direct parents of the `::view-transition-old` and `::view-transition-new` images. They allow you to apply common styling to both images, set CSS isolation (default is isolate) for the pair, and to use `:only-child` to style [exit/entry transition different from morph](/basics/default-animations/) transitions.[^nest]
+
+[^nest]: In a way that will continue to work once nested view transition groups are available.
 
 
 With the one to one relation between groups and image pairs, the group looks a bit redundant. This 1:1 relationship [will change in the future](https://drafts.csswg.org/css-view-transitions-2/#nested-view-transitions). But today the groups form a simple sequence and the order of the elements in this list also defines the standard paint order of the pseudos.

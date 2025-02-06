@@ -189,7 +189,7 @@ The browser’s user agent stylesheet aligns the `::view-transition-image-pair(.
 
 Since these pseudo-elements are fully customizable through CSS, you can alter their properties as needed. You could resize them, add margins, or tweak other styles to create unique visual effects. For instance, you could retain the default morph animation on the transition group while applying a custom animation to the image-pair for clipping. Let your imagination run wild!
 
-### Nested Transition Group Clipping
+### Nested View Transition Group Clipping
 
 
 <SidePicture  float="right">
@@ -201,11 +201,11 @@ Since these pseudo-elements are fully customizable through CSS, you can alter th
 
 In the early versions of the View Transition APi, the transition groups form a flat list of children of the `::view-transition` pseudo element. Nested view transition groups are already defined in the [Level 2 spec](/basics/api/#w3c-drafts), but are [not yet widely supported](/basics/test-page/) by browsers.
 
-Nested transition groups introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy. The example to the right is built with nested transition groups. When you press the button, and the demo behaves the same as the one in the next section, your browser does not support nested transition groups, yet.
+Nested view transition groups introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy. The example to the right is built with nested view transition groups. When you press the button, and the demo behaves the same as the one in the next section, your browser does not support nested view transition groups, yet.
 
 If your browser supports the nested `view-transition-group` property, at least the early implementations do not clip the view transition pseudo-elements while the tree is being built. This leads to a flash of elements escaping the box in the first frame.
 
-So Until nested view transition groups are widely and well supported by browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
+So until nested view transition groups are widely and well supported by browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
 
 </SidePicture>
 

@@ -39,7 +39,7 @@ If your image-pair has both, an old and a new image, you can control how the old
 
 The first two typically work together in a cross-fade or in a combined effect that removes the old image and inserts the new one. The animation of the `view-transition-group()` aligns differences in size, transformation, and position of the old and new image.
 
-If your 'image-pair' has only a single image, the browser places the `view-transition-group()` at the same position and does not define a morphing animation because there is nothing to align. You will still have the animation for the old or new image, respectively. Instead of a morph animation you have an entry animation if the old image is missing or an exit animation if the new image is missing.
+If your image-pair has only a single image, the browser places the `view-transition-group()` at the same position and does not define a morphing animation because there is nothing to align. You will still have the animation for the old or new image, respectively. Instead of a morph animation you have an entry animation if the old image is missing or an exit animation if the new image is missing.
 
 Using an [animation shorthand](https://developer.mozilla.org/en-US/docs/Web/CSS/animation), CSS rules for the element with view transition name `x` could look like this:
 
@@ -169,6 +169,14 @@ The typical cross-fade effect of view transitions is implemented by animations d
 ```
 
 The inherited values come from the view transition image pair, which inherits them from the view transition group. `-ua-mix-blend-mode-plus-lighter` is only added if the image pair has both images. For some background on `-ua-mix-blend-mode-plus-lighter` see the [section about mix blend modes](/tips/over-exposure/#set-the-correct-mix-blend-mode).
+
+Using `inherit` in your own definitions is a good idea as it allows for control over several animations at once.
+
+### Image-pair animation
+
+The View Transition API does not assign any animations to the `::view-transition-image-pair(x)` pseudo-elements as those elements are mainly added for render isolation and morph 1:1 with the `::view-transition-group(x)` elements.
+
+But of course, you can add animations to those elements. This has the benefit that you can modify the effect of the morph animation without the need to override the API-generated animations for `::view-transition-group(x)`.
 
 ### Non-Animation Properties
 

@@ -164,7 +164,7 @@ function sidebar() {
       { label: "Pseudo-Smooth-Scrolling", link: "/shaft-demo/1/" },
       { label: "Instant scrolling with Cam-Shaft", link: "/shaft-demo2/1/" },
       { label: "Can't confine List Elements", link: "/basics/hide-and-seek/problem/" },
-      { label: "Simulated Nested Transition Groups", link: "/basics/hide-and-seek/solution/" }
+      { label: "Simulated Nested View Transition Groups", link: "/basics/hide-and-seek/solution/" }
     ]
   }];
 }
