@@ -30,13 +30,13 @@
 }
 @keyframes shiftDown {
   to {
-    transform: translateY(20vh);
+    transform: translateY(10px);
     opacity: 0;
   }
 }
 @keyframes shiftUp {
   from {
-    transform: translateY(20vh);
+    transform: translateY(10px);
     opacity: 0;
   }
 }

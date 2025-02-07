@@ -17,14 +17,14 @@ import "@/styles/fwvt.css";
 <script type="module">{`setTimeout(()=>{document.querySelectorAll("video").forEach(v=>v.style.visibility="visible")},1000)`}</script>
 
 <EpisodeNav>
-  <span >
-    <a href="/fwvt/enabling/">Enabling</a>
-  </span>
   <span>
     <a href="/fwvt/customizing/">Customizing</a>
   </span>
   <span  class="selected">
     <a href="/fwvt/morphing/">Morphing</a>
+  </span>
+  <span >
+    <a href="/fwvt/healing/">Healing</a>
   </span>
 </EpisodeNav>
 
@@ -33,7 +33,7 @@ import "@/styles/fwvt.css";
     {
       "prerender": [
         {
-          "urls": ["/fwvt/enabling/", "/fwvt/customizing/"]
+          "urls": [ "/fwvt/customizing/", "/fwvt/healing/"]
         }
       ]
     }
@@ -106,6 +106,7 @@ Here's how we'll refine the example project. From the custom full-viewport anima
   video {
     width: 340px;
     display: inline;
+    margin: 20px 3px 0 3px;
   }
 `}</style>
 

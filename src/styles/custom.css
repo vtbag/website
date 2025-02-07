@@ -13,6 +13,7 @@
   transition: --sl-color-text 2s;
   scrollbar-gutter: stable;
   hyphens: auto;
+  --sl-sidebar-width: 24rem;
 }
 
 body {
