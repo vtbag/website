@@ -19,11 +19,13 @@ You caught me! The explanations above have been slightly simplified for the sake
 
 Additional technical details:
 
-* The browser's default exit and entry animations do more than just transition opacity. They also set the `mix-blend-mode` to `plus-lighter`, but only when both an old and new image are present in the image pair. Combined with the `isolation: isolate` setting of the image-pair, this ensures that during a cross-fade, the pixels of two identical images will sum to the original color and opacity. Without this, the images might exhibit an [overexposure-like effect](/tips/over-exposure/) during animations.\
-\
-Also, with the default styling, the old and new images extend or shrink to match the width of the group pseudo-element during the transition.
+* The browser's default exit and entry animations do more than just transition opacity. They also set the `mix-blend-mode` to `plus-lighter`, but only when both an old and new image are present in the image pair. Combined with the `isolation: isolate` setting of the image-pair, this ensures that during a cross-fade, the pixels of two identical images will sum to the original color and opacity. Without this, the images might exhibit an [overexposure-like effect](/tips/over-exposure/) during animations.
 
-* In the description of morph animations above, *position* was used for simplicity. In reality, the group animation accounts for both the element's position and any applied CSS transformations, such as those defined by `matrix3d` or specialized forms like `rotate`. When you read *position* in the following text, it always means *&hellip;and the applied transformations*.
+* In the description of morph animations above, *position* was used for simplicity. In reality, the group animation accounts for both the element's position and any applied CSS transformations, such as those defined by `matrix3d` or specialized forms like `rotate`. When you read *position* in the following text, it always means *&hellip;and the applied transformations*. And did I mention backdropFilter, yet? So the current[^current] set is `width`, `height`, `transform` and `backdropFilter`.
+
+[^current]: This is also what the spec says. Meanwhile, Chrome experimented with some more properties, but came back to the spec'ed set.
+
+* The `::view-transition-group` pseudo element is invisible. And so will be animations applied to it, yes? Good point. There are only two visible images. The old and the new image. Neither `::view-transition-image-pair` nor `::view-transition-group` are visible with the default styling. The effect of the group animation indirect. Moving the group also moves the images inside it. Changing the group's width also adjusts the image sizes, as the default styling keeps them the same width and scales the height to maintain the original aspect ratio.
 
 By default, both types of animations, entry/exit and group/morph, occur simultaneously, though they may not always be noticeable. For example, if elements sharing the same view transition name have identical size and position before and after the transition, the group animation will result in no visible change. Similarly, if the old and new images are identical, only the group animation will be apparent, with the exit and entry animations having no visible effect.
 
@@ -65,3 +67,7 @@ Finally the last rows shows the combined effect and also hints a bit on the fade
 
 
 
+## Corollaries
+The captured images for the automatically added `::view-transition-group(root)` on the `<html>` element both have the [size of the viewport](/basics/pseudos/#important-exception). The group animation morphs the viewport into an area of same position and size. Thus only the cross-fade animation is observable.
+
+With the default styles from the user-agent stylesheet, When morphing between elements with the same width before and after the transition, the old and new images will maintain their original size during the transition, even if their heights differ significantly. You can observe this in the main content area when navigating between short and tall pages on this site.
