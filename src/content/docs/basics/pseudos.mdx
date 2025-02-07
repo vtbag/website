@@ -249,9 +249,14 @@ Each element in the old DOM with a `view-transition-name: someName` CSS property
 
 These pseudo-elements represent images of their original elements. For `::view-transition-old`, think of it as a screenshot capturing how the element looked just before the view transition began.
 
-The `::view-transition-new` images are no simple screenshots but _replaced elements_. While they behave similarly to screenshots in that they are bitmap images whose height and width can be adjusted, they aren't static: If the underlying elements in the new DOM change, the pixels of the replaced element update as well.
+The `::view-transition-new` images are no simple screenshots but _life replaced elements_. While they behave similarly to screenshots in that they are bitmap images whose height and width can be adjusted, they aren't static: If the underlying elements in the new DOM change, the pixels of the replaced element update as well.
 
-This might be confusing, as the original element is usually hidden behind the `::view-transition` pseudo-element (the “curtain”). Here's the key difference: old images are immutable. For example, if you show the _old image_ of a video player during a view transition, the image is frozen. Replaced elements, however, are _live_. If you display a _new image_ of a video player, the video will continue to play during the transition.
+This might be confusing, as the original element is usually hidden behind the `::view-transition` pseudo-element (the “curtain”). Here's the key difference: old images are immutable. For example, if you show the _old image_ of a video player during a view transition, the image is frozen. New images, however, are _live_. If you display a _new image_ of a video player, the video will continue to play during the transition.
+
+If you capture an element with width _w_ and height _h_, the pseudo-element will have the same height and width. But in addition it will also show the _overflowing ink_, like box-shadows, of the original element outside the _w x h_ rectangle.
+
+#### Important Exception
+The View Transition API handles the image of the root `<html>` element in a special way. It covers only the viewport, not the entire page and no overflowing ink. If you shift this image up or down, it won't reveal anything beyond the viewport's boundaries. To capture the entire page, use the `<body>` element instead of the `<html>` element. However, keep in mind that browsers may consider such an image too large. They might capture only part of it, skip it, or even cancel the entire view transition. Chromium appears to implement partial capture for oversized images.
 
 
 ### Groups and Image-Pairs
