@@ -1,0 +1,44 @@
+---
+title: Automating View Transition Naming
+description: Explore current methods for automatically generating view transition names.
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/auto-og.png"
+---
+
+End of 2024 Safari, Safari did not only offer native support for both, same-document and cross-document view transitions. It also überholte Chromium browser with a umstrittenes feature that allows for the value of `auto` for the `view-transition-name`CS property.
+
+So you can now have a CSS rule that targets several elements as once and assigns some view transition name to all of those:
+```css
+selector-for-multiple-elements {
+  view-transition-name: auto;
+}
+```
+
+## Semantics
+If the element has an `id` attribute, that value will be used as the view transition name.
+Otherwise, the browser will make up a name that is tied to the internal object identity of the element _in that document_.
+
+### Dynamic Names
+The automatically generated names are internal to the browser. As the names are dynamically generated, you can not guess them and use them in  static CSS rules. The spec calls them "not web-observable". At least in current browsers, the names leak through the API.
+
+Safari gives you those short strings:
+```css
+...
+```
+Chrome has a bit longer names:
+```cs
+-ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-380
+-ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-381
+-ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-382
+```
+
+<style>{`p{view-transition-name:auto}`}</style>
+
+
+### Cross-Document names
+For two distinct document roots, the browser will generate different names, even if the DOMs are structurally the same.
+The consequence
+
