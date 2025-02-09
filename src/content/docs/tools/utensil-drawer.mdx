@@ -106,15 +106,10 @@ This site uses the `declarative-names` script to make `h2` and `h3` headings sta
 
 ```awk
 data-vtbag-decl=`
-  :is(h2, h3):not(.no-vtbag-decl *) = vtbag-h-;
-  :is(starlight-toc span):not(.no-vtbag-decl *) = vtbag-toc~`>
+  :is(h2, h3) = vtbag-h-;
+  :is(starlight-toc span) = vtbag-toc~`>
 ```
-This assigns `vtbag-h-0, ...` to the h2 and h3 headers of every page, and `vtbag-toc-0, ...` to the entries of the page navigation bar. It looks a bit complicate due to the `:not` expressions that are used to hide some DOM subtrees from the script. A version without those much simpler:
-```awk
-data-vtbag-decl="h2, h3 = vtbag-h-;  starlight-toc span = vtbag-toc~"
-```
-
-Still looks cryptic? Let's decompose what it means:
+This assigns `vtbag-h-0, ...` to the h2 and h3 headers of every page, and `vtbag-toc-0, ...` to the entries of the page navigation bar.
 
 ### Configuration
 You instruct the script with a `data-vtbag-decl` attribute on a script element. Typically on the very script element that loads the `declarative-names` code, but any other script element found in the DOM when the script executes will do. You can use this to your advantage to compose the declarations from multiple sources, but make sure that those elements a positioned before the `declarative-names` script.
@@ -199,7 +194,7 @@ data-vtbag-decl ::= ( rule ( ';' rule )* )? ;
 The data attribute accepts a semicolon separated list of rules.
 A rule instructs the script to add a `view-transition-name` that starts with the string `prefix` to the `style` attribute of all DOM elements that are matched by the `css-selector`.
 
-To ensure view transition names remain unique, a number starting at 0 and incremented by 1 is appended to the prefix for each rule. Numbers are assigned based on the order in which elements appear in the DOM, unless the prefix ends in `~`, in which case the `~` is replaced by `-` and the numbers are assigned in some random fashion. If an element's style attribute already includes a `view-transition-name`, it will be overridden, unless rule uses the weak assignment operator `~=`.
+To ensure view transition names remain unique, a number starting at 0 and incremented by 1 is appended to the prefix for each rule. Numbers are assigned based on the order in which elements appear in the DOM, unless the prefix ends in `~`, in which case the `~` is replaced by `-` and the numbers are assigned in some random fashion. If an element's style attribute already includes a `view-transition-name`, it will be overridden, unless the rule uses the weak assignment operator `~=`.
 
 
 #### Script Usage
