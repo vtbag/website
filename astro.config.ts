@@ -11,7 +11,6 @@ import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
 import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
-import { link } from 'fs';
 //import { ion } from "starlight-ion-theme";
 
 // https://astro.build/config
