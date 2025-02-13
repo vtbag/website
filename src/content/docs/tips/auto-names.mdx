@@ -41,13 +41,13 @@ In reality, you don't want to select each element individually. Instead, you wan
 ## How to Assign Dynamic Names?
 Here are your options right now:
 
-* _Not yet recommended_: Generate dynamic identifiers with `auto` or `match-element`: \
+* _Not yet recommended_: Generate [dynamic identifiers](/basics/pseudos/#auto-generated-names) with `auto` or `match-element`: \
 `selector { view-transition-name: auto; } /* or match-element */`
 * _Not yet recommended_: Copy an existing unique attribute like `id`: \
 `selector { view-transition-name: attr(id type(<custom-ident>)); }`
 * In JavaScript, do something like \
 `querySelectorAll("selector").forEach(e => e.style.viewTransitionName = ...)`
-*    Use a script like [`declarative-names`](/tools/utensil-drawer/) script \
+*    Use a script like [`declarative-names`](/tools/utensil-drawer/#declarative-names) script \
 `<script src="/declarative-names.js" data-vtbag-decl="selector"/>`
 
 I wouldn't recommend the first two approaches just yet, as they don't work reliably across all browsers.

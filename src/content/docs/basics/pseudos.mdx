@@ -183,7 +183,7 @@ It is not important to have much imagination when choosing names. They can be th
 At the start of the view transition, the **view transition names have to be unique** in the DOM. You can exempt an element from this uniqueness check by setting its (or one of its parent's) styles to `display: none`. For those elements, the browser won't generate pseudos.
 
 ### Auto-Generated Names
-The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](https://events-3bg.pages.dev/image-gallery/). However, it will also be possible to do this with only CSS by using the `auto` value, no JavaScript needed.
+The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](/tips/auto-names/). However, it will also be possible to do this with only CSS by using the `auto` value, no JavaScript needed.
 
 ```css
 .tile {
@@ -191,9 +191,13 @@ The opposite problem to view transition names not being unique is that elements 
 }
 ```
 
-[Check if your current browser already supports it](/basics/test-page/). Auto copies the name of the `id` attribute if defined. Otherwise, it makes up some name like `-ua-auto-....`.
+Currently, this only works in Safari.
+[Check if your current browser already supports it](/basics/test-page/). Setting the value to `auto` copies the name of the `id` attribute if defined. Otherwise, it makes up some name like `-ua-auto-....`.
 
-Using `auto` with `id` can be used to define elements with the same view transition name for cross-document navigation. But dynamically generated names will always be different for two documents.
+Using `auto` with `id` can be used to define elements with the same view transition name for cross-document navigation. But dynamically generated names have to always [be different](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name) for two documents.
+
+
+Even if it were widely supported, would would not recommend `auto` right now for cross-document view transitions. There are [alternatives](/tips/auto-names/#how-to-assign-dynamic-names) that work cross-browser and also for cross-document navigation.
 
 
 
