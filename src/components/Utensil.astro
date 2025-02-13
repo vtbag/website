@@ -2,14 +2,16 @@
 export interface Props {
   title: string;
   description: string;
+  stable?: boolean;
   icon?: any;
   href: string;
 }
-const { title, description, icon, href } = Astro.props;
+const { title, description, icon, href, stable=true } = Astro.props;
 ---
 
 <a class="utensil" {href}>
   <div class="utensil-content">
+    <p><small>{stable?<b style='color:darkolivegreen'>stable</b>:<i style='color:darkgoldenrod'>experimental</i>}</small></p>
     <h2 class="utensil-title">{icon} {title}</h2>
     <p class="utensil-description">{description}</p>
   </div>

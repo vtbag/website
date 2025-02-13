@@ -176,7 +176,7 @@ This default defines an animation for the current viewport. If you want to anima
 ```
 
 ### Escaping
-Do not quote the names. They are not strings but [custom-ident](https://developer.mozilla.org/de/docs/Web/CSS/custom-ident) values. Ensure proper escaping of special characters. The simplest, most portable approach is to just use upper and lower case letters from A to Z, digits from 0 to 9, an underscore `_` or a hyphen `-` character. But don't start the name with a digit. While all other characters with a code < 128 need to be escaped, codes > 127 like 😄 seem to work just fine in view transition names.
+Do not quote the names. They are not strings but [custom-ident](https://developer.mozilla.org/de/docs/Web/CSS/custom-ident) values. Ensure proper escaping of special characters. The simplest, most portable approach is to just use upper and lower case letters from A to Z, digits from 0 to 9, an underscore `_` or a hyphen `-` character. But don't start the name with a digit. While all other characters with a code < 128 need to be escaped, codes > 127 like 😄 seem to work just fine in view transition names. In browsers, you can use `CSS.escape()` to properly escape strings as custom identifiers.
 
 It is not important to have much imagination when choosing names. They can be the similar to the `id` of an element or name of a unique tag like `body` or `footer`.
 
@@ -193,7 +193,7 @@ The opposite problem to view transition names not being unique is that elements 
 
 [Check if your current browser already supports it](/basics/test-page/). Auto copies the name of the `id` attribute if defined. Otherwise, it makes up some name like `-ua-auto-....`.
 
-Using `auto` with `id` can be used to define elements with the same view transition name for cross-document navigation. But automatically generated names will always be different for two documents.
+Using `auto` with `id` can be used to define elements with the same view transition name for cross-document navigation. But dynamically generated names will always be different for two documents.
 
 
 

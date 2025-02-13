@@ -143,10 +143,11 @@ function sidebar() {
   }, {
     label: 'CSS Tips & Tricks',
     items: [
-      { label: 'Where to place the CSS', link: "/tips/css/" },
-      { label: "Flickering during fade animations?", link: "/tips/over-exposure/" },
+      { label: 'Where to Place the CSS', link: "/tips/css/" },
+      { label: "Flickering During Fade Animations?", link: "/tips/over-exposure/" },
       { label: "Avoid Pointer Flickering", link: "/tips/pointer/" },
-      { label: "Pseudo-smooth-scrolling?", link: "/tips/pseudo-smooth-scrolling/" },
+      { label: "Pseudo-Smooth-Scrolling?", link: "/tips/pseudo-smooth-scrolling/" },
+      { label: "Automatic Names", link: "/tips/auto-names/" },
     ]
   },
   { label: 'Fun with View Transitions', link: "/fwvt/welcome/", badge: { text: 'New!', variant: 'success' } as Badge },

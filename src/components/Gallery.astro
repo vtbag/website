@@ -1,0 +1,135 @@
+---
+
+---
+
+<p><i><small>(Click image to shuffle)</small></i></p>
+<div class="not-content gallery"></div>
+
+<script>
+  const pics: number[] = [];
+  const COUNT=36;
+  const SAFETY = 8;
+  let arr = randomize(COUNT - SAFETY);
+  let arr2 = randomize(SAFETY);
+  const gallery = document.querySelector(".gallery")!;
+
+  document.querySelector(".gallery")?.addEventListener("click", () => {
+    document.startViewTransition
+      ? document.startViewTransition(buildGallery)
+      : buildGallery();
+  });
+
+  function randomize(n: number) {
+    const array = Array.from({ length: n }, (_, i) => i);
+    for (let i = n - 1; i > 0; --i) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j]!, array[i]!];
+    }
+    return array;
+  }
+
+  async function buildGallery() {
+    randomPics();
+    const promises = pics.map((id, idx) => {
+      const w = idx < 2 ? 200 : 100;
+      const h = idx % 2 === 0 ? 200 : 100;
+      const img = new Image();
+      img.src = `https://picsum.photos/id/${id}/${w}/${h}`;
+      return new Promise((resolve, reject) => {
+        img.onload = resolve;
+        img.onerror = reject;
+      });
+    });
+
+    arr = randomize(COUNT-SAFETY);
+    arr2 = randomize(SAFETY);
+    gallery.innerHTML = "";
+    for (let i = 0; i < COUNT; ++i) {
+      const img = document.createElement("img");
+      let id, w, h;
+      if (arr[i] === undefined) {
+        id = 3;
+        w = 1;
+        h = 1;
+      } else {
+        const ari = arr[i]!;
+        w = ari < 5 ? 2 : 1;
+        h = ari < 3 || ari === 6 || ari === 5 ? 2 : 1;
+        id = ari < 3 ? 0 : ari < 5 ? 1 : ari < 7 ? 2 : 3;
+      }
+      img.src = `https://picsum.photos/id/${pics[id]}/${w}00/${h}00`;
+      img.className = `s${w}x${h}`;
+      img.style.viewTransitionName = `img-${arr[i] ?? arr2[i - COUNT + SAFETY]! + COUNT - SAFETY}`;
+      gallery.appendChild(img);
+    }
+    await Promise.allSettled(promises);
+    cacheNextPictures();
+  }
+
+  function randomPics(force = false) {
+    if (!force && Math.random() < 0.84) return false;
+    pics[0] = Math.floor(Math.random() * 30);
+    pics[1] = Math.floor(Math.random() * 30);
+    pics[2] = Math.floor(Math.random() * 30);
+    pics[3] = Math.floor(Math.random() * 30);
+    return true;
+  }
+
+  function preload(id: number, w: number, h: number) {
+    let preloadLink = document.createElement("link");
+    preloadLink.href = `https://picsum.photos/id/${id}/${w}/${h}`;
+    preloadLink.rel = "preload";
+    preloadLink.as = "image";
+    document.head.appendChild(preloadLink);
+  }
+  function cacheNextPictures() {
+    if (randomPics()) {
+      preload(pics[0]!, 200, 200);
+      preload(pics[1]!, 200, 100);
+      preload(pics[2]!, 100, 200);
+      preload(pics[3]!, 100, 100);
+    }
+  }
+
+  randomPics(true);
+  buildGallery();
+</script>
+
+<style is:global>
+  :root::view-transition-group(*) {
+    animation-duration: 1s;
+  }
+
+  .gallery {
+    margin: 0 auto;
+    max-width: 580px;
+    max-height: 5pp23px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, min(100px, 11.5%));
+    grid-auto-rows: min(100px, 11.5%);
+    grid-auto-flow: dense;
+    gap: 10px;
+  }
+  .gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-shadow: 1px 1px 2px 3px #8884;
+  }
+  .gallery img.s2x2 {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .gallery img.s1x1 {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .gallery img.s2x1 {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .gallery img.s1x2 {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+</style>
