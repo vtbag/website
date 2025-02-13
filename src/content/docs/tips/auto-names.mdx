@@ -31,14 +31,14 @@ There are some scenarios where automatically generating view transition names co
 * Structural mismatch: You want to target elements across different components globally.
 
 
-Typically, you achieve this separation by defining view transition names in CSS rather than as inline style attributes on HTML tags. With CSS selectors, you have a global view on your page and  can select individual HTML elements as needed.
+Typically, you achieve this separation by defining view transition names in a global stylesheet rather than as inline style attributes or local CSS in components. With CSS selectors, you have a global view on your page and  can select individual HTML elements as needed.
 
 However, assigning static names to the `view-transition-name` property is limited to situations where you already know your elements or at least an upper bound for their number. CSS processors can't do much to help with that either.
 
 In reality, you don't want to select each element individually. Instead, you want to assign unique names to a group of elements using a single selector.
 
 
-## How to Assign Dynamic Names?
+## How to Assign Names Automatically?
 Here are your options right now:
 
 * _Not yet recommended_: Generate [dynamic identifiers](/basics/pseudos/#auto-generated-names) with `auto` or `match-element`: \
@@ -50,7 +50,7 @@ Here are your options right now:
 *    Use a script like [`declarative-names`](/tools/utensil-drawer/#declarative-names) script \
 `<script src="/declarative-names.js" data-vtbag-decl="selector"/>`
 
-I wouldn't recommend the first two approaches just yet, as they don't work reliably across all browsers.
+I wouldn't recommend the first two approaches just yet, as they are still a bit experimental for cross-document view transitions and don't work reliably across all browsers. But I'm curious and looking forward to what the future has in store.
 
 ### Special View Transition Names
 Assigning `auto` as a view transition name dynamically generates unique names. Safari has supported this since version 18.2, Chrome hides it behind a flag, and Edge doesn't support it at all. Where it is supported, it works for same-document view transitions. However, dynamic name generation doesn't (or only partly) work for cross-document view transitions.

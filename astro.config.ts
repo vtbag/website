@@ -11,6 +11,7 @@ import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
 import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
+import { link } from 'fs';
 //import { ion } from "starlight-ion-theme";
 
 // https://astro.build/config
@@ -165,7 +166,8 @@ function sidebar() {
       { label: "Pseudo-Smooth-Scrolling", link: "/shaft-demo/1/" },
       { label: "Instant scrolling with Cam-Shaft", link: "/shaft-demo2/1/" },
       { label: "Can't confine List Elements", link: "/basics/hide-and-seek/problem/" },
-      { label: "Simulated Nested View Transition Groups", link: "/basics/hide-and-seek/solution/" }
+      { label: "Simulated Nested View Transition Groups", link: "/basics/hide-and-seek/solution/" },
+      { label: "Swirling Image Gallery", link: "/tips/auto-names/" }
     ]
   }];
 }
