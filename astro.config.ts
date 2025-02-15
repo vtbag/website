@@ -46,7 +46,6 @@ export default defineConfig({
     title: '@vtbag',
     components: {
       Head: "./src/components/NHead.astro",
-      MarkdownContent: "./src/components/MarkdownContent.astro",
       PageTitle: "./src/components/PageTitle.astro",
       Sidebar: "./src/components/Sidebar.astro"
     },

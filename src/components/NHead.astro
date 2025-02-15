@@ -1,5 +1,4 @@
 ---
-import type { Props } from "@astrojs/starlight/props";
 import StarlightHead from "@astrojs/starlight/components/Head.astro";
 import turnSignal from "@vtbag/turn-signal?url";
 import camShaft from "@vtbag/cam-shaft?url";
@@ -7,7 +6,7 @@ import declarativeNames from "@vtbag/utensil-drawer/declarative-names?url";
 import PagefindToTextFragments from "./PagefindToTextFragments.astro";
 ---
 
-<StarlightHead {...Astro.props}><slot /></StarlightHead>
+<StarlightHead><slot /></StarlightHead>
 
 <PagefindToTextFragments />
 

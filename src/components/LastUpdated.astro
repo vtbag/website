@@ -2,7 +2,7 @@
 import { spawnSync } from "child_process";
 import { basename, dirname } from "path";
 
-const { lang, lastUpdated } = Astro.props;
+const { lang, lastUpdated } = Astro.locals.starlightRoute;
 const gitDate = (f: string) =>
   spawnSync(
     "git",
@@ -20,7 +20,7 @@ const gitDate = (f: string) =>
     }
   ).stdout?.trim();
 const firstPublished = new Date(
-  Number(gitDate(Astro.props.entry.filePath) + "000")
+  Number(gitDate(Astro.locals.starlightRoute.entry.filePath) + "000")
 );
 ---
 
