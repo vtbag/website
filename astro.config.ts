@@ -3,9 +3,7 @@ import starlight from '@astrojs/starlight';
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
-//import remarkHeadingID from 'remark-heading-id';
-//import starlightImageZoom from 'starlight-image-zoom';
-//import { visualizer } from "rollup-plugin-visualizer";
+//import viewTransitions from "astro-vtbot/starlight-view-transitions";
 
 import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
@@ -44,6 +42,8 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [starlight({
     title: '@vtbag',
+    routeMiddleware: ["./src/middleware/overview-link.ts"],
+    //plugins: [viewTransitions()],
     components: {
       Head: "./src/components/NHead.astro",
       PageTitle: "./src/components/PageTitle.astro",
