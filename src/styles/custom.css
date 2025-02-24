@@ -78,7 +78,7 @@ main,
 
 section.footnotes:before {
   content: "Footnotes:";
-  margin-top: 0.5em;
+  margin-top: 1em;
   display: block;
 }
 sup {

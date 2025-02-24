@@ -1,26 +1,9 @@
 ---
 import StarlightHead from "@astrojs/starlight/components/Head.astro";
-import turnSignal from "@vtbag/turn-signal?url";
-import camShaft from "@vtbag/cam-shaft?url";
-import declarativeNames from "@vtbag/utensil-drawer/declarative-names?url";
 import PagefindToTextFragments from "./PagefindToTextFragments.astro";
 ---
 
 <StarlightHead><slot /></StarlightHead>
 
 <PagefindToTextFragments />
-
-{/* Decent transitions for scrolled down pages */}
-<script is:inline src={camShaft}></script>
-
-{/* Make animation direction based on the order of the pages in the sidebar */}
-{/* and annotate links with view transition types */}
-<script is:inline src={turnSignal} data-selector="header a, nav.sidebar li a"
-></script>
-
-{/* Make headings stand out during view transitions. */}
-<script
-  is:inline
-  src={declarativeNames}
-  data-vtbag-decl=":is(h2, h3):not(.no-vtbag-decl *) = vtbag-h-; :is(starlight-toc span):not(.no-vtbag-decl *) = vtbag-toc~"></script>
 

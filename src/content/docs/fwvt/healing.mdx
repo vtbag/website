@@ -1,5 +1,5 @@
 ---
-title: A Trip to the Text Morphology Clinic
+title: On a Trip to the Text Morphology Clinic
 description: Join Dr. Bag on patient rounds as we explore text-morph animations crafted with the View Transition API. Discover common issues, explore diagnostic techniques, and apply effective treatments.
 head:
   - tag: meta
@@ -18,13 +18,13 @@ import "@/styles/fwvt.css";
 
 <EpisodeNav>
   <span>
-    <a href="/fwvt/customizing/">Customizing</a>
-  </span>
-  <span>
     <a href="/fwvt/morphing/">Morphing</a>
   </span>
   <span class="selected">
     <a href="/fwvt/healing/">Healing</a>
+  </span>
+  <span>
+    <a href="/fwvt/twinkling/">Twinkling</a>
   </span>
 </EpisodeNav>
 
@@ -121,7 +121,7 @@ Below, you'll find before-and-after images illustrating both the severity of the
 
 For the best experience, follow along with the [exercise repository](https://github.com/vtbag/fun-with-view-transitions).
 
-Now, let’s begin the patient rounds!
+Now, let's begin the patient rounds!
 
 ## Characteristic Sufferings
 
@@ -140,7 +140,7 @@ Some effects might surprise or annoy you, while others you might seem perfectly 
 
 Don't get lost in perfectionism when fine-tuning your animations. Not every transition needs to be pixel-perfect during the whole animation. A bit of blurring from the cross-fade can even enhance the effect and make the animation more natural.
 
-Also, keep in mind that some glitches become less noticeable at higher animation speeds. View transitions are meant to be _fast_, and while you might be fascinated by them, your users care more about a quick and responsive experience than watching every frame of an animation play out before they can continue. Since interactivity is limited during a view transition, it's best to keep animations brief so users aren’t left waiting. Most users won't even notice minor glitches in a fast transition.
+Also, keep in mind that some glitches become less noticeable at higher animation speeds. View transitions are meant to be _fast_, and while you might be fascinated by them, your users care more about a quick and responsive experience than watching every frame of an animation play out before they can continue. Since interactivity is limited during a view transition, it's best to keep animations brief so users aren't left waiting. Most users won't even notice minor glitches in a fast transition.
 
 That said, let's take a closer look to understand exactly what's happening!
 
@@ -173,13 +173,13 @@ A more effective way to analyze animations is to use the browser's developer too
 .slomo img {margin: 1ex auto; display: block; width: 90%; height: auto; border: 1px solid #8888; box-shadow: 1px 1px 8px #8888}
 `}</style>
 
-Stepping through animations requires a bit of explanation. First, click the pause button (⏸) in the animation panel to wait for the next animations. Then, trigger a view transition by clicking a link or button on your page. At first, it may seem like nothing is happening, but the animations have been recorded. To view them, select a recording from the timeline band below the pause button. In the associated diagram, you can move the slider forward and backward through time to inspect each frame of the transition. When you're done, don’t forget to hit play (▶), or the browser may appear frozen indefinitely.
+Stepping through animations requires a bit of explanation. First, click the pause button (⏸) in the animation panel to wait for the next animations. Then, trigger a view transition by clicking a link or button on your page. At first, it may seem like nothing is happening, but the animations have been recorded. To view them, select a recording from the timeline band below the pause button. In the associated diagram, you can move the slider forward and backward through time to inspect each frame of the transition. When you're done, don't forget to hit play (▶), or the browser may appear frozen indefinitely.
 
 ### The Inspection Chamber
 
 When I first delved deeper into view transitions, I found myself wanting even better diagnostic tools. Admittedly, crafting such a tool also teaches you a a thing or two about the inner workings of view transitions. So, it's a clear win-win-win. I learned a lot, and now I can share both my knowledge _and_ the tool with you.
 
-The Bag’s Inspection Chamber is a developer tool designed specifically for view transitions. It offers stepless slow motion and random navigation through the animation timeline, allowing you to focus on specific transition groups. Additionally, it provides options to outline pseudo-element geometry and selectively hide elements, making it easier to analyze complex transitions with greater clarity.
+The Bag's Inspection Chamber is a developer tool designed specifically for view transitions. It offers stepless slow motion and random navigation through the animation timeline, allowing you to focus on specific transition groups. Additionally, it provides options to outline pseudo-element geometry and selectively hide elements, making it easier to analyze complex transitions with greater clarity.
 
 The Bag's [Inspection Chamber](/tools/inspection-chamber/) is a developer tool designed specifically for view transitions. It offers stepless slow motion and random navigation through the animation timeline, allowing you to focus on specific sets of transition groups. Additionally, it provides options to outline pseudo-element geometry and selectively hide them, making it easier to analyze crowded transitions with greater clarity.
 
@@ -287,15 +287,16 @@ The first picture above shows the old image of the link text within its purple f
 The [default styling](/basics/default-animations/#how-the-boxes-morph) for morph animations causes both images to transition from the width of the old image to the width of the new image, adjusting their height to keep the original aspect ratio.[^w] As a result, the small link text is enlarged to cover the whole width of the page before it fades.
 [^w]: Technically, the effect is determined by the _extent in the inline direction_ rather than strictly by _width_. In horizontal writing mode, this corresponds to the element's _width_, while in vertical writing mode, it applies to its _height_.
 
-One solution to this problem is to ensure that the new image also fits the content without any extra space. Even better, ensure that your identical texts have identical styling, including spacing and font features. Since the transition happens quickly, it doesn’t need to be perfect, just good enough.
+One solution to this problem is to ensure that the new image also fits the content without any extra space. Even better, ensure that your identical texts have identical styling, including spacing and font features. Since the transition happens quickly, it doesn't need to be perfect, just good enough.
 
-You don’t need to have the _exact same styling_ for a link and a heading on your site. To cure the broken link animation, we switch the heading's styling from block-level to inline. This ensures that both elements match more closely during the transition, preventing unwanted stretching.
+You don't need to have the _exact same styling_ for a link and a heading on your site. To cure the broken link animation, we switch the heading's styling from block-level to inline. This ensures that both elements match more closely during the transition, preventing unwanted stretching.
 
 ```css
 h2 {
   display: inline-block;
 }
 ```
+Alternatively, we could have set the width of the block-level heading to `fit-content`.
 
 You can find a more in-depth analysis of this [common glitch](/demo/Fail1/) and [its remedy](/demo/Improved1/) in the examples section on this site.
 
@@ -469,7 +470,7 @@ The last patient for today is the green single-line heading morphing into the la
 
 Clearly, the initial parts of the two images would align nicely, if we could modify the default animations to have the smaller image end up in the upper left corner of the larger one. The question now is: Can this be done?
 
-Here’s the prescribed solution:
+Here's the prescribed solution:
 
 ```css
 ::view-transition-old(header),
@@ -524,4 +525,4 @@ Finally, cross-fades are not always necessary:
 - There are alternative, visually appealing animations for changing text content.
 - Also consider crafting animations where either the old or new image is removed entirely, which can simplify the transition and enhance the visual flow.
 
-I sincerely hope you're feeling a bit better now and that these remedies have alleviated your worst symptoms! If your case requires further examination, don't hesitate to seek a specialist's opinion—I'm available for consultation on Bluesky. Until our next appointment, keep animating, keep experimenting, and most importantly, keep having fun&hellip;with view transitions!
+I sincerely hope you're feeling a bit better now and that these remedies have alleviated your worst symptoms! If your case requires further examination, don't hesitate to seek a specialist's opinion—I'm available for consultation on Bluesky. Until our next appointment, keep animating, keep experimenting, and most importantly, keep having fun&hellip; with view transitions!

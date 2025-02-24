@@ -11,16 +11,15 @@ head:
 <portal-gate to="end:head">
 <script>{`addEventListener('pagereveal',()=>document.querySelector("h1").innerHTML="Welcome to<br/><i>Fun with View Transitions</i>!")`}</script>
 
- <script is:inline type="speculationrules">{`
+<script is:inline type="speculationrules">{`
     {
       "prerender": [
         {
-          "urls": ["/fwft/enabling", "/fwvt/customizing/", "/fwvt/morphing/"]
+          "urls": ["/fwvt/enabling", "/fwvt/customizing/", "/fwvt/morphing/"]
         }
       ]
     }
   `}</script>
-
 
 </portal-gate>
 
@@ -101,7 +100,7 @@ So, let’s get started because view transitions are _seriously_ fun!
 </Episode>
     <Episode
       number={4}
-      title="A Trip to the Text Morphology Clinic!"
+      title="On a Trip to the Text Morphology Clinic!"
       description="Join Dr. Bag on patient rounds as we explore text-morph animations crafted with the View Transition API."
       href="/fwvt/healing/"
       from="February 07, 2025"
@@ -118,6 +117,22 @@ And off we go!
   Establishing best practices to avoid future complications.
 
 </Episode>
+<Episode
+      number={5}
+      title="Add View Transitions to Your Starlight Site!"
+      description="Let your Starlight site twinkle in a smooth new light. Learn how to sprinkle some view transition magic on your existing setup."
+      href="/fwvt/twinkling/"
+      from="February 19, 2025"
+    >
+Ready for lift-off!
+
+- Enable view transitions while respecting reduced motion preferences
+- Animate the main section, page title and navigation entry
+- Determine view transition types for direction based page order
+- Prevent pseudo-smooth-scrolling on scrolled pages
+- Fix stacking order issues during view transitions
+- Wait for page content to load before starting view transitions
+</Episode>
 </EpisodePlayer>
 </div>
 
@@ -130,6 +145,9 @@ No worries, the Bag has you covered! Clone this [exercise repository](https://gi
 <portal-gate to="end:head">
 
 <style>{`
+  :root {
+    view-transition-name: none;
+  }
   .episode {
     view-transition-class: episode;
   }
@@ -160,7 +178,12 @@ No worries, the Bag has you covered! Clone this [exercise repository](https://gi
   aside.right-sidebar-container {
     display: none;
   }
-
+:active-view-transition-type(same)::view-transition-new(intro-text) {
+  animation-name: none;
+}
+:active-view-transition-type(same)::view-transition-old(intro-text){
+  display:none;
+}
 `}</style>
 
 </portal-gate>

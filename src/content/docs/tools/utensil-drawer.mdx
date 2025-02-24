@@ -225,52 +225,47 @@ Copy [`dom-view-transitions-level2.d.ts`](http://github.com/vtbag/utensil-drawer
 
 ```ts
 declare global {
-  interface PageSwapEvent extends Event {
-    viewTransition: ViewTransition;
-    activation: NavigationActivation;
-  }
+	type UpdateCallback = undefined | (() => void | Promise<void>);
+	type StartViewTransitionParameter = { types?: string[] | Set<string>; update?: UpdateCallback };
 
-  type UpdateCallback = undefined | (() => void | Promise<void>);
-  type StartViewTransitionParameter = {
-    types?: string[] | Set<string>;
-    update?: UpdateCallback;
-  };
+	interface Document {
+		startViewTransition?(param?: StartViewTransitionParameter | UpdateCallback): ViewTransition;
+	}
+	interface PageSwapEvent extends Event {
+		viewTransition?: ViewTransition;
+		activation?: NavigationActivation;
+	}
+	interface PageRevealEvent extends Event {
+		viewTransition?: ViewTransition;
+	}
 
-  interface Document {
-    startViewTransition(
-      param?: StartViewTransitionParameter | UpdateCallback
-    ): ViewTransition;
-  }
-  interface PageRevealEvent extends Event {
-    viewTransition: ViewTransition;
-  }
+	interface WindowEventMap {
+		pageswap: PageSwapEvent;
+		pagereveal: PageRevealEvent;
+	}
 
-  interface WindowEventMap {
-    pageswap: PageSwapEvent;
-    pagereveal: PageRevealEvent;
-  }
+	interface NavigationActivation {
+		entry: NavigationHistoryEntry;
+		from: NavigationHistoryEntry;
+		navigationType: NavigationTypeString;
+	}
+	interface AnimationEffect {
+		target: HTMLElement;
+		pseudoElement?: string;
+		getKeyframes: () => Keyframe[];
+	}
 
-  interface NavigationActivation {
-    entry: NavigationHistoryEntry;
-    from: NavigationHistoryEntry;
-    navigationType: NavigationTypeString;
-  }
-  interface AnimationEffect {
-    target: HTMLElement;
-    pseudoElement?: string;
-    getKeyframes: () => Keyframe[];
-  }
-
-  interface ViewTransition {
-    types: Set<string>;
-  }
-  interface Window {
-    navigation: Navigation;
-  }
-  interface Navigation {
-    activation: NavigationActivation;
-  }
+	interface ViewTransition {
+		types?: Set<string>;
+	}
+	interface Window {
+		navigation?: Navigation;
+	}
+	interface Navigation {
+		activation: NavigationActivation;
+	}
 }
+export {};
 ```
 
 ## mayStartViewTransition()

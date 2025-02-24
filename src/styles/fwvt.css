@@ -9,6 +9,7 @@
   perspective: 50cm;
   transform-origin: center top;
 }
+
 ::view-transition-old(intro-text) {
   animation: 250ms forwards ease-out liftUp;
 }
@@ -43,6 +44,7 @@
 #intro {
   display: flex;
   flex-direction: column;
+  background-color: var(--vtbag-bg-color);
   div {
     flex: 1;
   }

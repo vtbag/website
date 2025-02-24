@@ -31,7 +31,7 @@ import signal from "../../../assets/signal.png";
 <Logo alt="The Turn-Signal" image={signal}>
 Backward/forward view transitions for intuitive history navigation.
 
-The Turn-Signal package is a set of scripts for enhancement of cross-document view transitions. They automatically detect direction of navigation or let you set view transition types. The current tricks are
+The Turn-Signal package is a set of scripts for enhancement of cross-document view transitions. They automatically detect the direction of navigation or let you explicitly set view transition types for a link. The current tricks are
 
 - the _directions_ script that derives directions from the history or a known set of pages
 - the _link-type_ script, that let's you define view-transition-types on a per link basis
@@ -123,10 +123,10 @@ All scripts are used the same way:
 Details depend on your project setup and the frameworks used, but with a bundler like `vite` it can be as simple as:
 
 ```jsx
-import signal from "@vtbag/turn-signal/directions?url";
+import signalDirections from "@vtbag/turn-signal/directions?url";
 <html>
   <head>
-    <script src={signal} />
+    <script src={signalDirections} />
     ...
   </head>
   ...
@@ -136,12 +136,11 @@ import signal from "@vtbag/turn-signal/directions?url";
 The scripts offered by the turn-signal package are:
 |Script|Module Specifier|Package Path
 |---|---|---|
-|directions|@vtbag/turn-signal/directions|lib/directions.js|
-|link types|@vtbag/turn-signal/link-types|lib/link-types.js|
-|forced traversal|@vtbag/turn-signal/forced-traversal|lib/forced-traversal.js|
 |directions + link types|@vtbag/turn-signal|lib/index.js|
 |same as above with debug output|@vtbag/turn-signal/debug|lib/debug.js|
-
+|directions only|@vtbag/turn-signal/directions|lib/directions.js|
+|link types only|@vtbag/turn-signal/link-types|lib/link-types.js|
+|forced traversal|@vtbag/turn-signal/forced-traversal|lib/forced-traversal.js|
 :::note
 The index.js file combines directions and link types. The view transition type set will hold types from both features. You can prioritize types by ordering the CSS rules that use them.
 :::
@@ -152,7 +151,7 @@ The scripts can be configured or guided by attributes on the script element itse
 
 ### Directions Script
 
-The `@vtbag/turn-signal/directions` script accepts several config options. Those are specified as `data-*` attributes on the `<script>` element. They are all optional.
+The `@vtbag/turn-signal/directions` script (and `@vtbag/turn-signal` script) accept several config options. Those are specified as `data-*` attributes on the `<script>` element. They are all optional.
 
 If used without any explicit parameters, the Turn-Signal
 
@@ -161,7 +160,7 @@ If used without any explicit parameters, the Turn-Signal
 - For all other navigation, the `forward` type is set.
 - On the old page, the `old` type is added, and on the new page the `new` type is added.
 
-If you want to tell the script about the order of the pages on your site, use the `data-selector` attribute to select links to all pages using CSS selectors. This site uses
+If you want to tell the script about the order of the pages on your site, use the `data-selector` attribute to select links to all pages using a CSS selector. This site uses
 
 ```html
 <script ... data-selector="header a, nav.sidebar li a"></script>
@@ -169,11 +168,11 @@ If you want to tell the script about the order of the pages on your site, use th
 
 Here the first CSS selector selects the home page and the second all pages from the global site navigation. This selector will fit for all Starlight sites.
 
-| Config option            | Type                                                      | Effect                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| Config option            | Type                                                      | Effect     |
 | ------------------------ | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| data-selector            | a CSS selector                                            | <p>If your site has a concept of _previous_ and _next_ page, use this to tell the Turn-Signal about your pages and their order. One selector _to find them all_.</p><p>The selector should return one element per page of your site, and each element must have an href attribute. Typically, you would select `<a>` elements from your navigation bar, such as `data-selector="nav a"`.</p><p>If your site doesn't already have a suitable structure, consider generating a list of pages in a non-intrusive way. For example, you could use `<a>` elements inside a `<template>` element or `<link>` elements with a custom `rel` attribute.</p><p> The sequence of selected URLs is used to derive the navigation direction. Navigation to a page that comes later in the sequence of selected URLs will be a _forward_ navigation. Navigation to a page that comes earlier in the sequence of selected URLs will be a _backward_ navigation.</p> |
-| data-direction-types     | backward-value, same-value, forward-value                 | <p>The Turn-Signal sets view transition types to convey the derived direction in a form that can easily be used for styling your animations.</p><p>By default, the types are `backward`, `same`, and `forward`, i.e. as if set using `data-direction-types="backward, same, forward"`. </p><p>An alternative would be `data-direction-types="reverse,,"` This would do nothing for same page and forward navigation, but would set the `reverse` type on backward navigation.</p><p>On the old page, the Turn-Signal also sets a type called `old` and on the new page it sets a type called `new`. This behavior can not be customized.</p>                                                                                                                                                                                                                                                                                                         |
-| data-direction-attribute | attribute-name, backward-value, same-value, forward-value | <p>For compatibility with existing code you might want to use attributes rather than view transition types to select different styling for your animations.</p><p>You can specify what attribute to use and what values to set. Here is an example of how to make Turn-Signal directions compatible with the CSS Astro generates for `transition:animate`: `data-direction-attribute="data-astro-transition, back, forward, forward"`.</p>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| <a id="data-selector"></a>data-selector            | a CSS selector                                            | <p>If your site has a concept of _previous_ and _next_ page, use this to tell the Turn-Signal about your pages and their order. One selector _to find them all_.</p><p>The selector should return one element per page of your site, and each element must have an href attribute. Typically, you would select `<a>` elements from your navigation bar, such as `data-selector="nav a"`.</p><p>If your site doesn't already have a suitable structure, consider generating a list of pages in a non-intrusive way. For example, you could use `<a>` elements inside a `<template>` element or `<link>` elements with a custom `rel` attribute.</p><p> The sequence of selected URLs is used to derive the navigation direction. Navigation to a page that comes later in the sequence of selected URLs will be a _forward_ navigation. Navigation to a page that comes earlier in the sequence of selected URLs will be a _backward_ navigation.</p> |
+| <a id="data-direction-types"></a>data-direction-types     | backward-value, same-value, forward-value                 | <p>The Turn-Signal sets view transition types to convey the derived direction in a form that can easily be used for styling your animations.</p><p>By default, the types are `backward`, `same`, and `forward`, i.e. as if set using `data-direction-types="backward, same, forward"`. </p><p>An alternative would be `data-direction-types="reverse,,"` This would do nothing for same page and forward navigation, but would set the `reverse` type on backward navigation.</p><p>On the old page, the Turn-Signal also sets a type called `old` and on the new page it sets a type called `new`. This behavior can not be customized.</p>|
+| <a id="data-direction-attribute"></a>data-direction-attribute | attribute-name, backward-value, same-value, forward-value | <p>For compatibility with existing code you might want to use attributes rather than view transition types to select different styling for your animations.</p><p>You can specify what attribute to use and what values to set. Here is an example of how to make Turn-Signal directions compatible with the CSS Astro generates for `transition:animate`: `data-direction-attribute="data-astro-transition, back, forward, forward"`.</p> |
 
 <a name="link-types" />
 ### Link Types

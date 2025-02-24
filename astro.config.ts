@@ -3,15 +3,13 @@ import starlight from '@astrojs/starlight';
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
-//import viewTransitions from "astro-vtbot/starlight-view-transitions";
+import { viewTransitions, remarkEndOfMarkdown } from "astro-vtbot/starlight-view-transitions";
 
 import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
 import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
-//import { ion } from "starlight-ion-theme";
 
-// https://astro.build/config
 export default defineConfig({
   image: { remotePatterns: [{ protocol: "https" }] },
   devToolbar: { enabled: true },
@@ -36,18 +34,18 @@ export default defineConfig({
         type: "text",
         value: "↗"
       }
-    }]]
-    //		remarkPlugins: [remarkHeadingID]
+    }]],
+    remarkPlugins: [remarkEndOfMarkdown]
   },
   trailingSlash: 'always',
   integrations: [starlight({
     title: '@vtbag',
     routeMiddleware: ["./src/middleware/overview-link.ts"],
-    //plugins: [viewTransitions()],
+    plugins: [viewTransitions({declarativeNames: ":is(h2, h3):not(.no-vtbag-decl *) = vtbag-h-; :is(starlight-toc span):not(.no-vtbag-decl *) = vtbag-toc~"})],
     components: {
       Head: "./src/components/NHead.astro",
       PageTitle: "./src/components/PageTitle.astro",
-      Sidebar: "./src/components/Sidebar.astro"
+      Sidebar: "./src/components/Sidebar.astro",
     },
     tableOfContents: {
       minHeadingLevel: 2,
@@ -64,13 +62,6 @@ export default defineConfig({
       attrs: {
         rel: "me",
         href: "https://mastodon.social/@martrapp"
-      }
-    }, {
-      tag: "link",
-      attrs: {
-        rel: "expect",
-        href: "#sl-main-content",
-        blocking: "render"
       }
     }],
 
