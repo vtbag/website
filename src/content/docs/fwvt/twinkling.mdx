@@ -271,7 +271,7 @@ Oh, look at Lines 4 & 10: It is already all there. And this script does not need
 
 On a scrolled-down page, the pseudo-elements of the `<main>` section will temporarily obscure the search bar during the view transition. This happens because all pseudo-elements created by the View Transition API are placed in their own stacking context, above everything else.
 
-As a result, when the upper edge of the `<main>` section is scrolled out of view, the search bar appears to be hidden, making it look like the z-orders of layout are broken.
+As a result, when the upper edge of the `<main>` section is scrolled out of view, the search bar appears to be hidden, making it look like the z-orders of the layout are broken.
 
 This issue is only visible during a view transition, but fortunately, there's already a solution. The effect and fix are explained in more detail on the  [Hide & Seek page](/basics/hide-and-seek/#stacking-pseudo-elements), and we can simply copy the solution from there:
 
