@@ -52,13 +52,7 @@ This website features both subtle and striking examples where pseudo-images pop 
 
 ## Stacking Pseudo-Elements
 
-This site is built with [Astro Starlight](https://starlight.astro.build/). Enabling cross-document view transitions for multi-page sites is surprisingly straightforward. [Most browsers](https://caniuse.com/?search=%40view-transition) support this feature; all you need to do is [add a simple CSS at-rule](/tips/css/) to your custom styles:
-
-```css
-@view-transition {
-  navigation: auto;
-}
-```
+This site is built with [Astro Starlight](https://starlight.astro.build/). Enabling cross-document view transitions for multi-page sites is surprisingly [straightforward](/fwvt/twinkling/#enable-view-transitions--groups).
 
 Once activated, your site will have full-page cross-fade transitions during navigation. To add a touch of flair, we've assigned the view transition name `main` to the primary content area, creating the corresponding `::view-transition-group(main)` pseudo-element:
 

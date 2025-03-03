@@ -11,8 +11,10 @@ head:
 You're aware that enabling cross-document view transitions is as simple as adding the view transition at-rule to your pages.
 
 ```css
-@view-transition {
-  navigation: auto;
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
 }
 ```
 You also know that both pages, the old one and the new one, must opt in by including this at-rule. Additionally, you might know that this only works if both pages share the same origin, meaning the same protocol, host, and port.
@@ -33,7 +35,39 @@ The reason for this is that the animations are triggered by the appearance of th
 
 While it seems logical, it's still somewhat counterintuitive that the CSS for an exit animation for an element that only exists on the old page needs to be defined on **all the page** the user can navigate to, including for example those reachable from a global navigation bar if your site features one. This might help you: keep in mind, that it is not the old element that is animated, but the _image_ of the old element that has been inserted as a pseudo-element on the new page.
 
-If you're accustomed to building with components, it might not always be clear which page a component will end up on and where the corresponding CSS should be placed. Additionally, the requirement that view transition names must be unique on a page makes you reconsider whether it's wise to hardcode view transition names inside reusable components. But that is not much different from using `id` attributes.
+## Components
+If you're accustomed to building with components, it might not always be clear which page a component will end up on and where the corresponding CSS should be placed. Additionally, the requirement that `view-transition-name` values must be unique on a page makes you reconsider whether it's wise to hardcode view transition names inside reusable components. Especially if you craft a component that can end up with multiple copies on the same page. This is very similar to how to handle `id` attributes.
+
+A promising approach with components might be the following (still under evaluation):
+
+**Use dynamic view transition names:**
+- Often, you can come up with a dynamic value for the `view-transition-name`, e.g. a slug from underlying data, or a context parameter given to the component from the outside.
+- If so, use this for the `view-transition-name`.
+
+**Otherwise:**
+- Do not explicitly assign a static `view-transition-name` as non unique names will break view transitions if the component is use multiple times on the same page.
+- Instead, defer the assignment of the view transition name to a global step
+- Use `view-transition-class` to select pseudo elements for styling
+```html
+<div class="someName">...</div>
+<style>
+  [someName] {
+    view-transition-class: someName;
+  }
+  ::view-transition-group(.someName) {
+    ...
+  }
+</style>
+class
+<script>
+// assign unique names to all elements that have the someName class
+  document.querySelectorAll([someName])
+    .forEach(e => e.style.viewTransitionName = ...)
+</script>
+```
+
+This way, the styling will even work if the component is used several times on the same page. Automatic name assignment is ease wih the [declarative-names script](/tools/utensil-drawer/#declarative-names). For the example above set `data-vtbag-decl=".someName = some-name-"`
+
 
 ## Conclusion
 I'm still exploring paths and alternatives but this would be my current recommendations:
