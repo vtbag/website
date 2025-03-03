@@ -15,7 +15,7 @@
     "@expressive-code/plugin-line-numbers": "^0.40.2",
     "@inox-tools/portal-gun": "^1.0.3",
     "@playwright/test": "^1.50.1",
-    "@types/node": "^22.13.5",
+    "@types/node": "^22.13.9",
     "@vtbag/cam-shaft": "^1.0.6",
     "@vtbag/element-crossing": "^1.1.0",
     "@vtbag/inspection-chamber": "^1.0.21",
