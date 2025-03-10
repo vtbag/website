@@ -1,0 +1,166 @@
+---
+
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vector Demo | vtbag.dev</title>
+  </head>
+  <body>
+    <div class="container">
+      <div id="elements-grid"></div>
+      <button id="shuffle-btn">Shuffle</button>
+    </div>
+  </body>
+</html>
+<style is:global>
+  :root {
+    color-scheme: light dark;
+    view-transition-name: none;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container {
+    padding: 2rem;
+    width: 13vh;
+  }
+
+  #elements-grid {
+    display: grid;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(10, 1fr);
+    grid-auto-rows: minmax(0, 1fr); /* Ensure rows fit within the container */
+  }
+
+  @media (orientation: landscape) {
+    .container {
+      width: 90%;
+      height: auto;
+    }
+    #elements-grid {
+      grid-template-columns: repeat(10, 1fr);
+      grid-template-rows: 1fr;
+    }
+  }
+
+  .element {
+    aspect-ratio: 1;
+    transition: all 0.3s ease;
+    width: 100%; /* Ensure elements fit within the grid cells */
+    height: 100%; /* Ensure elements fit within the grid cells */
+  }
+
+  .element:hover {
+    transform: scale(1.1);
+  }
+  .circle {
+    border-radius: 50%;
+  }
+
+  .square {
+    border-radius: 15px;
+  }
+
+  #shuffle-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px rgba(128, 128, 128, 0.5);
+  }
+
+  #shuffle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  #shuffle-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+<script>
+  import { mayStartViewTransition } from "@vtbag/utensil-drawer/may-start-view-transition";
+  import { initStyles, addStyle } from "src/dynamic-style.ts";
+  import { setVectors } from "src/vectors.ts";
+
+  // Color palettes for gradients
+  const colorPalettes = [
+    ["#FF6B6B", "#4ECDC4"],
+    ["#A8E6CF", "#FFD3B6"],
+    ["#FFAAA5", "#FFD3B6"],
+    ["#FF9A8B", "#FF6A88"],
+    ["#4158D0", "#C850C0"],
+    ["#0093E9", "#80D0C7"],
+    ["#8EC5FC", "#E0C3FC"],
+    ["#D9AFD9", "#97D9E1"],
+  ];
+
+  let elements: HTMLElement[] = [];
+
+  function createElements() {
+    const grid = document.getElementById("elements-grid")!;
+    grid.innerHTML = "";
+    elements = [];
+
+    initStyles();
+
+    for (let i = 0; i < 10; i++) {
+      const element = document.createElement("div");
+      element.className = `element ${Math.random() > 0.5 ? "circle" : "square"}`;
+      element.style.viewTransitionName = `el-${i}`;
+      addStyle(
+        `::view-transition-group(el-${i}) {animation-delay: ${(i * 0.05).toFixed(2)}s;}`
+      );
+
+      const palette =
+        colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+      const angle = Math.floor(Math.random() * 360);
+      element.style.background = `linear-gradient(${angle}deg, ${palette![0]}, ${palette![1]})`;
+
+      elements.push(element);
+      grid.appendChild(element);
+    }
+  }
+
+  function shuffleElements() {
+    const grid = document.getElementById("elements-grid")!;
+    const shuffled = [...elements].sort(() => Math.random() - 0.5);
+
+    grid.innerHTML = "";
+    shuffled.forEach((element) => grid.appendChild(element));
+    elements = shuffled;
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    createElements();
+    document
+      .getElementById("shuffle-btn")!
+      .addEventListener("click", () =>
+        mayStartViewTransition(shuffleElements).ready.then(() => setVectors())
+      );
+  });
+</script>
