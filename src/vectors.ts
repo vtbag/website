@@ -1,5 +1,3 @@
-import { fromRoutingStrategy } from "node_modules/astro/dist/i18n/utils";
-
 export function setVectors(scope: HTMLElement | Document = document) {
   pauseAllAnimations(scope);
 
