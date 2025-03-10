@@ -1,3 +1,5 @@
+import { fromRoutingStrategy } from "node_modules/astro/dist/i18n/utils";
+
 export function setVectors(scope: HTMLElement | Document = document) {
   pauseAllAnimations(scope);
 
@@ -8,17 +10,20 @@ export function setVectors(scope: HTMLElement | Document = document) {
     if (effect instanceof KeyframeEffect && pseudo?.startsWith("::view-transition-group")) {
       const group = pseudo.slice(24, -1);
 
-      console.log(group);
+      let from = effect.getKeyframes()[0]?.transform as string || "none";
+      let to = effect.getKeyframes()[1]?.transform as string || "none";
+      if (to === "none") {
+        animation.currentTime = effect.getComputedTiming().endTime?.valueOf() as number ?? 0;
+        to = window.getComputedStyle(scope instanceof HTMLElement ? scope : document.documentElement, pseudo).transform;
+        animation.currentTime = 0;
+      }
+      if (from === "none") {
+        from = window.getComputedStyle(scope instanceof HTMLElement ? scope : document.documentElement, pseudo).transform || "none";
+      }
+      const fromValues = from.match(/matrix\(([^)]+)\)/)?.[1]?.split(',').map(parseFloat);
+      const toValues = to.match(/matrix\(([^)]+)\)/)?.[1]?.split(',').map(parseFloat);
 
-      animation.currentTime = effect.getComputedTiming().endTime?.valueOf() as number ?? 0;
-      let styles = window.getComputedStyle(scope instanceof HTMLElement ? scope : document.documentElement, pseudo);
-      console.log(styles.transform);
-
-      animation.currentTime = 0;
-      styles = window.getComputedStyle(scope instanceof HTMLElement ? scope : document.documentElement, pseudo);
-      console.log(styles.transform);
-
-      effect.getKeyframes().forEach((keyframe, index) => {console.log(index, keyframe.transform);});
+      console.log(group, (toValues?.[4]||0)-(fromValues?.[4]||0), (toValues?.[5]||0)-(fromValues?.[5]||0));
     }
   });
 
