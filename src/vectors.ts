@@ -2,17 +2,19 @@ import { addStyle, initStyles } from "./dynamic-style";
 
 export function setVectors(scope: HTMLElement | Document = document) {
   initStyles('vtbag-vectors');
-  (scope !== document ? scope.getAnimations({ subtree: true }) : scope.getAnimations()).forEach(animation => {
+  (scope !== document ? scope.getAnimations({ subtree: true }) : document.getAnimations()).forEach(animation => {
     const effect = animation.effect;
     const pseudo = effect?.pseudoElement;
     if (effect instanceof KeyframeEffect && pseudo?.startsWith("::view-transition-group")) {
       const group = pseudo.slice(24, -1);
 
-      let from = effect.getKeyframes()[0]?.transform as string || "none";
-      let to = effect.getKeyframes()[1]?.transform as string || "none";
+      const frame = effect.getKeyframes();
+      let from = frame[0]?.transform as string;
+      let to = frame[1]?.transform as string;
+      console.log(group, from, to)
       if (to === "none") {
         animation.currentTime = effect.getComputedTiming().endTime?.valueOf() as number ?? 0;
-        to = window.getComputedStyle(scope instanceof HTMLElement ? scope : document.documentElement, pseudo).transform;
+        to = window.getComputedStyle(scope instanceof HTMLElement ? scope : document.documentElement, pseudo).transform || "none";
         animation.currentTime = 0;
       }
       if (from === "none") {

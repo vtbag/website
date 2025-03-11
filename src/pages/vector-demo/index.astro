@@ -149,7 +149,7 @@
 
 <script>
   import { mayStartViewTransition } from "@vtbag/utensil-drawer/may-start-view-transition";
-  import { setVectors } from "src/vectors.ts";
+  import { setVectors } from "src/vectors";
 
   // Color palettes for gradients
   const colorPalettes = [
@@ -188,7 +188,7 @@
     document
       .getElementById("shuffle-btn")!
       .addEventListener("click", () =>
-        mayStartViewTransition(shuffleElements).ready.then(() => setVectors())
+        document.startViewTransition(shuffleElements).ready.then(() => setVectors(document))
       );
   });
 </script>
