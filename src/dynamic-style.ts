@@ -1,9 +1,12 @@
 
-document.head.insertAdjacentHTML('beforeend', '<style id="vtbag-dynamic-styles"/>');
-let styles = document.head.querySelector('#vtbag-dynamic-styles') as HTMLStyleElement;
-export function initStyles() {
-  styles.innerHTML = '';
+const styleMap = new Map(); let styles = document.head.querySelector('#vtbag-dynamic-styles') as HTMLStyleElement;
+export function initStyles(name: string) {
+  if (!styleMap.has(name)) {
+    document.head.insertAdjacentHTML('beforeend', `<style id="vtbag-dynamic-styles-${name}"/>`);
+    styleMap.set(name, document.head.querySelector(`#vtbag-dynamic-styles-${name}`));
+  }
+  styleMap.get(name).innerHTML = '';
 }
-export function addStyle(rule: string) {
-  styles.innerHTML += rule;
+export function addStyle(name: string, rule: string) {
+  styleMap.get(name).innerHTML += rule;
 }

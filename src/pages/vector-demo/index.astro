@@ -16,37 +16,27 @@
     </div>
   </body>
 </html>
+
 <style is:global>
-  :root {
-    color-scheme: light dark;
-    view-transition-name: none;
-  }
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  /* This is it */
+  ::view-transition-group(*) {
+    animation-duration: 750ms;
+    animation-timing-function: linear;
   }
 
-  body {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
+  ::view-transition-image-pair(.el) {
+    animation-name: arc;
+    animation-timing-function: linear;
+  }
+  @keyframes arc {
+    50% {
+      transform: translateX(
+        calc(var(--vtbag-vector-to-y) / 3 - var(--vtbag-vector-from-y) / 3)
+      );
+    }
   }
 
-  .container {
-    padding: 2rem;
-    width: 13vh;
-  }
-
-  #elements-grid {
-    display: grid;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(10, 1fr);
-    grid-auto-rows: minmax(0, 1fr); /* Ensure rows fit within the container */
-  }
+  /* And some tweaks for horizontal mode */
 
   @media (orientation: landscape) {
     .container {
@@ -57,54 +47,96 @@
       grid-template-columns: repeat(10, 1fr);
       grid-template-rows: 1fr;
     }
+
+    @keyframes arc {
+      50% {
+        transform: translateY(
+          calc(var(--vtbag-vector-to-x) / 3 - var(--vtbag-vector-from-x) / 3)
+        );
+      }
+    }
   }
 
-  .element {
-    aspect-ratio: 1;
-    transition: all 0.3s ease;
-    width: 100%; /* Ensure elements fit within the grid cells */
-    height: 100%; /* Ensure elements fit within the grid cells */
-  }
+  @layer {
+    :root {
+      color-scheme: light dark;
+      view-transition-name: none;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  .element:hover {
-    transform: scale(1.1);
-  }
-  .circle {
-    border-radius: 50%;
-  }
+    body {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
 
-  .square {
-    border-radius: 15px;
-  }
+    .container {
+      padding: 2rem;
+      width: 13vh;
+    }
 
-  #shuffle-btn {
-    display: block;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-    box-shadow: 0 4px 6px rgba(128, 128, 128, 0.5);
-  }
+    #elements-grid {
+      display: grid;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(10, 1fr);
+      grid-auto-rows: minmax(0, 1fr); /* Ensure rows fit within the container */
+    }
 
-  #shuffle-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-  }
+    .element {
+      aspect-ratio: 1;
+      transition: all 0.3s ease;
+      width: 100%; /* Ensure elements fit within the grid cells */
+      height: 100%; /* Ensure elements fit within the grid cells */
+      view-transition-class: el;
+    }
 
-  #shuffle-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    .element:hover {
+      transform: scale(1.1);
+    }
+    .circle {
+      border-radius: 50%;
+    }
+
+    .square {
+      border-radius: 5px;
+    }
+
+    #shuffle-btn {
+      display: block;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+      box-shadow: 0 4px 6px rgba(128, 128, 128, 0.5);
+      view-transition-name: shuffle;
+    }
+
+    #shuffle-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #shuffle-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
   }
 </style>
 
 <script>
   import { mayStartViewTransition } from "@vtbag/utensil-drawer/may-start-view-transition";
-  import { initStyles, addStyle } from "src/dynamic-style.ts";
   import { setVectors } from "src/vectors.ts";
 
   // Color palettes for gradients
@@ -119,40 +151,24 @@
     ["#D9AFD9", "#97D9E1"],
   ];
 
-  let elements: HTMLElement[] = [];
-
   function createElements() {
     const grid = document.getElementById("elements-grid")!;
-    grid.innerHTML = "";
-    elements = [];
-
-    initStyles();
-
     for (let i = 0; i < 10; i++) {
       const element = document.createElement("div");
       element.className = `element ${Math.random() > 0.5 ? "circle" : "square"}`;
       element.style.viewTransitionName = `el-${i}`;
-      addStyle(
-        `::view-transition-group(el-${i}) {animation-delay: ${(i * 0.05).toFixed(2)}s;}`
-      );
-
       const palette =
         colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
-      const angle = Math.floor(Math.random() * 360);
-      element.style.background = `linear-gradient(${angle}deg, ${palette![0]}, ${palette![1]})`;
-
-      elements.push(element);
+      element.style.background = `linear-gradient(${Math.floor(Math.random() * 360)}deg, ${palette![0]}, ${palette![1]})`;
       grid.appendChild(element);
     }
   }
 
   function shuffleElements() {
     const grid = document.getElementById("elements-grid")!;
-    const shuffled = [...elements].sort(() => Math.random() - 0.5);
-
-    grid.innerHTML = "";
-    shuffled.forEach((element) => grid.appendChild(element));
-    elements = shuffled;
+    [...grid.querySelectorAll(".element")]
+      .sort(() => Math.random() - 0.5)
+      .forEach((element) => grid.appendChild(element));
   }
 
   document.addEventListener("DOMContentLoaded", () => {

@@ -1,7 +1,7 @@
+import { addStyle, initStyles } from "./dynamic-style";
+
 export function setVectors(scope: HTMLElement | Document = document) {
-  pauseAllAnimations(scope);
-
-
+  initStyles('vtbag-vectors');
   (scope !== document ? scope.getAnimations({ subtree: true }) : scope.getAnimations()).forEach(animation => {
     const effect = animation.effect;
     const pseudo = effect?.pseudoElement;
@@ -21,30 +21,20 @@ export function setVectors(scope: HTMLElement | Document = document) {
       const fromValues = from.match(/matrix\(([^)]+)\)/)?.[1]?.split(',').map(parseFloat);
       const toValues = to.match(/matrix\(([^)]+)\)/)?.[1]?.split(',').map(parseFloat);
 
-      console.log(group, (toValues?.[4]||0)-(fromValues?.[4]||0), (toValues?.[5]||0)-(fromValues?.[5]||0));
-    }
-  });
 
-  unPauseAllAnimations(scope);
-}
-
-
-function pauseAllAnimations(scope: HTMLElement | Document) {
-  (scope !== document ? scope.getAnimations({ subtree: true }) : scope.getAnimations()).forEach(animation => {
-    const effect = animation.effect;
-    const pseudo = effect?.pseudoElement;
-    if (effect instanceof KeyframeEffect && pseudo?.startsWith("::view-transition-group")) {
-      animation.pause();
-    }
-  });
-}
-
-function unPauseAllAnimations(scope: HTMLElement | Document) {
-  (scope !== document ? scope.getAnimations({ subtree: true }) : scope.getAnimations()).forEach(animation => {
-    const effect = animation.effect;
-    const pseudo = effect?.pseudoElement;
-    if (effect instanceof KeyframeEffect && pseudo?.startsWith("::view-transition-group")) {
-      animation.play();
+      addStyle('vtbag-vectors', `
+        :root {
+          --vtbag-vector-${group}-from-x: ${(fromValues?.[4] || 0)}px;
+          --vtbag-vector-${group}-to-x: ${toValues?.[4] || 0}px;
+          --vtbag-vector-${group}-from-y: ${(fromValues?.[5] || 0)}px;
+          --vtbag-vector-${group}-to-y: ${toValues?.[5] || 0}px;
+        }
+        ::view-transition-group(${group}) {
+          --vtbag-vector-from-x: ${(fromValues?.[4] || 0)}px;
+          --vtbag-vector-to-x: ${toValues?.[4] || 0}px;
+          --vtbag-vector-from-y: ${(fromValues?.[5] || 0)}px;
+          --vtbag-vector-to-y: ${toValues?.[5] || 0}px;
+        }`);
     }
   });
 }
