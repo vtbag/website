@@ -13,5 +13,5 @@ export function setVectors(scope: Document) {
       fs.push(animation.effect!.getKeyframes());
     }
   });
-  console.log(JSON.stringify(fs, null, 2));
+  document.querySelector("#debug")!.textContent = JSON.stringify(fs, null, 2);
 }
