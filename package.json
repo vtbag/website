@@ -14,7 +14,7 @@
     "@expressive-code/plugin-collapsible-sections": "^0.40.2",
     "@expressive-code/plugin-line-numbers": "^0.40.2",
     "@inox-tools/portal-gun": "^1.0.3",
-    "@playwright/test": "^1.51.0",
+    "@playwright/test": "^1.51.1",
     "@types/node": "^22.13.10",
     "@vtbag/cam-shaft": "^1.0.6",
     "@vtbag/element-crossing": "^1.1.0",
