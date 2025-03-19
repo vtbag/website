@@ -33,7 +33,12 @@ This might come as a surprise, but it's simple to explain: Besides defining view
 
 The reason for this is that the animations are triggered by the appearance of the view transition pseudo-elements on the `:root` element of the new page. At that moment, only the styles from the new page are available.
 
-While it seems logical, it's still somewhat counterintuitive that the CSS for an exit animation for an element that only exists on the old page needs to be defined on **all the page** the user can navigate to, including for example those reachable from a global navigation bar if your site features one. This might help you: keep in mind, that it is not the old element that is animated, but the _image_ of the old element that has been inserted as a pseudo-element on the new page.
+While it makes sense in theory, it still feels a bit counterintuitive that the CSS for an exit animation affecting an element that only exists on the old page has to be defined on the new page.
+
+This might help: Keep in mind that it is not the old element being animated but the _image_ of the old element, which is inserted as a pseudo-element on the new page.
+
+And the new page can be **any page** the user navigates to, including those accessed through a global navigation bar if your site has one. Even without a navigation bar, the user could select a page several entries back in the browser history. That could be just about anything.
+
 
 ## Components
 If you're accustomed to building with components, it might not always be clear which page a component will end up on and where the corresponding CSS should be placed. Additionally, the requirement that `view-transition-name` values must be unique on a page makes you reconsider whether it's wise to hardcode view transition names inside reusable components. Especially if you craft a component that can end up with multiple copies on the same page. This is very similar to how to handle `id` attributes.
@@ -49,28 +54,27 @@ A promising approach with components might be the following (still under evaluat
 - Instead, defer the assignment of the view transition name to a global step
 - Use `view-transition-class` to select pseudo elements for styling
 ```html
-<div class="someName">...</div>
+<div class="some-CSS-class-name">...</div>
 <style>
-  [someName] {
-    view-transition-class: someName;
+  .some-CSS-class-name {
+    view-transition-class: some-view-transition-class-name;
   }
-  ::view-transition-group(.someName) {
+  ::view-transition-group(.some-view-transition-class-name) {
     ...
   }
 </style>
-class
 <script>
-// assign unique names to all elements that have the someName class
-  document.querySelectorAll([someName])
+// assign unique names to all elements that have the some-CSS-class-name class
+  document.querySelectorAll(".some-CSS-class-name")
     .forEach(e => e.style.viewTransitionName = ...)
 </script>
 ```
 
-This way, the styling will even work if the component is used several times on the same page. Automatic name assignment is ease wih the [declarative-names script](/tools/utensil-drawer/#declarative-names). For the example above set `data-vtbag-decl=".someName = some-name-"`
+This way, the styling will even work if the component is used several times on the same page. Automatic name assignment is ease with the [declarative-names script](/tools/utensil-drawer/#declarative-names). For the example above set `data-vtbag-decl=".some-CSS-class-name = some-id-"`
 
 
 ## Conclusion
 I'm still exploring paths and alternatives but this would be my current recommendations:
-1. For complex pages, ensuring the uniqueness of view transition names might be easier if you assign them dynamically using JavaScript.
-2. Placing your view transition animation definitions in a global CSS file can be effective. This way, both the old and new pages share the same definitions, eliminating the need to worry about where to place them.
+1. For complex pages, ensuring the uniqueness of view transition names might be easier if you assign them dynamically in the browser using JavaScript, or in a page global action on the server.
+2. Placing your view transition animation definitions in a global CSS file can be a good approach. This ensures that both the old and new pages use the same definitions, so you do not have to worry about where to put them. Just make sure your keyframe and view transition names are either globally unique or intentionally the same.
 3. Utilizing [view transition classes and types](/basics/styling/#-with-classes) can help decouple usage from definitions, making your code more flexible."
