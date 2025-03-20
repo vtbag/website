@@ -39,6 +39,12 @@ This might help: Keep in mind that it is not the old element being animated but 
 
 And the new page can be **any page** the user navigates to, including those accessed through a global navigation bar if your site has one. Even without a navigation bar, the user could select a page several entries back in the browser history. That could be just about anything.
 
+* So should I put the styles for all exit animations in a site-wide global CSS file? Most likely yes, so they are available on all pages.
+
+* And should I split the CSS, keeping entry and morph animations separate from exit animations, with only the needed styles on each page? Probably not, since that would break up things that logically belong together.
+
+* But will the global file become huge, and won't it be loaded on every page? Yes, that is possible. However, since it is the same for all pages, the browser can cache it.
+
 
 ## Components
 If you're accustomed to building with components, it might not always be clear which page a component will end up on and where the corresponding CSS should be placed. Additionally, the requirement that `view-transition-name` values must be unique on a page makes you reconsider whether it's wise to hardcode view transition names inside reusable components. Especially if you craft a component that can end up with multiple copies on the same page. This is very similar to how to handle `id` attributes.
