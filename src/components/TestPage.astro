@@ -35,11 +35,11 @@
           const swap = JSON.parse(sessionStorage.getItem("vtbag-pageswap"));
           reveal && document.documentElement.setAttribute("cdvt", "");
           reveal?.viewTransition &&
-            document.documentElement.setAttribute("rvt", "");
+            document.documentElement.setAttribute("prvt", "");
           reveal?.activation &&
             document.documentElement.setAttribute("ract", "");
           swap?.viewTransition &&
-            document.documentElement.setAttribute("svt", "");
+            document.documentElement.setAttribute("psvt", "");
           swap?.activation && document.documentElement.setAttribute("sact", "");
           ((swap?.activation?.entry?.index ?? -1) !== -1 ||
             (swap?.activation?.from?.index ?? -1) !== -1) &&
@@ -52,8 +52,11 @@
             document.documentElement.setAttribute("vtna", "");
           CSS.supports("view-transition-group", "g") &&
             document.documentElement.setAttribute("vtg", "");
+          document.body.startViewTransition &&
+            document.documentElement.setAttribute("svt", "");
           "prerendering" in document &&
             document.documentElement.setAttribute("spec", "");
+
           history.replaceState(history.state, "", "/basics/test-page/");
         }
       }, 1000);
