@@ -199,11 +199,20 @@ Nested view transition groups introduce the ability to clip images not only with
 
 If your browser supports the nested `view-transition-group` property, at least the early implementations do not clip the view transition pseudo-elements while the tree is being built. This leads to a flash of elements escaping the box in the first frame.
 
+</SidePicture>
+<SidePicture  float="left">
+<iframe
+  slot="pic"
+  style="height:250px; width:200px; border: none;  margin-right: 1em"
+  src="/basics/hide-and-seek/list-scoped/"
+></iframe>
+</SidePicture>
+
 _Scoped_ view transitions are still a bit further in the future. Once available, they will also enable clipping view transition animations on any DOM element.
 
-So until _nested_ or _scoped_ view transition groups are widely and well supported by browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
+Scoped transitions also arrived recently in Chrome Canary 136, but they do not seem to work as expected. Or I have not yet figured out how to use them. 😉
 
-</SidePicture>
+So until _nested_ or _scoped_ view transition groups are widely and well supported by browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
 
 ## Taming Images of Clipped Elements
 
@@ -215,7 +224,7 @@ So until _nested_ or _scoped_ view transition groups are widely and well support
   src="/basics/hide-and-seek/list-flat/"
 ></iframe>
 
-Let’s be real: when an element has a view transition name, it will appear as an image in the view transition layer during the transition. Without support for nested view transition groups, it doesn't even matter if the original element was clipped by its container.
+Let’s be real: when an element has a view transition name, it will appear as an image in the view transition layer during the transition. Without support for scoped view transitions or nested view transition groups, it doesn't even matter if the original element was clipped by its container.
 
 This behavior can work well for elements that naturally feel like they should overflow their container as they glide to a new position. However, it can also result in unexpected outcomes, like images suddenly popping up in places they shouldn't, creating surprising visual effects.
 
