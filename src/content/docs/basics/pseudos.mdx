@@ -218,7 +218,9 @@ The View Transition API introduces five types of pseudo-elements:
 - `::view-transition-old`
 - `::view-transition-new`
 
-The `::view-transition` pseudo-element, which is rooted at the document's documentElement, is the root of all pseudo-elements created by the View Transition API.
+The `::view-transition` pseudo-element, which is rooted at the document's documentElement[^scoped], is the root of all pseudo-elements created by the View Transition API.
+
+[^scoped]: This will change when _scoped_ view transitions are available, allowing you to root the pseudo-element tree on any element.
 
 All these pseudo-elements only exist briefly during the transition effect, making them difficult to spot in the DOM.
 

@@ -156,18 +156,18 @@
     ["#D9AFD9", "#97D9E1"],
   ];
 
-  function createElements() {
-    const grid = document.getElementById("elements-grid")!;
-    for (let i = 0; i < 5 /**/; i++) {
-      const element = document.createElement("div");
-      element.className = `element ${Math.random() > 0.5 ? "circle" : "square"}`;
-      element.style.viewTransitionName = `el-${i}`;
-      const palette =
-        colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
-      element.style.background = `linear-gradient(${Math.floor(Math.random() * 360)}deg, ${palette![0]}, ${palette![1]})`;
-      grid.appendChild(element);
+    function createElements() {
+      const grid = document.getElementById("elements-grid")!;
+      for (let i = 0; i < 5 /**/; i++) {
+        const element = document.createElement("div");
+        element.className = `element ${Math.random() > 0.5 ? "circle" : "square"}`;
+        element.style.viewTransitionName = `el-${i}`;
+        const palette =
+          colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
+        element.style.background = `linear-gradient(${Math.floor(Math.random() * 360)}deg, ${palette![0]}, ${palette![1]})`;
+        grid.appendChild(element);
+      }
     }
-  }
 
   function shuffleElements() {
     const grid = document.getElementById("elements-grid")!;
