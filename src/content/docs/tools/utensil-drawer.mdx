@@ -40,6 +40,12 @@ One day, when it grows up, this will be an eclectic collection of snippets for v
     href="#escapeviewtransitionname"
   />
   <Utensil
+    title="Set Morphing Vector"
+    stable={false}
+    description="Brand new and experimental: provides the parameters of the morph animations as pseudo properties to your CSS rules"
+    href="#morphing-vector"
+  />
+  <Utensil
     title="Interim Type Declarations"
     stable={false}
     description="A temporary solution until Definitely Typed is ready and Level 2 definitions become available."
@@ -216,6 +222,26 @@ In client-side code, you can use `CSS.escape()` to escape custom identifiers.
 
 The `escapeViewTransitionName()` function might come in handy for server-side environments, where a CSS object isn't available.
 :::
+
+## Morphing Vector
+
+If `::view-transition-group(group)` morphs form _(x1, y1)_ to _(x2, y2)_, calling `setVectors()` adds the following CSS definitions for each view transition group:
+```
+:root {
+  --vtbag-vector-${group}-from-x: ${x1}px;
+  --vtbag-vector-${group}-to-x: ${x2}px;
+  --vtbag-vector-${group}-from-y: ${y1}px;
+  --vtbag-vector-${group}-to-y: ${y2}px;
+}
+::view-transition-group(${group}) {
+  --vtbag-vector-from-x: ${x1}px;
+  --vtbag-vector-to-x: ${x2}px;
+  --vtbag-vector-from-y: ${y1}px;
+  --vtbag-vector-to-y: ${y2}px;
+}
+```
+This way you can access the parameters of the morph animations directly within you CSS rules. Other parameters like width and height might follow in the future.
+
 
 ## Type Declarations
 

@@ -257,7 +257,7 @@ These pseudo-elements represent images of their original elements. For `::view-t
 
 The `::view-transition-new` images are no simple screenshots but _life replaced elements_. While they behave similarly to screenshots in that they are bitmap images whose height and width can be adjusted, they aren't static: If the underlying elements in the new DOM change, the pixels of the replaced element update as well.
 
-This might be confusing, as the original element is usually hidden behind the `::view-transition` pseudo-element (the “curtain”). Here's the key difference: old images are immutable. For example, if you show the _old image_ of a video player during a view transition, the image is frozen. New images, however, are _live_. If you display a _new image_ of a video player, the video will continue to play during the transition.
+This might be confusing, as the original element is usually hidden behind the `::view-transition` pseudo-element (the "curtain"). Here's the key difference: old images are immutable. For example, if you show the _old image_ of a video player during a view transition, the image is frozen. New images, however, are _live_. If you display a _new image_ of a video player, the video will continue to play during the transition.
 
 If you capture an element with width _w_ and height _h_, the pseudo-element will have the same height and width. But in addition it will also show the _overflowing ink_, like box-shadows, of the original element outside the _w x h_ rectangle.
 
@@ -318,7 +318,7 @@ For same-document view transitions, the creation of old images is the first step
 
 The process for creating new images is similar to the creation of old image pseudos.  The key difference is that a `::view-transition-group` for a specific `view-transition-name` may already exist when the `::view-transition-new` image is created. In such cases, the new image is added to the existing `::view-transition-image-pair` of that group. The image pair will then contain both the old and new images, always in that order.
 
-If no existing group is found, a `new ::view-transition-image-pair` and `::view-transition-group` pseudo-element is created for the view-transition-name and added to the end of the `::view-transition` pseudo-element's group list. This pair will then contain only the new image.
+If no existing group is found, a `new ::view-transition-image-pair` and `::view-transition-group` pseudo-element is created for the `view-transition-name` and added to the end of the `::view-transition` pseudo-element's group list. This pair will then contain only the new image.
 
 <div style="width: fit-content; margin: 0 auto">
 <Media>
@@ -345,7 +345,9 @@ When examining the `::view-transition-groups` in order, the elements at the star
 
 Before the view transition starts, the pseudo elements are rendered on top of the current page.
 
-The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport and is full transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set `pointer-events: none` on it).
+The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport[^scb] and is full transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set `pointer-events: none` on it).
+
+[^scb]: To be precise, it has the size of the viewport, plus scrollbars, and retractable UI parts on mobile. The spec refers to this as the _snapshot containing block_.
 
 The transition groups are rendered [in the order they were created](#creation-of-pseudo-elements) and appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
 
