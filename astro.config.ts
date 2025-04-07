@@ -41,7 +41,7 @@ export default defineConfig({
   integrations: [starlight({
     title: '@vtbag',
     routeMiddleware: ["./src/middleware/overview-link.ts"],
-    plugins: [viewTransitions({declarativeNames: ":is(h2, h3):not(.no-vtbag-decl *) = vtbag-h-; :is(starlight-toc span):not(.no-vtbag-decl *) = vtbag-toc~"})],
+    plugins: [viewTransitions({ declarativeNames: ":is(h2, h3):not(.no-vtbag-decl *) = vtbag-h-; :is(starlight-toc span):not(.no-vtbag-decl *) = vtbag-toc~" })],
     components: {
       Head: "./src/components/NHead.astro",
       PageTitle: "./src/components/PageTitle.astro",
@@ -73,10 +73,10 @@ export default defineConfig({
     logo: {
       src: "./src/assets/mini-bag.webp"
     },
-    social: {
-      github: 'https://github.com/vtbag/website',
-      blueSky: 'https://bsky.app/profile/vtbag.dev'
-    },
+    social: [
+      { icon: 'github', label: "GitHub", href: 'https://github.com/vtbag/website' },
+      { icon: 'blueSky', label: "Blussky", href: 'https://bsky.app/profile/vtbag.dev' }
+    ],
     editLink: {
       baseUrl: "https://github.com/vtbag/website/edit/main/"
     },
@@ -88,7 +88,7 @@ export default defineConfig({
   }), vtbot({ autoLint: false, loadingIndicator: false }), inoxToolsPortalGun()],
   vite: {
     build: {
- //     assetsInlineLimit: 4096,
+      //     assetsInlineLimit: 4096,
     },
     server: {
       fs: {
