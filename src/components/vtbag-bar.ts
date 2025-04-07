@@ -7,7 +7,7 @@ export function addBar(first:number) {
   console.log("adding");
   document.body.insertAdjacentHTML(
     "afterbegin",
-    `<div id="vtbag-bar-outer"><div id="vtbag-bar"><div id="vtbag-bar-inner"/></div></div>`
+    `<div id="vtbag-bar-outer"><div id="vtbag-bar"><div id="vtbag-bar-inner"></div></div></div>`
   );
   const timing = [
     10, 20, 30, 40, 50, 100, 90, 80, 70, 60, 50, 40, 20, 25, 30, 35, 40, 45,
