@@ -3,3 +3,4 @@
 /about /vtbag/ 301
 /basics/testpage/ /basics/test-page/ 301
 /tips/hide-and-seek/* /basics/hide-and-seek/:splat 301
+/fun-with-view-transitions /fwvt/welcome/ 301

@@ -10,7 +10,7 @@ const SIZE = 12;
     <title>Vector Demo | vtbag.dev</title>
   </head>
   <body>
-    <h1>Click somewhere,<br/><kbd id="esc">Esc</kbd> to exit</h1>
+    <h1>Click somewhere,<br /><kbd id="esc">Esc</kbd> to exit</h1>
     <div class="container">
       <div id="elements-grid"></div>
     </div>
@@ -20,6 +20,8 @@ const SIZE = 12;
 <style set:text=`:root{--size: ${SIZE};}`></style>
 
 <style is:global>
+@import "https://unpkg.com/open-props";
+
   :root {
     color-scheme: light dark;
     view-transition-name: none;
@@ -37,6 +39,7 @@ const SIZE = 12;
   h1 {
     font-size: 4vmin;
     padding: 2em;
+    position: absolute;
   }
   kbd {
     font-family: inherit;
@@ -52,22 +55,21 @@ const SIZE = 12;
   }
   .container {
     display: flex;
-    height: calc(50vh + 4vmin + 4em);
+    height: 100%;
     justify-content: center;
     align-items: center;
   }
 
   #elements-grid {
     display: grid;
-    width: 100px;
-    height: 90vh;
     grid-template-columns: repeat(1, 1fr);
+    height: 90%;
     gap: 10px;
-  }
 
+  }
   .element {
-    width: calc(66vmax / var(--size));
-    height: calc(66vmax / var(--size));
+    width: calc(66vmax / var(--size) - 10px);
+    height: calc(66vmax / var(--size) - 10px);
     view-transition-class: el;
   }
 
@@ -82,34 +84,11 @@ const SIZE = 12;
     border-radius: 5px;
   }
 
-  #shuffle-btn {
-    display: block;
-    margin: 0 auto;
-    padding: 1rem 2rem;
-    font-size: 1.2rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-    box-shadow: 0 4px 6px rgba(128, 128, 128, 0.5);
-    view-transition-name: shuffle;
-  }
 
-  #shuffle-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-  }
-
-  #shuffle-btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
   /* This is it */
   ::view-transition-group(*) {
     animation-duration: 1s;
-    animation-timing-function: ease-out;
+    animation-timing-function: var(--ease-spring-1);
   }
 
   ::view-transition-image-pair(.el) {
@@ -129,8 +108,8 @@ const SIZE = 12;
   @media (orientation: landscape) {
     #elements-grid {
       grid-template-columns: repeat(var(--size), 1fr);
-      height: 100px;
-      width: 90vw;
+      width: 90%;
+      height: auto;
       gap: 10px;
     }
     @keyframes arc {
@@ -160,26 +139,6 @@ const SIZE = 12;
     ["#D9AFD9", "#97D9E1"],
   ];
 
-  let msgs: string[] = [];
-
-  function show(transition: ViewTransition) {
-    if (transition) {
-      msgs.push("");
-      transition.ready.then(() => {
-        document.getAnimations().forEach((a: any) => {
-          if (!a.animationName.startsWith("-ua-view-transition-group")) return;
-          const kfs = a.effect.getKeyframes();
-          const from = new DOMMatrix(kfs[0].transform);
-          const to = new DOMMatrix(kfs[kfs.length - 1].transform);
-          msgs.push(
-            `${a.animationName}: (${from.e}, ${from.f}) -> (${to.e}, ${to.f})`
-          );
-        });
-      });
-    }
-  }
-
-  // @ts-ignore
   function createElements() {
     const grid = document.getElementById("elements-grid")!;
     // @ts-ignore
@@ -208,12 +167,19 @@ const SIZE = 12;
   document.addEventListener("DOMContentLoaded", () => {
     createElements();
     addEventListener("click", async () => {
-      const transition = mayStartViewTransition(shuffleElements);
-
-      show(transition);
-      transition.ready.then(() => setVectors());
+      const transition = mayStartViewTransition(shuffleElements, true);
+      transition.ready.then(() => {
+        setVectors(".* x y", "pseudo");
+      });
     });
   });
-  document.getElementById("esc")!.addEventListener("click", ()=>history.back());
-  document.addEventListener("keydown", (event)=>event.key === "Escape" && history.back());
+  document
+    .getElementById("esc")!
+    .addEventListener("click", () => history.back());
+  document.addEventListener(
+    "keydown",
+    (event) => event.key === "Escape" && history.back()
+  );
 </script>
+
+
