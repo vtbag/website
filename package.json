@@ -29,7 +29,7 @@
     "rehype-slug": "^6.0.0",
     "rollup-plugin-visualizer": "^5.14.0",
     "sharp": "^0.34.1",
-    "starlight-image-zoom": "^0.11.1",
+    "starlight-image-zoom": "^0.12.0",
     "typescript": "^5.8.3"
   }
 }
