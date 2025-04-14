@@ -12,7 +12,7 @@
     "@astrojs/check": "^0.9.4",
     "@astrojs/starlight": "^0.33.1",
     "@expressive-code/plugin-collapsible-sections": "^0.40.2",
-    "@expressive-code/plugin-line-numbers": "^0.40.2",
+    "@expressive-code/plugin-line-numbers": "^0.41.1",
     "@inox-tools/portal-gun": "^1.0.3",
     "@playwright/test": "^1.51.1",
     "@types/node": "^22.14.1",
