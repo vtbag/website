@@ -77,7 +77,7 @@ interface ViewTransition {
 
 The promises allow you to hook into the different stages of the view transition process.
 
-* The `updateCallbackDone` promise resolves once the update callback has finished. You can use this to (synchronously) make last-minute changes before the new images are created. If the promise rejects, view transition processing ends, and the `finished` promise also rejects.
+* The `updateCallbackDone` promise resolves once the update callback fulfills. You can use this to (synchronously) make last-minute changes before the new images are created. If the update function rejects, the `updateCallbackDone` promise rejects, too. View transition processing ends, and the `ready` and `finished` promises also reject.
 
 * The `ready` promise settles once the pseudo-elements have been inserted into the DOM. Inserting the pseudo-elements triggers their animations. For example, you can use this promise to add your own JavaScript animations using the Web Animation API. If there are errors, like duplicate view transition names, the `ready` promise will reject.
 
@@ -111,7 +111,9 @@ You can dynamically add or remove view transition types during the view transiti
 
 Calling `startViewTransition()` while another view transition is active will interrupt the current view transition, fast forward to the end state of the animations, and start the new view transition from there.
 
-Currently, browser behavior differs regarding the effects that occur when `startViewTransition` is called before `updateCallbackDone` resolves. You should better avoid this scenario. You can either chain the update callback functions and pass the chained callback to a single call of `startViewTransition()`, or chain multiple calls to `startViewTransition()` by awaiting the `finished` promise before starting the next view transition.
+If you want to avoid these jerky jump, you can either
+* chain the update callback functions, passing the chained callback to a single call of `startViewTransition()`, or
+* chain multiple calls to `startViewTransition()` by awaiting the `finished` promise before starting the next view transition.
 
 ## Cross-Document View Transitions
 
