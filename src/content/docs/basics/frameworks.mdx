@@ -1,0 +1,44 @@
+---
+title:  Support in Web Frameworks
+description: What is special when using React's <ViewTransition />
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/bag-og.png"
+---
+
+
+Are you using a web  framework that offers support for view transitions like React's `<ViewTransition />` or Astro's `<ClientRouter />` component?  Are you wondering how the information on `vtbag.dev` might still be valuable for you?
+
+## React
+
+React comes with support for **same-document** view transitions.
+
+React provides an extra layer around the browser's native View Transition API. The main reason  is to simplify integration with React's rendering process. The layer encapsulates assigning `view-transition-name` and `view-transition-class` values, as well as methods to start view transitions. Styling is still done in CSS, just like you would without React.
+
+Most of the information on `vtbag.dev` will apply as well to you as an React programmer, too.
+
+However, React changes how you interact with view transitions,  as a few details differ from the native API:
+
+- The `<ViewTransition />` component is used to mark which elements should potentially get `view-transition-name` and `view-transition-class` values assigned.
+- React's approach prefers `view-transition-class` for styling rather than `view-transition-name`.
+- It introduces a built in notion of `entry`, `exit`, `update`, and `shared` animations.
+- You do not call `document.startViewTransition()` directly. Instead, you use provided mechanisms like `startTransition()`,`useDeferredValue()` or `<Suspense />`
+- React automatically chains overlapping view transitions, similar to what the Bag's [`mayStartViewTransition()`](/tools/utensil-drawer/#maystartviewtransition) helps achieve.
+- Group animations that would otherwise fly in or out of the viewport are turned into exit/entry animations.
+- In React, you can not access the `ViewTransition` object.
+- React can trigger callbacks after `viewTransition.ready` resolves.
+
+## Astro
+
+Astro, being a framework for multi page apps,  supports    **cross-document** view transitions. Astro's view transition support was the first in any web framework, predating React's by at least 18 month.
+
+Like React it wraps the native View Transition API. Astro provides directives to define view transition names and animations. With its `transition:persist` directive, it even enables functionality that goes beyond what native cross-document view transitions can do. Astro also simulates view transitions in browsers that do not yet natively support the API. It has built-in `forward` / `back` animation directions  and offers several lifecycle events you can hook into.
+
+
+If you want to do something that the abstraction does not cover, you can always interact directly with the native view transition API.
+
+Now that cross-document view transitions are natively supported in most major browsers, you might want to consider using the native API directly for new projects  rather than relying on Astro's ClientRouter.
+
+As you might know, The Bag originated from Astro's view transitions. As an Astro programmer, you can visit [events-3bg.pages.dev](https://events-3bg.pages.dev) (the original Bag of Tricks site) for a whole site dedicated to Astro's view transitions.
