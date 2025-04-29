@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lost View Transitions</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Metropolis:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        width: 1280px;
+        height: 640px;
+        background: linear-gradient(135deg, #18100c, #182028);
+        overflow: hidden;
+        border-radius: 8px;
+      }
+      body::before {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 255, 255, 0.05) 1%,
+          transparent 95%
+        );
+        background-size: 190px 190px;
+      }
+      .image {
+        mask-image: radial-gradient(
+          ellipse at center,
+          white 55%,
+          transparent 80%
+        );
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 640px;
+        width: auto;
+      }
+      .wb {
+        mask-image: radial-gradient(
+          ellipse at center,
+          #8888 0%,
+          transparent 80%
+        );
+        position: absolute;
+        top: 50px;
+        right: 50px;
+        height: 100px;
+        width: auto;
+      }
+
+      h1 {
+        position: relative;
+        z-index: 10;
+        text-align: left;
+        left: 50px;
+        top: 0px;
+        color: #a98;
+        font-size: 90px;
+        margin: 33px 50px 0 0;
+        font-weight: 100;
+        font-family: "Bebas Neue", cursive;
+        text-shadow:
+          1px 2px 2px orange,
+          0 0 1em rgb(9, 0, 64),
+          0 0 0.2em rgb(0, 2, 128);
+      }
+      .h1-1 {
+        text-shadow:
+          0px 2px 2px orange,
+          0 0 1em rgb(9, 0, 64),
+          0 0 0.2em rgb(0, 2, 128);
+      }
+      .h1-2 {
+        text-shadow:
+          -1px 2px 2px orange,
+          0 0 1em rgb(9, 0, 64),
+          0 0 0.2em rgb(0, 2, 128);
+      }
+      h2 {
+        position: fixed;
+        z-index: 10;
+        text-align: left;
+        color: #a98;
+        font-size: 36px;
+        line-height: 1.4;
+        font-weight: 50;
+        margin: 0;
+        bottom: 50px;
+        right: 50px;
+        width: 30%;
+        paint-order: stroke fill;
+        transform: translate(10%, 0%);
+        text-shadow:
+          1px 1px 2px #69c,
+          0 0 0.5em #403080,
+          0 0 0.2em black;
+        font-family: "Special Elite", cursive;
+      }
+    </style>
+  </head>
+  <body>
+    <img class="image" src="/office.png" />
+    <h1>
+      Gone <span class="h1-1">without</span> <span class="h1-2">a trace: The mobile</span><br>view <span class="h1s-1">transition</span> <span class="h1-2">mystery</span>
+    </h1>
+    <h2>
+      What caught my eye was the small dot on the corner of the Discord icon.
+      Someone had left a message. Quiet, patient, and waiting to be found.
+    </h2>
+
+    <img class="wb" src="/white-board.webp" />
+  </body>
+</html>
