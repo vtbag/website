@@ -72,15 +72,12 @@ export default defineConfig({
     favicon: "/bag4.png",
     logo: {
       src: "./src/assets/mini-bag.webp"
-    },/*
+    },
+
     social: [
       { icon: 'github', label: "GitHub", href: 'https://github.com/vtbag/website' },
       { icon: 'blueSky', label: "Blussky", href: 'https://bsky.app/profile/vtbag.dev' }
-    ],*/
-    social: {
-      github: 'https://github.com/vtbag/website',
-      blueSky: 'https://bsky.app/profile/vtbag.dev'
-    },
+    ],
     editLink: {
       baseUrl: "https://github.com/vtbag/website/edit/main/"
     },
