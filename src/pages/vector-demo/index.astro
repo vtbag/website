@@ -165,7 +165,7 @@ const SIZE = 12;
   document.addEventListener("DOMContentLoaded", () => {
     createElements();
     addEventListener("click", async () => {
-      const transition = mayStartViewTransition(shuffleElements, {collisionBehavior: "chaining"});
+      const transition = mayStartViewTransition(shuffleElements, {chaining: true});
       transition.ready.then(() => {
         setVectors([{ pattern: ".*", props: ["x", "y"] }], "pseudo");
       });
