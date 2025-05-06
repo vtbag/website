@@ -41,7 +41,7 @@ In reality, you don't want to select each element individually. Instead, you wan
 ## How to Assign Names Automatically?
 Here are your options right now:
 
-* _Not yet recommended_: Generate [dynamic identifiers](/basics/pseudos/#auto-generated-names) with `auto` or `match-element`: \
+* _Not yet recommended_: Generate [dynamic identifiers](/basics/pseudos/#auto-generated-names-auto-and-match-element) with `auto` or `match-element`: \
 `selector { view-transition-name: auto; } /* or match-element */`
 * _Not yet recommended_: Copy an existing unique attribute like `id`: \
 `selector { view-transition-name: attr(id type(<custom-ident>)); }`
@@ -53,10 +53,10 @@ Here are your options right now:
 I wouldn't recommend the first two approaches just yet, as they are still a bit experimental for cross-document view transitions and don't work reliably across all browsers. But I'm curious and looking forward to what the future has in store.
 
 ### Special View Transition Names
-Assigning `auto` as a view transition name dynamically generates unique names. Safari has supported this since version 18.2, Chrome hides it behind a flag, and Edge doesn't support it at all. Where it is supported, it works for same-document view transitions. However, dynamic name generation doesn't (or only partly) work for cross-document view transitions.
+
 
 Assigning `auto` as a view transition name dynamically generates unique names.
-Safari support this since 18.2, in Chrome it is hidden behind a flag, in Edge it is not supported.
+Safari supports this since 18.2, in Chrome it is hidden behind a flag, in Edge it is not supported.
 Where it is supported, it works for same-document view transitions. Other than [defined in the specification](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name) it does not or only partly work for cross-document view transitions.
 
 Safari generates rather short names, but only for `startViewTransition()`, and not for cross-document view transitions.
@@ -74,15 +74,15 @@ Chrome's dynamically generated names at least appear as though they could techni
 -ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-382
 ...
 ```
-Setting the name to `auto` does not always generate those fancy dynamic names. If the element has an `id`-attribute, its value is used as the view transition name instead. This works fine in Safari and only so-so in Chrome, which seems to struggle a bit with ASCII characters beyond `A-Za-z0-9_-`.
+Setting the name to `auto` does not always generate those fancy dynamic names. If the element has an `id`-attribute, its value is used as the view transition name instead. This works fine in Safari but not in Chrome.
 
-Unlike Safari, Chrome also supports `match-element`, which works like `auto` but always generates a dynamic name, even when an `id` attribute is present.
+Chrome and Safari also support `match-element`, which works like `auto` but always generates a dynamic name, even when an `id` attribute is present.
 
 
 ### Using attr() For Names
 
 Chrome offers `view-transition-name: attr(id type(<custom-ident>))` as an alternative to `view-transition-name: auto`.
-Currently, this typed `attr()` function is _only available in Chrome_. When used with the `id` attribute, it behaves like the `auto` view transitions name when `id` is set. In Chrome, it also has the same limitations regarding allowed characters in names as `view-transition-name: auto`.
+Currently, this typed `attr()` function is _only available in Chrome_. When used with the `id` attribute, it behaves like the `auto` view transitions name when `id` is set.
 
 You might wonder why copying another attribute's value counts as a solution here. After all, you only get automatic view transition names if you have already manually set all those `id` attributes.  Well, yes.
 
@@ -94,12 +94,7 @@ ul li:nth-child(even) {
   view-transition-name: attr(id type(<custom-ident>))
 }
 ```
-Assuming `id`s are defined, you can do the same with `view-transition-name: auto`:
-```css
-ul li:nth-last-child(-n+6) {
-  view-transition-name: auto;
-}
-```
+
 
 ### Setting Names Using JavaScript
 
