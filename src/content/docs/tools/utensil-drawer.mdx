@@ -339,18 +339,17 @@ This function ensures a unified approach by offering fallback support for browse
 There is a second parameter for extensions:
 ```js
 export interface StartViewTransitionExtensions {
-	respectReducedMotion?: boolean;
-	chaining?: boolean;
-	speedUpWhenChained?: number;
+	respectReducedMotion?: boolean; // default is true
+	collisionBehavior?: 'skipOld' | 'chaining'; // default is "skipOld"
+	speedUpWhenChained?: number; // default is 1.0;
 }
 ```
-The defaults are:
-```js
-{ respectReducedMotion = true, chaining = false, speedUpWhenChained = 1 }
-```
 
-With `respectReducedMotion`, `mayStartViewTransition` behaves as if native view transitions are not supported, if the user has set preference for reduced motion on the operation system or browser level.
+With `respectReducedMotion`, `mayStartViewTransition` behaves as though native view transitions are not supported when the user has enabled reduced motion at the operation system or browser level.
 
-When `chaining` is set to true, new transitions do not kill the current one but collect all the update callbacks and chain them in a new view transition once the current transition finishes. Hitting a current transition with a new call can also increase the speed of the current animation, if `speedUpWhenChained` is set to a value _> 1_.
+When `collisionBehavior` is set to `chaining`, calls to `mayStartViewTransition` do not interrupt active view transitions.
+Instead, if the animation has not yet started, the updates are merged into the current transition.  If the animation is already underway, the updates from the new calls are queued and replayed in a new view transition that begins automatically once the current one has finished.
+
+Hitting an ongoing transition with a new call can also increase the speed of the current animation if `speedUpWhenChained` is set to a value _> 1_.
 
 For details see [`may-start-view-transition.ts`](http://github.com/vtbag/utensil-drawer/blob/main/src/may-start-view-transition.ts)
