@@ -10,6 +10,8 @@ import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
 import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
+import og from "astro-og";
+
 export default defineConfig({
   image: { remotePatterns: [{ protocol: "https" }] },
   devToolbar: { enabled: true },
@@ -86,7 +88,7 @@ export default defineConfig({
     sidebar: sidebar(),
   }), d2({
     skipGeneration: process.env.GITHUB_ACTIONS === "true"
-  }), vtbot({ autoLint: false, loadingIndicator: false }), inoxToolsPortalGun()],
+  }), vtbot({ autoLint: false, loadingIndicator: false }), inoxToolsPortalGun(), og()],
   vite: {
     build: {
       //     assetsInlineLimit: 4096,
