@@ -110,10 +110,6 @@ export default defineConfig({
       brotliSize: true
     })]*/
   },
-
-  adapter: node({
-    mode: "standalone"
-  })
 });
 
 
