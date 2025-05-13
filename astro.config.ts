@@ -12,15 +12,20 @@ import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 import og from "astro-og";
 
+import node from "@astrojs/node";
+
 export default defineConfig({
   image: { remotePatterns: [{ protocol: "https" }] },
   devToolbar: { enabled: true },
   site: 'https://vtbag.dev',
   compressHTML: false,
+
   redirects: {
     '/inspection-chamber/': '/tools/inspection-chamber/'
   },
+
   prefetch: false,
+
   markdown: {
     shikiConfig: {
       themes: {
@@ -39,7 +44,9 @@ export default defineConfig({
     }]],
     remarkPlugins: [remarkEndOfMarkdown]
   },
+
   trailingSlash: 'always',
+
   integrations: [starlight({
     title: '@vtbag',
     routeMiddleware: ["./src/middleware/overview-link.ts"],
@@ -89,6 +96,7 @@ export default defineConfig({
   }), d2({
     skipGeneration: process.env.GITHUB_ACTIONS === "true"
   }), vtbot({ autoLint: false, loadingIndicator: false }), inoxToolsPortalGun(), og()],
+
   vite: {
     build: {
       //     assetsInlineLimit: 4096,
@@ -101,7 +109,11 @@ export default defineConfig({
     plugins: [visualizer({
       brotliSize: true
     })]*/
-  }
+  },
+
+  adapter: node({
+    mode: "standalone"
+  })
 });
 
 
@@ -123,7 +135,7 @@ function sidebar() {
     items: [
       { label: 'Test Your Browser', link: "/basics/test-page/" },
       { label: 'View Transition API', link: "/basics/api/" },
-      { label: 'Web Framework Support', link: "/basics/frameworks/", badge: { text: 'New!', variant: 'success' } as Badge  },
+      { label: 'Web Framework Support', link: "/basics/frameworks/", badge: { text: 'New!', variant: 'success' } as Badge },
 
       {
         label: 'View Transition Examples', link: "/basics/examples/",
@@ -142,6 +154,7 @@ function sidebar() {
       { label: "Avoid Pointer Flickering", link: "/tips/pointer/" },
       { label: "Pseudo-Smooth-Scrolling?", link: "/tips/pseudo-smooth-scrolling/" },
       { label: "Automatic Names", link: "/tips/auto-names/" },
+      { label: "Retaining Interactivity", link: "/tips/interactivity/", badge: { text: 'New!', variant: 'success' } as Badge },
     ]
   },
   { label: 'Fun with View Transitions', link: "/fwvt/welcome/", badge: { text: 'New!', variant: 'success' } as Badge },
@@ -160,7 +173,10 @@ function sidebar() {
       { label: "Instant scrolling with Cam-Shaft", link: "/shaft-demo2/1/" },
       { label: "Can't confine List Elements", link: "/basics/hide-and-seek/problem/" },
       { label: "Simulated Nested View Transition Groups", link: "/basics/hide-and-seek/solution/" },
-      { label: "Swirling Image Gallery", link: "/tips/auto-names/" }
+      { label: "Swirling Image Gallery", link: "/tips/auto-names/" },
+      { label: "Derived Trajectories", link: "/vector-demo/" },
+      { label: "Chained View Transitions", link: "/chaining-demo/" },
+      { label: "Tower of Hanoi", link: "https://fun-with-view-transitions.pages.dev/episode/7/page.html" }
     ]
   }];
 }

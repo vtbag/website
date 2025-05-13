@@ -1,0 +1,64 @@
+---
+title: Retain Control While Transitioning
+description: Normally, you cannot interact with a page while view transition animations are running. Here is why that happens, and how to fix it.
+---
+Normally, you cannot interact with a page while view transition animations are running. Here is why that happens, and how to fix it.
+
+## What happens?
+
+The View Transition API builds a [tree of pseudo-elements](/basics/pseudos/#the-theater-curtain) that show images of elements from the before and after states. These pseudo-elements are what the view transition animations actually animate.
+By default, there is a view transition group for the `:root` element, named `root`, that spans the entire viewport. Even if it looks like your page, it is really just a large element showing an image of the page.
+
+
+So, during a view transition animation, when you click a visible button or link, you are usually clicking on an images in the `root` group, or some other view transition pseudo element, but not the actual interactive element.
+
+
+Even if you assign a view-transition-name to the button or link to promote it into the transition layer, clicking it will still not do anything. That is because you are clicking an image. It has no event listeners. And you cannot attach any to the pseudo-elements.
+
+
+Even if you assign a view-transition-name to the button or link to elevate it into the [view transition layer](/basics/pseudos/#rendering-pseudo-elements:~:text=own%20stacking%20context%2C%20known%20as%20the%20view%20transition%20layer), clicking it will still not do anything. That is because you are  clicking an image. It has no event listeners. And you cannot attach any to the pseudo-elements.
+
+
+Clicks do still reach the DOM, though. You could, in theory, listen to clicks on the `:root` element and try to figure out what was visually underneath at that viewport position. Just kidding.
+
+
+## Why?
+
+You might wonder why the View Transition API doesn't detect clicks on pseudo-elements and delegate them to the original elements Wouldn't that feel natural? Not really.
+
+First, it would be very ambiguous to determine which element was actually meant, especially if the click lands on a crossfade between two completely different elements.
+
+Second, clicking an animated image in mid-transition could easily disrupt the user experience if the response to that click changes state behind the scenes while the animation is still running.
+
+So having the view transition pseudo-element tree acting like a glass pane was a deliberate design choice in the View Transition API.
+
+## How to Retain Interactivity
+
+There are situations where you do _not_ want to be protected by the API from all the dangers of interaction.
+Examples include the [Game of Life](/chaining-demo/), [Derived Trajectories](/vector-demo), and [Towers of Hanoi](/concurrent-demo/).
+
+Regaining control and letting clicks through to your interactive elements takes two steps:
+* First, make sure that the buttons or links you want to remain interactive are  not part of any  view transition group. If you assigned a view-transition-name to the element or one of its parents, remove it.
+
+    In most cases, you will at least need to cancel the implicit `root` transition group that the friendly View Transition API automatically adds for the `:root` element:
+
+    ```css
+    :root {
+      view-transition-name: none;
+    }
+    ```
+* Second, let clicks pass through the `::view-transition` pseudo-element so they can reach the elements underneath the view transition layer.
+
+    ```css
+    ::view-transition {
+      pointer-events: none;
+    }
+    ```
+
+Together, these two changes ensure that you are clicking actual buttons and links, not just images of them.
+
+
+
+
+## Scoped View Transitions
+Future versions of the View Transition API will introduced scoped view transitions that apply only to specific parts of the DOM. This will automatically preserve interactivity for all elements outside the scoped view transition area.

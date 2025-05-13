@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chaining Demo | @vtbag.dev</title>
+    <link rel="canonical" href="https://vtbag.dev/chaining-demo/" />
+    <link rel="shortcut icon" href="/bag4.png" type="image/png" />
+    <meta property="og:title" content="The Chaining Demo" />
+    <meta property="og:url" content="https://vtbag.dev/chaining-demo/" />
+    <meta property="og:locale" content="en" />
+    <meta
+      property="og:description"
+      content="A view transition tech demo where starting a new view transition does not cancel the old one."
+    /><meta property="og:site_name" content="@vtbag" /><meta
+      name="twitter:card"
+      content="summary_large_image"
+    /><meta
+      name="description"
+      content="A view transition tech demo were starting a new view transition does not cancel the old one."
+    /><meta property="og:image" content="/gol-og.png" />
+  <style is:global>
+    :root {
+      --grid-color: #1a1a1a;
+      --cell-color: #00ff9d;
+      --bg-color: #0f172a;
+      --text-color: #e2e8f0;
+      --button-color: #00ff9d;
+      --button-hover: #00cc7d;
+      --input-bg: #1e293b;
+      --input-border: #334155;
+      view-transition-name: none;
+    }
+
+    ::view-transition {
+      pointer-events: none;
+    }
+
+    :active-view-transition {
+      #controls :not(#gen) {
+        pointer-events: none;
+        opacity: 0.5;
+        filter: grayscale(50%)
+      }
+    }
+
+
+    ::view-transition-group(*) {
+      animation-duration: .75s;
+
+    }
+
+    ::view-transition-old(grid) {
+      animation-name: none;
+    }
+
+    ::view-transition-new(grid) {
+      animation-timing-function: linear;
+      animation-name: grid-down;
+    }
+
+    :root.up::view-transition-new(grid) {
+      animation-name: grid-up;
+    }
+
+    ::view-transition-group(hr),
+    ::view-transition-group(hr2) {
+      animation-timing-function: linear;
+    }
+
+    ::view-transition-old(hr),
+    ::view-transition-new(hr),
+    ::view-transition-new(hr2),
+    ::view-transition-old(hr2) {
+      animation-name: none;
+    }
+
+    @keyframes grid-down {
+
+      0%,
+      5% {
+        clip-path: inset(0 0 99.999% 0);
+      }
+
+      95%,
+      100% {
+        clip-path: inset(0);
+      }
+    }
+
+    @keyframes grid-up {
+
+      0%,
+      10% {
+        clip-path: inset(99.999% 0 0 0);
+      }
+
+      95%,
+      100% {
+        clip-path: inset(0);
+      }
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--bg-color);
+      background-image:
+        radial-gradient(circle at 15% 50%, rgba(0, 255, 157, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(0, 255, 157, 0.08) 0%, transparent 25%);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text-color);
+    }
+
+    #container2.hidden {
+      display: none;
+    }
+    #text {
+      user-select: none;
+    }
+    #container {
+      display: flex;
+      --cell-size: calc(100cqmin / 50);
+      flex-direction: column;
+      gap: 2rem;
+      padding: 2rem;
+      padding-bottom: 4rem;
+      background: rgba(30, 41, 59, 0.4);
+      backdrop-filter: blur(12px);
+      border-radius: 1rem;
+      box-shadow:
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    @media (orientation: landscape) {
+      #container {
+        flex-direction: row;
+        min-height: 100vh;
+      }
+    }
+
+
+
+    #container2 {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      margin-inline: auto;
+    }
+
+    #controls {
+      user-select: none;
+      max-width: calc(35 * var(--cell-size));
+      margin-inline: auto;
+      padding: 1rem;
+      background: rgba(15, 23, 42, 0.3);
+      border-radius: 0.75rem;
+      margin-bottom: calc(2 * var(--cell-size));
+      width: fit-content;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      background-color: var(--button-color);
+      color: var(--bg-color);
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    input {
+      padding: 0.5rem 1rem;
+      background-color: var(--button-color);
+      color: var(--bg-color);
+      border: none;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    button:hover {
+      background-color: var(--button-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 255, 157, 0.25);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #container2 {
+      position: relative;
+      width: fit-content;
+    }
+
+    #demo,
+    #text {
+      flex: 1;
+    }
+
+    #grid {
+      display: grid;
+      width: fit-content;
+      view-transition-name: grid;
+      background-color: var(--grid-color);
+      border-radius: 0.75rem;
+      border: var(--cell-size) solid gray;
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .cell {
+      width: var(--cell-size);
+      height: var(--cell-size);
+      background-color: rgba(255, 255, 255, 0.03);
+      border-radius: 50%;
+    }
+
+    .cell:hover {
+      background-color: rgba(0, 255, 157, 0.2);
+    }
+
+    .cell.alive {
+      background-color: var(--cell-color);
+      box-shadow: 0 0 15px rgba(0, 255, 157, 0.5);
+      transform: scale(1.1);
+      z-index: 1;
+    }
+
+
+
+    a {
+      color: white;
+    }
+    hr {
+      width: calc(var(--cell-size) * 34 );
+      position: absolute;
+      border: 5px solid var(--input-border);
+      margin-left: calc(-1.5 * var(--cell-size));
+      border-radius: 5px;
+      box-shadow: 0 0 5px green;
+      padding: 0;
+      animation: glow alternate .1s ease-in-out infinite;
+      animation-duration: 6s;
+      animation-timing-function: linear;
+      view-transition-name: hr;
+    }
+
+    #hr2 {
+      view-transition-name: hr2;
+    }
+
+
+    :active-view-transition hr {
+      border-color: var(--cell-color);
+    }
+
+    @keyframes glow {
+      0% {
+        box-shadow: 0 0 2px darkgreen;
+        border-color: drakgreen;
+      }
+
+      50% {
+        box-shadow: 0 0 8px lightgreen;
+        border-color: black;
+      }
+
+      100% {
+        box-shadow: 0 0 2px green;
+        border-color: darkgreen;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <div id="demo">
+      <div id="controls">
+        <label>
+          Activate View Transition Chaining:
+          <input type="checkbox" id="chaining" checked />
+        </label>
+        <button id="gen">Next</button><br>
+        <span>shown / requested: <span id="current">0</span> / <span id="max">0</span></span>
+      </div>
+
+      <div id="container2"  class="hidden">
+        <hr id="hr2">
+        <div id="grid"></div>
+        <hr id="hr">
+      </div>
+    </div>
+    <div id="text">
+      <h2 style="color:darkred">Caution:</h2>
+
+      <p><strong>Do NOT uncheck the "View Transition Chaining" option!</strong></p>
+
+      <p>Disabling chaining reverts to default behavior:
+        new view transitions will cancel the active one.</p>
+
+      <p>Rapid-fire clicking the NEXT button could cause serious machine damage.</p>
+
+      <p>Proceed with caution.</p>
+      <h2>About this Tech Demo</h2>
+      <p>This is Conway's Game of Life.</p>
+
+
+      <p>Clicking the NEXT button triggers a new generation. The mechanics of the machine take a bit to render the new
+        state. If you click faster than it can render, the machine queues up your requests and processes them in batches
+        once it is ready. </p>
+
+      <p>You will not see any of this magic in the code. Just start one view transition per click and rely on
+        <code>@vtbag/utensil-drawer/<a href="/tools/utensil-drawer/#maystartviewtransition">mayStartViewTransition</a></code> with <code>collisionBehavior</code> set to
+        <code><a href="/tools/utensil-drawer/#collisionbehavior-chaining">chaining</a></code>.</p>
+      <h2>Preconditions</h2>
+
+      <p>By default, view transitions block interaction with screen elements while the animations are running. So, if you want a
+        button like NEXT to remain clickable during view transitions, you first need to <a
+          href="/tips/interactivity/#how-to-retain-interactivity">regain control</a>. </p>
+      <button id="randomize">Reset</button>
+    </div>
+  </div>
+
+
+
+  <script is:inline type="module">
+    import { mayStartViewTransition } from 'https://unpkg.com/@vtbag/utensil-drawer@1.2.6/lib/may-start-view-transition.js';
+    //import { mayStartViewTransition } from '/may-start-view-transition.js';
+
+
+    container2.classList.remove("hidden");
+
+    function positionRulers() {
+      const height = grid.getBoundingClientRect().height;
+      hr.style.top = `calc(-2 * var(--cell-size))`;
+      hr2.style.top = `calc(1 * var(--cell-size) + ${height}px)`;
+    }
+    function moveRulers() {
+      const height = grid.getBoundingClientRect().height;
+      hr.style.top = `calc(1 * var(--cell-size) + ${height}px)`;
+      hr2.style.top = `calc(-2 * var(--cell-size))`;
+    }
+
+    class GameOfLife {
+      constructor(width, height) {
+        this.width = width;
+        this.height = height;
+        this.grid = Array(height)
+          .fill()
+          .map(() => Array(width).fill(0));
+        this.setupGrid();
+        this.setupControls();
+        this.randomize();
+      }
+
+      action(e) {
+        max.innerText = ++this.max;
+
+        const transition = mayStartViewTransition(() => {
+          current.innerText = ++this.current;
+          moveRulers();
+          hr.style.animationDuration = "0.75s";
+          hr2.style.animationDuration = "0.75s";
+          this.nextGeneration();
+        }, { collisionBehavior: chaining.checked ? "chaining" : "skipOld", maxUpdateDuration: 500,  });
+
+        transition.finished.then(() => {
+          hr.style.animationDuration = hr2.style.animationDuration = "20s";
+          positionRulers();
+        });
+      }
+
+
+      setupGrid() {
+        grid.style.gridTemplateColumns = `repeat(${this.width}, ${this.width}fr)`;
+        grid.innerHTML = "";
+
+        for (let y = 0; y < this.height; y++) {
+          for (let x = 0; x < this.width; x++) {
+            const cell = document.createElement("div");
+            cell.className = "cell";
+            cell.dataset.x = x;
+            cell.dataset.y = y;
+            grid.appendChild(cell);
+          }
+        }
+        const gridRect = grid.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+
+        grid.addEventListener('click', e => {
+          if (e.target.classList.contains("cell")) {
+            const x = parseInt(e.target.dataset.x, 10);
+            const y = parseInt(e.target.dataset.y, 10);
+            this.grid[y][x] = this.grid[y][x] > 0 ? 0 : 1;
+            this.updateCell(x, y);
+          }
+        });
+
+
+        this.up = false;
+        positionRulers();
+
+        gen.addEventListener("pointerdown", (e) => this.action(e));
+        gen.addEventListener("keydown", (e) => this.action(e));
+      }
+
+      setupControls() {
+        randomize.addEventListener("click", (e) => this.randomize());
+
+        chaining.addEventListener("change", (e) => {
+          if (chaining.checked) {
+            gen.style.backgroundColor = "";
+          } else {
+            gen.style.backgroundColor = "darkred";
+            gen.style.color = "white";
+          }
+        });
+      }
+
+      randomize() {
+        max.innerText = (this.max = 0);
+        current.innerText = (this.current = 0);
+        for (let y = 0; y < this.height; y++) {
+          for (let x = 0; x < this.width; x++) {
+            this.grid[y][x] = Math.random() < 0.3 ? 1 : 0;
+          }
+        }
+        this.updateAllCells();
+      }
+
+      updateCell(x, y) {
+        const cell = document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
+        cell.classList.toggle("alive", this.grid[y][x] > 0);
+        cell.style.setProperty("--cell-color", `#0${(16 - Math.min(this.grid[y][x], 15)).toString(16)}0`);
+      }
+
+      countNeighbors(x, y) {
+        let count = 0;
+        for (let dy = -1; dy <= 1; dy++) {
+          for (let dx = -1; dx <= 1; dx++) {
+            if (dx === 0 && dy === 0) continue;
+            const nx = (x + dx + this.width) % this.width;
+            const ny = (y + dy + this.height) % this.height;
+            if (this.grid[ny][nx] > 0) count++;
+          }
+        }
+        return count;
+      }
+
+      nextGeneration() {
+        const newGrid = Array(this.height)
+          .fill()
+          .map(() => Array(this.width).fill(0));
+
+        for (let y = 0; y < this.height; y++) {
+          for (let x = 0; x < this.width; x++) {
+            const neighbors = this.countNeighbors(x, y);
+            const isAlive = this.grid[y][x] > 0;
+
+            if (isAlive && (neighbors === 2 || neighbors === 3)) {
+              newGrid[y][x] += this.grid[y][x] + 1;
+            } else if (!isAlive && neighbors === 3) {
+              newGrid[y][x] = 1;
+            }
+          }
+        }
+
+        this.grid = newGrid;
+        this.updateAllCells();
+      }
+
+      updateAllCells() {
+        for (let y = 0; y < this.height; y++) {
+          for (let x = 0; x < this.width; x++) {
+            this.updateCell(x, y);
+          }
+        }
+      }
+    }
+
+    addEventListener('resize', () => location.reload());
+
+    const game = new GameOfLife(30, 30);
+
+  </script>
+</body>
+
+</html>
