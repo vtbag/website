@@ -25,21 +25,21 @@ const SIZE = 12;
     /><meta property="og:image" content="/vector-og.png" />
   </head>
   <body>
-    <h1>Click somewhere to<br>shuffle the blocks!</h1>
-    <h2><a href="/tools/utensil-drawer/#morphing-vector"
-          >[Leave demo]</a></h2>
+    <h1>Click somewhere to<br />shuffle the blocks!</h1>
+    <h2><a href="/tools/utensil-drawer/#morphing-vector">[Leave demo]</a></h2>
     <div class="container">
       <div id="elements-grid"></div>
     </div>
     <main>
       <p>
         This tech demo showcases curved morph animations like those seen on <a
-          href="https://events-3bg.pages.dev/jotter/styling/" target="_blank"
-          >the vtbot website</a
+          href="https://events-3bg.pages.dev/jotter/styling/"
+          target="_blank">the vtbot website</a
         >.
       </p>
       <p>
-        The fun part: the shuffle is random, but the morphs derive their trajectories dynamically from the pseudo-elements' positions. Each one
+        The fun part: the shuffle is random, but the morphs derive their
+        trajectories dynamically from the pseudo-elements' positions. Each one
         curves <a href="/tools/utensil-drawer/#morphing-vector"
           >based on the distance it needs to travel</a
         >. Longer distances result in higher arcs!
@@ -55,6 +55,10 @@ const SIZE = 12;
         > ones already in progress.
       </p>
     </main>
+    <section>
+      <button>Toggle Code</button>
+      <img id="code" class="hidden" src="/vector-code.png" alt="Code snippet" />
+    </section>
   </body>
 </html>
 
@@ -66,19 +70,49 @@ const SIZE = 12;
   p {
     margin-bottom: 1ex;
   }
+  .hidden {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  img {
+    max-width: 80%;
+    max-height: 80%;
+    width: auto;
+    height: auto;
+    position: fixed;
+    top: 2ex;
+    left: 2ex;
+    z-index: 1;
+    transition: all 0.25s ease-in-out;
+    transform: translateX(0);
+  }
   main {
     position: fixed;
     bottom: 2ex;
     right: 2ex;
     width: 35vw;
+    transition: all 0.25s ease-in-out;
+  }
+
+  section {
+    position: fixed;
+    bottom: 2em;
+    left: 2em;
+    transition: all 0.25s ease-in-out;
   }
   @media (orientation: landscape) {
     main {
-      width: unset;
+      width: calc(100vw - 2ex);
       max-width: 666px;
       padding-left: 2ex;
     }
+    section {
+      bottom: calc(100vh - 3em);
+      left: calc(100vw - 14ex);
+      right: 2ex;
+    }
   }
+
   :root {
     color-scheme: light dark;
     view-transition-name: none;
@@ -93,7 +127,8 @@ const SIZE = 12;
     height: 100vh;
   }
 
-  h1,h2 {
+  h1,
+  h2 {
     font-size: 4vmin;
     padding: 2em;
     position: absolute;
@@ -130,6 +165,7 @@ const SIZE = 12;
     width: calc(66vmax / var(--size) - 10px);
     height: calc(66vmax / var(--size) - 10px);
     view-transition-class: el;
+    transition: all 0.5s ease-in-out;
   }
 
   .element:hover {
@@ -206,7 +242,9 @@ const SIZE = 12;
       element.style.viewTransitionName = `el-${i}`;
       const palette =
         colorPalettes[Math.floor(Math.random() * colorPalettes.length)];
-      element.style.background = `linear-gradient(${Math.floor(Math.random() * 360)}deg, ${palette![0]}, ${palette![1]})`;
+      element.style.background
+        = `linear-gradient( ${Math.floor(Math.random() * 360)}deg,
+                            ${palette![0]}, ${palette![1]})`;
       grid.appendChild(element);
     }
   }
@@ -231,6 +269,9 @@ const SIZE = 12;
       transition.ready.then(() => {
         setVectors([{ pattern: ".*", props: ["x", "y"] }], "pseudo");
       });
+    });
+    document.querySelector("button")?.addEventListener("click", () => {
+      document.querySelector("img")?.classList.toggle("hidden");
     });
   });
 </script>
