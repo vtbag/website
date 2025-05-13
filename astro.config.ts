@@ -12,7 +12,6 @@ import type { Badge } from 'node_modules/@astrojs/starlight/schemas/badge';
 
 import og from "astro-og";
 
-import node from "@astrojs/node";
 
 export default defineConfig({
   image: { remotePatterns: [{ protocol: "https" }] },
