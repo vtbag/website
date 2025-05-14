@@ -11,6 +11,7 @@ head:
 
 Are you using a web  framework that offers support for view transitions like React's `<ViewTransition />` or Astro's `<ClientRouter />` component?  Are you wondering how the information on `vtbag.dev` might still be valuable for you?
 
+
 ## React
 
 React comes with support for **same-document** view transitions.
@@ -28,17 +29,49 @@ However, React changes how you interact with view transitions,  as a few details
 - React automatically chains overlapping view transitions, similar to what the Bag's [`mayStartViewTransition()`](/tools/utensil-drawer/#maystartviewtransition) helps achieve.
 - Group animations that would otherwise fly in or out of the viewport are turned into exit/entry animations.
 - In React, you can not access the `ViewTransition` object.
-- React can trigger callbacks after `viewTransition.ready` resolves.
+- But at least you can trigger callbacks after `viewTransition.ready` resolves.
+
+To make the most of view transitions, you have to dive into the View Transition API. No way around it.
+
+React hides some parts of the View Transition API from you, especially the viewTransition object. Instead, it offers React-only ways to handle transitions, like automatic class name assignment and callbacks like OnEnter(), that do not exist outside of React. So if you want to build a solid understanding of view transitions in general, learning them through React might not get you very far.
+
+On the flip side, React cannot really afford to skip a framework-specific approach either. Without it, things would get messy fast due to the virtual DOM.
+
+
 
 ## Astro
 
-Astro, being a framework for multi page apps,  supports    **cross-document** view transitions. Astro's view transition support was the first in any web framework, predating React's by at least 18 month.
+Astro, being a framework for multi page apps,  Astro's `<ClientRouter />`[^1] component supports **cross-document** view transitions. Astro's view transition support was the first in any web framework, predating React's by at least 18 month.
 
 Like React it wraps the native View Transition API. Astro provides directives to define view transition names and animations. With its `transition:persist` directive, it even enables functionality that goes beyond what native cross-document view transitions can do. Astro also simulates view transitions in browsers that do not yet natively support the API. It has built-in `forward` / `back` animation directions  and offers several lifecycle events you can hook into.
 
 
-If you want to do something that the abstraction does not cover, you can always interact directly with the native view transition API.
+If you want to do something that the abstraction does not cover, you can always interact directly with the native view transition API. And of course you can use `startViewTransition` directly for same-document transitions.
 
-Now that cross-document view transitions are natively supported in most major browsers, you might want to consider using the native API directly for new projects  rather than relying on Astro's ClientRouter.
+Now that cross-document view transitions are natively supported in most major browsers, you [might want to consider](https://events-3bg.pages.dev/jotter/astro-view-transitions/) using the native API directly for new projects  rather than relying on Astro's client router.
 
 As you might know, The Bag originated from Astro's view transitions. As an Astro programmer, you can visit [events-3bg.pages.dev](https://events-3bg.pages.dev) (the original Bag of Tricks site) for a whole site dedicated to Astro's view transitions.
+
+## SvelteKit
+
+In SvelteKit, you can imply call `document.startViewTransition` for same-document view transitions. For a 'cross-document' effect, there is a well documented standard way to integrate view transitions into the navigation using the `onNavigate()` function:
+
+```js
+import { onNavigate } from '$app/navigation';
+
+onNavigate((navigation) => {
+	if (!document.startViewTransition) return;
+
+	return new Promise((resolve) => {
+		document.startViewTransition(async () => {
+			resolve();
+			await navigation.complete;
+		});
+	});
+});
+```
+No   special magic required, jut pure View Transition API.
+
+
+
+[^1]: Formerly known as `<ViewTransitions />`.

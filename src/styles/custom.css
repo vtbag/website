@@ -77,8 +77,8 @@ main,
 }
 
 section.footnotes:before {
-  content: "Footnotes:";
   margin-top: 1em;
+  content: "Footnotes:";
   display: block;
 }
 sup {
@@ -89,6 +89,7 @@ sup {
   margin-right: 0.2em;
 }
 section.footnotes {
+  margin-top: 3em;
   border-top: 1px solid var(--sl-color-gray-4);
 }
 
