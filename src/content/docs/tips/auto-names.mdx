@@ -84,9 +84,9 @@ Chrome and Safari also support `match-element`, which works like `auto` but alwa
 Chrome offers `view-transition-name: attr(id type(<custom-ident>))` as an alternative to `view-transition-name: auto`.
 Currently, this typed `attr()` function is _only available in Chrome_. When used with the `id` attribute, it behaves like the `auto` view transitions name when `id` is set.
 
-You might wonder why copying another attribute's value counts as a solution here. After all, you only get automatic view transition names if you have already manually set all those `id` attributes.  Well, yes.
+You might wonder why copying another attribute's value counts as a solution here. After all, you only get automatic view transition names if you have already manually set all those `id` attributes.  Well, yes. At least it is less to type.
 
-But it does offer more flexibility: Once the `id`s are in place, you can control when to use them as view transition names using your CSS selectors. For example, you could choose to set names only on certain list elements:
+But it does also offer more flexibility: Once the `id`s are in place, you can control when to use them as view transition names using your CSS selectors. For example, you could choose to set names only on certain list elements:
 
 
 ```css
