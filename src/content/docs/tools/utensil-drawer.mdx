@@ -430,6 +430,9 @@ Assume the `ProgressContainer` code runs before the `MoveDisk` code. `ProgressCo
 
 If  `MoveDisk` calls `mayStartViewTransition` before the API is ready to capture the new images, `mayStartViewTransition` can automatically extend the active update callback to include `MoveDisk`'s update callback. This mechanism also supports more than two calls.
 
+#### Current View Transition
+The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active.
+
 
 ### respectReducedMotion
 When `respectReducedMotion` is enabled, `mayStartViewTransition` behaves as if native view transitions are not supported if the user has turned on reduced motion at the operation system or browser level.
