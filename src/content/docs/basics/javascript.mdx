@@ -115,6 +115,18 @@ If you want to avoid these jerky jump, you can either
 * chain the update callback functions, passing the chained callback to a single call of `startViewTransition()`, or
 * chain multiple calls to `startViewTransition()` by awaiting the `finished` promise before starting the next view transition.
 
+The [`mayStartViewTransition()`](/tools/utensil-drawer/#maystartviewtransition) function from the Utensil Drawer has automatic support for both strategies.
+
+### Scoped View Transitions
+
+[Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md) are rooted at arbitrary DOM elements. Instead of calling `document.startViewTransition()` it's `element.startViewTransition()`. This has some severe advantages:
+- Rendering only blocked on the DOM subtree rooted at element. The rest of the page is still interactive.
+- There can be several scoped view transitions on the page and they can independently perform in parallel.
+
+Rumor has it that the root element of the scoped view transition needs to have its `contain` CSS property set to `layout` (or `strict`).
+
+ Scoped view transitions are not widely supported jet. If your [browser supports](/basics/test-page/) them, this site features a [small example on clipping](/basics/hide-and-seek/#clipping-with-scoped-view-transition-groups).
+
 ## Cross-Document View Transitions
 
 Cross-document view transitions work similarly to [same-document](#same-document-view-transitions) ones but are triggered by navigation. In particular you can get access to the [view transition object](#viewtransition-object) in event listeners for the new `pageswap` and `pagereveal` events.

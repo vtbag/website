@@ -48,12 +48,13 @@ import Layout from "@/layouts/Layout.astro";
       background-color: #aca;
     }
     ul {
-      overflow-y: scroll;
+      overflow: scroll;
       height: 200px;
       list-style: none;
       width: 150px;
       border: 1px solid grey;
-      view-transition-name: ul;
+      contain: layout;
+      scrollbar-gutter: stable;
     }
     li {
       padding: 10px;

@@ -145,7 +145,7 @@ function sidebar() {
       { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/" }
     ]
   }, {
-    label: 'CSS Tips & Tricks',
+    label: 'Tips & Tricks',
     items: [
       { label: 'Where to Place the CSS', link: "/tips/css/" },
       { label: "Flickering During Fade Animations?", link: "/tips/over-exposure/" },

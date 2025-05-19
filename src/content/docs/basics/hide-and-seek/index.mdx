@@ -183,8 +183,7 @@ The browser’s user agent stylesheet aligns the `::view-transition-image-pair(.
 
 Since these pseudo-elements are fully customizable through CSS, you can alter their properties as needed. You could resize them, add margins, or tweak other styles to create unique visual effects. For instance, you could retain the default morph animation on the transition group while applying a custom animation to the image-pair for clipping. Let your imagination run wild!
 
-### Nested/Scoped View Transition Group Clipping
-
+### Clipping with **Nested** View Transition Groups
 
 <SidePicture  float="right">
 <iframe
@@ -193,11 +192,14 @@ Since these pseudo-elements are fully customizable through CSS, you can alter th
   src="/basics/hide-and-seek/list-nested/"
 ></iframe>
 
-In the early versions of the View Transition API, the transition groups form a flat list of children of the `::view-transition` pseudo element. _Nested_ view transition groups are already defined in the [Level 2 spec](/basics/api/#w3c-drafts), but are [not yet widely supported](/basics/test-page/) by browsers.
+In the early versions of the View Transition API, the transition groups form a flat list of children of the `::view-transition` pseudo element. [_Nested_ view transition groups](/basics/pseudos/#nested-view-transition-groups) are already defined in the [Level 2 spec](/basics/api/#w3c-drafts), but are not yet widely supported by browsers.
 
-Nested view transition groups introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy. The example to the right is built with nested view transition groups. When you press the button, and the demo behaves the same as the one in the next section, your browser does not support nested view transition groups, yet.
+Nested view transition groups introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy. The example to the right is built with nested view transition groups. If it doesn't look right, check whether your [browser has support](/basics/test-page/) for them.
 
-If your browser supports the nested `view-transition-group` property, at least the early implementations do not clip the view transition pseudo-elements while the tree is being built. This leads to a flash of elements escaping the box in the first frame.
+Clipping the list elements at the list container prevents them from being drawn outside the list element. However, they seem to fly in front of the scrollbars.
+
+
+### Clipping with **Scoped** View Transition Groups
 
 </SidePicture>
 <SidePicture  float="left">
@@ -208,9 +210,11 @@ If your browser supports the nested `view-transition-group` property, at least t
 ></iframe>
 </SidePicture>
 
-_Scoped_ view transitions are still a bit further in the future. Once available, they will also enable clipping view transition animations on any DOM element.
 
-Scoped transitions also arrived recently in Chrome Canary 136, but they do not seem to work as expected. Or I have not yet figured out how to use them. 😉
+
+_Scoped_ view transitions are still a bit further in the future. Once available, they will also enable clipping view transition animations on any DOM element. They really work well for clipping. In contrast to nested view transition groups, the elements move behind the scrollbars.
+
+Scoped transitions also arrived recently in Chrome Canary 136. There seem to be issues when included in an iframe. If the example to the left seems to be broken, here is a [direct link](/basics/hide-and-seek/list-scoped/).
 
 So until _nested_ or _scoped_ view transition groups are widely and well supported by browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
 

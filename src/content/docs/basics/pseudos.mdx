@@ -312,8 +312,31 @@ The image-pairs are the direct parents of the `::view-transition-old` and `::vie
 
 [^nest]: In a way that will continue to work once nested view transition groups are available.
 
+#### Nested View Transition Groups
 
-With the one to one relation between groups and image pairs, the group looks a bit redundant. This 1:1 relationship [will change in the future](https://drafts.csswg.org/css-view-transitions-2/#nested-view-transitions). But today the groups form a simple sequence and the order of the elements in this list also defines the standard paint order of the pseudos.
+With the one to one relation between groups and image pairs, the group looks a bit redundant. This 1:1 relationship [will change in the future](https://drafts.csswg.org/css-view-transitions-2/#nested-view-transition-groups). Today the groups form a simple sequence and the order of the elements in this list also defines the standard paint order of the pseudos.
+
+Nested view transition groups will add the possibility to arrange view transition groups in trees.
+```css
+selector {
+  view-transition-name: my-name;
+  view-transition-group: other;
+}
+```
+Here the definition of the view transition name creates a view transition group `my-name`. adding the `view-transition-group` property makes the new group a child of the `other` group defined elsewhere.
+
+```c
+::view-transition                    // the parent of all groups
+  ​::view-transition-group(other)     // a top level group
+    ::view-transition-image-pair(other)
+      ::view-transition-old(other)
+      ::view-transition-new(other)
+    ​::view-transition-group(my-name) // a group that is a child of the "other" group
+      ::view-transition-image-pair(my-name)
+        ::view-transition-old(my-name)
+```
+
+Nested view transition groups are especially interesting as they will allow [clipping of child groups](/basics/hide-and-seek/#clipping-with-nested-view-transition-groups).
 
 [^unique]: In certain cases, the View Transition API may ignore the `view-transition-name` of an element. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance are not rendered (e.g., by setting their `display` CSS property to `none`). This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site.
 
