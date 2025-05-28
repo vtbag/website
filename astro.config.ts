@@ -120,15 +120,6 @@ function sidebar() {
     label: '@vtbag',
     link: '/vtbag/'
   }, {
-    label: 'Tools',
-    items: [
-      { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" },
-      { label: 'Element Crossing', link: "/tools/element-crossing/" },
-      { label: 'Turn Signal', link: "/tools/turn-signal/" },
-      { label: 'Cam-Shaft', link: "/tools/cam-shaft/" },
-      { label: 'Utensil Drawer', link: "/tools/utensil-drawer/" }
-    ],
-  }, {
     label: 'Basics',
     items: [
       { label: 'Test Your Browser', link: "/basics/test-page/" },
@@ -145,6 +136,16 @@ function sidebar() {
       { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/" }
     ]
   }, {
+    label: 'Tools',
+    items: [
+      { label: 'Inspection Chamber', link: "/tools/inspection-chamber/" },
+      { label: 'Element Crossing', link: "/tools/element-crossing/" },
+      { label: 'Turn Signal', link: "/tools/turn-signal/" },
+      { label: 'Cam-Shaft', link: "/tools/cam-shaft/" },
+      { label: 'Utensil Drawer', link: "/tools/utensil-drawer/" }
+    ],
+  },
+  { label: 'Fun with View Transitions', link: "/fwvt/welcome/", badge: { text: 'New!', variant: 'success' } as Badge }, {
     label: 'Tips & Tricks',
     items: [
       { label: 'Where to Place the CSS', link: "/tips/css/" },
@@ -155,7 +156,6 @@ function sidebar() {
       { label: "Retaining Interactivity", link: "/tips/interactivity/", badge: { text: 'New!', variant: 'success' } as Badge },
     ]
   },
-  { label: 'Fun with View Transitions', link: "/fwvt/welcome/", badge: { text: 'New!', variant: 'success' } as Badge },
   { label: "BagLog", link: "/baglog" }, {
     label: 'All Demos',
     collapsed: true,
