@@ -458,4 +458,7 @@ Setting `collisionBehavior` to `skipNew` means a new view transition will only s
 ### collisionBehavior: skipOld
 Setting `collisionBehavior` to `skipOld` give you the default behavior of view transitions, where new transitions cancel active ones.
 
+### collisionBehavior: never
+Setting `collisionBehavior` to `never` prevents any collisions by executing only the update callback, skipping pseudo-element creation and animation.
+
 For details see [`may-start-view-transition.ts`](http://github.com/vtbag/utensil-drawer/blob/main/src/may-start-view-transition.ts)
