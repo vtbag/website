@@ -71,7 +71,14 @@ export default defineConfig({
         rel: "me",
         href: "https://mastodon.social/@martrapp"
       }
-    }],
+    }, {
+			tag: "meta",
+			attrs: {
+				name: "viewport",
+				content: "width=device-width, initial-scale=1.0, minimum-scale=1.0"
+
+			}
+		}],
 
     customCss: ["./src/styles/custom.css", "./src/styles/sidebar.css", "./src/styles/view-transitions.css",
       "./src/styles/vtbag-bar.css"],
