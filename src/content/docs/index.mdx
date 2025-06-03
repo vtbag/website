@@ -38,6 +38,7 @@ renderBlocking: legal
 import Bsky from "@/components/Bsky.astro";
 import NoViewTransitions from "@/components/NoViewTransitions.astro"
 import ReducedMotion from "@/components/ReducedMotion.astro"
+import WebRing from "@/components/WebRing.astro"
 
 <NoViewTransitions/>
 <ReducedMotion/>
@@ -77,6 +78,9 @@ import ReducedMotion from "@/components/ReducedMotion.astro"
 
 import { Icon } from '@astrojs/starlight/components';
 
+<WebRing />
+
+
 <div id="legal">
 Built with <Icon name="starlight" color="darkgoldenrod" label="The Starlight logo" /> [Starlight](https://starlight.astro.build).\
 Content on this site is licensed under a [Creative Commons Attribution 4.0 License](https://creativecommons.org/licenses/by-nc/4.0/)\
@@ -95,12 +99,14 @@ Code samples are licensed under the ISC License
   p a span b {
     view-transition-name: butterfly2;
   }
+
   #legal {
     border: 1px #888 dotted;
     border-radius: 8px;
-    margin-block-start: 5rem;
+    margin-inline: auto;
     padding: 0.5rem 1rem;
     width: fit-content;
+
     p {
       max-width: 100%;
       width: fit-content;
