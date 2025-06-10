@@ -90,7 +90,7 @@
             document.documentElement.setAttribute("spec", "");
 
           const browserInfo = getBrowserAndVersion();
-          document.querySelector("#browser").textContent = browserInfo.name + " " + browserInfo.version;
+          document.querySelector("#browser").textContent = browserInfo.name + " " + browserInfo.version.replace(/(\.0)+$/, "");
           history.replaceState(history.state, "", "/basics/test-page/");
         }
       }, 1000);
