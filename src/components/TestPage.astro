@@ -1,5 +1,37 @@
 <portal-gate to="end:head">
   <script is:inline>
+    function getBrowserAndVersion() {
+      const ua = navigator.userAgent;
+
+      let match = ua.match(/OPR\/([\d.]+)/);
+      if (match) return { name: "Opera", version: match[1] };
+
+      match = ua.match(/Opera\/([\d.]+)/);
+      if (match) {
+        let versionMatch = ua.match(/Version\/([\d.]+)/);
+        return {
+          name: "Opera",
+          version: versionMatch ? versionMatch[1] : match[1],
+        };
+      }
+
+      match = ua.match(/Firefox\/([\d.]+)/);
+      if (match) return { name: "Firefox", version: match[1] };
+
+      match = ua.match(/Edg\/([\d.]+)/);
+      if (match) return { name: "Edge", version: match[1] };
+
+      match = ua.match(/Chrome\/([\d.]+)/);
+      if (match && !ua.includes("Edg") && !ua.includes("OPR"))
+        return { name: "Chrome", version: match[1] };
+
+      match = ua.match(/Version\/([\d.]+).*Safari/);
+      if (match && !ua.includes("Chrome") && !ua.includes("Chromium"))
+        return { name: "Safari", version: match[1] };
+
+      return { name: ua, version: "" };
+    }
+
     const activation = (act) => {
       copy = {};
       copy.from = {};
@@ -57,6 +89,8 @@
           "prerendering" in document &&
             document.documentElement.setAttribute("spec", "");
 
+          const browserInfo = getBrowserAndVersion();
+          document.querySelector("#browser").textContent = browserInfo.name + " " + browserInfo.version.replace;
           history.replaceState(history.state, "", "/basics/test-page/");
         }
       }, 1000);

@@ -263,11 +263,13 @@ This way you can access the parameters of the morph animations directly within y
 
 ### Usage
 
-Here is an example from the [Derived Trajectories](/vector-demo/) demo: `setVector` is called right at the beginning of the animation phase when all old and new images are setup.
+Here is an example from the [Derived Trajectories Demo](/vector-demo/): `setVector` is called right at the beginning of the animation phase when all old and new images are setup.
 ```js
-startViewTransition(...).ready.then(()=>setVectors())
+import { setVectors } from "@vtbag/utensil-drawer/vectors";
+...
+document.startViewTransition(...).ready.then(() => setVectors())
 ```
-This adds the `--vtbag-vector-*` custom properties to the page as shown in the last section.
+This adds the `--vtbag-vector-*` custom properties to the page as shown in the last section. Of course, this also works with [`mayStartViewTransition()`](#maystartviewtransition).
 
 CSS rules can now access the values and calculate derived parameters for the animations.
 
@@ -370,24 +372,24 @@ This function provides quite different functionalities.
 1. It wraps `document.startViewTransition()` to free you free you from checking whether the browser supports the View Transition API. You can call it the same way in any browser, whether it supports Level 2, Level 1, or nothing at all.
 2. It includes built-in support for users who prefer reduced motion, automatically suppressing transitions based on system or browser settings.
 
-3. The View Transition API cancels active view transitions when a new one starts. `mayStartViewTransition` provides alternatives to prevent these cancellations. It can:
+3. The View Transition API cancels active view transitions when a new one starts. `mayStartViewTransition` provides alternatives to prevent these cancellations. Here is what's supported:
 
     * If the animations have not started yet, the function can automatically merge additional update callbacks into the current view transition. This means multiple UI components can trigger transitions close together, and they will seamlessly act as one.
 
-    * If animations are already in progress, the function queues new update  callbacks and runs them once the current view transitions finishes, combining them into an update function for a new view transition.
+    * If animations are already in progress, the function queues new update  callbacks and runs them once the current view transitions finishes, combining them into a single update function for a new view transition.
 
     * It can also skip starting a new transition if one is already running, letting the active one take the lead for a smoother result.
 
-In the simplest use case, `mayStartViewTransition` works as a drop-in replacement for `document.startViewTransition`. Like the Level 2 API, it accepts either an update callback or an options object with a callback and view transition types.
+In the simplest use case, `mayStartViewTransition` works as a drop-in replacement for `document.startViewTransition`. Like the Level 2 API, it accepts either an update callback or an options object with a callback and view transition types. If the browser only supports the old syntax with the callback, the parameters are mapped accordingly. Types are lost in this case.
 
-When the View Transition API is not supported, it falls back gracefully by calling the update function directly and returning a compatible object with `updateCallbackDone`, `ready` and `finished` promises.
+When the View Transition API is not supported at all, `mayStartViewTransition()` falls back gracefully by calling the update function directly and returning a compatible object with `updateCallbackDone`, `ready` and `finished` promises.
 
-You can also pass a second parameter for advanced behavior not available in the native API:
+You can also pass a second options parameter for advanced behavior not available in the native API:
 
 ```js
 export interface StartViewTransitionExtensions {
 	respectReducedMotion?: boolean; // default is true
-	collisionBehavior?: 'skipOld' | 'chaining'; // default is "skipOld"
+	collisionBehavior?: 'skipOld' | 'chaining' | 'skipNew' | 'never'; // default is "skipOld"
 	speedUpWhenChained?: number; // default is 1.0
 	maxUpdateDuration?: number; // default is 250 (milliseconds)
 }
@@ -409,7 +411,7 @@ button.addEventListener('click', (e)=>{
 ```
 If the user clicked several times during the animation, `mayStartViewTransition` queues the shuffle callbacks and executes them together in a single update function for a subsequent view transition.
 
-The [Chaining Demo](/chaining-demo/) uses the same technique to decouple the calculation of new generations from their rendering. If generations are requested faster than the view transition can display them, `mayStartViewTransition`  automatically queues the update callbacks. You can quickly fill the queue on desktop by "clicking" the NEXT button using the keyboard auto-repeat. You should then see the queued request processed in batches. Visually, life proceeds skipping several generations at a time.
+The [Game of Life](/chaining-demo/) uses the same technique to decouple the calculation of new generations from their rendering. If generations are requested faster than the view transition can display them, `mayStartViewTransition`  automatically queues the update callbacks. You can quickly fill the queue on desktop by "clicking" the NEXT button using the keyboard auto-repeat. You should then see the queued request processed in batches. Visually, life proceeds skipping several generations at a time.
 
 
 ##### Automatic Integration

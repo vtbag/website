@@ -180,7 +180,7 @@ function sidebar() {
       { label: "Simulated Nested View Transition Groups", link: "/basics/hide-and-seek/solution/" },
       { label: "Swirling Image Gallery", link: "/tips/auto-names/" },
       { label: "Derived Trajectories", link: "/vector-demo/" },
-      { label: "Chained View Transitions", link: "/chaining-demo/" },
+      { label: "Game of Life", link: "/chaining-demo/" },
       { label: "Tower of Hanoi", link: "https://fun-with-view-transitions.pages.dev/episode/7/page.html" }
     ]
   }];

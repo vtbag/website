@@ -163,12 +163,14 @@ This rule applies the longer duration to all group pseudo-elements, and the anim
 
 A more effective way to analyze animations is to use the browser's developer tools. In the animation panel, you can slow down animation speed by selecting predefined percentage values.
 
+<Media>
 <span class="not-content slomo light:sl-hidden">
   ![Animation panel](@/assets/fwvt/slomo-dark.png)
 </span>
 <span class="not-content slomo dark:sl-hidden">
   ![Animation panel](@/assets/fwvt/slomo-light.png)
 </span>
+</Media>
 <style>{`
 .slomo img {margin: 1ex auto; display: block; width: 90%; height: auto; border: 1px solid #8888; box-shadow: 1px 1px 8px #8888}
 `}</style>
@@ -224,7 +226,8 @@ And off we go with the treatment!
 
 Morphing from a link to a title with the same text on the next page is a classical fail. The reason for this becomes clear when we examine the bounding boxes of the pseudo-elements during the transition:
 
-<div class="p2 not-content light:sl-hidden">
+<div class="not-content light:sl-hidden">
+<div class="p2">
   <Media>
     ![](@/assets/fwvt/p2-0-dark.png)
 
@@ -250,7 +253,9 @@ Morphing from a link to a title with the same text on the next page is a classic
 
   </Media>
 </div>
-<div class="p2 not-content dark:sl-hidden">
+</div>
+<div class="not-content dark:sl-hidden">
+<div class="p2">
   <Media>
     ![](@/assets/fwvt/p2-0-light.png)
 
@@ -275,6 +280,7 @@ Morphing from a link to a title with the same text on the next page is a classic
     <p slot="caption">Failing link animation 4/4</p>
 
   </Media>
+</div>
 </div>
 <style>{`
 .p2 {display:flex; flex-wrap: wrap}
@@ -306,7 +312,8 @@ Alternatively, you could change the morphing behavior that is the root cause of 
 
 Setting the images' width to match the width of the group-pseudo container scales them differently, leading to misalignment during the morph.
 
-<div class="desc not-content light:sl-hidden">
+<div class="not-content light:sl-hidden">
+<div class="desc">
   <Media>
     ![](@/assets/fwvt/desc-0-dark.png)
 
@@ -332,7 +339,9 @@ Setting the images' width to match the width of the group-pseudo container scale
 
   </Media>
 </div>
-<div class="desc not-content dark:sl-hidden">
+</div>
+<div class="not-content dark:sl-hidden">
+<div class="desc">
   <Media>
     ![](@/assets/fwvt/desc-0-light.png)
 
@@ -358,10 +367,11 @@ Setting the images' width to match the width of the group-pseudo container scale
 
   </Media>
 </div>
+</div>
 <style>{`
 .desc {display:flex; flex-wrap: wrap}
 .desc > span {margin: 16px auto; }
-.desc img {display: block; width: 100%; height: auto; border: 1px solid #8888; box-shadow: 1px 1px 8px #8888}
+.desc img {disply: block; width: 100%; height: auto; border: 1px solid #8888; box-shadow: 1px 1px 8px #8888}
 `}</style>
 
 So, instead of making the images same width, we can make them same height and let the width be calculated automatically to preserve the original aspect ration:[^h]
@@ -384,7 +394,8 @@ Can we use this trick also if the two texts have different aspect ratio? Definit
 
 Can we use this technique even if the two texts have different aspect ratios? Definitely! This approach works particularly well for inline elements where the texts share some common content:
 
-<div class="grow not-content light:sl-hidden">
+<div class="not-content light:sl-hidden">
+<div class="grow">
   <Media>
     ![](@/assets/fwvt/grow-0-dark.png)
 
@@ -406,7 +417,9 @@ Can we use this technique even if the two texts have different aspect ratios? De
     <p slot="caption">Growing text animation 4/4</p>
   </Media>
 </div>
-<div class="grow not-content dark:sl-hidden">
+</div>
+<div class="not-content dark:sl-hidden">
+<div class="grow">
   <Media>
     ![](@/assets/fwvt/grow-0-light.png)
 
@@ -427,6 +440,7 @@ Can we use this technique even if the two texts have different aspect ratios? De
 
     <p slot="caption">Growing text animation 4/4</p>
   </Media>
+</div>
 </div>
 <style>{`
 .grow {display:flex; flex-wrap: wrap}

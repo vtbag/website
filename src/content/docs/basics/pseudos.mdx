@@ -395,16 +395,35 @@ The first pseudo-element that is rendered for a view transition is `::view-trans
 
 [^scb]: To be precise, it has the size of the viewport, plus scrollbars, and retractable UI parts on mobile. The spec refers to this as the _snapshot containing block_.
 
-The transition groups are rendered [in the order they were created](#creation-of-pseudo-elements) and appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
+The transition groups are rendered [in the order they were created](#creation-of-pseudo-elements), which is the same as the order in which they appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
 
-There is a clear separation between regular DOM elements and the view transition pseudo-elements. The pseudo-elements form their own stacking context, known as the _view transition layer_. This one is special as it sits above all other elements of the page. As with regular elements, the `z-index` property can be used to alter how the pseudo-elements hide each other. However, no regular page elements can be forced into or above the view transition layer, even with high `z-index` values.
+Within the image pair, the old image is painted first and the new image is painted on top of it.
 
-One advantage of using images and a separate _view transition layer_ is that animations are not restricted by the original DOM tree structure. However, this can lead to unexpected side effects if you apply view-transition-name attributes as an afterthought.
+There is a clear separation between regular DOM elements and the view transition pseudo-elements. The pseudo-elements form their own stacking context, known as the _view transition layer_. This one is special as it sits in front of all other elements of the page. No regular page elements can be forced into or above the view transition layer, not even with high `z-index` values.
 
-For example, if an element is partially hidden by other elements and you assign it a view transition name, it may unexpectedly appear in front during the transition. To manage this, either treat it as a feature or avoid such cases. Alternatively, you can include the obscuring elements in a view transition group, ensuring their images also move to the _view transition layer_, where they now have a chance to partially hide your other image as before.
-Here you also can use `z-index` properties to rearrange the images to your liking.
+One advantage of using images and a separate _view transition layer_ is that animations are not restricted by the original DOM tree structure. However, this can lead to unexpected side effects if you apply `view-transition-name` attributes as an afterthought.
 
-Just as pseudo-elements cannot be moved behind page elements, elements on the page won't appear in front of the pseudo-elements. If you have prominent elements on your page that should always be in the foreground, even through view transitions, consider giving them an view transition name to lift  them to the _view transition layer_ and raise them there with an appropriate `z-index`.
+For example, if an element is partially hidden by other elements and you assign it a view transition name, it may unexpectedly appear in front them during the transition. To manage this, either treat it as a feature or avoid such cases. Alternatively, you can assign a view transition name to the obscuring elements. This ensures that they also define images in the _view transition layer_.
+
+### Reordering Pseudo-Elements Using z-index
+The View Transition API stacks the images in the original paint order. You can use the `z-index` CSS property to rearrange the view transition groups:
+
+```css
+::view-transition-group(elevated-group) {
+  z-index: 1;
+}
+```
+
+If you have prominent elements on your page that should always be in the foreground, even through view transitions, consider giving them an view transition name to lift them to the _view transition layer_ and raise them there with an appropriate `z-index`.
+
+
+The same approach can also be used to move the old image in front of the new image inside its image pair:
+```css
+::view-transition-old(important-old) {
+  z-index: 1;
+}
+```
+
 
 ## Delaying Cross Document Transitions
 

@@ -123,10 +123,10 @@
     }
   }
   span.media,
-  dialog.media span {
+  dialog.media span:not(.dark\:sl-hidden):not(.light\:sl-hidden) {
     display: inline-block;
   }
-  dialog.media {
+    dialog.media {
     border: dotted 1px gray;
     border-radius: 1em;
     box-shadow: 0 0 1em #8888;
