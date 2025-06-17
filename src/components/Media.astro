@@ -12,6 +12,7 @@
 
 <portal-gate to="end:head">
   <script>
+    import { mayStartViewTransition } from "@vtbag/utensil-drawer/may-start-view-transition";
     document.querySelectorAll<HTMLSpanElement>("span.media").forEach((e) => {
       //        e.parentElement!.style.viewTransitionName = `media-${idx}`;
       //        e.parentElement!.style.viewTransitionClass = "nonewanim";
@@ -78,7 +79,7 @@
           //@ts-ignore
           smallMedia.style.viewTransitionClass = "media";
 
-        document.startViewTransition({
+        mayStartViewTransition({
           update: () => {
             dialog.style.viewTransitionName = `dialog`;
             smallMedia.style.viewTransitionName = "none";
@@ -90,8 +91,7 @@
         dialog.addEventListener(
           "click",
           () => {
-            document
-              .startViewTransition({
+            mayStartViewTransition({
                 update: () => {
                   bigMedia.style.viewTransitionName = "none";
                   smallMedia.style.viewTransitionName = "media";
@@ -126,7 +126,7 @@
   dialog.media span:not(.dark\:sl-hidden):not(.light\:sl-hidden) {
     display: inline-block;
   }
-    dialog.media {
+  dialog.media {
     border: dotted 1px gray;
     border-radius: 1em;
     box-shadow: 0 0 1em #8888;
