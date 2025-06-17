@@ -64,11 +64,11 @@ import Layout from "@/layouts/Layout.astro";
     ::view-transition-group(*) {
       animation-duration: 0.8s;
     }
-    ::view-transition-group(ul){
-      overflow: hidden;
+    ::view-transition-group(ul) {
+      overflow: clip;
     }
-    ::view-transition-group-children(ul){
-      overflow: hidden;
+    ::view-transition-group-children(ul) {
+      overflow: clip;
       width: calc(100% - 18px);
     }
     ::view-transition-image-pair(l1) {
