@@ -237,6 +237,7 @@ The View Transition API introduces five types of pseudo-elements:
 
 - `::view-transition`
 - `::view-transition-group`
+- `::view-transition-group-children`
 - `::view-transition-image-pair`
 - `::view-transition-old`
 - `::view-transition-new`
@@ -323,20 +324,29 @@ selector {
   view-transition-group: other;
 }
 ```
-Here the definition of the view transition name creates a view transition group `my-name`. adding the `view-transition-group` property makes the new group a child of the `other` group defined elsewhere.
+Here the definition of the view transition name creates a view transition group `my-name`. Adding the `view-transition-group` property makes the `my-name` group a child of the `other` group defined elsewhere.
+Reserved values are `none`, `normal`, `contain`, and `nearest` with their obvious ;-) meaning.
 
 ```c
-::view-transition                    // the parent of all groups
-  ​::view-transition-group(other)     // a top level group
+::view-transition                           // the parent of all groups
+  ​::view-transition-group(other)            // a top level group
     ::view-transition-image-pair(other)
       ::view-transition-old(other)
       ::view-transition-new(other)
-    ​::view-transition-group(my-name) // a group that is a child of the "other" group
-      ::view-transition-image-pair(my-name)
-        ::view-transition-old(my-name)
+    ::view-transition-group-children(other) // a container for all child groups
+      ​::view-transition-group(my-name)      // a group that is a child of the "other" group
+        ::view-transition-image-pair(my-name)
+          ::view-transition-old(my-name)
 ```
 
 Nested view transition groups are especially interesting as they will allow [clipping of child groups](/basics/hide-and-seek/#clipping-with-nested-view-transition-groups).
+
+
+The `::view-transition-group-children` pseudo-element is a relatively new addition to the View Transition API. Check whether your browser already [supports](/basics/test-page/) it. 
+
+If supported, `::view-transition-group-children` appears after the parent group's image-pair (if any) and becomes the direct parent of all nested groups. This pseudo-element is only inserted for groups where the `view-transition-group` property is set. The name in parentheses for a group children pseudo-element matches that of its group.   
+
+In browsers that support nested group names but do not yet support `::view-transition-group-children`, nested groups are direct children of the parent `::view-transition-group`, and they may appear before the image-pair.  
 
 [^unique]: In certain cases, the View Transition API may ignore the `view-transition-name` of an element. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance are not rendered (e.g., by setting their `display` CSS property to `none`). This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site.
 

@@ -64,8 +64,12 @@ import Layout from "@/layouts/Layout.astro";
     ::view-transition-group(*) {
       animation-duration: 0.8s;
     }
-    ::view-transition-group(ul) {
+    ::view-transition-group(ul){
       overflow: hidden;
+    }
+    ::view-transition-group-children(ul){
+      overflow: hidden;
+      width: calc(100% - 18px);
     }
     ::view-transition-image-pair(l1) {
       animation: slide-left 0.8s 0s;

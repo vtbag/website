@@ -50,6 +50,15 @@
         "navigation" in window ? window.navigation?.activation : undefined
       );
       sessionStorage.setItem("vtbag-pagereveal", JSON.stringify(d));
+      e.viewTransition?.ready.then(() => {
+        const as = document.getAnimations();
+        console.log("huhu", as);
+        as.forEach((a) => {
+          console.log(a.effect.pseudoElement);
+          a.effect.pseudoElement === "::view-transition-group-children(root)" &&
+            document.documentElement.setAttribute("_vtgc", "x");
+        });
+      });
     });
 
     addEventListener("pageswap", (e) => {
@@ -84,16 +93,33 @@
             document.documentElement.setAttribute("vtna", "");
           CSS.supports("view-transition-group", "g") &&
             document.documentElement.setAttribute("vtg", "");
+          document.documentElement.getAttribute("_vtgc") &&
+            document.documentElement.setAttribute("vtgc", "");
           document.body.startViewTransition &&
             document.documentElement.setAttribute("svt", "");
           "prerendering" in document &&
             document.documentElement.setAttribute("spec", "");
 
           const browserInfo = getBrowserAndVersion();
-          document.querySelector("#browser").textContent = "("+browserInfo.name + " " + browserInfo.version.replace(/(\.0)+$/, "") + ") ";
+          document.querySelector("#browser").textContent =
+            "(" +
+            browserInfo.name +
+            " " +
+            browserInfo.version.replace(/(\.0)+$/, "") +
+            ") ";
           history.replaceState(history.state, "", "/basics/test-page/");
         }
       }, 1000);
     });
   </script>
 </portal-gate>
+<style is:global>
+  #test {
+    view-transition-name: test;
+    view-transition-group: root;
+  }
+  ::view-transition-group-children(root) {
+    animation-name: -ua-view-transition-fade-out;
+    animation-duration: 0.25s;
+  }
+</style>

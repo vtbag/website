@@ -196,8 +196,9 @@ In the early versions of the View Transition API, the transition groups form a f
 
 Nested view transition groups introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy. The example to the right is built with nested view transition groups. If it doesn't look right, check whether your [browser has support](/basics/test-page/) for them.
 
-Clipping the list elements at the list container prevents them from being drawn outside the list element. However, they seem to fly in front of the scrollbars.
+Clipping the list elements at the list container prevents them from being drawn outside the list element. However, if clipped at the parent group, they seem to fly in front of the scrollbars and the border.
 
+Clipping at the `::view-transition-group-children` element respects the border. If you make it some pixels smaller, you can keep the scrollbar visible during the animation.
 
 ### Clipping with **Scoped** View Transition Groups
 
