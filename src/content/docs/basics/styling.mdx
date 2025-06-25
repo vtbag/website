@@ -26,7 +26,6 @@ There are three parts that you influence with CSS when it comes to view transiti
 
 If you want a DOM element to participate in view transitions with an individual animation, you assign a value to the [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property of the element. The browser will then generate three or four [pseudo-elements](/basics/pseudos/#types-of-pseudo-elements) for each _visible_ DOM element with a view transition name. These are a transition group, an image pair, and at least one of the old or new image pseudos.
 
-
 ### Define Animations for View Transitions
 
 For a single view transition name, `x`, there are different animations that you might want to style.
@@ -124,12 +123,14 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
 
 The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the new image's size, transform, and position. I.e. if the original element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honored by the generated transform.
 
-### Cross-Fade of the images
+### Cross-Fade of the Images
 
 The typical cross-fade effect of view transitions is implemented by animations defined on the pseudo-elements for the old and new images. The definitions are the same for all view transition names.
 
 ```css
-::view-transition-image-pair(x) {
+::view-transition-image-pair(x),
+::view-transition-old(x),
+::view-transition-new(x) {
   animation-duration: inherit;
   animation-delay: inherit;
   animation-fill-mode: inherit;
@@ -167,12 +168,22 @@ The typical cross-fade effect of view transitions is implemented by animations d
   }
 }
 ```
+`-ua-mix-blend-mode-plus-lighter` is only added if the image pair has both images. For some background on `-ua-mix-blend-mode-plus-lighter` see the [section about mix blend modes](/tips/over-exposure/#set-the-correct-mix-blend-mode).
 
-The inherited values come from the view transition image pair, which inherits them from the view transition group. `-ua-mix-blend-mode-plus-lighter` is only added if the image pair has both images. For some background on `-ua-mix-blend-mode-plus-lighter` see the [section about mix blend modes](/tips/over-exposure/#set-the-correct-mix-blend-mode).
 
-Using `inherit` in your own definitions is a good idea as it allows for control over several animations at once.
+The inherited values come from the view transition image pair, which inherits them from the view transition group.  Due to these default inherits you might want to prefer setting the individual `animation-...` properties instead of using the `animation` shortcut, which would reset `animation-duration`, `animation-delay` and `animation-fill-mode` to `0s`, `0s`, and `none` if not explicitly stated otherwise.
 
-### Image-pair animation
+Using `inherit` in your own definitions is a good idea as it allows for control over several animations at once. For example you can set the duration of all unchanged morph and cross-fade animations with a single rule:
+```css
+::view-transition-group(*) {
+  animation-duration: 500ms; /* all groups, which pass down to the image-pairs, which pass down to the old and new images. */
+}  
+```
+
+
+
+
+### Image-Pair Animation
 
 The View Transition API does not assign any animations to the `::view-transition-image-pair(x)` pseudo-elements as those elements are mainly added for render isolation and morph 1:1 with the `::view-transition-group(x)` elements.
 
@@ -254,6 +265,12 @@ If multiple class names are used to identify a pseudo element, all must match. T
   /* ... */
 }
 ```
+Or shorter, without the star:
+```css
+::view-transition-group(.nav-link) {
+  /* ... */
+}
+```
 
 This is an example on how to assign the class:
 
@@ -278,16 +295,20 @@ While it is active, a view transition might have a set of identifiers called _ty
 The initial set of types can be set when calling `startViewTransition()` or it might be specified using the `types` property inside a `@view-transition` rule.
 
 ```ts title="Level 2 signature of startViewTranstion()"
-document.startViewTransition({types: ['boom'], update: changeTheDOM})
+document.startViewTransition({ types: ["boom"], update: changeTheDOM });
 ```
+
 or
+
 ```css title="Setting types using CSS"
 @view-transition {
   navigation: auto;
-  types: boom, var(--special)
+  types: boom, var(--special);
 }
 ```
+
 Another typical pattern for cross-document view transitions is to (conditionally) set the types in the `pagereveal` or `pageswap` handlers.
+
 ```js
 listener(event) {
   ...
@@ -301,6 +322,7 @@ Types set during `pageswap` are only available on the old page. You can not use 
 Types set during `pagereveal` can be used for both: setting and removing view transition names on the new page and for styling the view transition pseudo elements.
 
 #### Active View Transition Types
+
 The pseudo-class that can check for types is `:active-view-transition-type()`. It takes a comma separated list of types. If at least one of these types is set on the active view transition, the pseudo-class matches the documents root element.
 
 Thus, the typical patterns to use `:active-view-transition-type()` are:
@@ -356,7 +378,7 @@ See the [Turn-Signal documentation](/tools/turn-signal/#switching-transition-nam
 
 The user agent stylesheet example above is an excerpt from the [View Transition Draft Spec](https://drafts.csswg.org/css-view-transitions-1/). There the pseudo-elements are prefixed with the the `:root` pseudo-class selector.
 
-The scope of view transitions is the whole document. Until _scoped_ view transitions change this in the future, all pseudo-elements that the API generates are children of the document's root element and can be targeted using the CSS `:root` selector. So  `::view-transition-group(x)` and `:root::view-transition-group(x)` currently are the same thing.
+The scope of view transitions is the whole document. Until _scoped_ view transitions change this in the future, all pseudo-elements that the API generates are children of the document's root element and can be targeted using the CSS `:root` selector. So `::view-transition-group(x)` and `:root::view-transition-group(x)` currently are the same thing.
 
 With scoped view transitions, `:root::view-transition*` will still select only pseudo-elements of the document root, while `::view-transition*` will target pseudo-elements of any element. Should I prefix all rules with `:root`? Right now, I do not. Scoped view transitions will be another (smaller) game changer, and I expect to refactor things anyway once they become available.
 
