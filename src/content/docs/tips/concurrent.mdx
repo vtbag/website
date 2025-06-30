@@ -1,0 +1,24 @@
+---
+title: Concurrent View Transitions
+description: How to handle view transitions that interrupt each other
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/concurrent-og.png"
+---
+
+When a view transition starts while another view transition is still active, the former gets canceled.
+
+What does that mean and how can we improve this situation?
+
+This is a topic that won't show its head on cross-document view transitions and even not on most same-document cases. But if your app is highly interactive and event driven and you want to use a non global, perhaps component based approach, you will likely have to deal with this situation.
+
+## How View Transitions Interrupt Each Other
+
+The basic semantics of view transitions is that the update callback will always run and that the whole animation thing is optional in the presence of errors.
+
+When a call is made to `startViewTransition` while the active view transition's update callback has not yet resolved the active view transition ends without any animations. The new view transition starts from the DOM state resulting from awaiting all
+former update callbacks.
+
+On the other hand, if the active view transition was `ready` and animations have been started, the active `::view-transition` pseudo-element tree is removed. This will stop all animations associated with the pseudo-elements and finally stop the active view transition. This looks like all animations abruptly skip to their end before the new view transition starts from there.

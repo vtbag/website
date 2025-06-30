@@ -1,0 +1,65 @@
+---
+title: Isolated View Transitions
+description: "Keeping multiple view transitions separate and independent."
+---
+When you use view transitions today, they always operate on the whole document. In the future, [_Scoped_ view transitions](/basics/javascript/#scoped-view-transitions) will allow you to confine them to a subtree of the DOM. While this is a planned extensions for the View Transition API, we are not there yet. Currently they are available in Chrome behind a flag.
+
+Scoped View Transitions will bring a lot of benefits:
+- independent view transitions running in parallel
+- rendering and interactivity must only be blocked for subtrees
+
+But there is one feature that you can force with CSS already today.
+
+## Independent View Transitions on the Same Page
+Assume you want to support three view transition use cases on the same page:
+- a cross-document view transition on navigation sliding the whole page.
+- a same-document view transition that animates dynamic additions and removal of input fields in a form.
+- a same-document lightbox animation that can show a enlarged version of an image when clicked at
+
+Conceptually, no two of these view transitions run in parallel. The first animation is enabled using `@view-transition {navigation: auto}`, the two others are triggered by event listeners calling `document.startViewTransition()`.
+
+### The Problem
+A naive implementation will define view transition names with selectors that select a single element and set a name. For the lightbox component this might look as simple as this:
+```css
+#lightbox {
+  view-transition-name: lightbox;
+}
+```
+The form component might use the modern `attr()` function to c[opy the id attribute](/tips/auto-names/#using-attr-for-names) to the view transition name for all input elements inside the form:
+```css
+form input[id] {
+  view-transition-name: attr(id type(<custom-ident>))
+}
+```
+
+Egal wie, this will result in a big surprise: starting one view transition also runs the other two, as the view transition is defined on the `:root` element and always operates on the entire document. The API will generate view transition groups for all visible DOM elements that have view transition names defined.
+
+When you work with the form and expand some section, the page will slide out and in again, with the exception of the lightbox which will just stay put.
+
+### Solutions
+
+As long as we do not have scoped versions, view transitions are a document-global thing.
+
+There are many ways to fix gegenseitige beinflussung unterschiedlicher view transitions. Maybe you already have defined view transition types to use different animation direction for forward and backward navigation. In that case you can simply add another case for "stay on same page" and skip the animation. Or you switch from the slide back to the default cross-fade, which will not be observable when applied to the same page.
+
+The most reliable solution would be if each use case would only temporarily add view transition names for the short time frame when the image are captured. You could do this by adding a CSS class or a custom data attribute to the `:root` element and ue this as a guard for your view-transition-name assignments.
+
+```css
+	:root.form-active {
+		*:not(.user-data-form *) {
+			view-transition-name: none !important;
+		}
+		#nickname-label {
+			view-transition-name: nickname;
+		}
+		#student-fields,
+		#employed-fields,
+		#other-fields {
+			view-transition-name: dynamic;
+		}
+	}
+```
+
+this would only add the lightbox view transition name to the element with class
+
+

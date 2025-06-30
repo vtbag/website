@@ -1,0 +1,93 @@
+---
+title: "View Transitions: What Could Possibly Go Wrong, and What to Do About It"
+description: "Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life."
+---
+
+import Bsky from "@/components/Bsky.astro";
+
+Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.
+
+This list is still in its infancy. I will keep adding items whenever I spot something that might catch you off guard. But to be honest, I am probably a bit blind to some of the quirks by now. Please help me improve the list by <a class="not-content" target="\_blank" href={`https://bsky.app/intent/compose?text=@vtbag.dev`}><span>sending tips on Bluesky<b>🦋</b></span></a>
+or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?template=feature-request.yml) Anything that tripped you up or seems worth mentioning is welcome!
+
+
+## Cross-Document View Transitions
+There are Some restrictions when you use `@view-transition{navigation: auto}` to enable [cross-document view transitions](/tips/css/):
+<details name="fail">
+  <summary>Missing opt in</summary>
+  Both sides of the navigation must opt in to view transitions. You need the `@view-transition` at-rule on page where you start the navigation  and on the page you navigate to.
+</details>
+<details name="fail">
+  <summary>Cross-origin navigation</summary>
+  The _origin_ of a URL is the part up to the first single slash. For cross-document view transitions, the protocol (`http:` vs `https:`), the hostname part, and the port must be identical. Also check for cross-origin redirects.
+</details>
+<details name="fail">
+  <summary>Missing CSS rules</summary>
+  Styles to animate view transitions must be available in the updated DOM. That is typically not a problem for same-document view transitions, but for cross-document view transitions, the updated DOM is loaded from the target page of the navigation.
+
+  All styling for the pseudo-elements is taken from the page you navigate to. This is even true for the [styling of exit animations](/tips/css/#animations).
+</details>
+<details name="fail">
+  <summary>Incremental page Load</summary>
+This one can really throw you off: View transitions work sometimes, sometimes they don't. They might work when you open dev tools. And fail as soon as you close them.
+
+The reason could be that the [browser starts view transitions too early](/basics/pseudos/#delaying-cross-document-transitions) during page load.
+</details>
+<details name="fail">
+  <summary>No reverse</summary>
+When you replace the default cross-fade animation with a slide from the right or something similar, you might have the expectation that on back navigation, the animation should play the animation in reverse.
+
+The View Transition API can give you a bit of navigation context in its `pagereveal` event. A concept of avigation direction is not part of it. If your browser supports the navigation API, you can get the information from there.  Otherwise, you need to fiddle with the History API or use third-party scripts like the [Turn Signal](/tools/turn-signal/) to detect whether the user initiated a browser back action.
+</details>
+
+<details name="fail">
+  <summary>Clashes with browser navigation gestures</summary>
+  Especially on mobile, browsers might support their own gestures and animations for traversing the browser history, like swiping the current page to the right. In combination with view transitions this can look awkward.
+
+  Some browsers suppress view transitions on navigation where the browser has its own animation. Others provide mechanisms to detect such animations
+</details>
+
+## Same-Document View Transitions
+
+Calls to `document.startViewTransition`, too, might have surprising effects:
+
+<details name="fail">
+  <summary>Interrupted by another call</summary>
+  Calling `document.startViewTransition()` starts an asynchronous action. It takes some time to update the DOM, capture the before and after images and to wait for the end of the animation. The call to startViewTransition does not wait for all this to happen. It returns immediately even before the capturing phase. This allows you to directly interact with the view transition object returned by the call. Your code continues and runs in parallel to the view transition.
+
+  If you now call `document.startViewTransition()` before the [ready promise](/basics/javascript/#promises) fulfills, the view transition API will not insert the `::view-transition` pseudo-element tree and the animations won't start at all.
+
+  If you call `document.startViewTransition()` after the animations started but before they end, the view transition API will remove the  `::view-transition` pseudo-element tree. This interrupts all animations and reveals the target DOM. It looks like all animations suddenly jumped to their end position.
+
+  The View Transition API has no function to check for a currently active view transition. For your own calls, you can take care that you do not interrupt yourself by keeping track of the last result of calling `startViewTransition`.
+
+  You can also use [`mayStartViewTransition()`](/tools/utensil-drawer/#maystartviewtransition) from the Bag's `Utensil Drawer` to keep track for you.
+
+</details>
+
+- A second view transition interrupting the current
+- Explicit call of skipTransition
+- The documents visibility state is "hidden"
+- Errors inside the update function
+- The update function stalls for too long
+- Not even :root has a view-transition-name
+- Duplicate view-transition-name values
+- Size change of the snapshot containing block
+- Errors while capturing snapshots
+- Broken CSS rules for the animations
+- Use of undefined keyframes
+
+
+
+<style>{`
+
+main details {
+  border-left: 0pt !important;
+}
+main details::details-content {
+  transform: translateX(30px)
+}
+main summary {
+  margin-bottom: 0!important;
+}
+`}</style>

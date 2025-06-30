@@ -442,11 +442,11 @@ When `respectReducedMotion` is enabled, `mayStartViewTransition` behaves as if n
 ### collisionBehavior: "chaining"
 When `collisionBehavior` is set to `"chaining"`, calls to `mayStartViewTransition` do not interrupt active view transitions.
 
-Instead, if the animation has not yet started, the updates are merged into the current transition.
-If the animation is already in progress, updates from new calls are queued and played back in a new view transition that begins automatically once the current one has finished.
+Instead, while the old screenshots are not captured yet, the updates are merged into the current transition.
+Calls arriving after capturing old images are queued and played back in a new view transition that begins automatically once the current one has finished.
 
-
-You can control how many work is done when replaying queued updates. By default, execution of queued updates stops after 250 milliseconds, and a new view transition begins. Remaining updates are applied in additional transitions. This results in a batched execution, with one or more updates grouped per added view transition.
+### collisionBehavior: "chaining-only"
+Like before, but not combining updates that arrive before the capturing. Updates arriving while a view transition is running are always queued.
 
 ##### maxUpdateDuration
 If you assign a larger value to `maxUpdateDuration`, be aware that browsers may get impatient and skip view transitions with long combined update functions. Chromium, for example, appears to have a 4 second limit.
