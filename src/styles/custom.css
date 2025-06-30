@@ -199,8 +199,8 @@ li a[aria-current="page"] {
 
 main kbd {
   display: inline-block;
-  padding: 0.1em 0.4em;
-  margin: 0 0.1em !important;
+  padding: 2px 8px 0px;
+  margin: 0 !important;
   font-size: 0.85em;
   color: #333;
   background-color: #f7f7f7;
@@ -208,6 +208,8 @@ main kbd {
   border-radius: 3px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   font-family: "Courier New", Courier, monospace;
+  font-weight: 500;
+  transform: translateY(-2px);
 }
 :root[data-theme="dark"] main kbd {
   color: #fff;
