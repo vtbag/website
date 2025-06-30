@@ -421,10 +421,10 @@ The [Tower of Hanoi](https://fun-with-view-transitions.pages.dev/episode/7/page.
 These transitions are conceptually and technically independent. Some share the same trigger, but not all. From the user's perspective, the result appears as a single coordinated transition, even though there is no shared or global app code managing synchronization.
 
 ```js title="ProgressContainer"
-mayStartViewTransition(updateProgress, {collisionBehavior: chaining})
+mayStartViewTransition(updateProgress, {collisionBehavior: "chaining"})
 ```
 ```js title="MoveDisks"
-mayStartViewTransition(moveDisks, {collisionBehavior: chaining})
+mayStartViewTransition(moveDisks, {collisionBehavior: "chaining"})
 ```
 
 
@@ -439,8 +439,8 @@ The module also exports `getCurrentViewTransition()` to access the active global
 ### respectReducedMotion
 When `respectReducedMotion` is enabled, `mayStartViewTransition` behaves as if native view transitions are not supported if the user has turned on reduced motion at the operation system or browser level.
 
-### collisionBehavior: chaining
-When `collisionBehavior` is set to `chaining`, calls to `mayStartViewTransition` do not interrupt active view transitions.
+### collisionBehavior: "chaining"
+When `collisionBehavior` is set to `"chaining"`, calls to `mayStartViewTransition` do not interrupt active view transitions.
 
 Instead, if the animation has not yet started, the updates are merged into the current transition.
 If the animation is already in progress, updates from new calls are queued and played back in a new view transition that begins automatically once the current one has finished.
