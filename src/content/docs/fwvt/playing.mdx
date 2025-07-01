@@ -15,8 +15,11 @@ import wb from "@/assets/hanoi.png";
 import "@/styles/fwvt.css";
 
 <style>{`
-summary {font-size: 1.25rem; font-weight: 600}
+details div.level-h3 {display: none}
+summary {font-size: 20px}
+summary::before { height: 32px; width: 32px; margin-bottom: 4px;}
 `}</style>
+
 <EpisodeNav>
   <span>
     <a href="/fwvt/twinkling/">Twinkling</a>
@@ -66,19 +69,27 @@ As you can probably guess, this is not so much about the game itself as it is ab
 
 ## Let the Games Begin!
 
-No worries, you won't have to solve the puzzle yourself. It all runs automatically! But you can [play with it and explore its features](http://localhost:5173/episode/7/page.html):
-
-### Obvious Features
+No worries, you won't have to solve the puzzle yourself. It all runs automatically! But you can [play with it and explore its features](http://localhost:5173/episode/7/page.html).
 
 <details>
-  <summary>Hit the <kbd>Next Step</kbd> button to step through the solution.</summary>
-  #### The Rules of the Game
+  <summary>
+  The Rules of the Game
+  </summary>
+  ### The Rules of the Game
   The goal of the puzzle is to move all the disks from the starting peg to the
   target peg. Sounds simple? Yes, but there are a few restrictions: You may only
   move the top disk of a stack, one disk at a time, and you may never place a
   larger disk on top of a smaller one.
 </details>
 
+## Obvious Features
+Move through the demo by pressing the <kbd>Next Step</kbd> button. You can always <kbd>Reset</kbd> it to the initial state. 
+
+You can select different kinds of view transition behavior:
+* `none`: all view transitions switched off
+* `normal`: plain vanilla view transitions
+* `chaining`: a mode where view transitions do no interrupt each other
+* ` 
 <details>
 <summary>View transitions help you see the nature of the disk move more clearly.</summary>
 To see view transitions in action, choose the `normal` option from the View Transitions dropdown. This turns abrupt jumps (`none`) into smooth moves (`normal`).
