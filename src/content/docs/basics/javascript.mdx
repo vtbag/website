@@ -120,7 +120,7 @@ The [`mayStartViewTransition()`](/tools/utensil-drawer/#maystartviewtransition) 
 ### Scoped View Transitions
 
 [Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md) are rooted at arbitrary DOM elements. Instead of calling `document.startViewTransition()` it's `element.startViewTransition()`. This has some severe advantages:
-- Rendering only blocked on the DOM subtree rooted at element. The rest of the page is still interactive.
+- Rendering is only blocked on the DOM subtree rooted at element. The rest of the page is still interactive.
 - There can be several scoped view transitions on the page and they can independently perform in parallel.
 
 Rumor has it that the root element of the scoped view transition needs to have its `contain` CSS property set to `layout` (or `strict`).
