@@ -628,15 +628,18 @@ Noticed that rules in this demo are often guarded with an active view transition
 ```
 This is a pattern I really like as it allows for grouping your view transition styles by use cases.
 
-The rule guarded with `:active-view-transition-type(some-type) {}` are active while the type `some-type` is included in the view transition's types. 
+The rule guarded with `:active-view-transition-type(some-type) {...}` are active while the type `some-type` is included in the view transition's types. 
 
 By passing the type to the call of `startViewTransition` it is active throughout the entire view transition.
 ```js
 startViewTransition({update, types: ["some-type"]});
 ```
-You can use this to guard animations of the pseuo-elements, but you can even use it to _define_ the pseudo-elements by setting view transition names nested inside the type guarded rule. And of course you can use this pattern to style regular DOM elements _just for the time_ a certain view transition is active. 
+You can use this to guard animations of the pseudo-elements, but you can even use it to _define_ the pseudo-elements by setting view transition names nested inside the type guarded rule. And of course you can use this pattern to style regular DOM elements _just for the time_ a certain view transition is active. 
 
-For [more on this pattern](/tips/css/#scoping-with-types), check the CSS Tips & Tricks section.
+:::caution
+This pattern will likely break in Firefox once it adds support for Level 1 of the View Transition API.
+:::
+For an explanation and [more on this pattern](/tips/css/#scoping-with-types), check the CSS Tips & Tricks section.
 
 ### Changing Group Stacking Order 
 With the View Transition API, the [stacking order](/basics/pseudos/#rendering-pseudo-elements) of the `::view-transition-group` pseudo-elements corresponds to the paint order of the named elements on the old page, then followed by those only on the new page, also in paint order.  

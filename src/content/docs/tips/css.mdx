@@ -125,6 +125,16 @@ Thus all contained definitions only exist just during the view transition. Here 
    because you cant have `:root @keyframes name {}` */
 ```
 One of the main benefits of this pattern is that view transition names are only defined during the view transition with that specific type and thus can not conflict with other unrelated view transition use cases. When the transition ends, they are gone. No need to tidy up afterward.
+:::caution
+
+This pattern works well in all current browser versions that natively support the View Transition API.
+Once Firefox adds native support for Level 1 view transitions, this will likely break because `:active-view-transition-type` is only available with Level 2 of the API.
+
+As an alternative to view transition types, you can set CSS classes with the same name on the `:root` element and replace `:active-view-transition-type(some-type) {...}` with `:root.some-type {...}`.
+
+Keep in mind you cannot combine both selectors. Browsers that do not understand the `:active-view-transition-type` syntax will also ignore a combined selector like `:active-view-transition-type(some-type), :root.some-type`.
+:::
+I am actively exploring this and will update you once there is more to share.
 
 #### Auto-generated View Transition Names
 There are also ways to handle generated view transition names: instead of directly setting an element's view transition name, set a CSS custom property and copy it over inside the guarded rule:
