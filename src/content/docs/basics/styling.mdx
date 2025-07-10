@@ -103,7 +103,10 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
 
 ```css
 ::view-transition-group(x) {
-  animation: 0.25s ease 0s 1 normal both running -ua-view-transition-group-anim-x;
+  animation-name: -ua-view-transition-group-anim-x;
+  animation-duration: 0.25s;
+  animation-delay: 0s;
+  animation-fill-mode: both;
 }
 @keyframes -ua-view-transition-group-anim-x {
   0% {
@@ -120,6 +123,8 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
   }
 }
 ```
+The `animation-timing-function`, `animation-iteration-count` and, `animation-direction` properties keep their default values: `ease`, `1`, and `normal`, respectively. 
+
 
 The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the new image's size, transform, and position. I.e. if the original element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honored by the generated transform.
 
@@ -136,11 +141,9 @@ The typical cross-fade effect of view transitions is implemented by animations d
   animation-fill-mode: inherit;
 }
 ::view-transition-old(x) {
-  animation: <inherited duration> ease <inherited delay> 1 normal <inherited fillMode> running
   animation-name: -ua-view-transition-fade-out, -ua-mix-blend-mode-plus-lighter
 }
 ::view-transition-new(x) {
-  animation: <inherited duration> ease <inherited delay> 1 normal <inherited fillMode> running
   animation-name: -ua-view-transition-fade-in, -ua-mix-blend-mode-plus-lighter
 }
 @keyframes -ua-view-transition-fade-out {
@@ -168,10 +171,14 @@ The typical cross-fade effect of view transitions is implemented by animations d
   }
 }
 ```
+
+
 `-ua-mix-blend-mode-plus-lighter` is only added if the image pair has both images. For some background on `-ua-mix-blend-mode-plus-lighter` see the [section about mix blend modes](/tips/over-exposure/#set-the-correct-mix-blend-mode).
 
+The `animation-timing-function`, `animation-iteration-count` and, `animation-direction` properties keep their default values: `ease`, `1`, and `normal`, respectively. 
 
-The inherited values come from the view transition image pair, which inherits them from the view transition group.  Due to these default inherits you might want to prefer setting the individual `animation-...` properties instead of using the `animation` shortcut, which would reset `animation-duration`, `animation-delay` and `animation-fill-mode` to `0s`, `0s`, and `none` if not explicitly stated otherwise.
+
+The values for `animation-duration`, `animation-delay`, and `animation-fill-mode` are inherited from the view transition image pair, which inherits them from the view transition group.  The [API sets the defaults](/basics/styling/#group--morph-animation) to `0.25s`, `0s`, and `both`. Due to these default inherits you might want to prefer setting the individual `animation-...` properties instead of using the `animation` shortcut, which would reset `animation-duration`, `animation-delay` and `animation-fill-mode` to `0s`, `0s`, and `none` if not explicitly stated otherwise.
 
 Using `inherit` in your own definitions is a good idea as it allows for control over several animations at once. For example you can set the duration of all unchanged morph and cross-fade animations with a single rule:
 ```css

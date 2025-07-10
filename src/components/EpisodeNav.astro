@@ -2,6 +2,7 @@
   <div>
     <slot />
   </div>
+  <a href="/fwvt/welcome/">Back to the episode overview</a>
 </nav>
 
 <portal-gate to="end:head">
@@ -16,7 +17,7 @@
         var(--sl-color-gray-6)
       );
       border-radius: 2em;
-      padding: 1.5em 1em;
+      padding: 1.5em 1em 2em;
       box-shadow: 0 4px 8px #8888;
       & div {
         width: fit-content;
@@ -24,6 +25,14 @@
         background-color: var(--sl-color-gray-5);
         border-radius: 1em;
         padding: 0em 0.33em;
+      }
+      & > a {
+        color: var(--sl-color-text-accent);
+        text-decoration: dotted underline;
+        font-size: 0.8em;
+        margin-top: 0.5em;
+        display: inline-block;
+        float: right;
       }
     }
 

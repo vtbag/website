@@ -41,7 +41,7 @@ On the flip side, React cannot really afford to skip a framework-specific approa
 
 ## Astro
 
-Astro, being a framework for multi page apps,  Astro's `<ClientRouter />`[^1] component supports **cross-document** view transitions. Astro's view transition support was the first in any web framework, predating React's by at least 18 month.
+Astro, being a framework for multi page apps,  Astro's `<ClientRouter />` component (formerly known as `<ViewTransitions />`) supports **cross-document** view transitions. Astro's view transition support was the first in any web framework, predating React's by at least 18 month.
 
 Like React it wraps the native View Transition API. Astro provides directives to define view transition names and animations. With its `transition:persist` directive, it even enables functionality that goes beyond what native cross-document view transitions can do. Astro also simulates view transitions in browsers that do not yet natively support the API. It has built-in `forward` / `back` animation directions  and offers several lifecycle events you can hook into.
 
@@ -74,4 +74,3 @@ No   special magic required, jut pure View Transition API.
 
 
 
-[^1]: Formerly known as `<ViewTransitions />`.

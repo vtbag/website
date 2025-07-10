@@ -41,9 +41,9 @@ In reality, you don't want to select each element individually. Instead, you wan
 ## How to Assign Names Automatically?
 Here are your options right now:
 
-* _Not yet recommended_: Generate [dynamic identifiers](/basics/pseudos/#auto-generated-names-auto-and-match-element) with `auto` or `match-element`: \
-`selector { view-transition-name: auto; } /* or match-element */`
-* _Not yet recommended_: Copy an existing unique attribute like `id`: \
+* For same-document view transitions, only: generate [dynamic identifiers](/basics/pseudos/#auto-generated-names-auto-and-match-element) with `match-element` (or `auto`): \
+`selector { view-transition-name: match-element; } /* or auto */`
+* _Not yet baseline: Copy an existing unique attribute like `id`: \
 `selector { view-transition-name: attr(id type(<custom-ident>)); }`
 * In JavaScript, do something like \
 `querySelectorAll("selector").forEach(e => e.style.viewTransitionName = ...)`
@@ -77,7 +77,6 @@ Chrome's dynamically generated names at least appear as though they could techni
 Setting the name to `auto` does not always generate those fancy dynamic names. If the element has an `id`-attribute, its value is used as the view transition name instead. This works fine in Safari but not in Chrome.
 
 Chrome and Safari also support `match-element`, which works like `auto` but always generates a dynamic name, even when an `id` attribute is present.
-
 
 ### Using attr() For Names
 

@@ -140,9 +140,8 @@ These pseudo-elements actually cover your entire viewport, concealing the origin
 Despite their unconventional names, these pseudo-elements behave like any other HTML pseudo-elements, making them fully customizable with CSS.
 
 ## Cross-Fade Rules
-We can select them like a `<div>` or `<img>` elements and animate them. For example, we could fade out the old image with the following CSS rule.
 
-We can select and animate these pseudo-elementsJ just like `<img>` or `<div>` elements. For instance, we can fade out the old image using the following CSS rule:
+We can select and animate these pseudo-elements just like `<img>` or `<div>` elements. For instance, we can fade out the old image using the following CSS rule:
 
 ```css
 ::view-transition-old(root) {
@@ -193,7 +192,7 @@ Okay, 10 seconds is far too long for a practical transition, but this exaggerate
 
 * It gives you **time to inspect the pseudo-elements** in your browser's developer tools. These elements are temporarily attached to the `<html>` element and only exist for the duration of the animation.
 
-* This also gives you first-hand **experience with one limitation[^2]** of the View Transition API: although you can see the new page during the animation, you can’t interact with it until the transition ends.
+* This also gives you first-hand **experience with one current limitation** of the View Transition API: although you can see the new page during the animation, you can’t interact with it until the transition ends.
 
 Manually setting long animation durations isn't the best way to inspect or debug view transitions, though. In a later episode, we will explore how to delay and pause view transitions using your browser's developer tools and the [Inspection Chamber](/tools/inspection-chamber/).
 
@@ -203,7 +202,7 @@ Before you move on, don't forget to reset the overall animation duration to a mo
 
 **A Quick Tip:** When experimenting with animation parameters, resist the urge to push the fade-out and fade-in out of sync. Using different timings for concurrent  opacity changes can cause [odd visual effects](/tips/over-exposure/) when the browser combines the partially transparent images.
 
-[^2]: Rumors suggest that _scoped_ view transitions might eventually restore some interactivity during transitions. Stay tuned for updates!
+
 
 
 ## Are There Alternatives to Cross-Fade?
@@ -247,9 +246,9 @@ Here is what it looks at [fun-with-view-transitions.pages.dev](https://fun-with-
 
 Now it is time to ask why all the pseudo-element names we saw in this episode end with "(root)". The identifier `root` is a view transition name.
 
-View transition names tell the View Transition API to generate a `::view-transition-group` pseudo element for the DOM element the name is assigned to. So with more view transition names, there will be multiple `:view-transition-group` elements and the view transition name  is used to distinguish them. Therefore, the view transition names, for which the API generates groups, must be unique on a page. The API won't generate groups for invisible elements[^i]. So the rule in truth is: View transition names for visible DOM elements must be unique on a page.
+View transition names tell the View Transition API to generate a `::view-transition-group` pseudo element for the DOM element the name is assigned to. So with more view transition names, there will be multiple `:view-transition-group` elements and the view transition name  is used to distinguish them. Therefore, the view transition names, for which the API generates groups, must be unique on a page. The API won't generate groups for elements that are not rendered[^i]. So the rule in truth is: View transition names for displayed DOM elements must be unique on a page.
 
-[^i]: "invisible" here means `display: none`. Just being clipped or hidden by `visibility: hidden`, `overflow: ...` or being obscured by other elements does not hinder group generation.
+[^i]: "not rendered" here means `display: none`. Just being clipped or hidden by `visibility: hidden`, `overflow: ...` or being obscured by other elements does not hinder group generation.
 
 That the whole view port is assigned the `root` name is another default from the useragent stylesheet:
 

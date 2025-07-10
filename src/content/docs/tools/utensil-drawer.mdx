@@ -369,14 +369,15 @@ _experimental_
 More than just a wrapper. This function upgrades your view transitions with advanced capabilities and seamless fallbacks.
 
 This function provides quite different functionalities.
-1. It wraps `document.startViewTransition()` to free you free you from checking whether the browser supports the View Transition API. You can call it the same way in any browser, whether it supports Level 2, Level 1, or nothing at all.
+1. It wraps `document.startViewTransition()` to free you from checking whether the browser supports the View Transition API. You can call it the same way in any browser, whether it supports Level 2, Level 1, or nothing at all.
+
 2. It includes built-in support for users who prefer reduced motion, automatically suppressing transitions based on system or browser settings.
 
 3. The View Transition API cancels active view transitions when a new one starts. `mayStartViewTransition` provides alternatives to prevent these cancellations. Here is what's supported:
 
-    * If the animations have not started yet, the function can automatically merge additional update callbacks into the current view transition. This means multiple UI components can trigger transitions close together, and they will seamlessly act as one.
+    * If the old images have not been captured yet, the function can automatically merge additional update callbacks into the current view transition. This means multiple UI components can trigger transitions close together, and they will seamlessly act as one.
 
-    * If animations are already in progress, the function queues new update  callbacks and runs them once the current view transitions finishes, combining them into a single update function for a new view transition.
+    * If  the old images were already captured, the function queues new update  callbacks and types and runs them once the current view transitions finishes, combining them into a single update function for a new view transition.
 
     * It can also skip starting a new transition if one is already running, letting the active one take the lead for a smoother result.
 
@@ -391,14 +392,13 @@ export interface StartViewTransitionExtensions {
 	respectReducedMotion?: boolean; // default is true
 	collisionBehavior?: 'skipOld' | 'chaining' | 'skipNew' | 'never'; // default is "skipOld"
 	speedUpWhenChained?: number; // default is 1.0
-	maxUpdateDuration?: number; // default is 250 (milliseconds)
 }
 ```
 ### Basic Chaining Examples
 
 `mayStartViewTransition` is useful when you need to manage concurrent calls to `startViewTransition`. Common use cases include debouncing transitions triggered by user events, or allowing UI components to start view transitions independently, without requiring them to coordinate or be manually integrated into a single transition.
 
-##### Debouncing
+#### Debouncing
 
 The [Derived Trajectories](/vector-demo/) demo uses `mayStartViewTransitions` to ensure that rapid clicks triggering element shuffles do not cancel the current view transition animation.
 
@@ -414,26 +414,33 @@ If the user clicked several times during the animation, `mayStartViewTransition`
 The [Game of Life](/chaining-demo/) uses the same technique to decouple the calculation of new generations from their rendering. If generations are requested faster than the view transition can display them, `mayStartViewTransition`  automatically queues the update callbacks. You can quickly fill the queue on desktop by "clicking" the NEXT button using the keyboard auto-repeat. You should then see the queued request processed in batches. Visually, life proceeds skipping several generations at a time.
 
 
-##### Automatic Integration
-The [Tower of Hanoi](https://fun-with-view-transitions.pages.dev/episode/7/page.html) demo (to be soon covered by a new episode of Fun with View Transitions) makes multiple independent calls to `mayStartViewTransition`. One animates the  disk movements, another updates the progress bar and counters. A separate view transition runs when the puzzle is solved, and yet another handles switching between light and dark mode.
+#### Automatic Integration
+
+The [Tower of Hanoi](https://fun-with-view-transitions.pages.dev/episode/7/page.html) demo, [covered by its own episode of Fun with View Transitions](/fwvt/playing/) makes multiple independent calls to `mayStartViewTransition`. One animates the  disk movements, another updates the progress bar and counters. A separate view transition runs when the puzzle is solved, and yet another comes in when switching between light and dark mode.
 
 
 These transitions are conceptually and technically independent. Some share the same trigger, but not all. From the user's perspective, the result appears as a single coordinated transition, even though there is no shared or global app code managing synchronization.
 
 ```js title="ProgressContainer"
-mayStartViewTransition(updateProgress, {collisionBehavior: "chaining"})
+...
+mayStartViewTransition(updateProgress, {collisionBehavior: "chaining"});
+...
 ```
 ```js title="MoveDisks"
-mayStartViewTransition(moveDisks, {collisionBehavior: "chaining"})
+...
+mayStartViewTransition(moveDisks, {collisionBehavior: "chaining"});
+...
 ```
 
+Assume the `ProgressContainer` code runs before the `MoveDisk` code. `ProgressContainer` calls `mayStarViewTransition()`, which eventually invokes the browser's `document.startViewTransition()`. That creates the result object containing the view transition promises and hands off image capturing  and update callback execution to the browser's render loop. 
 
-Assume the `ProgressContainer` code runs before the `MoveDisk` code. `ProgressContainer` starts a view transition.  Program execution continues normally while the View Transition API begins capturing old images, and then calls the update callback.
 
-If  `MoveDisk` calls `mayStartViewTransition` before the API is ready to capture the new images, `mayStartViewTransition` can automatically extend the active update callback to include `MoveDisk`'s update callback. This mechanism also supports more than two calls.
+If  `MoveDisk` calls `mayStartViewTransition` before the next render loop runs, the function can automatically extend the current view transition to include `MoveDisk`'s update callback (and, optionally, its types). This mechanism is not limited to just two calls.
 
-#### Current View Transition
-The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active.
+In fact, as long as your code does not return control to the macro-task queue, the browser will not re-enter the render loop, and will not start capturing the old images. During that time, all your update callbacks can be included in a single view transition.
+
+Just keep in mind that the browser might lose patience and skip the transition if the (combined) update callback takes too long. Chromium based browsers seem to have a limit of around four seconds, but really, who wants to block rendering for that long? The best practice is handle any time-consuming preparations before starting the view transition, and keep update callback as short and simple a possible, ideally as a synchronous function.   
+
 
 
 ### respectReducedMotion
@@ -448,9 +455,6 @@ Calls arriving after capturing old images are queued and played back in a new vi
 ### collisionBehavior: "chaining-only"
 Like before, but not combining updates that arrive before the capturing. Updates arriving while a view transition is running are always queued.
 
-##### maxUpdateDuration
-If you assign a larger value to `maxUpdateDuration`, be aware that browsers may get impatient and skip view transitions with long combined update functions. Chromium, for example, appears to have a 4 second limit.
-
 ##### speedUpWhenChained
 Triggering a new call during an ongoing transition can also be used to speed up the current animation if `speedUpWhenChained` is set to a value greater than 1.
 
@@ -464,3 +468,6 @@ Setting `collisionBehavior` to `skipOld` give you the default behavior of view t
 Setting `collisionBehavior` to `never` prevents any collisions by executing only the update callback, skipping pseudo-element creation and animation.
 
 For details see [`may-start-view-transition.ts`](http://github.com/vtbag/utensil-drawer/blob/main/src/may-start-view-transition.ts)
+
+### Current View Transition
+The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active.

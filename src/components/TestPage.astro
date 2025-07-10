@@ -52,9 +52,7 @@
       sessionStorage.setItem("vtbag-pagereveal", JSON.stringify(d));
       e.viewTransition?.ready.then(() => {
         const as = document.getAnimations();
-        console.log("huhu", as);
         as.forEach((a) => {
-          console.log(a.effect.pseudoElement);
           a.effect.pseudoElement === "::view-transition-group-children(root)" &&
             document.documentElement.setAttribute("_vtgc", "x");
         });

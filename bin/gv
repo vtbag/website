@@ -1,0 +1,20 @@
+#! /bin/sh
+
+rm src/assets/gv/*.old
+tmp=/tmp/gv.svg
+while true; do
+	for i in src/assets/gv/*.gv; do
+		out="src/assets/svgs/$(basename $i .gv).svg"
+		old="src/assets/gv/$(basename $i .gv).old"
+		if [ ! -f $old ] || ! diff -q $i $old; then
+			echo "generating $out"
+			cat $i | sed  -e 's|include(\([^)]*\))|include(\`src/assets/gv/\1'"'"')|'|\
+			m4 | dot -Tsvg | svgo - >$tmp && cp $i $old
+			cp $tmp $out
+		else
+			echo "$out is up to date"
+		fi
+	done
+	if [ "$1" != "dev" ]; then break; fi
+	sleep 1
+done

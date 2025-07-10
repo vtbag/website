@@ -21,7 +21,9 @@ Same document view transitions are amazing! You assign view transition names to 
 
 ### startViewTransition()
 
-Typically, you start a same-document view transition with an update callback that transforms the current DOM to the future state. The View Transition API takes care of creating and running animations that smoothly transform the old state into the new one.
+You start a same-document view transition with an update callback that transforms the current DOM to the future state. The View Transition API takes care of creating and running animations that smoothly transform the old state into the new one.
+
+It is good practice to care for users that do not want motion effects and for browsers that do not support the API:
 
 ```js
 if (window.matchMedia('(prefers-reduced-motion: reduce)') || !document.startViewTransition) {
@@ -30,7 +32,11 @@ if (window.matchMedia('(prefers-reduced-motion: reduce)') || !document.startView
   document.startViewTransition(updateCallback);
 }
 ```
-For users who prefer reduced motion or when the browser doesn't support the View Transition API, the code above directly executes the update function without calling `startViewTransition()`.
+For users who prefer reduced motion or when the browser doesn't support the View Transition API, the code above directly executes the update function without calling `startViewTransition()`. 
+
+:::note 
+Calling `startViewTransition()` while another view transition is active will end the previous view transition in the same way as [`skipTransition()`](#skiptransition) ends the view transition: any running animation abruptly jumps to the end before the new transition starts.  
+:::
 
 The update callback can either be a synchronous or asynchronous function. If it's asynchronous, the View Transition API will wait for it to settle. However, you should aim to spend only little time inside the callback. For one thing, the browser freezes the renderer while the update callback executes. And browsers may impose time limits. For Chrome this seem to be 4 seconds before it loses its temper. If you need an expensive preparation for the transition, like loading and parsing a new DOM from file, you better do that before you call `startViewTransition()`. The update callback is optional, so you can even transition to the same version of the DOM by omitting the update function, which might make sense with custom animations.
 
@@ -58,6 +64,8 @@ interface Document {
   ): ViewTransition;
 }
 ```
+
+
 
 ### ViewTransition Object
 
@@ -100,7 +108,11 @@ if (document.startViewTransition && window.matchMedia('(prefers-reduced-motion: 
 
 #### skipTransition()
 
-Calling `skipTransition()` stops the current view transition animations or prevents their start if the `ready` promise hasn't settled yet. If called during the update callback, it doesn't affect the update itself, nor does it impact the processing or the outcome of the updateCallbackDone promise.
+Calling `skipTransition()` stops the current view transition animations or prevents their start if the `ready` promise hasn't settled yet. 
+
+If called before or during the update callback, it doesn't affect the update itself, nor does it impact the processing or the outcome of the updateCallbackDone promise.
+
+Skipping the transition means that the pseudo-element tree created by the view transition API is removed (or never inserted). Without the pseudo-elements, the browser directly shows the new DOM state. Therefore a skipped view transitions looks like the animation would jump abruptly to its end state.
 
 #### Types
 

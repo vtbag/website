@@ -23,6 +23,10 @@ export default defineConfig({
     '/inspection-chamber/': '/tools/inspection-chamber/'
   },
 
+  experimental: {
+    preserveScriptOrder: true,
+    headingIdCompat: true,
+  },
   prefetch: false,
 
   markdown: {
@@ -152,7 +156,16 @@ function sidebar() {
       { label: 'Utensil Drawer', link: "/tools/utensil-drawer/" }
     ],
   },
-  { label: 'Fun with View Transitions', link: "/fwvt/welcome/", badge: { text: 'New!', variant: 'success' } as Badge }, {
+  { label: 'Fun with View Transitions' , items:[
+    {label: "Overview", link: "/fwvt/welcome/"},
+    {label: "Enabling", link: "/fwvt/enabling/"},
+    {label: "Customizing", link: "/fwvt/customizing/"},
+    {label: "Morphing", link: "/fwvt/morphing/"},
+    {label: "Healing", link: "/fwvt/healing/"},
+    {label: "Twinkling", link: "/fwvt/twinkling/"},
+    {label: "Uncovering", link: "/fwvt/uncovering/"},
+    {label: "Playing", link: "/fwvt/playing/", badge: { text: 'New!', variant: 'success' } as Badge },
+  ] }, {
     label: 'Tips & Tricks',
     items: [
       { label: 'Where to Place the CSS', link: "/tips/css/" },
@@ -184,4 +197,4 @@ function sidebar() {
       { label: "Tower of Hanoi", link: "https://fun-with-view-transitions.pages.dev/episode/7/page.html" }
     ]
   }];
-}
+} 

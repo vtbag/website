@@ -162,6 +162,11 @@ main {
 }
 ```
 
+At the start of the view transition, the **view transition names have to be unique** in the DOM. 
+
+There is an important exception: The View Transition API will ignore the `view-transition-name` of an element if that element is not rendered. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance have  their `display` CSS property set to `none`. This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site.
+
+
 The static user agent stylesheet provides one default name for the document, called `root`.
 ```css title="static user agent stylesheet"
 :root {
@@ -181,7 +186,6 @@ Do not quote the names. They are not strings but [custom-ident](https://develope
 
 It is not important to have much imagination when choosing names. They can be the similar to the `id` of an element or name of a unique tag like `body` or `footer`.
 
-At the start of the view transition, the **view transition names have to be unique** in the DOM. You can exempt an element from this uniqueness check by setting its (or one of its parent's) styles to `display: none`. For those elements, the browser won't generate pseudos.
 
 ### Auto-Generated Names: auto and match-element
 The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](/tips/auto-names/). However, it is also possible to do this with only CSS by using the `auto` value, no JavaScript needed.
@@ -244,11 +248,12 @@ The View Transition API introduces five types of pseudo-elements:
 
 The `::view-transition` pseudo-element, which is rooted at the document's documentElement[^scoped], is the root of all pseudo-elements created by the View Transition API.
 
-[^scoped]: This will change when _scoped_ view transitions are available, allowing you to root the pseudo-element tree on any element.
+> This will change when [_scoped_ view transitions](/basics/javascript/#scoped-view-transitions) are available, allowing you to root the pseudo-element tree on any element.
 
 All these pseudo-elements only exist briefly during the transition effect, making them difficult to spot in the DOM.
 
-:::note
+<details>
+<summary>Viewing pseudo-elements in the browser's developer tools</summary>
 
 To make spotting pseudo-elements in the DOM easier, you can use the animation panel of the browser's Development Tools and press the pause button before you start the navigation. When you playback the animations, you can examine the DOM including the pseudo-elements.
 
@@ -268,7 +273,7 @@ inspect(top.document.querySelector("#vtbag-main-frame").contentDocument.querySel
 ```
 
 Here `root` is the automatically assigned `view-transition-name` for the document's documentElement (:root). `myName` is an arbitrary example `view-transition-name`.
-:::
+</details>
 
 
 ### Old and New Image Pseudos
@@ -291,7 +296,7 @@ The View Transition API handles the image of the root `<html>` element in a spec
 
 ### Groups and Image-Pairs
 
-Because view transition names must be unique[^unique] inside their DOM, there can be at most one old image and one new image with a given name. The API assumes that elements with the same `view-transition-name` on both the old and the new pages represent the same logical concept. It is not necessary for these elements to be implemented the same way or even use the same HTML tags. The old and new images form a pair, and this pair is the only child of the group. Both `::view-transition-group` and `::view-transition-image-pair` are named using the `view-transition-name`. All groups are direct children of the `::view-transition` pseudo-element. Thus, a typical structure looks like this, where a pair can have one or two children.
+Because view transition names must be unique inside their DOM, there can be at most one old image and one new image with a given name. The API assumes that elements with the same `view-transition-name` on both the old and the new pages represent the same logical concept. It is not necessary for these elements to be implemented the same way or even use the same HTML tags. The old and new images form a pair, and this pair is the only child of the group. Both `::view-transition-group` and `::view-transition-image-pair` are named using the `view-transition-name`. All groups are direct children of the `::view-transition` pseudo-element. Thus, a typical structure looks like this, where a pair can have one or two children.
 
 ```c
 ::view-transition                       // the parent of all groups
@@ -309,9 +314,9 @@ Because view transition names must be unique[^unique] inside their DOM, there ca
 
 The term "pair" might be a bit misleading here: it refers to having _at least one_ and _at most two_ children, but there can be instances where only an old image or only a new image is present.
 
-The image-pairs are the direct parents of the `::view-transition-old` and `::view-transition-new` images. They allow you to apply common styling to both images, set CSS isolation (default is isolate) for the pair, and to use `:only-child` to style [exit/entry transition different from morph](/basics/default-animations/) transitions.[^nest]
+If both images are present, their order is a) old, b) new.
 
-[^nest]: In a way that will continue to work once nested view transition groups are available.
+The image-pairs are the direct parents of the `::view-transition-old` and `::view-transition-new` images. They allow you to apply common styling to both images, set CSS isolation (default is isolate) for the pair, and to use `:only-child` to style [exit/entry transition different from morph](/basics/default-animations/) transitions. In a way that will continue to work once nested view transition groups are available.
 
 #### Nested View Transition Groups
 
@@ -348,7 +353,7 @@ If supported, `::view-transition-group-children` appears after the parent group'
 
 In browsers that support nested group names but do not yet support `::view-transition-group-children`, nested groups are direct children of the parent `::view-transition-group`, and they may appear before the image-pair.  
 
-[^unique]: In certain cases, the View Transition API may ignore the `view-transition-name` of an element. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance are not rendered (e.g., by setting their `display` CSS property to `none`). This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site.
+
 
 
 
@@ -401,9 +406,7 @@ When examining the `::view-transition-groups` in order, the elements at the star
 
 Before the view transition starts, the pseudo elements are rendered on top of the current page.
 
-The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport[^scb] and is full transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set `pointer-events: none` on it).
-
-[^scb]: To be precise, it has the size of the viewport, plus scrollbars, and retractable UI parts on mobile. The spec refers to this as the _snapshot containing block_.
+The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport including scrollbars, and retractable UI parts on mobile. The spec refers to this as the _snapshot containing block_. The `::view-transition` pseudo-element is fully transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set `pointer-events: none` on it).
 
 The transition groups are rendered [in the order they were created](#creation-of-pseudo-elements), which is the same as the order in which they appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
 

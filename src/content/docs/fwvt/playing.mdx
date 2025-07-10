@@ -13,6 +13,7 @@ import Media from "@/components/Media.astro";
 import EpisodeNav from "@/components/EpisodeNav.astro";
 import wb from "@/assets/hanoi.png";
 import "@/styles/fwvt.css";
+import { Steps } from '@astrojs/starlight/components';
 
 <style>{`
 details div.level-h3 {display: none}
@@ -50,9 +51,9 @@ summary::before { height: 32px; width: 32px; margin-bottom: 4px;}
     <p slot="caption">Hello, and welcome to _Fun with View Transitions_!</p>
   </Media>
   <div>
-Hello, and welcome to _Fun with View Transitions_! Get ready for a super playful episode where we are tackling the Towers of Hanoi and spicing things up with some slick view transitions.
+Hello, and welcome to _Fun with View Transitions_! Get ready for a super playful episode where we tackle the Towers of Hanoi and spice things up with some slick view transitions.
 
-This demo dives into a bunch of cool possibilities and is packed with handy tips and tricks you can use in your own projects!
+This demo explores a bunch of fun possibilities and is packed with handy tips and tricks you can use in your own projects.
 
 As always with _Fun with View Transitions_,\
 you find the code at [https://github.com/vtbag/fun-with-view-transitions](https://github.com/vtbag/fun-with-view-transitions)\
@@ -62,45 +63,53 @@ and a deployment at
 </div>
 </div>
 
-As you can probably guess, this is not so much about the game itself as it is about making changes in the DOM visually readable.
+As you can probably guess, this is not so much about the game itself as it is about making changes in the DOM visually readable. We will see examples on&hellip;
 
-- Tips and tricks for same-document view transitions.
-- How to automatically merge multiple startViewTransition calls from different parts of your code into a single transition.
+- how to chain view transitions so they run back to back.
+- how to fuse multiple simultaneous view transitions into one.
+- how to make view transitions move along dynamic, playful curves instead of straight lines.
+- how to keep pages interactive during view transitions.
+- ...and lots of other tips and tricks for view transitions.
 
-## Let the Games Begin!
+### Let the Games Begin!
 
 No worries, you won't have to solve the puzzle yourself. It all runs automatically! But you can [play with it and explore its features](http://localhost:5173/episode/7/page.html).
 
-<details>
-  <summary>
-  The Rules of the Game
-  </summary>
-  ### The Rules of the Game
-  The goal of the puzzle is to move all the disks from the starting peg to the
-  target peg. Sounds simple? Yes, but there are a few restrictions: You may only
-  move the top disk of a stack, one disk at a time, and you may never place a
-  larger disk on top of a smaller one.
-</details>
+The goal of the puzzle is to move all the disks from the starting peg to the target peg. Sounds simple? Yes, but there are a few restrictions: You may only move the top disk of a stack, one disk at a time, and you may never place a larger disk on top of a smaller one.
 
-## Obvious Features
-Move through the demo by pressing the <kbd>Next Step</kbd> button. You can always <kbd>Reset</kbd> it to the initial state. 
+### How to Interact with the Demo
 
-You can select different kinds of view transition behavior:
-* `none`: all view transitions switched off
-* `normal`: plain vanilla view transitions
-* `chaining`: a mode where view transitions do no interrupt each other
-* ` 
-<details>
-<summary>View transitions help you see the nature of the disk move more clearly.</summary>
-To see view transitions in action, choose the `normal` option from the View Transitions dropdown. This turns abrupt jumps (`none`) into smooth moves (`normal`).
+You can step through the demo by pressing the <kbd>Next Step</kbd> button, and you can always <kbd>Reset</kbd> it to the initial state.
 
-Since we stay on the same page, we start a view transition by calling [`document.startViewTransition`](/basics/javascript/#startviewtransition), the method the View Transition API provides for smooth same-page updates.
+With the `View Transitions` drop down, you can select different kinds of behavior:
 
-#### Rendering from a Model
-You might have guessed that the update function simply moves the one disk around in the DOM. But this demo takes a different approach: the entire view is created from a model. This simplifies different actions, like advancing or resetting the game. It's all just changes in the model and repainting it will update the view accordingly.
+- `none`: disks jump without view transitions
+- `normal`: plain vanilla view transitions
+- `chaining`: a mode where view transitions do no interrupt each other
+- `...with vectors`: Replaces straight line group animations with curved ones
 
-```js {7,8}
-function update() {
+Finally, you can toggle the page between light and dark themes.
+
+The main perk of view transitions in this demo is swapping sudden UI jumps for smooth animations that highlight the connection between states and keep the visual flow clear and continuous.
+
+If you step through the game with view transitions switched off, you see the disks jumping from peg to peg. They suddenly vanish from one spot and pop up somewhere else. To make this a smooth transition, we need to tell the View Transition API to add [group animations](/basics/styling/#group--morph-animation) for all disks. Here is how it's done.
+
+### Rendering Animatable Disks
+
+The main part of the demo is a click handler for the <kbd>Next Step</kbd> button that advances the game model and then renders the new view. Updates to the DOM are wrapped with a call to `startViewTransitions`.
+
+The following snippet is slightly simplified. For details on handling missing API support and reacting to the reduced motion preference, check the demo's code or the page about [same-page view transitions](/basics/javascript/#startviewtransition).
+
+```js {15,16}
+nextStep.addEventListener("click", () => {
+  game.nextStep();
+  statViewTransition(() => {
+    render(game.pegs);
+    ...
+  })
+})
+
+function render(pegs) {
   pegs.forEach((peg, pegIndex) => {
     stack[pegIndex].innerHTML = "";
     peg.forEach((diskSize) => {
@@ -114,119 +123,23 @@ function update() {
 }
 ```
 
-To give each disk a unique view transition name, we include its size in the name, e.g., `disk-1`, `disk-2`, and so on. We do not only assign each disk some CSS classes, but also a view transition class named `disk` to simplify styling shared across all disks.
+To give each disk a [unique view transition name](/basics/pseudos/#:~:text=view%20transition%20names%20have%20to%20be%20unique), we include its size in the name, e.g., `disk-1`, `disk-2`, and so on. We do not only assign each disk some CSS classes, but also a view transition class named `disk` to simplify view transition styling shared across all disks.
 
-</details>
+To see view transitions in action, choose the `normal` option from the View Transitions dropdown. This turns abrupt jumps (`none`) into smooth moves (`normal`).
 
-<details>
-  <summary>
-    In 'normal' mode, fast Clicking 'Next Step' interrupts the animation.
-  </summary>
-  #### New View Transitions Interrupt Existing Ones
-  The disks float away from their peg, but if you click fast, the second click
-  makes them jump directly to their target peg. This is how view transitions
-  work. Interrupting an ongoing view transition let the current animation jump
-  to its end state. The next animation start from there.
-</details>
+## There Can Be Only One
 
-<details>
-<summary>In chaining mode, animations are uninterruptible.</summary>
-When you select 'chaining' from the View Transitions dropdown, active animations are not interrupted by clicking "Next Step". Rapid clicks will combine several steps into a single animation. In such a combined animation multiple disks will move at once.
+In `normal` mode, the disks float away from their peg. But if you click quickly and manage to hit the button while a disk is still moving to its destination, the second click causes the disk to jump directly to the target peg.
 
-Yes, that does look like a rules violation. If it is any comfort, it is just the visualization, the model behind the scenes still plays all the moves one by one ;-)
+That's just how view transitions work: starting a new one [interrupts any active view transition](/basics/javascript/#startviewtransition). When a view transition is interrupted, the current animation snaps to its end state, and the next one begins from there.
 
-#### Combining Multiple Updates
-Automatically chaining multiple calls to `startViewTransitions()` into a single animation goes beyond what the View Transition API provides out of the box. You will need supporting JavaScript to make this work. For example, the [`mayStartViewTransition` from `@vtbag/utensil-drawer`](/tools/utensil-drawer/#maystartviewtransition) can help enable automatic chaining.
+If you have multiple view transitions that should run in sequence, make sure they don't start too early. Otherwise, they will interrupt each other.
 
-```js
-const transition = mayStartViewTransition(
-  { update, types },
-  {
-    collisionBehavior: "chaining",
-    speedUpWhenChained: 1.33,
-  }
-);
-```
-The "chaining" behavior of the Bag's `mayStartViewTransition` function works like this: 
-- If there is no active view transition, it starts one.
-- If there is an active view transition, and *the old images have not been captured yet*, it injects the update function and types into the current view transition.  
-- If this call happens during an active view transition *after the old images have been captured*, it queues the call.  All queued calls run in a combined view transitions immediately  after the current one ends. 
+### You can Chain View Transitions
 
-Also, clicking during an animation speeds it up by 33% each time.
+Let's for a moment focus on the theme toggle to see how chaining works.
 
-</details>
-
-<details>
-<summary>There is also a `...with vectors` chaining mode that adds curved trajectories.</summary>
-If a view transition group contains an image pair with both an old and a new image, the View Transition API creates an animation that moves the group in a straight line from the position and size of the named element in the old DOM to the position and size of the identically named element in the new DOM.
-
-
-The group animation is a standard CSS animation, and you can inspect or override every aspect of it, including the generated keyframes.
-
-While the group moves, the image pair inside it moves as well. More precisely: the entire image pair moves with the group, and the two images inside move with the pair.
-
-Because the API does not generate animations for the image pair itself, there is no conflict with user-defined animations. This makes it simpler to leave the group animation as-is and instead animate the image pair to create combined effects.
-
-#### Animating Image-Pairs
-For example, if a group moves from left to right, you can create the illusion of a curved path by adding a vertical (y-axis) animation to its image pair, like this:
-
-```css
-::view-transition-image-pair {
-  animation-name: y-push;
-}
-@keyframes y-push {
-  50% {
-    transform: translateY(-50px);
-  }
-}
-```
-If a group moves from top to bottom, you can create an arc-like effect by animating its image pair horizontally
-
-#### Using Coordinates of the Group Animation 
-
-Want higher arcs for longer moves? Then you need to know how far and in which direction the group travels. Imagine if CSS gave you that vector directly—from start to finish.
-
-This is accomplished with [the Bag's `setVector` script](/tools/utensil-drawer/#morphing-vector).
-
-In the following block, `transition` refers to the current view transition. By attaching to its `ready` promise, we calculate the vectors right after all pseudo-elements have been set up.
-
-```js
-if (mode === "vectors") {
-  transition.ready.then(
-    () => { setVectors([{ pattern: "disk-.", props: ["x", "y"] }], "pseudo") },
-    (e) => { console.error("View transition failed:", e) }
-  );
-}
-```
-
-Here is the goal with the vector data: On landscape viewports, disks drop straight down onto and off of their pegs. On portrait viewports, disks fly down on the left and rise up on the right.
-
-The lift and shift animation uses the vectors to initialize its keyframes.
-
-```css
-@keyframes lift-and-shift {
-  0%, 100% { transform: translateY(0) }
-  15%, 85% { transform: translateY(calc(
-        -1 * min(170px, abs(var(--vtbag-vector-from-x, 0) - var(--vtbag-vector-to-x, 0)))
-      ))}
-}
-@media (orientation: portrait) {
-  @keyframes lift-and-shift {
-    0%, 100% { transform: translateX(0) }
-    50% { transform: translateX(calc(
-      (var(--vtbag-vector-from-y, 0) - var(--vtbag-vector-to-y, 0)) / 3)
-      )}}
-}
-```
-
-Custom-properties will be read once when the keyframes are initiated. Later changes to their values won't
-have an effect on the keyframes.
-
-</details>
-
-<details>
-<summary>You can toggle the light/dark theme.</summary>
-Of course, theme switching in this demo is also animated using view transitions. At its core, it is one of the simplest things you can do with same page view transitions:
+Of course, theme switching in this demo is also animated using view transitions. At its core, animating theme switching is one of the simplest things you can do with same page view transitions. Just switch the theme inside the update callback of the call to `startViewTransition()`. 
 
 ```js
 const style = document.documentElement.style;
@@ -235,7 +148,7 @@ document.startViewTransition(
 );
 ```
 
-Dive into [this example](https://events-3bg.pages.dev/jotter/same-doc/#theme-switcher) and click the green orb for some inspiration on how you could animate the old and new images of the viewport!
+Dive into [this vtbot example](https://events-3bg.pages.dev/jotter/same-doc/#theme-switcher) and click the green orb for some inspiration on how you could animate the old and new images of the viewport!
 
 To make landscape-oriented displays feel a bit more dynamic, let us add two extra view transitions around the theme switch. The first lifts the disks off their pegs and shifts the board and <kbd>Reset</kbd> button lower on the page to make room. The second puts everything back in place after the theme has changed.
 
@@ -251,18 +164,136 @@ if (landscape) {
 }
 ```
 
-The key here is to await the finished promise of each transition before starting the next one. This kind of chaining works well with the View Transition API. Unlike the automatic integration of overlapping transitions, chaining consecutive transitions does not require any extra JavaScript support.
+The key here is to await the finished promise of each transition before starting the next one. You will also often see `transition.finished.then(()=>doSomething())`, which is just another way to write the same thing.
 
-</details>
+### Merging Multiple View Transitions
 
-### Less Obvious Features
+Back to moving the disks in our demo: To avoid fast clicks interrupting our disk animations, we can check whether a view transition is already running and delay the next one until the current one finishes. The View Transition API does not expose the current view transition[^current], but if we control all calls to `startViewTransition()` on our page, we can keep track of them ourselves.
 
-<details><summary>
-The <kbd>Next Step</kbd> button remains interactive even while animations are running.
-</summary>
-Normally, view transitions block clicks during animations. But we have already seen, this demo behaves differently. After all we could cancel or chain ongoing animations. Curious how it works? Check out the [details on how to keep interactivity](/tips/interactivity/#how-to-retain-interactivity) during view transitions.
+[^current]: The Bag's Utensil-Drawer provides a `getCurrentViewTransition()` function that knows about the last view transition returned by `mayStartViewTransition()`.
 
-In this demo we opt-out of the default `root` pseudo-element and we make clicks go right through the `::view-transition` pseudo-element.
+With multiple rapid clicks, our queue of not yet started view transitions can pile up fast. So one question is: can we combine the queued calls into a single view transition? And the answer it "Yes": by chaining the individual update callbacks into one combined callback that runs them all.
+
+When you select `chaining` from the View Transitions dropdown, active animations are no longer interrupted when you click <kbd>Next Step</kbd>. Rapid clicks will merge multiple steps into a single animation. In that combined animation, several disks may move at once.
+
+Yes, that does look like a rules violation. If it is any comfort, it is just the visualization, the model behind the scenes still plays all the moves one by one ;-)
+
+### Chaining with mayStartViewTransition
+
+Automatically merging multiple calls to `startViewTransitions()` into a single transition goes beyond what the View Transition API provides out of the box. You will need supporting JavaScript to make this work. For example, the [`mayStartViewTransition` from `@vtbag/utensil-drawer`](/tools/utensil-drawer/#maystartviewtransition) provides this kind of support.
+
+```js
+const transition = mayStartViewTransition(
+  { update, types },
+  {
+    collisionBehavior: "chaining",
+    speedUpWhenChained: 1.33,
+  }
+);
+```
+
+The `chaining` behavior of `mayStartViewTransition` function works like this:
+
+- If there is no active view transition, it starts one.
+- If there is an active view transition, and _the old images have not been captured yet_, it injects the update function and types into the current view transition.
+- If this call happens during an active view transition _after the old images have been captured_, it queues the call. All queued calls run in a combined view transitions immediately after the current one ends.
+
+Also, due to the `speedUpWhenChained` values used in the example above, clicking during an animation speeds it up by 33% each time.
+
+## Curved Group Animations
+
+If a view transition group contains an image pair with both an old and a new image, the View Transition API [creates an animation](/basics/default-animations/#morphing-animation-details) that moves the group in a straight line from the position and size of the named element in the old DOM to the position and size of the identically named element in the new DOM.
+
+The group animation dynamically created by the View Transition API is just a regular CSS animation.
+You can inspect or override every aspect of it, including the generated keyframes.
+
+While the group moves, the images inside it move as well. More precisely: the image pair moves with the group, and the two images inside move with the pair. So instead of manipulating the group animation,  you can consider animating the image-pair instead.
+
+Because the API does not generate animations for the image pair itself, there are no conflict when adding user-defined animations to the image pair. This makes it simpler to leave the group animation as-is and instead animate the image pair to create combined effects.
+
+For example, if a group moves from left to right, you can create the illusion of a curved path by adding a vertical (y-axis) animation to its image pair, like this:
+
+```css
+::view-transition-image-pair {
+  animation-name: y-push;
+}
+@keyframes y-push {
+  50% {
+    transform: translateY(-50px);
+  }
+}
+```
+
+If a group moves from top to bottom, you can create an arc-like effect by animating its image pair horizontally
+
+### Derived Curves
+
+Want higher arcs for longer moves? Then you need to know how far and in which direction the group travels. Imagine if CSS directly gave you that vector from start to finish.
+
+This can be accomplished with [the Bag's `setVectors` script](/tools/utensil-drawer/#morphing-vector).
+
+In the following block, `transition` refers to the current view transition. By attaching to its `ready` promise, we calculate the vectors right after all pseudo-elements have been set up.
+
+```js
+if (mode === "vectors") {
+  transition.ready.then(
+    () => {
+      setVectors([{ pattern: "disk-.", props: ["x", "y"] }], "pseudo");
+    },
+    (e) => {
+      console.error("View transition failed:", e);
+    }
+  );
+}
+```
+The arguments to the `setVectors()` function are used to control which values to include and where to store the result. For details, please see the script's [configuration section](/tools/utensil-drawer/#configuration-1). 
+
+Here is what we want to achieve with the vector data: On landscape viewports, disks drop straight down onto and off of their pegs. On portrait viewports, disks fly down on the left and rise up on the right.
+
+The lift and shift animation uses the vectors to initialize its keyframes.
+
+```css
+@keyframes lift-and-shift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  15%,
+  85% {
+    transform: translateY(calc(-1 * min(170px, 
+      abs(var(--vtbag-vector-from-x, 0) - var(--vtbag-vector-to-x, 0))
+    )));
+  }
+}
+@media (orientation: portrait) {
+  @keyframes lift-and-shift {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(
+        calc((var(--vtbag-vector-from-y, 0) - var(--vtbag-vector-to-y, 0)) / 3)
+      );
+    }
+  }
+}
+```
+
+Custom-properties will be read once when the keyframes are initiated. Later changes to their values won't
+have an effect on the keyframes.
+
+## The Less Obvious Features
+
+Now that we touched the more obvious features of this demo, I'd like to point out and share some patterns that might not be that obvious. This is mainly about small solutions for common issues. But there might also be some less obvious things you might find interesting. Lets start with making the page interactive during view transitions.
+
+### Keep Interactivity During Animations
+
+Normally, the View Transitions API blocks all clicks during animations. That is because any clicks in the viewport during the transition hit one of the pseudo-elements the API creates, and those ignore the clicks. These pseudo-elements also never show up as the target of a click event. So in the default setup, clicks basically just vanish.
+
+But as you have seen, this demo behaves differently. You can cancel or chain view transitions by clicking the <kbd>NextStep</kbd> button while an animation is still running. Curious how that works? For a deeper dive, check out the [details on how to keep interactivity](/tips/interactivity/#how-to-retain-interactivity) during view transitions.
+
+In this demo we opt-out of the default `root` pseudo-element and let clicks pass through the `::view-transition` pseudo-element.
 
 ```css
 :root {
@@ -273,119 +304,497 @@ In this demo we opt-out of the default `root` pseudo-element and we make clicks 
 }
 ```
 
-Otherwise, both elements would cover the entire viewport during view transitions and block all clicks.
+Now clicks can reach elements in the regular DOM behind the view transition layer, as long as those elements do not have a view transition name. Any element with a view transition name will always [ignore clicks during the animation phase](https://www.w3.org/TR/css-view-transitions-1/#:~:text=do%20not%20respond%20to%20hit%2Dtesting), even if the click makes it through and hits the element.
 
-</details>
-<details>
-<summary>A Green _and_ Blue progress bar? </summary>
+### When New Images Obscure the Old Ones
+
 In chaining mode, the progress bar shows two sections: the completed steps are shown in green. The blue head shows how many view transitions have been chained. They will automatically be combined into a new transition that starts right after the current one. The HTML for the progress bar is simply two nested diffs: one for the entire bar and one for the progress within.
+
 ```html
-<div class="progress-bar">
+<div id="progress-bar">
   <div id="progressFill"></div>
 </div>
 ```
-Clicking the <kbd>Next Step</kbd> button quickly increases the size of the blue head. If you are using a keyboard, focus the <kbd>Next Step</kbd> button and hold down Enter to trigger auto-repeat and boost the effect.
 
+Clicking the <kbd>Next Step</kbd> button quickly increases the size of the blue head. If you are using a keyboard, focus the <kbd>Next Step</kbd> button and hold down the <kbd>Enter</kbd> key to trigger auto-repeat and boost the effect.
 
+You might have guessed it: the larger blue bar is the new image, while the shorter green section corresponds to the old image of the `#progressFill` `<div>`.
 
-You might have guessed it: the larger blue bar is the new image, while the shorter green section corresponds to the old image of the `.progressfill` `<div>`.
+In an image pair, the View Transition API places the [new image above the old](/basics/pseudos/#rendering-pseudo-elements) image. This works fine with the default cross-fade animation where the new image fades in from `opacity: 0` while the old image fades out. But in our case, where we cancel the cross-fade animation, the longer new bar would obscure the shorter old bar.
 
+You can [use z-Index](/basics/pseudos/#reordering-pseudo-elements-using-z-index) on the old image to change the rendering order and make the old bar visible in front of the new bar. Just to show that there is another way, this demo uses a different approach: It applies the `soft-light` mix-blend mode, allowing both images to remain visible at the same time.
 
-#### New Image Obscures Old Image
-In an image pair, the View Transition API places new image above the old image. So typically the longer new bar would obscure the shorter old bar. You can [use z-Index](/basics/pseudos/#reordering-pseudo-elements-using-z-index) on the old image to make the old bar visible in front of the old bar. Just to show that there is another way, this demo uses a different approach: It applies a mix-blend mode that lets both images remain visible at the same time..
+```css
+::view-transition-old(bar),
+::view-transition-new(bar) {
+  mix-blend-mode: soft-light;
+  animation-name: none;
+}
+```
 
-    ```css
-    ::view-transition-old(bar),
-    ::view-transition-new(bar) {
-      animation-name: none;
-      mix-blend-mode: soft-light;
-    }
-    ```
-    Here, setting `animation-name: none` switches off all default animations for the bar images. So there is no cross-fade and both, the old and the new image, are visible throughout the entire animation phase.
+Here, setting `animation-name: none` switches off all default animations for the bar images. So there is no cross-fade and both, the old and the new image, are visible throughout the entire animation phase.
 
-#### Changing Colors of Screenshots?
+### Changing Colors of Screenshots?
+
 The bar is green. How comes that its new image is blue?
 After all it is a bitmap image and we know that [we can not change the content](/basics/pseudos/#old-and-new-image-pseudos) of the pseudo-elements!?
 
-    Almost right. We can not change the content of `::view-transition-old` images. But the `::view-transition-new` images are life, replaced images of their underlying DOM-elements.
+Almost right. We can not change the content of `::view-transition-old` images. But the `::view-transition-new` images are life, replaced images of their underlying DOM-elements.
+So, yes, we can't paint the `::view-transition-new(bar)` blue during a view transition, but we can switch the color of the `#progressFill` `<div>` to blue.
 
-    So, yes, we can't paint the `::view-transition-new(bar)` blue during a view transition, but we can switch the color of the `#progressFill` `div` to blue.
+The following code block provides additional details, particularly the process of switching the background color first to blue and then back to green. We set the background to blue within the update callback, i.e. after capturing the old snapshots but before capturing the new images. Then, we revert it to green once all view transition animations have completed.
 
-    The following code block provides additional details, particularly the process of switching the background color first to blue and then back to green. We set the background to blue within the update callback, i.e. after capturing the old snapshots but before capturing the new images. Then, we revert it to green once all view transition animations have completed.
+```js
+document
+  .startViewTransition(() => {
+    progressFill.style.width = `${(current / total) * 100}%`;
+    progressFill.style.backgroundColor = `hsl(212, 60.20%, 54.70%)`;
+  })
+  .finished.then(
+    () => (progressFill.style.backgroundColor = `hsl(115, 74.50%, 41.60%)`)
+  );
+```
 
-    ```js
-    document.startViewTransition(() => {
-        progressFill.style.width = `${(current / total) * 100}%`;
-        progressFill.style.backgroundColor = `hsl(212, 60.20%, 54.70%)`;
-      }
-    ).finished.then(
-      () => (progressFill.style.backgroundColor = `hsl(115, 74.50%, 41.60%)`)
-    );
-    ```
-  The overall result is that the new image appears blue, while the old image remains green. After the view transition, the progress bar returns to its usual green color.
-</details>
+During the animation, you effectively see the `#progressFill` `<div>` and any change you make to it. This is a very powerful trick that can be [useful in many situations](https://www.bram.us/2025/05/15/view-transitions-border-radius-revisited/#a-simpler-approach).
 
-<details>
-<summary>The number hovering above the  step counter tells how many steps have been animated yet.</summary>
+The overall result is that the new image appears blue, while the old image remains green. After the view transition, the progress bar returns to its usual green color.
+
+### CSS Transitions are the Simpler Animations
+
+The number hovering above the step counter tells how many steps have been animated yet. If the current step counter shows a larger number, there are some steps chained for an animation to come.
 It's very similar to the progress bar, both in what it does and how it works. The number that slides up and hovers above the counter is the immutable old image while the new image mirrors the underlying counter that changes with each click.
 
-What makes this one special is that it uses a simple CSS transition, not a CSS animation. The effect does not rely on any keyframes:
+What makes this one special is that it uses a simple CSS transition instead of a CSS animation, no keyframes involved. It is a good reminder that you can bring all your animation skills to the table. Even though most examples tend to use CSS animations, the pseudo-elements created by the View Transition API can be styled any way you like.
 
 ```css
 :active-view-transition-type(chaining) {
+  ...
   &::view-transition-new(step) {
     animation-name: none;
     height: 100%;
     width: auto;
   }
-  &::view-transition-old(step) {
-    animation-name: none;
-    height: 100%;
-    width: auto;
+ &::view-transition-old(step) {
     opacity: 0.66;
     transform: translateY(-1rem);
     transition: transform 0.5s;
+    @starting-style {
+      transform: translateY(0);
+    }
+  }
+  ...
+}
+```
+
+As with the progress bar, setting `animation-name` to `none` ensures that the old and the new image are not cross-fading but are both visible throughout the entire view transition. As soon as the `::view-transition-old(step)` element is placed into the view transition layer, the transition activates, causing it to begin sliding upward from its starting state for 0.5 seconds.
+
+The `height: 100%; width: auto;` is an old acquaintance we already know from the [Trip to the Text Morphology Clinic](/fwvt/healing/#fixing-the-morph-animation-for-same-texts). It ensures that aspect-ratio change due to added digits doesn't distort the images.
+
+### View Transition Composition
+
+Wait, how often have you called `startViewTransition` now in parallel?
+
+Let's count: 
+1. rendering the disks on their pegs 
+1. updating progress bar and counter 
+1. showing the success message after the last move
+1. all of the above during a theme change[^egg].
+
+So that makes four.
+
+[^egg]: Set the mode to `...with vectors` and changing the theme will automatically click the <kbd>Next Step</kbd> button 3 tines, merging the disk moves, progress updates, and maybe even the appearance of the success message into the theme toggle animation. 
+
+<div style="width: fit-content; margin: 0 auto">
+<Media>
+```d2 width=450 sketch title="Composed View Transitions"
+grid-gap: 0
+grid-columns: 1
+Header: {
+  grid-gap: 0
+  grid-columns: 2
+  Title.width: 350
+  Theme.width: 100
+  Theme.style.fill: "#797"
+}
+Controls:  {
+  grid-gap: 0
+  grid-columns: 2
+  ProgressBar.width: 350
+  ProgressBar.style.fill: "#797"
+  NextStep.width: 100
+}
+Board: {
+  grid-columns: 3
+  Peg1
+  Peg2
+  Peg3
+  style.fill: "#797"
+}
+Reset / Message.style.fill: "#797"
+...@../../../common
+
+````
+<p slot="caption">Multiple independent components calling `startViewTransition()` simultaneously.</p>
+</Media>
+</div>
+
+This is how you would like to do it as a software engineer. Have your components, you use view transitions where appropriate, and you know that everything is scoped to your components. Good news: [scoped view transitions](https://vtbag.dev/basics/javascript/#scoped-view-transitions) are on there way.
+
+In the meantime (and when you want to automatically synchronize several scoped view transitions on the same element), it would be nice if several calls to `startViewTransition()` would get integrated automatically.
+
+This is similar but not identical to the merging of [queued view transitions](/fwvt/playing/#chaining-with-maystartviewtransition). The main difference is, that we now want calls to auto integrate directly without being queued first.
+
+But how should this work? A call to `startViewTransition()` will immediately return a new `ViewTransition` object and the next call will automatically destroy it!?
+
+The key observation here is that not only the execution of the update callback runs asynchronously, but also capturing the old images does not happen immediately. 
+
+The Utensil-Drawer's `mayStartViewTransition` function exploits this fact to offer auto-integration support: You can [call `mayStartViewTransition()` several times](/tools/utensil-drawer/#automatic-integration) before the old images are captured. The function automatically merges all the calls into a single view transition that animates all gathered updates at once.
+
+## Miscellaneous
+
+This demo hides plenty of small perks for you to uncover in the code. Here is a guide to help you find them.
+
+### Embrace Inheritance
+
+Most view transition examples tell you to use the `animation` shorthand property when defining animations like this:
+
+```css del={2}
+::view-transition-image-pair(.disk) {
+  animation: 0.5s both lift-and-shift;
+}
+````
+
+When you use the shorthand property, you have to define a duration, and likely explicitly specify `both` for the fill mode. Otherwise, you get `0s` and `none` as defaults. You end up ignoring the well-crafted inheritance rules in the spec for `animation-duration`, `animation-delay`, and `animation-fill-mode`. Normally, these cascade down from the group to the image-pair, and then to the old and new image _"...so that by default, the animation timing set on a ::view-transition-group() will dictate the animation timing of all its descendants"_.
+
+That is why the `view-transition.css` file of this demo does not use the `animation` shorthand. Instead, it defines the individual `animation-*` properties separately:
+
+```css ins={2,3}
+::view-transition-image-pair(.disk) {
+  animation-timing-function: inherit;
+  animation-name: lift-and-shift;
+}
+```
+
+Bonus perk: As a result, there is just one rule to change the duration of all animations in this demo:
+
+```css {2}
+::view-transition-group(*) {
+  animation-duration: 1s;
+}
+```
+
+
+
+<a id="rotate"></a>But doesn't the demo use animations with different durations? Yes, it does. If you switch the view transition mode from or to `...with vectors`, you will notice that the select element finishes its animation while the game board is still moving. I made  this happen by using only the first 50% of the keyframes definition for the select element's animation. 
+
+```css
+@keyframes rotate-out {
+  0%  { transform: rotateY(0) }
+  25% { transform: rotateY(-90deg) }
+  50% { transform: rotateY(-180deg) }
+}
+@keyframes rotate-in {
+  0%  { transform: rotateY(180deg); z-index: -1 }
+  25% { transform: rotateY(90deg); z-index: 0 }
+  50% { transform: rotateY(0deg); z-index: 1 }
+}
+```
+This approach lets you to define relative speeds and control them all with a single knob.    
+
+### For Minimalists: No Extras, Just the Essential
+
+The View Transition API gives you pseudo-elements and default animations, and all the freedom to customize them to your liking. Often this is more than we need.
+
+Morph animations, where&hellip;
+- old and new images have the same geometry, or 
+- cross-fade animations between two identical images
+
+&hellip;use up resources, but do not have a visual effect. And if the old image is completely hidden behind the new image during the entire animation phase, why should we render it? And if an element does not play an independent role in an animation, why should we give it a view transition name at all?
+
+This is less about performance optimizations and more about building a clean, maintainable solution, where each decision is made deliberately.
+
+These examples should help make the idea more concrete:
+
+```css
+/* Only define view transition names for elements that should participate */
+active-view-transition-type(progress) {
+  /* Participants: current step, progress bar */
+  #currentStep  { view-transition-name: step }
+  #progress-bar { view-transition-name: bar  }
+  ...
+}
+```
+With the rules above, we animate both the current step counter and the progress bar during the progress animation.
+
+While the disks are moving, only the group animation matters. So we cancel the fade-in and fade-out on the old and new images. In fact, we remove the old image entirely, since it would not be visible behind the new one anyway. This applies to every disk, so we use the .disk view transition class and avoid having to write a separate rule for each disk.
+
+```css
+:active-view-transition-type(move) {
+  ...
+  /* Reducing animations: we won't have entry or exit animations for the disks */
+  &::view-transition-old(.disk),
+  &::view-transition-new(.disk) {
+    animation-name: none;
+  }
+  /* We do not even need old images. */
+  &::view-transition-old(.disk) {
+    display: none;
+  }
+  ...
+}
+```
+
+If the active view transition type caught your interest, this way of guarding use case–specific view transition rules is explained in more detail [in a later section](/fwvt/playing/#scoping-with-active-types). 
+
+### Staggered Animations
+
+If you wondered why this demo doesn't use `view-transition-name: auto` or `view-transition-name: match-element`, here is the answer: 
+
+[Auto-generated](/basics/pseudos/#auto-generated-names-auto-and-match-element) view transition names are fine if you do not need to address individual elements. You can still address _all_ elements using view transition classes. But because the auto-assigned name is the APIs little secret, you do not know it and thus can't use it to address a particular element.
+
+For staggered animations we assign individual delays to the disks and for this we need to know the name of the pseudo-element. If you were counting on `sibling-index()` to make things easier in combination with the `.disk` view transition class, sorry to disappoint: tree-counting functions only work on real DOM elements, not on pseudo-elements. 
+
+```css
+::view-transition-group(disk-1) {
+  animation-delay: 0ms;
+}
+::view-transition-group(disk-2) {
+  animation-delay: 20ms;
+}
+::view-transition-group(disk-3) {
+  animation-delay: 40ms;
+}
+::view-transition-group(disk-4) {
+  animation-delay: 60ms;
+}
+::view-transition-group(disk-5) {
+  animation-delay: 80ms;
+}
+::view-transition-group(disk-6) {
+  animation-delay: 100ms;
+}
+```
+
+The effect can best be seen when you reset the game after completing it. The disks return to their initial position, the smaller ones earlier, the larger ones just a bit later.  
+
+A similar effect can be seen when toggling the theme on a portrait mode viewport while in `normal` or `chaining` mode.
+
+
+### Non-Unique View Transition Names?
+One thing you will be told from the beginning when doing view transitions is that the `view-transitions-names` must be unique on a page or otherwise view transitions will error and you will get no animations at all.
+
+So how about this?
+```css
+:active-view-transition-type(reset) {
+  #reset,
+  #playAgain {
+    view-transition-name: reset;
+  }
+  ...
+}
+```
+
+The demo has two message panels: one shows the <kbd>Reset</kbd> button, the other shows the completion message with the <kbd>Play again</kbd> button. The CSS above assigns the same view transition name to both buttons. That is fine because the two panels are [never shown at the same time](/basics/pseudos/#view-transition-names). Throughout the game, you only see the <kbd>Reset</kbd> button. Only after the last move does the <kbd>Play again</kbd> button appear.
+
+
+Having the same name in the DOM before and after the update is key for the View Transition API to figure out which elements to animate as a pair. The clever part is that the API does not morph elements themselves, but snapshots of them. That means the old and new elements do not have to be the same. They can be entirely different things.
+
+At the end of the game, and again when you press <kbd>Play again</kbd>, the two panels swap places by toggling their display style. This happens inside the update callback passed to `startViewTransition()`. The result is a smooth morph between the two buttons.
+
+
+### Disabled Links and Buttons
+In [a previous section](#keep-interactivity-during-animations) we saw how to keep parts of the page interactive during view transitions. And we also learned that elements with a view transition name and their children are not clickable during the animations. Maybe we should style them as being disabled? Here is the styling for the buttons from the previous section.
+
+```css
+:active-view-transition-type(reset) {
+  ...
+  #reset,
+  #playAgain {
+    background-color: var(--color-border);
+    cursor: not-allowed;
+  }
+  ...
+}
+```
+These style are guarded with a view transition type. Thus they will just apply during the view transition and will be automatically removed once all animations end. 
+
+### Scoping with Active Types
+
+Noticed that rules in this demo are often guarded with an active view transition type?
+```css
+:active-view-transition-type(some-type) {
+  ...
+}
+```
+This is a pattern I really like as it allows for grouping your view transition styles by use cases.
+
+The rule guarded with `:active-view-transition-type(some-type) {}` are active while the type `some-type` is included in the view transition's types. 
+
+By passing the type to the call of `startViewTransition` it is active throughout the entire view transition.
+```js
+startViewTransition({update, types: ["some-type"]});
+```
+You can use this to guard animations of the pseuo-elements, but you can even use it to _define_ the pseudo-elements by setting view transition names nested inside the type guarded rule. And of course you can use this pattern to style regular DOM elements _just for the time_ a certain view transition is active. 
+
+For [more on this pattern](/tips/css/#scoping-with-types), check the CSS Tips & Tricks section.
+
+### Changing Group Stacking Order 
+With the View Transition API, the [stacking order](/basics/pseudos/#rendering-pseudo-elements) of the `::view-transition-group` pseudo-elements corresponds to the paint order of the named elements on the old page, then followed by those only on the new page, also in paint order.  
+
+If needed, you can change this order with the `z-index` property, either statically or dynamically through an animation.
+
+```css
+:active-view-transition-type(theme-toggle) {
+  ...
+  /* push the root group into the background */
+  &::view-transition-group(root) {
+    z-index: -2;
+  }
+  /* move the board to the foreground */
+  &::view-transition-group(board) {
+    animation-name: popup;
+  }
+  ...
+}
+@keyframes popup {
+  33%,
+  80% {
+    z-index: 1;
   }
 }
 ```
 
-As with the progress bar, setting `animation-name` to `none` ensures that both the old and the new image are visible throughout the entire view transition. As soon as the `::view-transition-old(step)` element is placed into the view transition layer, the transition activates, causing it to begin sliding upward for 0.5 seconds.
+### 3D Animations
+If you want to use 3D effects in you animations, you should use a `perspective()` transform or set the `perspective` CSS property on the parent of the pseudo-element you want to animate. 
 
-The `height: 100%; width: auto;` is an old acquaintance we already know from the [Trip to the Text Morphology Clinic](/fwvt/healing/#fixing-the-morph-animation-for-same-texts). It ensures that aspect-ratio change due to added digits doesn't distort the images.
-
-</details>
-
-<details>
-<summary>Wait, how often have you called `startViewTransition` now in parallel?</summary>
-Let's count: a) rendering the disks on their pegs b) updating progress bar and counter c) showing the success message with the last move d) changing the theme[^egg]. So that makes four.
-
-[^egg]: Set the mode to `chaining` and changing the theme will automatically click the <kbd>Next Step</kbd> button 3 tines.
-
-Yes, that is a problem, as repeated calls to `startViewTransition()` cancel the ones made before.
-We already saw that in chaining mode, steps happening during an animation will be queued.
-
-</details>
-
-If the current step counter shows a larger number, there are some steps chained for an
-animation to come
-
-        - When you click the Next Step button, independent view transitions are started for moving
-          the disks, and updating progress bar & counters. Normally, directly following starts would kill earlier
-          transitions. Not here. Here they are automatically merged into a single animation.
-        - The <code>&hellip;with vectors</code> mode adds orthogonal movement to the disk animation. For landscape
-          oriented viewports, disks leave and enter their pegs vertically. For portrait oriented viewports disks fly
-          down on the left and up on the right.
-          - Changing the color theme advances three steps in the puzzle
-          - During reset you can see that the disks have a small delay. It looks as if a larger disk has ome head-start over a smaller one
-
-<style>{`
-main details {
-  border-left: 0pt !important;
+```css
+:active-view-transition-type(theme-toggle) {
+  ...
+  &::view-transition-image-pair(board) {
+    perspective: 50cm;
+  }
+  /* rotate the board out and in again */
+  &::view-transition-old(board) { animation-name: turn-out }
+  &::view-transition-new(board) { animation-name: turn-in  }
 }
-main details::details-content {
-  transform: translateX(30px)
+```
+The parent for the old and new images is the image pair of that group!  
+Setting perspective in the board's parent in the DOM does not help for 3D view transitions. 
+
+### Animated Select Element 
+
+We close this episode with a deep dive into the view transition animations applied to the selector for the view transition mode:
+
+<div style="width: 200px; margin-inline:auto">
+View Transitions: <select style="field-sizing: content"><option value="none">none</option><option value="normal">normal</option></select>
+</div>
+
+To kick off view transitions, we add a change listener to the select element and call `startViewTransition()` to do&hellip;what?  Turns out the select element already shows the new value by the time the listener runs, so there is nothing left to animate.
+
+#### Animating to the Current State 
+
+A quick fix is to&hellip; 
+<Steps>
+1. save the previous state of the select before it changes, 
+1. undo the change so the API can capture the correct old image, and then 
+1. restore the value so we can morph to the new state.
+</Steps>
+Here is the code that manipulates the value of the select element before and during the view transition accordingly.
+
+```js
+let targetMode = viewTransitions.value;
+viewTransitions.addEventListener("change", (e) => {
+  const old = targetMode;
+  targetMode = e.target.value;
+  e.target.value = old;
+  const transition = mayStartViewTransition(
+    { update: () => { e.target.value = targetMode }, types }
+  );
+});
+``` 
+With a CSS rule that sets the view transition name for the select element we get the default cross-fade effect when changing the view transition mode.
+```css
+active-view-transition-type(mode-toggle) {
+  select {
+    view-transition-name: select;
+  }
 }
-main summary {
-  margin-bottom: 0!important;
+```
+#### Separating Text from Outline
+
+More ambitious effects that animate the text of the select element independently from the focus outline require a bit of preparation. Typically, if you want different animations for an element and its border, you add a child element and push the content into it. That gives you two elements to work with: the outer one holds the border, and the inner one holds the content without a border. You can now assign separate view transition names to each.
+
+With `<select>` elements, though, the visible text comes from the nested option elements, which unfortunately cannot be captured as view transition images. So instead of pushing the content down, it is better to wrap the select element in a span and move the focus outline from the select up to that span.
+
+Here are the HTML and the CSS to achieve this. 
+
+```html
+<span id="selectFrame">
+  <select id="viewTransitions">
+    <option value="none">none</option>
+    <option value="normal">normal</option>
+    <option value="chaining">chaining</option>
+    <option value="vectors">&hellip;with vectors&nbsp;&nbsp;</option>
+  </select>
+</span>
+<style>
+  #viewTransitions {
+    border-radius: 8px;
+    outline: none;
+  }
+  #selectFrame {
+    border-radius: 8px;
+    &:has(select:focus) {
+      outline: solid 1px;
+    }
+  }
+</style>
+```
+Now we can have two separate view transition groups, `selectFrame` with the focus outline and `select` with the text but no outline. Next we alter the order of those two groups using `z-index` to make the `selectFrame` group appear in from of the `select` group.   
+```css
+active-view-transition-type(mode-toggle) {
+  /* additional participants: select, game board, completion message, reset buttons */
+  #viewTransitions {
+    view-transition-name: select;
+  }
+  #selectFrame {
+    view-transition-name: selectFrame;
+  }
+  &::view-transition-group(selectFrame) {
+    z-index: 1;
+  }
 }
-`}</style>
+```
+
+
+With all that in place, we can go wild and and animate the text of the select element independent of the focus outline. As the focus outline belongs to its own view transition group, it stays in front and does not move while the text of the select element slides behind it.
+
+#### Let the Options Swirl!
+To create a [3D effect](#3d-animations) on the old and new image, we set the perspective on their shared parent, the image pair. That is also where we clip the images. 
+
+The transform origin is half text width right of (0,0,0) and the same distance to the back. While you can use `center` for width and height, you need to specify an absolute value for the depth. For his example, it would by about 75px. Or -0.5 * the width we get from the [setVectors()](#derived-curves) function, which we call with `props: ["width"]`.
+
+```css
+active-view-transition-type(mode-toggle) {
+  &::view-transition-image-pair(select) {
+    overflow: clip;
+    perspective: 50cm;
+  }
+  &::view-transition-old(select) {
+    transform-origin: center center calc(var(--vtbag-vector-from-width) * -0.5);
+    animation-name: rotate-out;
+    animation-timing-function: ease-in-out;
+  }
+  &::view-transition-new(select) {
+    transform-origin: center center calc(var(--vtbag-vector-from-width) * -0.5);
+    animation-name: rotate-in;
+    animation-timing-function: ease-in-out;
+  }
+}
+```
+
+The rotate animations in this example make the text of the select element spin in circles. You already saw their definition at the end of the [inheritance section](#rotate). Curious to see what you come up with!
+
+## That’s All, Folks!
+
+Hope you enjoyed this episode of Fun With View Transitions! Happy if you got some ideas and inspiration out of it and always happy to discuss view transition stuff on [Bluesky](https://bsky.app/profile/vtbag.dev) and [Discord](https://discord.gg/jt5STpw2).

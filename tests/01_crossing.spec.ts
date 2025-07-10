@@ -87,6 +87,7 @@ test.describe("vtbot", () => {
 
     expect(await page.locator("#p").getAttribute("style")).toBe("color: blue");
     await page.click('text=goto z');
+    await new Promise(r => setTimeout(r, 100)); 
     expect(await page.locator("#p").getAttribute("style")).toBe("color: blue;");
   });
 
@@ -95,6 +96,7 @@ test.describe("vtbot", () => {
 
     expect(await page.locator("#p").getAttribute("style")).toBe("color: blue");
     await page.click('text=goto z2');
+    await new Promise(r => setTimeout(r, 100)); 
     expect(await page.locator("#p").getAttribute("style")).toBe("color: blue;");
     await page.reload();
     expect(await page.locator("#p").getAttribute("style")).toBe("color: red");

@@ -110,8 +110,7 @@ If you want to use the TurnSignal with an Astro project, see [astro-vtbot](https
 :::
 
 The scripts provided by the turn-signal package run entirely in the browser during navigation. Since they hook into events triggered early in the page load process, they must be included as classic[^1] JavaScript `<script>` elements within the `<head>` of any HTML page you want to enhance with these effects.
-
-[^1]: In other words, module scripts can't be used because their deferred loading would make them too late to capture the early events.
+In other words, `type="module"` can't be used because the deferred loading would make the script come too late to capture the early events.
 
 All scripts are used the same way:
 
