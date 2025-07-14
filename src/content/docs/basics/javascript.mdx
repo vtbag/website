@@ -8,7 +8,7 @@ head:
       content: "/javascript-og.png"
 ---
 
-Browser-native cross-document view transitions can be created entirely with CSS, without the need for JavaScript. However, JavaScript becomes essential for advanced functionality, such as:
+Browser-native cross-document view transitions can be [created entirely with CSS](#cross-document-view-transitions), without the need for JavaScript. However, even for cross-document view transitions, JavaScript becomes essential for advanced functionality. And for same-document view transitions, even the activation is done via JavaScript:
 
 - Triggering same-page view transitions with `startViewTransition()`,
 - Dynamically modifying CSS properties like `view-transition-name`,
@@ -141,6 +141,14 @@ Rumor has it that the root element of the scoped view transition needs to have i
 
 ## Cross-Document View Transitions
 
+You activate cross-document view transitions by adding the following incantation to the styles of all pages that should participate in view transitions:
+```css
+@view-transition{
+  navigation: auto;
+}
+```
+Opting in to cross-document view transitions is CSS-only. But cross-document view transitions, too, have their JavaScript API.
+
 Cross-document view transitions work similarly to [same-document](#same-document-view-transitions) ones but are triggered by navigation. In particular you can get access to the [view transition object](#viewtransition-object) in event listeners for the new `pageswap` and `pagereveal` events.
 
 ### Pageswap and Pagereveal Events
@@ -162,4 +170,4 @@ Similarly, `pagereveal` listeners allow you to tweak view transition names and t
 
 ### Activation Object
 
-The `pageswap` event also provides a `NavigationActivation` object via its `activation` property, offering details about the current page (`from`) and next page (`entry`). While the `pagereveal` event does not include this property, in browsers supporting the Navigation API, you can use `navigation.activation` to access information about the previous page (`from`) and current page (`entry`).
+The `pageswap` event also provides a [`NavigationActivation`](https://developer.mozilla.org/en-US/docs/Web/API/NavigationActivation) object via its `activation` property, offering details about the current page (`from`) and next page (`entry`). While the `pagereveal` event does not include this property, in browsers supporting the Navigation API, you can use `navigation.activation` to access information about the previous page (`from`) and current page (`entry`).

@@ -135,8 +135,6 @@ function sidebar() {
     items: [
       { label: 'Test Your Browser', link: "/basics/test-page/" },
       { label: 'View Transition API', link: "/basics/api/" },
-      { label: 'Web Framework Support', link: "/basics/frameworks/", badge: { text: 'New!', variant: 'success' } as Badge },
-
       {
         label: 'View Transition Examples', link: "/basics/examples/",
       },
@@ -144,7 +142,9 @@ function sidebar() {
       { label: 'Mechanics of Default Animations', link: "/basics/default-animations/" },
       { label: 'Styling View Transitions', link: "/basics/styling/" },
       { label: 'JavaScript API', link: "/basics/javascript/" },
-      { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/" }
+      { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/" },
+      { label: 'API Levels and Implications', link: "/basics/levels/", badge: { text: 'New!', variant: 'success' } as Badge },
+      { label: 'Web Framework Support', link: "/basics/frameworks/"} 
     ]
   }, {
     label: 'Tools',

@@ -87,6 +87,8 @@
             document.documentElement.setAttribute("sdvt", "");
           "navigation" in window &&
             document.documentElement.setAttribute("nav", "");
+          CSS.supports("view-transition-class", "mine") &&
+            document.documentElement.setAttribute("vtc", "");
           CSS.supports("view-transition-name", "auto") &&
             document.documentElement.setAttribute("vtna", "");
           CSS.supports("view-transition-group", "g") &&

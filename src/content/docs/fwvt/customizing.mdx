@@ -248,7 +248,7 @@ Now it is time to ask why all the pseudo-element names we saw in this episode en
 
 View transition names tell the View Transition API to generate a `::view-transition-group` pseudo element for the DOM element the name is assigned to. So with more view transition names, there will be multiple `:view-transition-group` elements and the view transition name  is used to distinguish them. Therefore, the view transition names, for which the API generates groups, must be unique on a page. The API won't generate groups for elements that are not rendered[^i]. So the rule in truth is: View transition names for displayed DOM elements must be unique on a page.
 
-[^i]: "not rendered" here means `display: none`. Just being clipped or hidden by `visibility: hidden`, `overflow: ...` or being obscured by other elements does not hinder group generation.
+[^i]: "not rendered" here means `display: none`, or `content-visibility: hidden`. Just being clipped or hidden by `visibility: hidden`, `overflow: ...` or being obscured by other elements does not hinder group generation.
 
 That the whole view port is assigned the `root` name is another default from the useragent stylesheet:
 

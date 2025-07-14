@@ -164,7 +164,10 @@ main {
 
 At the start of the view transition, the **view transition names have to be unique** in the DOM. 
 
-There is an important exception: The View Transition API will ignore the `view-transition-name` of an element if that element is not rendered. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance have  their `display` CSS property set to `none`. This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site.
+There are two exceptions: 
+- The API ignores the `view-transition-name` of a fragmented element, i.e. an element that consists of two or more boxes, like an inline element that spans two lines.
+
+- The API ignores the `view-transition-name` of an element if that element is not rendered, like the `<head>`, or if it is skipped. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance have  their `display` CSS property set to `none`.  Looking for an example? This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site. This trick also works with an ancestor with `content-visibility: hidden` but not with a simple `visibility: hidden` directly on the element.
 
 
 The static user agent stylesheet provides one default name for the document, called `root`.

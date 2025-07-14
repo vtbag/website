@@ -1,0 +1,78 @@
+---
+title: API Levels and Implications
+description: What are those levels of the View Transition API, and what does that mean for me as a dev? 
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/bag-og.png"
+---
+The (preliminary) View Transition API's specification comes in two parts: 
+
+
+* Level 1: *CSS View Transitions Module Level 1* (Editor's Draft) [https://drafts.csswg.org/css-view-transitions-1/](https://drafts.csswg.org/css-view-transitions-1/)
+
+* Level 2: *CSS View Transitions Module Level 2* (Editor's Draft) [https://drafts.csswg.org/css-view-transitions-2/](https://drafts.csswg.org/css-view-transitions-2/)
+
+Splitting the specification into two parts allows browser vendors to roll out the API incrementally.
+
+You might often hear that 
+* Level 1 is _same-document_ view transitions and 
+* Level 2 defines _cross-document_ view transitions
+
+It is a neat, memorable way to explain it.  Half‑true, slightly wrong, but sticky enough to spread. Just do not forget: the real implications still hide in the details.
+
+I prefer to think of Level 1 as the core and Level 2 as the extensions.
+
+## Level 1: Core Features
+
+The essentials boil down to these core features:
+* The [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property to mark elements that should participate in the view transition. 
+* The [`document.startViewTransition()`](/basics/javascript/#startviewtransition) function that takes an update callback and returns a `ViewTransition` object with three promises (`updateCallbackDon`, `ready`, `finished`) and the `skipTransition()` function.  
+* [Pseudo-elements](/basics/pseudos/#types-of-pseudo-elements) and selectors to capture, structure and style before and after images: `::view-transition`, `::view-transition-group`,  `::view-transition-image-pair`,  `::view-transition-old` and  `::view-transition-new` 
+* Additions to the user [agent stylesheet and dynamically generated animations](/basics/styling/#the-user-agent-stylesheet).
+* Some rules when view transitions automatically get skipped, e.g. on resize events or view transition start while another view transition is still active. 
+
+## Level 2: Extensions
+Part two indeed adds extensions for cross-document view transitions, but also features that come extremely handy for same-document, even though they are no core features.
+
+### Cross-Document
+* The `@view-transition{ navigation: auto }` at-rule to opt in to [cross-document view transitions](/basics/javascript/#cross-document-view-transitions). 
+* `pageswap` and `pagereveal` [events](/basics/javascript/#pageswap-and-pagereveal-events) that give access to the view transition object on the old and new page.
+* An [`activation`](/basics/javascript/#activation-object) property on `pageswap` holds a `NavigationActivation` object from the Navigation API, even if the browser doesn't otherwise support the Navigation API. But there is nothing equivalent on `pagereveal`.
+
+### Extensions for Both, Same- and Cross-Document 
+* The [`view-transition-class`](/basics/styling/#with-classes) property and selector syntax to address multiple pseudo-elements with a single selector.
+* [View transition types](/basics/styling/#with-types) being part of the ViewTransition object, the `startViewTransition()` signature, and the `@view-transition{ }` at-rule; as well as matching pseudo-class selector `:active-view-transition-type()` and the type-less  `:active-view-transition`.
+* [Generated view transition names](/basics/pseudos/#auto-generated-names-auto-and-match-element) with `view-transition-name: auto` and `view-transition-name: match-element`.
+* [Nested view transition groups](/basics/pseudos/#nested-view-transition-groups) with the `::view-transition-group-children()` pseudo element.
+
+## Future extensions
+
+* [Scoped view transitions](/basics/javascript/#scoped-view-transitions)
+
+
+
+## Implications
+
+The new features defined in Level 2 of the view transition API are in deed written as extensions to the Level 1 spec. They can easily be merged into one specification. But the interesting part here is not the document structure but the implication from incremental releasing of the two parts.
+
+Up to now, all vendors have implemented and released Level 1 first before they went on to Level2. For Chrome and Edge there was a period of over 12 month before level 2 got released. For Safari, it had been 3 month. Now Firefox is actively working on Level 1 of the API as it is part of Interop 2025. It's unclear when Level 2 will be released.
+
+For the Chromium based browsers, this was not a problem as when they released Level 1 support there where no othr browsers that understood Level 2. When Safari came out, this was different, but it did not take that lon for them to deliver Level 2 after that.
+
+### Same-Document Features Missing in Level 1
+The problem is not same-document vs. cross-document. The problem is that there are browser versions out there in the wild that support only Level 1 of the API. To say it more clearly: Soon you can use same-document view transitions on all major browsers, but if you want to support them all, you can't use the extensions from the Level 2 list above. 
+
+This might be obvious for the more experimental stuff like nested view transition groups or scoped view transitions.
+
+But for simple same-document view transitions, there are some highly desirable features that we cannot use cross-browser before Level 2 becomes baseline.
+- no view transition classes
+- no view transition types
+- no auto-generated view transition names
+
+Of course, there is no guarantee that it comes that bad:
+* Firefox Nightly already seems to have support for `view-transition-class`. So this should not become a problem.
+* When usings the [declarative-names script](/tools/utensil-drawer/#declarative-names) from The Bag's utensil-drawer, you have an alternative for dynamically generating view transition names that work more reliably than `view-transition-name: auto`.
+* I started a polyfill to use view transition types even on browsers that only support Level 1. 
+Let's keep our fingers crossed.

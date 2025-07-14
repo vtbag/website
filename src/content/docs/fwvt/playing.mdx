@@ -636,10 +636,10 @@ startViewTransition({update, types: ["some-type"]});
 ```
 You can use this to guard animations of the pseudo-elements, but you can even use it to _define_ the pseudo-elements by setting view transition names nested inside the type guarded rule. And of course you can use this pattern to style regular DOM elements _just for the time_ a certain view transition is active. 
 
-:::caution
+:::note
 This pattern will likely break in Firefox once it adds support for Level 1 of the View Transition API.
+But I'm already working on a polyfill. For an explanation and more on this pattern, check the [CSS Tips & Tricks](/tips/css/#scoping-with-types) section.
 :::
-For an explanation and more on this pattern, check the [CSS Tips & Tricks](/tips/css/#scoping-with-types) section.
 
 ### Changing Group Stacking Order 
 With the View Transition API, the [stacking order](/basics/pseudos/#rendering-pseudo-elements) of the `::view-transition-group` pseudo-elements corresponds to the paint order of the named elements on the old page, then followed by those only on the new page, also in paint order.  
