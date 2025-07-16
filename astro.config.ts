@@ -153,7 +153,7 @@ function sidebar() {
       { label: 'Element Crossing', link: "/tools/element-crossing/" },
       { label: 'Turn Signal', link: "/tools/turn-signal/" },
       { label: 'Cam-Shaft', link: "/tools/cam-shaft/" },
-      { label: 'Utensil Drawer', link: "/tools/utensil-drawer/" }
+      { label: 'Utensil Drawer', link: "/tools/utensil-drawer/" , badge: { text: 'Updated!', variant: 'success' } as Badge }
     ],
   },
   { label: 'Fun with View Transitions' , items:[

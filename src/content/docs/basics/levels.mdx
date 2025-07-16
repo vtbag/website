@@ -72,7 +72,6 @@ But for simple same-document view transitions, there are some highly desirable f
 - no auto-generated view transition names
 
 Of course, there is no guarantee that it comes that bad:
-* Firefox Nightly already seems to have support for `view-transition-class`. So this should not become a problem.
+* Firefox Nightly already [seems to have support](https://bsky.app/profile/vtbag.dev/post/3ltwvggp7xc2u) for `view-transition-class`. So this should not become a problem.
 * When usings the [declarative-names script](/tools/utensil-drawer/#declarative-names) from The Bag's utensil-drawer, you have an alternative for dynamically generating view transition names that work more reliably than `view-transition-name: auto`.
-* I started a polyfill to use view transition types even on browsers that only support Level 1. 
-Let's keep our fingers crossed.
+* The Bag's utensil-drawer now has a [polyfill for view transition types](/tools/utensil-drawer/#usetypespolyfill-always--never) to support them even on browsers that only implement Level 1 of the View Transition API!

@@ -299,6 +299,8 @@ Often you want to support different animations for a given view transition pseud
 
 While it is active, a view transition might have a set of identifiers called _types_ that can be used in CSS pseudo-classes to select different rules. During the view transition, the set can be altered at any time by assigning to the `types` property of the viewTransition object.
 
+This mechanism can be used to [increase isolation and/or composability](/tips/css/#the-active-type-guard) of independent view transition use cases. 
+
 The initial set of types can be set when calling `startViewTransition()` or it might be specified using the `types` property inside a `@view-transition` rule.
 
 ```ts title="Level 2 signature of startViewTranstion()"

@@ -302,7 +302,7 @@ setVectors(instructions: Inst[], where: "root" | "pseudo" | "both" = "both")
 
 The `instructions` parameter can be used to exclude groups and properties. Each instruction has a regular expression that selects group names, and an array of property names. An instruction tells the function to set pseudo properties for the given property names if the regular expression completely matches the group name.
 
-The default instructions are `[{pattern: ".*", props: ["x", "y", "width", "height"]}]`. This adds properties for x, y, width, and height to all groups. If you, for example, only want custom-properties for _x_ and _y_ for groups where the name starts with `elt-`, use `[{pattern: "elt-.*", props: [x, y]}]`.
+The default instructions are `[{pattern: ".*", props: ["x", "y", "width", "height"]}]`. This adds properties for x, y, width, and height to all groups. If you, for example, only want custom-properties for _x_ and _y_ for groups where the name starts with `elt-`, use `[{pattern: "elt-.*", props: ["x", "y"]}]`.
 
 The `where` parameter tells the function whether the pseudo properties should be added to the `::view-transition-group` pseudo, to the `:root` element, or to both.
 
@@ -458,16 +458,62 @@ Like before, but not combining updates that arrive before the capturing. Updates
 ##### speedUpWhenChained
 Triggering a new call during an ongoing transition can also be used to speed up the current animation if `speedUpWhenChained` is set to a value greater than 1.
 
-### collisionBehavior: skipNew
+### collisionBehavior: "skipNew"
 Setting `collisionBehavior` to `skipNew` means a new view transition will only start if none is currently active. Otherwise, the update callback is executed immediately as if view transitions weren't supported and without affecting the ongoing view transition.
 
-### collisionBehavior: skipOld
+### collisionBehavior: "skipOld"
 Setting `collisionBehavior` to `skipOld` give you the default behavior of view transitions, where new transitions cancel active ones.
 
-### collisionBehavior: never
+### collisionBehavior: "never"
 Setting `collisionBehavior` to `never` prevents any collisions by executing only the update callback, skipping pseudo-element creation and animation.
 
 For details see [`may-start-view-transition.ts`](http://github.com/vtbag/utensil-drawer/blob/main/src/may-start-view-transition.ts)
 
+### useTypesPolyfill: "always" | "never"
+
+Setting `useTypesPolyfill: "always"` adds a **polyfill for [view transition types]()**.
+This bring view transition types even to browsers that [only support Level 1](/basics/levels/#same-document-features-missing-in-level-1) of the View Transition API.
+
+```js
+mayStartViewTransition({update, types: ["my", "type"]}, {useTypesPolyfill: 'always'})
+```
+
+The polyfill replaces view transition types with CSS classes set on the `:root` element during view transitions.
+As an example, a type called `type-name` is replaced with a class called `vtbag-vtt-type-name`, where the `vtbag-vtt-` prefix avoids name clashes with regular CSS classes. While the view transition is active, this option also sets a `vtbag-vtt-0` class on the `:root` element as a pendant for `:active-view-transition`.
+
+Setting `useTypesPolyfill: "never"` completely disable the plugin. This is the default. 
+
+In your stylesheets, you can have your `:active-view-transition-type()` and `:active-view-transition` selectors automatically be rewritten to checks for the inserted classes by using the Bag's [postcss-active-view-transition-type](#the-postcss-active-view-transition-type-postcss-plugin) PostCSS plugin. 
+
 ### Current View Transition
 The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active.
+
+
+## The postcss-active-view-transition-type PostCSS Plugin
+
+Want to use `:active-view-transition-type()` and `:active-view-transition` pseudo-classes with browsers that do not support them natively? This is typically the case when there is a time lag between Level 1 and Level 2 implementations of the API. Some browser versions support same-document view transitions (Level 1) but not view transition types (Level 2). Presumably, this will happen again, when Firefox releases its first version of View Transition API support.  
+
+This PostCSS plugin rewrites the pseudo-class selectors `:active-view-transition-type()` and `:active-view-transition` to selectors that work with the Bag's [polyfill for view transition types](#usetypespolyfill-always--never). Plugin and polyfill together let you use 
+* pseudo-class selectors for view transition types in your stylesheets, 
+* as well as view transition types with [`mayStartViewTransition({types:...})`](#maystartviewtransition), 
+
+even if those types [are not natively supported](/basics/levels/#same-document-features-missing-in-level-1) on all browsers that implement same-document view transitions.
+
+### Installation
+
+Install the PostCSS plugin from `npm`:
+```sh
+npm i -D postcss-active-view-transition-type
+```
+
+Add the plugin to your PostCSS config. If you use `vite` (or a framework based on `vite`, like Astro), `vite` will automatically pick up a `postcss.config.cjs` in your project home, if it exists.
+```js title="postcss.config.cjs"
+module.exports = {
+  plugins: [
+    require("postcss-active-view-transition-type")
+  ]
+};
+```
+
+
+
