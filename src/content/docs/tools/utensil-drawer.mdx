@@ -271,6 +271,10 @@ document.startViewTransition(...).ready.then(() => setVectors())
 ```
 This adds the `--vtbag-vector-*` custom properties to the page as shown in the last section. Of course, this also works with [`mayStartViewTransition()`](#maystartviewtransition).
 
+:::note
+As the `setVectors()` function needs access to the [current view transition](#current-view-transition), it only works in combination with [mayStartViewTransition](#maystartviewtransition).
+:::
+
 CSS rules can now access the values and calculate derived parameters for the animations.
 
 ```css
@@ -481,7 +485,7 @@ mayStartViewTransition({update, types: ["my", "type"]}, {useTypesPolyfill: 'alwa
 The polyfill replaces view transition types with CSS classes set on the `:root` element during view transitions.
 As an example, a type called `type-name` is replaced with a class called `vtbag-vtt-type-name`, where the `vtbag-vtt-` prefix avoids name clashes with regular CSS classes. While the view transition is active, this option also sets a `vtbag-vtt-0` class on the `:root` element as a pendant for `:active-view-transition`.
 
-Setting `useTypesPolyfill: "never"` completely disable the plugin. This is the default. 
+Setting `useTypesPolyfill: "never"` completely disable the polyfill. This is the default. 
 
 In your stylesheets, you can have your `:active-view-transition-type()` and `:active-view-transition` selectors automatically be rewritten to checks for the inserted classes by using the Bag's [postcss-active-view-transition-type](#the-postcss-active-view-transition-type-postcss-plugin) PostCSS plugin. 
 
