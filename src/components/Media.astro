@@ -79,30 +79,32 @@
           //@ts-ignore
           smallMedia.style.viewTransitionClass = "media";
 
-        mayStartViewTransition({
-          update: () => {
-            dialog.style.viewTransitionName = `dialog`;
-            smallMedia.style.viewTransitionName = "none";
-            bigMedia.style.viewTransitionName = "media";
-            dialog.showModal();
+        mayStartViewTransition(
+          {
+            update: () => {
+              dialog.style.viewTransitionName = `dialog`;
+              smallMedia.style.viewTransitionName = "none";
+              bigMedia.style.viewTransitionName = "media";
+              dialog.showModal();
+            },
+            types: ["media"],
           },
-          types: ["media"],
-        });
+          { useTypesPolyfill: "auto" }
+        );
         dialog.addEventListener(
           "click",
           () => {
             mayStartViewTransition({
-                update: () => {
-                  bigMedia.style.viewTransitionName = "none";
-                  smallMedia.style.viewTransitionName = "media";
-                  dialog.close();
-                },
-                types: ["media"],
-              })
-              .finished.finally(() => {
-                smallMedia.style.viewTransitionName =
-                  dialog.style.viewTransitionName = "none";
-              });
+              update: () => {
+                bigMedia.style.viewTransitionName = "none";
+                smallMedia.style.viewTransitionName = "media";
+                dialog.close();
+              },
+              types: ["media"],
+            }, {useTypesPolyfill: 'auto'}).finished.finally(() => {
+              smallMedia.style.viewTransitionName =
+                dialog.style.viewTransitionName = "none";
+            });
           },
           { once: true }
         );

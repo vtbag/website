@@ -61,7 +61,7 @@ Calls to `document.startViewTransition`, too, might have surprising effects:
 
   The View Transition API has no function to check for a currently active view transition. For your own calls, you can take care that you do not interrupt yourself by keeping track of the last result of calling `startViewTransition`.
 
-  You can also use [`mayStartViewTransition()`](/tools/utensil-drawer/#maystartviewtransition) from the Bag's `Utensil Drawer` to keep track for you.
+  You can also use [`mayStartViewTransition()`](/tools/utensil-drawer/#maystartviewtransition) from the Bag's `Utensil Drawer` to keep track for you and then call [`getCurrentViewTransition()`](/tools/utensil-drawer/#current-view-transition) to check for an active view transition. 
 
 </details>
 

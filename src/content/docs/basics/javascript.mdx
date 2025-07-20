@@ -118,6 +118,8 @@ Skipping the transition means that the pseudo-element tree created by the view t
 
 You can dynamically add or remove view transition types during the view transition by modifying the `types` object. Such changes will directly affect CSS rules that use the `:active-view-transition-type` pseudo-class.
 
+View transition types are a feature of Level 2 of the View Transition API. They [can be polyfilled](/tools/utensil-drawer/#the-postcss-active-view-transition-type-postcss-plugin) if you want to use them with Level 1 implementations.
+
 
 ### Canceling and Chaining
 

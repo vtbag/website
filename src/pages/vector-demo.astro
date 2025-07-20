@@ -65,7 +65,6 @@ const SIZE = 12;
 <style set:text=`:root{--size: ${SIZE};}`></style>
 
 <style is:global>
-  @import "https://unpkg.com/open-props";
 
   p {
     margin-bottom: 1ex;
@@ -185,7 +184,7 @@ const SIZE = 12;
     animation-timing-function: ease-in-out;
   }
 
-  ::view-transition-image-pair(.el) {
+  :active-view-transition-type(with-vectors)::view-transition-image-pair(.el) {
     animation-name: arc;
     animation-timing-function: ease-in-out;
   }
@@ -264,10 +263,11 @@ const SIZE = 12;
     createElements();
     addEventListener("click", async () => {
       const transition = mayStartViewTransition(shuffleElements, {
-        collisionBehavior: "chaining",
+        collisionBehavior: "chaining", useTypesPolyfill: "auto",
       });
       transition.ready.then(() => {
         setVectors([{ pattern: ".*", props: ["x", "y"] }], "pseudo");
+        transition.types.add("with-vectors");
       });
     });
     document.querySelector("button")?.addEventListener("click", () => {

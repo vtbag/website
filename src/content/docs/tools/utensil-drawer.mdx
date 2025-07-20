@@ -267,18 +267,26 @@ Here is an example from the [Derived Trajectories Demo](/vector-demo/): `setVect
 ```js
 import { setVectors } from "@vtbag/utensil-drawer/vectors";
 ...
-document.startViewTransition(...).ready.then(() => setVectors())
+const transition = document.mayStartViewTransition(...);
+transition.ready.then(() => { 
+  setVectors();
+  transition.types.add("with-vectors");
+})
 ```
-This adds the `--vtbag-vector-*` custom properties to the page as shown in the last section. Of course, this also works with [`mayStartViewTransition()`](#maystartviewtransition).
+This adds the `--vtbag-vector-*` custom properties to the page as shown in the last section. 
 
 :::note
-As the `setVectors()` function needs access to the [current view transition](#current-view-transition), it only works in combination with [mayStartViewTransition](#maystartviewtransition).
+As the `setVectors()` function needs access to the [current view transition](#current-view-transition). Thus it only works in combination with [mayStartViewTransition](#maystartviewtransition).
 :::
 
-CSS rules can now access the values and calculate derived parameters for the animations.
+For Firefox it is important to avoid accessing the pseudo-properties too early. This is why we set the `with-vectors` view transition type _after_ the vectors are calculated. The type is then used to guard the arc animation. Otherwise the @keyframes would initialize before the custom-properties are calculated. Alternatively, you could use a CSS class or an HTML attribute and check for its existence from CSS. But hey, we are doing view transitions and have a [polyfill](/tools/utensil-drawer/#usetypespolyfill-always--auto--never) for types if they are not supported ;-) 
+
+While such a pattern is necessary for Firefox it does no harm for the other browser. 
+
+With the guard, the CSS rules can now access the values as soon as they are available and calculate derived parameters for the animations.
 
 ```css
-  ::view-transition-image-pair(.el) {
+  :active-view-transition-type(with-vectors)::view-transition-image-pair(.el) {
     animation-name: arc;
     animation-timing-function: ease-in-out;
   }
@@ -396,6 +404,7 @@ export interface StartViewTransitionExtensions {
 	respectReducedMotion?: boolean; // default is true
 	collisionBehavior?: 'skipOld' | 'chaining' | 'skipNew' | 'never'; // default is "skipOld"
 	speedUpWhenChained?: number; // default is 1.0
+  useTypesPolyfill?: 'always' | 'auto' | 'never';
 }
 ```
 ### Basic Chaining Examples
@@ -473,7 +482,7 @@ Setting `collisionBehavior` to `never` prevents any collisions by executing only
 
 For details see [`may-start-view-transition.ts`](http://github.com/vtbag/utensil-drawer/blob/main/src/may-start-view-transition.ts)
 
-### useTypesPolyfill: "always" | "never"
+### useTypesPolyfill: "always" | "auto" | "never"
 
 Setting `useTypesPolyfill: "always"` adds a **polyfill for [view transition types]()**.
 This bring view transition types even to browsers that [only support Level 1](/basics/levels/#same-document-features-missing-in-level-1) of the View Transition API.
@@ -485,9 +494,12 @@ mayStartViewTransition({update, types: ["my", "type"]}, {useTypesPolyfill: 'alwa
 The polyfill replaces view transition types with CSS classes set on the `:root` element during view transitions.
 As an example, a type called `type-name` is replaced with a class called `vtbag-vtt-type-name`, where the `vtbag-vtt-` prefix avoids name clashes with regular CSS classes. While the view transition is active, this option also sets a `vtbag-vtt-0` class on the `:root` element as a pendant for `:active-view-transition`.
 
-Setting `useTypesPolyfill: "never"` completely disable the polyfill. This is the default. 
+Setting `useTypesPolyfill: "never"` completely disables the polyfill. This is the default. \
+Setting `useTypesPolyfill: "auto"` enables the polyfill in browsers that do support Level 1 but not Level 2 of the View Transition API.
 
 In your stylesheets, you can have your `:active-view-transition-type()` and `:active-view-transition` selectors automatically be rewritten to checks for the inserted classes by using the Bag's [postcss-active-view-transition-type](#the-postcss-active-view-transition-type-postcss-plugin) PostCSS plugin. 
+
+
 
 ### Current View Transition
 The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active.
@@ -496,6 +508,8 @@ The module also exports `getCurrentViewTransition()` to access the active global
 ## The postcss-active-view-transition-type PostCSS Plugin
 
 Want to use `:active-view-transition-type()` and `:active-view-transition` pseudo-classes with browsers that do not support them natively? This is typically the case when there is a time lag between Level 1 and Level 2 implementations of the API. Some browser versions support same-document view transitions (Level 1) but not view transition types (Level 2). Presumably, this will happen again, when Firefox releases its first version of View Transition API support.  
+
+The `postcss-active-view-transition-type` plugin addresses view transition types for **same-document** view transitions. **Cross-document** view transitions are also Level 2, so they do not need additional support. 
 
 This PostCSS plugin rewrites the pseudo-class selectors `:active-view-transition-type()` and `:active-view-transition` to selectors that work with the Bag's [polyfill for view transition types](#usetypespolyfill-always--never). Plugin and polyfill together let you use 
 * pseudo-class selectors for view transition types in your stylesheets, 
@@ -515,9 +529,19 @@ Add the plugin to your PostCSS config. If you use `vite` (or a framework based o
 module.exports = {
   plugins: [
     require("postcss-active-view-transition-type")
+    // or 
+    // require("postcss-active-view-transition-type")({mode: 'append'})
   ]
 };
 ```
+The plugin support a `mode` option: 
+* `in-place` rewrites the selectors in place, 
+* `append` appends the rewritten rules to the original stylesheet.   The following table shows how to combine the plugin and the polyfill parameters.
 
+|When to use|useTypesPolyfill|postcss-active-view-transition-type mode|
+|---|---|---|
+|The recommended way: Activate polyfill only where needed and have original and rewritten rules in your CSS|'auto'| 'append'|
+| If you do not want to use the polyfill|'never' | n.a.|
+| You can avoid duplication of rules if you do not use types with cross-document view transition and all same-document view transition are started by `mayStartViewTransition()` with `useTypesPlugin: 'always'`|'always' | 'in-place'|
 
 

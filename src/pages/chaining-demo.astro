@@ -343,7 +343,7 @@
 
 
   <script is:inline type="module">
-    import { mayStartViewTransition } from 'https://unpkg.com/@vtbag/utensil-drawer@1.2.6/lib/may-start-view-transition.js';
+    import { mayStartViewTransition } from 'https://unpkg.com/@vtbag/utensil-drawer@1.2.11/lib/may-start-view-transition.js';
     //import { mayStartViewTransition } from '/may-start-view-transition.js';
 
 
@@ -381,7 +381,7 @@
           hr.style.animationDuration = "0.75s";
           hr2.style.animationDuration = "0.75s";
           this.nextGeneration();
-        }, { collisionBehavior: chaining.checked ? "chaining" : "skipOld", maxUpdateDuration: 500,  });
+        }, { collisionBehavior: chaining.checked ? "chaining" : "skipOld", useTypesPolyfill: 'always' });
 
         transition.finished.then(() => {
           hr.style.animationDuration = hr2.style.animationDuration = "20s";
