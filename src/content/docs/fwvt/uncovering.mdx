@@ -217,7 +217,7 @@ Just a tiny bit. But enough so that the browser  allowed me to zoom out a bit.
 
 This shouldn't be possible, and it wasn't on desktop. The page shouldn't be wider than the viewport, but in Chrome's mobile emulation, it suddenly was.
 
-![An paragraph overflowing to the right beyond the device limits](./overflow.png)
+![An paragraph overflowing to the right beyond the device limits](@/assets/fwvt/overflow.png)
 
 ## The Viewport Trap
 
@@ -258,7 +258,7 @@ While that thought was bouncing around in my head, something started to click. I
 
 But what if the DOM update during the view transition nudged the layout viewport just enough to make the whole thing stumble? Should be impossible. I had my overflows clipped.
 
-I was getting a headache. Not the kind a cigarette and a strong coffee could fix. I needed proof. Real proof, not the kind you get from asking a hallucinating AI about it.More than a hunch. More than a gut feeling on a rainy night.
+I was getting a headache. Not the kind a cigarette and a strong coffee could fix. I needed proof. Real proof, not the kind you get from asking a hallucinating AI about it. More than a hunch. More than a gut feeling on a rainy night.
 
 I reverted the meta viewport and logged window.innerWidth before and after the transition. It jumped from 414 to some larger value. I couldn't believe it. Nothing on screen looked different. No visible resize. Just a bit of space that crept past the right edge, completely out of sight. But suddenly, I could scroll sideways. Zoom out, too.
 
