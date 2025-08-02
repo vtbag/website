@@ -11,17 +11,17 @@ We want to shrink the current image as the new one grows in. The smaller the ima
 We built on the [former example showing default animations](/demo/BasicC1/). The extensions are CSS only.
 
 #### View Transition Names
-We do not want to shrink the whole viewport but only the image. Therefore the first thing is to assign a transition name to the image. We could add the property using inline styling to the `<img>` element, but with a new rule like this
+We do not want to shrink the whole viewport but only the image. Therefore the first thing is to assign a view transition name to the image. We could add the property using inline styling to the `<img>` element, but also with a new rule like this
 ```html ins={1-3}
 h2 + img {
   view-transition-name: img
 }
 ```
-This also has to be done on the second page for the `<img>` there.
+This has to be done for the `<img>` on the second page, too.
 
 #### Custom Animations
 
-For the shrining and growing, we use the same `zoom-out` keyframes, but for the zoom-in effect they are run in reveres order.  The `forwards` definition says that the old image should stay hidden at the end of the transition. Both animation run for a second in parallel without any delays.
+For the shrinking and growing, we use the same `zoom-out` keyframes, but for the zoom-in effect we run them in reveres order.  The `forwards` definition says that the old image should stay hidden at the end of the transition. Both animation run for a second in parallel without any delays.
 
 ```css ins={1-6}
 ::view-transition-old(img) {
