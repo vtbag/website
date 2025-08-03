@@ -1,0 +1,43 @@
+---
+
+---
+
+<script>
+  import { mayStartViewTransition } from "@vtbag/utensil-drawer/may-start-view-transition";
+  const proto = customElements.get("starlight-tabs")?.prototype;
+  const originalSwitchTab = proto.switchTab;
+  proto.switchTab = function (
+    newTab: HTMLAnchorElement | null | undefined,
+    index: number,
+    shouldSync = true
+  ) {
+    document.querySelectorAll("starlight-tabs").forEach((t,idx) => {
+      t.querySelectorAll<HTMLElement>('[role="tabpanel"]').forEach((p) => {
+        p.style.setProperty("--vtbag-tabs-vtn", `tab${idx}`);
+      });
+    });
+    mayStartViewTransition(
+      {
+        update: () => originalSwitchTab.call(this, newTab, index, shouldSync),
+        types: ["tabs"],
+      },
+      { collisionBehavior: "chaining", useTypesPolyfill: "auto" }
+    );
+  };
+</script>
+<style is:global>
+  .tablist-wrapper a {
+    text-decoration: none;
+  }
+  :active-view-transition-type(tabs) {
+    &, *, *:after {
+      view-transition-name: none !important;
+    }
+    main {
+      view-transition-name: main;
+    }
+    [style*="--vtbag-tabs-vtn:"] {
+      view-transition-name: var(--vtbag-tabs-vtn) !important;
+    }
+  }
+</style>

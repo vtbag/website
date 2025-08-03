@@ -227,3 +227,8 @@ main kbd {
     font-size: 16px;
   }
 }
+
+
+a.site-title {
+  text-decoration: none;
+}

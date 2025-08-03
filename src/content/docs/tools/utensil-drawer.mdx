@@ -14,6 +14,7 @@ import drawer from "@/assets/drawer.png";
 import UtensilGrid from "@/components/UtensilGrid.astro";
 import Utensil from "@/components/Utensil.astro";
 import Media from "@/components/Media.astro";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
 
 <Logo alt="The Utensil Drawer" image={drawer}>
 Pick the tools you need to craft the view transitions you want!
@@ -61,27 +62,71 @@ One day, when it grows up, this will be an eclectic collection of snippets for v
 
 ## Declarative Names
 
-The `@vtbag/utensil-drawer/declarative-names` script assigns view transition names to HTML elements. This [comes in handy](/tips/auto-names/) if you want to assign names to many elements like all images in a container or all items in a list.
+The `@vtbag/utensil-drawer/declarative-names` script assigns view transition names to HTML elements. This comes in handy if you want to [automatically assign view transition names to many elements](/tips/auto-names/) like all images in a container or all items in a list.
 
-The Utensil-Drawer offers a bundled script for cross-document view transitions and reusable function for same-document view transitions.
+The Utensil-Drawer offers a bundled script for cross-document view transitions and reusable functions for same-document view transitions.
 
 This functionality is similar to assigning dynamic view transition names with the `auto` value, but it works consistently across browsers and gives you greater control. You specify the names to assign. This allows you to match elements between the old and new pages for cross-document morph animations, which is something not possible with dynamically generated names from `view-transition-name: auto`.
 
-### Script Usage
+For both alternatives, start by installing the package from npm:
 
-For use with cross-document view transitions you load the `declarative-names.js` script on every page that needs declarative view transition names and specify what names to assign where with the `data-vtbag-decl` attribute.
-
-```jsx
-<html>
-  <head>
-    ...
-    <script src="/declarative-names.js" data-vtbag-decl="..."/>
-  </head>
+```sh
+npm i -D @vtbag/utensil-drawer
 ```
+### Bundled Script Usage (cross-document)
+
+For use with cross-document view transitions you load the `declarative-names.js` script on every page that needs declarative view transition names and specify what names to assign with the `data-vtbag-decl` attribute.
+
+For vite-based frameworks like Nuxt and Astro this is straight forward:
+
+
+<Tabs>
+<TabItem label="Astro">
+```astro
+---
+import declarativeNamesURL from "@vtbag/utensil-drawer/declarative-names?url";
+---
+<head>
+  <script is:inline src={declarativeNamesURL} data-vtbag-decl='...' />
+</head>  
+```
+</TabItem>
+
+<TabItem label="Nuxt">
+
+```vue
+<script setup>
+import { useHead } from '#imports'
+import declarativeNamesUrl from '@vtbag/utensil-drawer/declarative-names?url'
+
+useHead({
+  script: [
+    { src: declarativeNamesUrl, attrs: { 'data-vtbag-decl': '...' } }
+  ]
+})
+</script>
+```
+</TabItem>
+<TabItem label="plain HTML">
+After installing the package from npm, copy it to a place where it can be served to the browser.
+```sh
+cp node_modules/@vtbag/utensil-drawer/lib/bundled/declarative-names.js public/declarative-name.js
+```
+
+```html
+<head>
+  <script src="/declarative-names.js" data-vtbag-decl="..."></script>
+</head>
+```
+Don't forget to update the copy once you update the npm package!
+</TabItem>
+</Tabs>
+
+<style>{`.tablist-wrapper a {text-decoration: none}`}</style>
 
 To ensure that the code is executed before the `pagereveal` event, the script must be placed inside the `<head>` element of your page as a classical inline script. Do _not_ add `type="module"` or the `defer` or `async` attributes as this would delay the script too much.
 
-### Reusable Functions
+### Import Reusable Functions (same-document)
 
 The reusable functions can be imported from `@vtbag/utensil-drawer/set-view-transition-names`.
 
@@ -214,6 +259,10 @@ If an element’s style attribute already contains a view-transition-name, it wi
 
 The `escapeViewtransitionName()` function [escapes](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident) characters in a string, making it safe to use as a view transition name.
 
+```sh
+npm i -D @vtbag/utensil-drawer
+```
+
 ```ts
 import { escapeViewTransitionName } from "@vtbag/utensil-drawer/escape-view-transition-name";
 
@@ -264,41 +313,47 @@ This way you can access the parameters of the morph animations directly within y
 ### Usage
 
 Here is an example from the [Derived Trajectories Demo](/vector-demo/): `setVector` is called right at the beginning of the animation phase when all old and new images are setup.
+
+```sh
+npm i -D @vtbag/utensil-drawer
+```
+
 ```js
 import { setVectors } from "@vtbag/utensil-drawer/vectors";
+import { mayStartViewTransition } from "@vtbag/utensil-drawer/may-start-view-transition";
 ...
-const transition = document.mayStartViewTransition(...);
-transition.ready.then(() => { 
+const transition = mayStartViewTransition(...);
+transition.ready.then(() => {
   setVectors();
   transition.types.add("with-vectors");
 })
 ```
-This adds the `--vtbag-vector-*` custom properties to the page as shown in the last section. 
+
+This adds the `--vtbag-vector-*` custom properties to the page as shown in the last section.
 
 :::note
 As the `setVectors()` function needs access to the [current view transition](#current-view-transition). Thus it only works in combination with [mayStartViewTransition](#maystartviewtransition).
 :::
 
-For Firefox it is important to avoid accessing the pseudo-properties too early. This is why we set the `with-vectors` view transition type _after_ the vectors are calculated. The type is then used to guard the arc animation. Otherwise the @keyframes would initialize before the custom-properties are calculated. Alternatively, you could use a CSS class or an HTML attribute and check for its existence from CSS. But hey, we are doing view transitions and have a [polyfill](/tools/utensil-drawer/#usetypespolyfill-always--auto--never) for types if they are not supported ;-) 
+For Firefox it is important to avoid accessing the pseudo-properties too early. This is why we set the `with-vectors` view transition type _after_ the vectors are calculated. The type is then used to guard the arc animation. Otherwise the @keyframes would initialize before the custom-properties are calculated. Alternatively, you could use a CSS class or an HTML attribute and check for its existence from CSS. But hey, we are doing view transitions and have a [polyfill](/tools/utensil-drawer/#usetypespolyfill-always--auto--never) for types if they are not supported ;-)
 
-While such a pattern is necessary for Firefox it does no harm for the other browser. 
+While such a pattern is necessary for Firefox it does no harm for the other browser.
 
 With the guard, the CSS rules can now access the values as soon as they are available and calculate derived parameters for the animations.
 
 ```css
-  :active-view-transition-type(with-vectors)::view-transition-image-pair(.el) {
-    animation-name: arc;
-    animation-timing-function: ease-in-out;
+:active-view-transition-type(with-vectors)::view-transition-image-pair(.el) {
+  animation-name: arc;
+  animation-timing-function: ease-in-out;
+}
+@keyframes arc {
+  50% {
+    transform: translateX(
+      calc(var(--vtbag-vector-to-y) / 3 - var(--vtbag-vector-from-y) / 3)
+    );
   }
-  @keyframes arc {
-    50% {
-      transform: translateX(
-        calc(var(--vtbag-vector-to-y) / 3 - var(--vtbag-vector-from-y) / 3)
-      );
-    }
-  }
+}
 ```
-
 
 Since we are using a view-transition-class in the selector, this CSS rule applies animations to multiple pseudo-elements. Each image pair gets its own version of the keyframe definition, inheriting the custom-property values from its parent, the `::view-transition-group` pseudo-element. The `var()` expressions are evaluated once when the keyframes are defined. Changing the values of the custom properties later will not affect the keyframes or the animations.
 
@@ -380,18 +435,29 @@ _experimental_
 
 More than just a wrapper. This function upgrades your view transitions with advanced capabilities and seamless fallbacks.
 
+```sh
+npm i -D @vtbag/utensil-drawer
+```
+
+```js
+import { mayStartViewTransition } from "@vtbag/utensil-drawer/may-start-view-transition";
+
+const transition = mayStartViewTransition(...);
+```
+
 This function provides quite different functionalities.
+
 1. It wraps `document.startViewTransition()` to free you from checking whether the browser supports the View Transition API. You can call it the same way in any browser, whether it supports Level 2, Level 1, or nothing at all.
 
 2. It includes built-in support for users who prefer reduced motion, automatically suppressing transitions based on system or browser settings.
 
 3. The View Transition API cancels active view transitions when a new one starts. `mayStartViewTransition` provides alternatives to prevent these cancellations. Here is what's supported:
 
-    * If the old images have not been captured yet, the function can automatically merge additional update callbacks into the current view transition. This means multiple UI components can trigger transitions close together, and they will seamlessly act as one.
+   - If the old images have not been captured yet, the function can automatically merge additional update callbacks into the current view transition. This means multiple UI components can trigger transitions close together, and they will seamlessly act as one.
 
-    * If  the old images were already captured, the function queues new update  callbacks and types and runs them once the current view transitions finishes, combining them into a single update function for a new view transition.
+   - If the old images were already captured, the function queues new update callbacks and types and runs them once the current view transitions finishes, combining them into a single update function for a new view transition.
 
-    * It can also skip starting a new transition if one is already running, letting the active one take the lead for a smoother result.
+   - It can also skip starting a new transition if one is already running, letting the active one take the lead for a smoother result.
 
 In the simplest use case, `mayStartViewTransition` works as a drop-in replacement for `document.startViewTransition`. Like the Level 2 API, it accepts either an update callback or an options object with a callback and view transition types. If the browser only supports the old syntax with the callback, the parameters are mapped accordingly. Types are lost in this case.
 
@@ -407,6 +473,7 @@ export interface StartViewTransitionExtensions {
   useTypesPolyfill?: 'always' | 'auto' | 'never';
 }
 ```
+
 ### Basic Chaining Examples
 
 `mayStartViewTransition` is useful when you need to manage concurrent calls to `startViewTransition`. Common use cases include debouncing transitions triggered by user events, or allowing UI components to start view transitions independently, without requiring them to coordinate or be manually integrated into a single transition.
@@ -416,21 +483,20 @@ export interface StartViewTransitionExtensions {
 The [Derived Trajectories](/vector-demo/) demo uses `mayStartViewTransitions` to ensure that rapid clicks triggering element shuffles do not cancel the current view transition animation.
 
 ```js
-button.addEventListener('click', (e)=>{
+button.addEventListener("click", (e) => {
   mayStartViewTransition(shuffle, {
-    collisionBehavior: "chaining"
-  })
+    collisionBehavior: "chaining",
+  });
 });
 ```
+
 If the user clicked several times during the animation, `mayStartViewTransition` queues the shuffle callbacks and executes them together in a single update function for a subsequent view transition.
 
-The [Game of Life](/chaining-demo/) uses the same technique to decouple the calculation of new generations from their rendering. If generations are requested faster than the view transition can display them, `mayStartViewTransition`  automatically queues the update callbacks. You can quickly fill the queue on desktop by "clicking" the NEXT button using the keyboard auto-repeat. You should then see the queued request processed in batches. Visually, life proceeds skipping several generations at a time.
-
+The [Game of Life](/chaining-demo/) uses the same technique to decouple the calculation of new generations from their rendering. If generations are requested faster than the view transition can display them, `mayStartViewTransition` automatically queues the update callbacks. You can quickly fill the queue on desktop by "clicking" the NEXT button using the keyboard auto-repeat. You should then see the queued request processed in batches. Visually, life proceeds skipping several generations at a time.
 
 #### Automatic Integration
 
-The [Tower of Hanoi](https://fun-with-view-transitions.pages.dev/episode/7/page.html) demo, [covered by its own episode of Fun with View Transitions](/fwvt/playing/) makes multiple independent calls to `mayStartViewTransition`. One animates the  disk movements, another updates the progress bar and counters. A separate view transition runs when the puzzle is solved, and yet another comes in when switching between light and dark mode.
-
+The [Tower of Hanoi](https://fun-with-view-transitions.pages.dev/episode/7/page.html) demo, [covered by its own episode of Fun with View Transitions](/fwvt/playing/) makes multiple independent calls to `mayStartViewTransition`. One animates the disk movements, another updates the progress bar and counters. A separate view transition runs when the puzzle is solved, and yet another comes in when switching between light and dark mode.
 
 These transitions are conceptually and technically independent. Some share the same trigger, but not all. From the user's perspective, the result appears as a single coordinated transition, even though there is no shared or global app code managing synchronization.
 
@@ -439,45 +505,50 @@ These transitions are conceptually and technically independent. Some share the s
 mayStartViewTransition(updateProgress, {collisionBehavior: "chaining"});
 ...
 ```
+
 ```js title="MoveDisks"
 ...
 mayStartViewTransition(moveDisks, {collisionBehavior: "chaining"});
 ...
 ```
 
-Assume the `ProgressContainer` code runs before the `MoveDisk` code. `ProgressContainer` calls `mayStarViewTransition()`, which eventually invokes the browser's `document.startViewTransition()`. That creates the result object containing the view transition promises and hands off image capturing  and update callback execution to the browser's render loop. 
+Assume the `ProgressContainer` code runs before the `MoveDisk` code. `ProgressContainer` calls `mayStarViewTransition()`, which eventually invokes the browser's `document.startViewTransition()`. That creates the result object containing the view transition promises and hands off image capturing and update callback execution to the browser's render loop.
 
-
-If  `MoveDisk` calls `mayStartViewTransition` before the next render loop runs, the function can automatically extend the current view transition to include `MoveDisk`'s update callback (and, optionally, its types). This mechanism is not limited to just two calls.
+If `MoveDisk` calls `mayStartViewTransition` before the next render loop runs, the function can automatically extend the current view transition to include `MoveDisk`'s update callback (and, optionally, its types). This mechanism is not limited to just two calls.
 
 In fact, as long as your code does not return control to the macro-task queue, the browser will not re-enter the render loop, and will not start capturing the old images. During that time, all your update callbacks can be included in a single view transition.
 
-Just keep in mind that the browser might lose patience and skip the transition if the (combined) update callback takes too long. Chromium based browsers seem to have a limit of around four seconds, but really, who wants to block rendering for that long? The best practice is handle any time-consuming preparations before starting the view transition, and keep update callback as short and simple a possible, ideally as a synchronous function.   
-
-
+Just keep in mind that the browser might lose patience and skip the transition if the (combined) update callback takes too long. Chromium based browsers seem to have a limit of around four seconds, but really, who wants to block rendering for that long? The best practice is handle any time-consuming preparations before starting the view transition, and keep update callback as short and simple a possible, ideally as a synchronous function.
 
 ### respectReducedMotion
+
 When `respectReducedMotion` is enabled, `mayStartViewTransition` behaves as if native view transitions are not supported if the user has turned on reduced motion at the operation system or browser level.
 
 ### collisionBehavior: "chaining"
+
 When `collisionBehavior` is set to `"chaining"`, calls to `mayStartViewTransition` do not interrupt active view transitions.
 
 Instead, while the old screenshots are not captured yet, the updates are merged into the current transition.
 Calls arriving after capturing old images are queued and played back in a new view transition that begins automatically once the current one has finished.
 
 ### collisionBehavior: "chaining-only"
+
 Like before, but not combining updates that arrive before the capturing. Updates arriving while a view transition is running are always queued.
 
 ##### speedUpWhenChained
+
 Triggering a new call during an ongoing transition can also be used to speed up the current animation if `speedUpWhenChained` is set to a value greater than 1.
 
 ### collisionBehavior: "skipNew"
+
 Setting `collisionBehavior` to `skipNew` means a new view transition will only start if none is currently active. Otherwise, the update callback is executed immediately as if view transitions weren't supported and without affecting the ongoing view transition.
 
 ### collisionBehavior: "skipOld"
+
 Setting `collisionBehavior` to `skipOld` give you the default behavior of view transitions, where new transitions cancel active ones.
 
 ### collisionBehavior: "never"
+
 Setting `collisionBehavior` to `never` prevents any collisions by executing only the update callback, skipping pseudo-element creation and animation.
 
 For details see [`may-start-view-transition.ts`](http://github.com/vtbag/utensil-drawer/blob/main/src/may-start-view-transition.ts)
@@ -488,7 +559,10 @@ Setting `useTypesPolyfill: "always"` adds a **polyfill for [view transition type
 This bring view transition types even to browsers that [only support Level 1](/basics/levels/#same-document-features-missing-in-level-1) of the View Transition API.
 
 ```js
-mayStartViewTransition({update, types: ["my", "type"]}, {useTypesPolyfill: 'always'})
+mayStartViewTransition(
+  { update, types: ["my", "type"] },
+  { useTypesPolyfill: "always" }
+);
 ```
 
 The polyfill replaces view transition types with CSS classes set on the `:root` element during view transitions.
@@ -497,51 +571,58 @@ As an example, a type called `type-name` is replaced with a class called `vtbag-
 Setting `useTypesPolyfill: "never"` completely disables the polyfill. This is the default. \
 Setting `useTypesPolyfill: "auto"` enables the polyfill in browsers that do support Level 1 but not Level 2 of the View Transition API.
 
-In your stylesheets, you can have your `:active-view-transition-type()` and `:active-view-transition` selectors automatically be rewritten to checks for the inserted classes by using the Bag's [postcss-active-view-transition-type](#the-postcss-active-view-transition-type-postcss-plugin) PostCSS plugin. 
-
-
+In your stylesheets, you can have your `:active-view-transition-type()` and `:active-view-transition` selectors automatically be rewritten to checks for the inserted classes by using the Bag's [postcss-active-view-transition-type](#the-postcss-active-view-transition-type-postcss-plugin) PostCSS plugin.
 
 ### Current View Transition
-The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active.
 
+The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active.
 
 ## The postcss-active-view-transition-type PostCSS Plugin
 
-Want to use `:active-view-transition-type()` and `:active-view-transition` pseudo-classes with browsers that do not support them natively? This is typically the case when there is a time lag between Level 1 and Level 2 implementations of the API. Some browser versions support same-document view transitions (Level 1) but not view transition types (Level 2). Presumably, this will happen again, when Firefox releases its first version of View Transition API support.  
+Want to use `:active-view-transition-type()` and `:active-view-transition` pseudo-classes with browsers that do not support them natively? This is typically the case when there is a time lag between Level 1 and Level 2 implementations of the API. Some browser versions support same-document view transitions (Level 1) but not view transition types (Level 2). Presumably, this will happen again, when Firefox releases its first version of View Transition API support.
 
-The `postcss-active-view-transition-type` plugin addresses view transition types for **same-document** view transitions. **Cross-document** view transitions are also Level 2, so they do not need additional support. 
+The `postcss-active-view-transition-type` plugin addresses view transition types for **same-document** view transitions. **Cross-document** view transitions are also Level 2, so they do not need additional support.
 
-This PostCSS plugin rewrites the pseudo-class selectors `:active-view-transition-type()` and `:active-view-transition` to selectors that work with the Bag's [polyfill for view transition types](#usetypespolyfill-always--never). Plugin and polyfill together let you use 
-* pseudo-class selectors for view transition types in your stylesheets, 
-* as well as view transition types with [`mayStartViewTransition({types:...})`](#maystartviewtransition), 
+This PostCSS plugin rewrites the pseudo-class selectors `:active-view-transition-type()` and `:active-view-transition` to selectors that work with the Bag's [polyfill for view transition types](#usetypespolyfill-always--never). Plugin and polyfill together let you use
+
+- pseudo-class selectors for view transition types in your stylesheets,
+- as well as view transition types with [`mayStartViewTransition({types:...})`](#maystartviewtransition),
 
 even if those types [are not natively supported](/basics/levels/#same-document-features-missing-in-level-1) on all browsers that implement same-document view transitions.
 
 ### Installation
 
-Install the PostCSS plugin from `npm`:
+Install the PostCSS plugin from npm:
+
 ```sh
 npm i -D postcss-active-view-transition-type
 ```
 
 Add the plugin to your PostCSS config. If you use `vite` (or a framework based on `vite`, like Astro), `vite` will automatically pick up a `postcss.config.cjs` in your project home, if it exists.
+
 ```js title="postcss.config.cjs"
 module.exports = {
   plugins: [
-    require("postcss-active-view-transition-type")
-    // or 
+    require("postcss-active-view-transition-type"),
+    // or
     // require("postcss-active-view-transition-type")({mode: 'append'})
-  ]
+  ],
 };
 ```
-The plugin support a `mode` option: 
-* `in-place` rewrites the selectors in place, 
-* `append` appends the rewritten rules to the original stylesheet.   The following table shows how to combine the plugin and the polyfill parameters.
 
-|When to use|useTypesPolyfill|postcss-active-view-transition-type mode|
-|---|---|---|
-|The recommended way: Activate polyfill only where needed and have original and rewritten rules in your CSS|'auto'| 'append'|
-| If you do not want to use the polyfill|'never' | n.a.|
-| You can avoid duplication of rules if you do not use types with cross-document view transition and all same-document view transition are started by `mayStartViewTransition()` with `useTypesPlugin: 'always'`|'always' | 'in-place'|
+The plugin support a `mode` option:
+
+- `"in-place"` (the default) rewrites the selectors in place,
+- `"append"` appends the rewritten rules to the original stylesheet. 
 
 
+The recommended value depends on your setting of the `useTypesPolyfill` extension when calling `mayStartViewTransition`: Use `"in-place"` for `useTypesPolyfill: "always"`. Use `"append"` for `useTypesPolyfill: "auto"`.
+
+The following table shows how to combine the plugin and the polyfill parameters in more detail.
+
+
+| When to use                                                                                                                                                                                                    | useTypesPolyfill | postcss-active-view-transition-type mode |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ---------------------------------------- |
+| Activate the polyfill only where needed and have original and rewritten rules in your CSS                                                                                                     | 'auto'           | 'append'                                 |
+| You can avoid duplication of rules if you do not use types with cross-document view transitions and all same-document view transitions are started using `mayStartViewTransition()` with `useTypesPlugin: 'always'` | 'always'         | 'in-place'                               |
+| If you do not want to use the polyfill                                                                                                                                                                         | 'never'          | n.a.                                     |

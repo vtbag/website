@@ -381,7 +381,7 @@
           hr.style.animationDuration = "0.75s";
           hr2.style.animationDuration = "0.75s";
           this.nextGeneration();
-        }, { collisionBehavior: chaining.checked ? "chaining" : "skipOld", useTypesPolyfill: 'always' });
+        }, { collisionBehavior: chaining.checked ? "chaining" : "skipOld", useTypesPolyfill: 'auto' });
 
         transition.finished.then(() => {
           hr.style.animationDuration = hr2.style.animationDuration = "20s";
