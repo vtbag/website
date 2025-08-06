@@ -252,11 +252,11 @@ function sidebar() {
           label: "Pseudo-Smooth-Scrolling?",
           link: "/tips/pseudo-smooth-scrolling/",
         },
-        { label: "Automatic Names", link: "/tips/auto-names/" },
+        { label: "Automatic Names", link: "/tips/auto-names/",
+          badge: { text: "Updated!", variant: "success" } as Badge },
         {
           label: "Retaining Interactivity",
           link: "/tips/interactivity/",
-          badge: { text: "New!", variant: "success" } as Badge,
         },
       ],
     },

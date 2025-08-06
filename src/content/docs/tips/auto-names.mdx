@@ -41,11 +41,11 @@ In reality, you don't want to select each element individually. Instead, you wan
 ## How to Assign Names Automatically?
 Here are your options right now:
 
-* Currently only feasible for same-document view transitions: generate dynamic identifiers with [match-element](/basics/pseudos/#auto-generated-names-match-element)
+* Useful for same-document view transitions: generate dynamic identifiers with [match-element](/basics/pseudos/#auto-generated-names-match-element)
 
-* In rare cases also for cross-document view transitions: generate dynamic identifiers with [auto](/basics/pseudos/#auto-generated-names-auto) for elements with `id` properties.
+* Cross-document: generate dynamic identifiers with [auto](/basics/pseudos/#auto-generated-names-auto) for elements with `id` properties.
 
-* [Copy an existing unique attribute](/basics/pseudos/#auto-generated-names-match-element) like `id`
+* [Copy an existing unique attribute](/basics/pseudos/#auto-generated-names-match-element) like `id` using `attr(id type(<custom-ident>))`
 * In JavaScript, do something like \
 `querySelectorAll("selector").forEach(e => e.style.viewTransitionName = ...)`
 * Use a script like the [`declarative-names`](/tools/utensil-drawer/#declarative-names) script \
