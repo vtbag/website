@@ -571,7 +571,7 @@ If the active view transition type caught your interest, this way of guarding us
 
 If you wondered why this demo doesn't use `view-transition-name: auto` or `view-transition-name: match-element`, here is the answer: 
 
-[Auto-generated](/basics/pseudos/#auto-generated-names-auto-and-match-element) view transition names are fine if you do not need to address individual elements. You can still address _all_ elements using view transition classes. But because the auto-assigned name is the APIs little secret, you do not know it and thus can't use it to address a particular element.
+[Auto-generated](/basics/pseudos/#auto-generated-names-match-element) view transition names are fine if you do not need to address individual elements. You can still address _all_ elements using view transition classes. But because the auto-assigned name is the APIs little secret, you do not know it and thus can't use it to address a particular element.
 
 For staggered animations we assign individual delays to the disks and for this we need to know the name of the pseudo-element. If you were counting on `sibling-index()` to make things easier in combination with the `.disk` view transition class, sorry to disappoint: tree-counting functions only work on real DOM elements, not on pseudo-elements. 
 

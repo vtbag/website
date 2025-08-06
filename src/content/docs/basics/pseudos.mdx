@@ -167,7 +167,7 @@ At the start of the view transition, the **view transition names have to be uniq
 There are two exceptions: 
 - The API ignores the `view-transition-name` of a fragmented element, i.e. an element that consists of two or more boxes, like an inline element that spans two lines.
 
-- The API ignores the `view-transition-name` of an element if that element is not rendered, like the `<head>`, or if it is skipped. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance have  their `display` CSS property set to `none`.  Looking for an example? This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site. This trick also works with an ancestor with `content-visibility: hidden` but not with a simple `visibility: hidden` directly on the element.
+- The API ignores the `view-transition-name` of an element if that element is not rendered, like the `<head>`, or if it is skipped. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance have  their `display` CSS property set to `none`. This can also be done by setting an HTML element's hidden attribute or property. Looking for an example? This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site. This trick also works with an ancestor with `content-visibility: hidden` but not with a simple `visibility: hidden` directly on the element.
 
 
 The static user agent stylesheet provides one default name for the document, called `root`.
@@ -183,6 +183,9 @@ This default defines an animation for the current viewport. If you want to anima
   view-transition-name: none;
 }
 ```
+The special value `none` removes a potentially set view transition name.
+
+Other special names are [`match-element`](#auto-generated-names-match-element) and `auto`, and all names beginning with `-ua-`. 
 
 ### Escaping
 Do not quote the names. They are not strings but [custom-ident](https://developer.mozilla.org/de/docs/Web/CSS/custom-ident) values. Ensure proper escaping of special characters. The simplest, most portable approach is to just use upper and lower case letters from A to Z, digits from 0 to 9, an underscore `_` or a hyphen `-` character. But don't start the name with a digit. While all other characters with a code < 128 need to be escaped, codes > 127 like 😄 seem to work just fine in view transition names. In browsers, you can use `CSS.escape()` to properly escape strings as custom identifiers.
@@ -190,30 +193,63 @@ Do not quote the names. They are not strings but [custom-ident](https://develope
 It is not important to have much imagination when choosing names. They can be the similar to the `id` of an element or name of a unique tag like `body` or `footer`.
 
 
-### Auto-Generated Names: auto and match-element
-The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](/tips/auto-names/). However, it is also possible to do this with only CSS by using the `auto` value, no JavaScript needed.
+### Auto-Generated Names: match-element
+The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined as it acts as a marker for elements for which the API should generate view transition groups. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](/tips/auto-names/). 
+
+However, it is also possible to do this with only CSS by using the `match-element` value, no JavaScript needed.
 
 ```css
-.tile {
-  view-transition-name: auto;
-}
 .card {
   view-transition-name: match-element;
 }
 ```
 
-[Check if your current browser already supports it](/basics/test-page/).
-
-Both, `auto` and `match-element`, assign a generated name that is bound to the DOM element.
-Those names typically look like `-ua-auto-....`.
+Using `match-element` assigns a generated name that is bound to the DOM element.  
+Those names typically look like `-ua-....` with some random suffix.
 Two different elements are always assigned different values.
 When you set the view transition name multiple times for the same element that way, it will always get the same name.
 
-Safari, first checks for an existing `id` attribute, and instead copies its value if it exists. Chromium browsers don't.
+How could you style your pseudo-elements, if they have an unknown random name? The general approach here is to also assign a view transition class. 
+```css
+.card {
+  view-transition-name: match-element;
+  view-transition-class: card;
+}
+```
+The class name does not need to be unique across elements. Then [use the view transition class name](/basics/styling/#with-classes) in your style rules. 
 
-With cross-document view transitions, auto-generated names of the two documents will never be the same, [not even when `id` attributes would match](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name).
+This works fine for **same-document** view transitions on supporting browsers. 
+For **cross-document** view transitions, generated names for the two document should never be the same. Therefore groups created from `match-element` in cross-document view transitions wi ll always have image-pairs with a single old or new image, only. 
 
-`match-element` will always assign a random name, no matter wether the `id` attribute is set or not. On Chromium browsers, `auto` and `match-element` seem to be the same thing.
+:::caution
+That is, if they are created. Safari seems to handle `match-element` like `none` in cross-document view transitions for elements that do not define an `id`.
+:::
+
+Until it gets broader, convergent support in browsers, **I would not recommend `match-element`** for cross-document view transitions. There are [alternatives](/tips/auto-names/#how-to-assign-names-automatically) that work cross-browser and also for cross-document navigation.
+
+### Auto-Generated Names: auto
+
+_`view-transition-name: auto` is a bit of a mess right now. Use with caution._
+
+Browser also defined `auto` as a special value for `view-transition-name`, but its semantics are not consistent across browsers and its specification is work in progress. Do not use it (yet).
+
+```css
+selector {
+  view-transition-name: auto; 
+}
+```
+This is similar to `match-element` but it also takes the `id` property of an HTML element into account: If the `id` property is set, `auto` generates the same view transition name for all elements with that `id`, independent of the document that element belongs to.
+Different ids generate different view transition names. The generated name has to start with `-ua-`. 
+
+Different browsers and browser versions show divergent behavior. Safari used to directly use the `id` value as view transition name. Current versions use `-ua-id-<id>`, where `<id>` is the element's `id` value. Chrome uses random values similar to those generated for `match-element`.
+
+:::caution
+Like with `match-element`, Safari seem to not generate random names for cross-document view transitions enabled with `@view-transition{navigation: auto}`. Only for view transitions started by `startViewTransition()`.
+:::
+
+### Using id as View Transition Name
+
+_Not available across browsers, yet._
 
 On Chromium browsers you would use the following incantation to use the id attribute as an view transition name:
 ```css
@@ -224,10 +260,9 @@ Here `type(<custom-ident>)` is necessary to make the id a custom-ident, and `non
 Fun fact: The following works in Chrome like the original Safari version of `auto`: Use the `id` attribute if defined, otherwise make up some name.
 
 ```css
-view-transition-name: attr(id type(<custom-ident>), auto);
+view-transition-name: attr(id type(<custom-ident>), match-element);
 ```
 
-I would not recommend `auto` for cross-document view transitions. There are [alternatives](/tips/auto-names/#how-to-assign-names-automatically) that work cross-browser and also for cross-document navigation.
 
 
 

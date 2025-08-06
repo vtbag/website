@@ -41,47 +41,47 @@ In reality, you don't want to select each element individually. Instead, you wan
 ## How to Assign Names Automatically?
 Here are your options right now:
 
-* For same-document view transitions, only: generate [dynamic identifiers](/basics/pseudos/#auto-generated-names-auto-and-match-element) with `match-element` (or `auto`): \
-`selector { view-transition-name: match-element; } /* or auto */`
-* _Not yet baseline: Copy an existing unique attribute like `id`: \
-`selector { view-transition-name: attr(id type(<custom-ident>)); }`
+* Currently only feasible for same-document view transitions: generate dynamic identifiers with [match-element](/basics/pseudos/#auto-generated-names-match-element)
+
+* In rare cases also for cross-document view transitions: generate dynamic identifiers with [auto](/basics/pseudos/#auto-generated-names-auto) for elements with `id` properties.
+
+* [Copy an existing unique attribute](/basics/pseudos/#auto-generated-names-match-element) like `id`
 * In JavaScript, do something like \
 `querySelectorAll("selector").forEach(e => e.style.viewTransitionName = ...)`
-*    Use a script like [`declarative-names`](/tools/utensil-drawer/#declarative-names) script \
+* Use a script like the [`declarative-names`](/tools/utensil-drawer/#declarative-names) script \
 `<script src="/declarative-names.js" data-vtbag-decl="selector"/>`
 
-I wouldn't recommend the first two approaches just yet, as they are still a bit experimental for cross-document view transitions and don't work reliably across all browsers. But I'm curious and looking forward to what the future has in store.
 
-### Special View Transition Names
+I would **not recommend the first three** approaches just yet, as of today, they don't work reliably across all browsers. But I'm curious and looking forward to what the future has in store.
+
+### Auto Generated Names
 
 
-Assigning `auto` as a view transition name dynamically generates unique names.
-Safari supports this since 18.2, in Chrome it is hidden behind a flag, in Edge it is not supported.
-Where it is supported, it works for same-document view transitions. Other than [defined in the specification](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name) it does not or only partly work for cross-document view transitions.
+Assigning `match-element` or `auto` as a view transition name dynamically generates unique names.
+Where it is supported, it works for same-document view transitions.
 
-Safari generates rather short names, but only for `startViewTransition()`, and not for cross-document view transitions.
+Safari generates rather short names.
 ```cs
 -ua-auto-2235
 -ua-auto-2236
 -ua-auto-2237
 ...
 ```
-Chrome's dynamically generated names at least appear as though they could technically distinguish the owner documents of the old and new page elements during cross-document transitions. However, it only generates old images for `auto` on cross-document view transitions.
+Chrome's dynamically generated names can technically distinguish the owner documents of the old and new page elements during cross-document transitions. 
 
 ```cs
--ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-380
--ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-381
--ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-382
+-ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-63044
+-ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-63051
+-ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-63058
 ...
 ```
-Setting the name to `auto` does not always generate those fancy dynamic names. If the element has an `id`-attribute, its value is used as the view transition name instead. This works fine in Safari but not in Chrome.
+Some Chrome versions conceal the random value by mapping it back to `match-element` on some interfaces. But that might soon change again.
 
-Chrome and Safari also support `match-element`, which works like `auto` but always generates a dynamic name, even when an `id` attribute is present.
 
 ### Using attr() For Names
 
-Chrome offers `view-transition-name: attr(id type(<custom-ident>))` as an alternative to `view-transition-name: auto`.
-Currently, this typed `attr()` function is _only available in Chrome_. When used with the `id` attribute, it behaves like the `auto` view transitions name when `id` is set.
+Chrome offers [`view-transition-name: attr(id type(<custom-ident>))`](/basics/pseudos/#auto-generated-names-match-element) as an alternative way to set view transition names.
+Currently, this typed `attr()` function is _only available in Chrome_.
 
 You might wonder why copying another attribute's value counts as a solution here. After all, you only get automatic view transition names if you have already manually set all those `id` attributes.  Well, yes. At least it is less to type.
 
@@ -99,7 +99,7 @@ ul li:nth-child(even) {
 
 After everything we've covered so far: If you want a solution that reliably works across browsers and can also be used for cross-document view transitions, it seems you're better off doing it yourself. Using `document.querySelectorAll()` lets you take advantage of arbitrary CSS selectors, as seen in the previous section. Plus, you have full control over the names you want to generate and assign.
 
-Instead of building this functionality from scratch, you can use the declarative-names script from the Utensil Drawer. It also supports CSS selectors and lets you choose the names to use. Plus, you can decide whether to override existing names or keep them and even assign names randomly, creating a randomization effect like in the introductory demo on this page.
+Instead of building this functionality from scratch, you can use the [declarative-names script](/tools/utensil-drawer/#declarative-names) from the Utensil Drawer. It also supports CSS selectors and lets you choose the names to use. Plus, you can decide whether to override existing names or keep them and even assign names randomly, creating a randomization effect like in the introductory demo on this page.
 
 Fun fact: The introductory demo does _not_ use the `declarative-names` script. Honestly, as already [observed](#:~:text=If%20you%E2%80%99re%20generating%20HTML%20from%20data%2C%20you%20can%20also%20generate%20view%20transition%20names%20with%20minimal%20extra%20work.), dynamically adding view transition names is hardly extra work if you're already generating the HTML with JavaScript.
 

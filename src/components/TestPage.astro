@@ -32,24 +32,7 @@
       return { name: ua, version: "" };
     }
 
-    const activation = (act) => {
-      copy = {};
-      copy.from = {};
-      copy.from.url = act?.from?.url;
-      copy.from.index = act?.from?.index;
-      copy.entry = {};
-      copy.entry.url = act?.entry?.url;
-      copy.entry.index = act?.entry?.index;
-      copy.navigationType = act?.navigationType;
-      return copy;
-    };
     addEventListener("pagereveal", (e) => {
-      const d = {};
-      d.viewTransition = e?.viewTransition;
-      d.activation = activation(
-        "navigation" in window ? window.navigation?.activation : undefined
-      );
-      sessionStorage.setItem("vtbag-pagereveal", JSON.stringify(d));
       e.viewTransition?.ready.then(() => {
         const as = document.getAnimations();
         as.forEach((a) => {
@@ -60,43 +43,42 @@
     });
 
     addEventListener("pageswap", (e) => {
-      const d = {};
-      d.viewTransition = e?.viewTransition;
-      d.activation = activation(e?.activation);
-      sessionStorage.setItem("vtbag-pageswap", JSON.stringify(d));
+      sessionStorage.removeItem("vtbag-pageswap-idx");
+      (e.activation?.entry?.index ?? -1 !== -1) &&
+        sessionStorage.setItem("vtbag-pageswap-idx", "x");
     });
     addEventListener("load", () => {
-      setTimeout(() => {
-        if (!new URL(location, location.href).searchParams.has("pagereveal")) {
-          location.href = "/basics/test-page/?pagereveal";
+      setTimeout(async () => {
+        if (!sessionStorage.getItem("vtbag-test-page")) {
+          sessionStorage.setItem("vtbag-test-page", "x");
+          location.href = "/basics/test-page/";
         } else {
-          const reveal = JSON.parse(sessionStorage.getItem("vtbag-pagereveal"));
-          const swap = JSON.parse(sessionStorage.getItem("vtbag-pageswap"));
-          reveal && document.documentElement.setAttribute("cdvt", "");
-          reveal?.viewTransition &&
-            document.documentElement.setAttribute("prvt", "");
-          reveal?.activation &&
-            document.documentElement.setAttribute("ract", "");
-          swap?.viewTransition &&
-            document.documentElement.setAttribute("psvt", "");
-          swap?.activation && document.documentElement.setAttribute("sact", "");
-          ((swap?.activation?.entry?.index ?? -1) !== -1 ||
-            (swap?.activation?.from?.index ?? -1) !== -1) &&
-            document.documentElement.setAttribute("idx", "");
-          "startViewTransition" in document &&
+          sessionStorage.removeItem("vtbag-test-page");
+          if (document.startViewTransition) {
+            let matchElement = true;
+            await document.startViewTransition().ready;
+            document.getAnimations().forEach((a) => {
+              if (a.animationName === "no-match-element") matchElement = false;
+            }); 
             document.documentElement.setAttribute("sdvt", "");
-          "navigation" in window &&
-            document.documentElement.setAttribute("nav", "");
+            matchElement && document.documentElement.setAttribute("vtnme", "");
+          }
+          "onpageswap" in window &&
+            document.documentElement.setAttribute("cdvt", "");
+          sessionStorage.getItem("vtbag-pageswap-idx") &&
+            document.documentElement.setAttribute("idx", "");
           CSS.supports("view-transition-class", "mine") &&
             document.documentElement.setAttribute("vtc", "");
-          CSS.supports("view-transition-name", "auto") &&
-            document.documentElement.setAttribute("vtna", "");
           CSS.supports("view-transition-group", "g") &&
             document.documentElement.setAttribute("vtg", "");
           document.documentElement.getAttribute("_vtgc") &&
             document.documentElement.setAttribute("vtgc", "");
+          document.documentElement.getAttribute("_vtnme") &&
+            document.documentElement.setAttribute("vtnme", "");
           document.body.startViewTransition &&
             document.documentElement.setAttribute("svt", "");
+          "navigation" in window &&
+            document.documentElement.setAttribute("nav", "");
           "prerendering" in document &&
             document.documentElement.setAttribute("spec", "");
 
@@ -114,12 +96,20 @@
   </script>
 </portal-gate>
 <style is:global>
-  #test {
+  .test {
     view-transition-name: test;
     view-transition-group: root;
+  }
+  .test-match-element {
+    view-transition-name: match-element;
   }
   ::view-transition-group-children(root) {
     animation-name: -ua-view-transition-fade-out;
     animation-duration: 0.25s;
+  }
+  ::view-transition-new(match-element) {
+    animation-name: no-match-element;
+  }
+  @keyframes no-match-element {
   }
 </style>
