@@ -241,7 +241,7 @@ selector {
 This is similar to `match-element` but it also takes the `id` property of an HTML element into account: If the `id` property is set, `auto` generates the same view transition name for all elements with that `id`, independent of the document that element belongs to.
 Different ids generate different view transition names. The generated name has to start with `-ua-`. 
 
-Different browsers and browser versions show divergent behavior. Safari used to directly use the `id` value as view transition name. Current versions use `-ua-id-<id>`, where `<id>` is the element's `id` value. Chrome uses random values similar to those generated for `match-element`.
+Different browsers and browser versions show divergent behavior. Safari uses the `id` value as view transition name. On some Webkit versions you might also see `-ua-id-<id>`, where `<id>` is the element's `id` value. Chrome uses random values similar to those generated for `match-element`.
 
 :::caution
 Like with `match-element`, Safari seem to not generate random names for cross-document view transitions enabled with `@view-transition{navigation: auto}`. Only for view transitions started by `startViewTransition()`.
