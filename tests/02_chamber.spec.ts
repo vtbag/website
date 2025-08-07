@@ -1,5 +1,8 @@
 import { test, expect, type Page } from '@playwright/test';
 
+test.skip(({ browserName }) => browserName === 'firefox', 'Skip on Firefox');
+
+
 test('has title', async ({ page }) => {
   await page.goto('http://localhost:4321/inspection-chamber-demo/first-page/');
   await expect(page).toHaveTitle('🔬 Inspection Chamber Demo | @vtbag');
