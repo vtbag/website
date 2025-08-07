@@ -1,0 +1,24 @@
+---
+import Layout from "./_Layout.astro";
+---
+
+<Layout title="Auto 2">
+  <script is:inline slot="head">
+    addEventListener("pagereveal", async (e) => {
+      await e.viewTransition?.ready;
+      document.getAnimations().forEach((a) => {
+        if (a.animationName.startsWith("stop")) {
+          console.log(a.animationName, a.effect.pseudoElement);
+        }
+      });
+    });
+  </script>
+  <body id="body">
+    <h1 id="hid">Auto 2</h1>
+    <p>This is another test page for view transitions.</p>
+    <p>
+      <a href="/auto/Auto1/">Go to Page Auto 1</a>
+      <button id="button">Click Me</button>
+    </p>
+  </body>
+</Layout>

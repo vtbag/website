@@ -1,0 +1,77 @@
+---
+export interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<html>
+  <head>
+    <title>{title}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style is:inline>
+      ::view-transition-image-pair(.body),
+      ::view-transition-new(.body),
+      ::view-transition-old(.body) {
+        animation-name: stop-body;
+      }
+      ::view-transition-image-pair(.heading),
+      ::view-transition-new(.heading),
+      ::view-transition-old(.heading) {
+        animation-name: stop-heading;
+      }
+      ::view-transition-image-pair(.p),
+      ::view-transition-new(.p),
+      ::view-transition-old(.p) {
+        animation-name: stop-p;
+      }
+      @keyframes stop-body {
+      }
+      @keyframes stop-heading {
+      }
+      @keyframes stop-p {
+      }
+    </style>
+    <slot name="head" />
+  </head>
+  <slot />
+
+  <style is:global>
+    @view-transition {
+      navigation: auto;
+    }
+    :root {
+      view-transition-name: none;
+    }
+    h1,
+    h2 {
+      view-transition-name: auto;
+      view-transition-class: heading;
+    }
+    body {
+      view-transition-name: match-element;
+      view-transition-class: body;
+    }
+    p {
+      view-transition-name: attr(id type(<custom-ident>), match-element);
+      view-transition-class: p;
+    }
+    h1,
+    h2 {
+      width: fit-content;
+    }
+  </style>
+  <script>
+    console.log(navigator.userAgent);
+    document.querySelector("#button")?.addEventListener("click", async () => {
+      await document.startViewTransition().ready;
+      document.getAnimations().forEach((x) => {
+        const a = x as CSSAnimation;
+        if (a.animationName.startsWith("stop")) {
+          console.log(a.animationName, a.effect!.pseudoElement);
+        }
+      });
+    });
+  </script>
+</html>
