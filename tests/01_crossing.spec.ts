@@ -62,15 +62,15 @@ test.describe("vtbag", () => {
     await new Promise(r => setTimeout(r, 1000));
     const video1 = await page.$eval('video', el => el.currentTime);
     const svg1 = await page.$eval('svg', (el: SVGSVGElement) => el.getCurrentTime());
-    const footer1 =await page.$eval('footer div', el => ~~getComputedStyle(el).transform.split(/,\s*/)[4]!);
+    const footer1 = await page.$eval('footer div', el => ~~getComputedStyle(el).transform.split(/,\s*/)[4]!);
 
     await page.click('text=Page 2');
     await expect(page).toHaveTitle('Vanilla Element Crossing 2/2 | @vtbag');
-    await new Promise(r=>setTimeout(r)); // get rid of race condition
+    await new Promise(r => setTimeout(r)); // get rid of race condition
 
     const video2 = await page.$eval("video", (el) => el.currentTime);
     const svg2 = await page.$eval('svg', (el: SVGSVGElement) => el.getCurrentTime());
-    const footer2 =await page.$eval('footer div', el => ~~getComputedStyle(el).transform.split(/,\s*/)[4]!);
+    const footer2 = await page.$eval('footer div', el => ~~getComputedStyle(el).transform.split(/,\s*/)[4]!);
 
     expect(video1).toBeGreaterThan(1);
     expect(video2).toBeGreaterThan(video1);
@@ -87,7 +87,7 @@ test.describe("vtbot", () => {
 
     expect(await page.locator("#p").getAttribute("style")).toBe("color: blue");
     await page.click('text=goto z');
-    await new Promise(r => setTimeout(r, 100)); 
+    await new Promise(r => setTimeout(r, 100));
     expect(await page.locator("#p").getAttribute("style")).toBe("color: blue;");
   });
 
@@ -96,7 +96,7 @@ test.describe("vtbot", () => {
 
     expect(await page.locator("#p").getAttribute("style")).toBe("color: blue");
     await page.click('text=goto z2');
-    await new Promise(r => setTimeout(r, 100)); 
+    await new Promise(r => setTimeout(r, 100));
     expect(await page.locator("#p").getAttribute("style")).toBe("color: blue;");
     await page.reload();
     expect(await page.locator("#p").getAttribute("style")).toBe("color: red");
