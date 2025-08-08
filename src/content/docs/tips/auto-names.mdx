@@ -58,30 +58,45 @@ I would **not recommend the first three** approaches just yet, as of today, they
 
 
 Assigning `match-element` or `auto` as a view transition name dynamically generates unique names.
-Where it is supported, it works for same-document view transitions.
+Where it is supported, it works well for same-document view transitions. 
 
-Safari generates rather short names.
+The view transition names generated this way depend on the browser. While Safari's `auto` value seems to encourage the use of the id attribute as view transition name for cross-document view transitions, this does not work for the other browsers. 
+
+For same-document view-transitions, Safari generates rather short names, but it wont generate those for cross-document view transition. 
 ```cs
 -ua-auto-2235
 -ua-auto-2236
 -ua-auto-2237
-...
 ```
-Chrome's dynamically generated names can technically distinguish the owner documents of the old and new page elements during cross-document transitions. 
+What works in Safari for cross-document view transitions: Use `auto` on elements that have their `id` set. In this case, Safari/Webkit just copies the id as an view transition name, directly or with some prefix.
+```cs
+myid
+-ua-id-myid
+```
+But that is not really auto generating view transition names, right?
+
+
+Chrome's dynamically generated names use what looks like a cryptographic hash to distinguish the owner documents of elements and a counter to distinguish the elements within the document. That way it assigns different ids during cross-document transitions.  
 
 ```cs
 -ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-63044
 -ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-63051
 -ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-63058
-...
 ```
+Auto-generation in Chrome works well for same-document and cross-document view transitions. For cross-document view transition, when using `auto` on elements that have their `id` set, Chrome also generates such cryptic names, where the hash only depends on the id, omitting the counter. 
+```
+-ua-auto-A266076C3FD7C0005E7B8A3E59C387EE 
+```
+
 Some Chrome versions conceal the random value by mapping it back to `match-element` on some interfaces. But that might soon change again.
 
 
-### Using attr() For Names
+### Using attr() For View Transition Names
 
-Chrome offers [`view-transition-name: attr(id type(<custom-ident>))`](/basics/pseudos/#auto-generated-names-match-element) as an alternative way to set view transition names.
-Currently, this typed `attr()` function is _only available in Chrome_.
+Chrome offers [`view-transition-name: attr(id type(<custom-ident>))`](/basics/pseudos/#using-id-as-view-transition-name) as an alternative way to set view transition names.
+Currently, this typed `attr()` function is _far from being baseline on all browsers_.
+
+
 
 You might wonder why copying another attribute's value counts as a solution here. After all, you only get automatic view transition names if you have already manually set all those `id` attributes.  Well, yes. At least it is less to type.
 
