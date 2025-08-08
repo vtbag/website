@@ -556,7 +556,7 @@ For details see [`may-start-view-transition.ts`](http://github.com/vtbag/utensil
 ### useTypesPolyfill: "always" | "auto" | "never"
 
 Setting `useTypesPolyfill: "always"` adds a **polyfill for [view transition types]()**.
-This bring view transition types even to browsers that [only support Level 1](/basics/levels/#same-document-features-missing-in-level-1) of the View Transition API.
+This brings view transition types even to browsers that [only support Level 1](/basics/levels/#same-document-features-missing-in-level-1) of the View Transition API.
 
 ```js
 mayStartViewTransition(
@@ -575,7 +575,7 @@ In your stylesheets, you can have your `:active-view-transition-type()` and `:ac
 
 ### Current View Transition
 
-The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active.
+The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active. Looking forward to [native support] via `document.activeViewTransition`. 
 
 ## The postcss-active-view-transition-type PostCSS Plugin
 

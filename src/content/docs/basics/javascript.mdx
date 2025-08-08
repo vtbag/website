@@ -121,6 +121,10 @@ You can dynamically add or remove view transition types during the view transiti
 View transition types are a feature of Level 2 of the View Transition API. They [can be polyfilled](/tools/utensil-drawer/#the-postcss-active-view-transition-type-postcss-plugin) if you want to use them with Level 1 implementations.
 
 
+### Checking for an Active View Transition
+
+Today, the View Transition API does not offer a way to check whether some view transition is currently active or not. Chances are good, that this [will change](/basics/api/#upcoming-topics) soon. If you use  [`mayStartViewTransition`](/tools/utensil-drawer/#maystartviewtransition) from the Utensil Drawer, you can access the most recent `ViewTransition` object by calling [getCurrentViewTransition](/tools/utensil-drawer/#current-view-transition). 
+
 ### Canceling and Chaining
 
 Calling `startViewTransition()` while another view transition is active will interrupt the current view transition, fast forward to the end state of the animations, and start the new view transition from there.
