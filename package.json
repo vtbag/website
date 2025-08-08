@@ -14,17 +14,18 @@
     "@expressive-code/plugin-collapsible-sections": "^0.41.3",
     "@expressive-code/plugin-line-numbers": "^0.41.3",
     "@inox-tools/portal-gun": "^1.2.0",
-    "@playwright/test": "^1.54.1",
-    "@types/node": "^24.1.0",
+    "@playwright/test": "^1.54.2",
+    "@types/node": "^24.2.1",
     "@vtbag/cam-shaft": "^1.0.6",
     "@vtbag/element-crossing": "^1.1.0",
     "@vtbag/inspection-chamber": "^1.0.22",
     "@vtbag/turn-signal": "^1.3.1",
     "@vtbag/utensil-drawer": "^1.2.11",
-    "astro": "^5.12.6",
+    "astro": "^5.12.9",
     "astro-d2": "^0.8.0",
     "astro-og": "^0.3.0",
     "astro-vtbot": "^2.1.7",
+    "baseline-status": "^1.0.11",
     "postcss-active-view-transition-type": "^0.0.4",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
@@ -32,6 +33,6 @@
     "rollup-plugin-visualizer": "^6.0.3",
     "sharp": "^0.34.3",
     "starlight-image-zoom": "^0.13.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.9.2"
   }
 }
