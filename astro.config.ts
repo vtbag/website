@@ -141,7 +141,7 @@ export default defineConfig({
         },
         {
           icon: "blueSky",
-          label: "Blussky",
+          label: "Bluesky",
           href: "https://bsky.app/profile/vtbag.dev",
         },
       ],
