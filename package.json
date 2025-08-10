@@ -26,7 +26,7 @@
     "astro-og": "^0.3.0",
     "astro-vtbot": "^2.1.7",
     "baseline-status": "^1.0.11",
-    "postcss-active-view-transition-type": "^0.0.5",
+    "postcss-active-view-transition-type": "^0.0.7",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
     "rehype-slug": "^6.0.0",
