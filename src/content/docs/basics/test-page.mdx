@@ -14,19 +14,19 @@ import TestPage from "../../../components/TestPage.astro";
 
 This page shows whether your current browser <span id="browser"></span>has native support for view transitions and related APIs like the Navigation API and Speculation Rules.
 
-| Feature                                                                                                      | Support?          |
-| ------------------------------------------------------------------------------------------------------------ | ----------------- |
-| [Same-document view transitions](https://drafts.csswg.org/css-view-transitions-1)                            | <span id="sdvt"/> |
-| [Cross-document view transitions](https://drafts.csswg.org/css-view-transitions-2)                           | <span id="cdvt"/> |
-| [PageSwapEvent.activation.\*.index](https://drafts.csswg.org/css-view-transitions-2/#old-doc-event)          | <span id="idx"/>  |
-| [view-transition-class](https://drafts.csswg.org/css-view-transitions-2/#view-transition-class-prop)         | <span id="vtc"/> |
-| [view-transition-name: match-element](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name) | <span id="vtnme"/> |
-| [Nested view transition groups](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-prop) | <span id="vtg"/>  |
+| Feature                                                                                                                  | Support?           |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------ |
+| [Same-document view transitions](https://drafts.csswg.org/css-view-transitions-1)                                        | <span id="sdvt"/>  |
+| [Cross-document view transitions](https://drafts.csswg.org/css-view-transitions-2)                                       | <span id="cdvt"/>  |
+| [PageSwapEvent.activation.\*.index](https://drafts.csswg.org/css-view-transitions-2/#old-doc-event)                      | <span id="idx"/>   |
+| [view-transition-class](https://drafts.csswg.org/css-view-transitions-2/#view-transition-class-prop)                     | <span id="vtc"/>   |
+| [view-transition-name: match-element](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name)             | <span id="vtnme"/> |
+| [Active view transition name](https://github.com/w3c/csswg-drafts/issues/12407)             | <span id="avt"/>   |
+| [Nested view transition groups](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-prop)             | <span id="vtg"/>   |
 | [View transition group children](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-children-pseudo) | <span id="vtgc"/>  |
-| [Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md)          | <span id="svt"/>  |
-| [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API)                            | <span id="nav"/>  |
-| [Speculation Rules](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)                  | <span id="spec"/> |
-
+| [Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md)                      | <span id="svt"/>   |
+| [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API)                                        | <span id="nav"/>   |
+| [Speculation Rules](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)                              | <span id="spec"/>  |
 
 <div class="test"></div>
 <div class="test-match-element"></div>
@@ -38,31 +38,33 @@ For browser compatibility data regarding the View Transition API see [the mdn pa
 [More pointers to interesting reads](/basics/api/#references).
 
 <style>{`
-	#sdvt,
+	#avt,
 	#cdvt,
+	#idx,
 	#nav,
-	#vtnme,
+	#sdvt,
+	#spec,
+	#svt,
 	#vtc,
 	#vtg,
 	#vtgc,
-	#idx,
-	#svt,
-	#spec {
+	#vtnme {
 		&::before {
 			content: 'Not supported';
 		}
 	}
 
-	:root[sdvt] #sdvt,
+	:root[avt] #avt,
 	:root[cdvt] #cdvt,
+	:root[idx] #idx,
 	:root[nav] #nav,
+	:root[sdvt] #sdvt,
+	:root[spec] #spec,
+	:root[svt] #svt,
 	:root[vtc] #vtc,
 	:root[vtg] #vtg,
 	:root[vtgc] #vtgc,
-	:root[vtnme] #vtnme,
-	:root[idx] #idx,
-	:root[svt] #svt,
-	:root[spec] #spec
+	:root[vtnme] #vtnme
 	 {
 		&::before {
 			content: 'Supported';

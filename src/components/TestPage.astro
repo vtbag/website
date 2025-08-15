@@ -59,12 +59,14 @@
             await document.startViewTransition().ready;
             document.getAnimations().forEach((a) => {
               if (a.animationName === "no-match-element") matchElement = false;
-            }); 
+            });
             document.documentElement.setAttribute("sdvt", "");
             matchElement && document.documentElement.setAttribute("vtnme", "");
           }
           "onpageswap" in window &&
             document.documentElement.setAttribute("cdvt", "");
+          "activeViewTransition" in document &&
+            document.documentElement.setAttribute("avt", "");
           sessionStorage.getItem("vtbag-pageswap-idx") &&
             document.documentElement.setAttribute("idx", "");
           CSS.supports("view-transition-class", "mine") &&
