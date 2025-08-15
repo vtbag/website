@@ -181,7 +181,9 @@ Since the main content areas occupy the same position on both the old and new pa
 
 The browser’s user agent stylesheet aligns the `::view-transition-image-pair(...)` with its `::view-transition-transition-group(...)` in terms of geometry and transform properties. This means you can use either pseudo-element for clipping purposes, and initially, they will produce the same result.
 
-Since these pseudo-elements are fully customizable through CSS, you can alter their properties as needed. You could resize them, add margins, or tweak other styles to create unique visual effects. For instance, you could retain the default morph animation on the transition group while applying a custom animation to the image-pair for clipping. Let your imagination run wild!
+Since these pseudo-elements are fully customizable through CSS, you can alter their properties as needed. You could resize them, add margins, or tweak other styles to create unique visual effects. For instance, you could retain the default morph animation on the transition group while applying a custom animation to the image-pair for clipping. 
+
+The latest pseudo-element addition to the View Transition API points to something new: for _nested_ view transition groups, the pseudo-element tree now includes a `view-transition-group-children` element designed specifically for clipping children. See the next section.
 
 ### Clipping with **Nested** View Transition Groups
 
