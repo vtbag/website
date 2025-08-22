@@ -73,7 +73,7 @@ But for simple same-document view transitions, there are some highly desirable f
 
 ### What Happens when Firefox Releases Level 1
 
-Actually, Firefox Nightly not only supports Level 1 of the View Transition API, also brings some Level 2 features:
+Actually, Firefox Nightly not only supports Level 1 of the View Transition API, but also brings some Level 2 features:
 * Firefox Nightly already [has support for `view-transition-class`](https://bsky.app/profile/vtbag.dev/post/3ltwvggp7xc2u) and the [`:active-view-transition` pseudo-class](basics/test-page/).
 * Firefox Nightly already [has support for `view-transition-name: match-element`](https://bsky.app/profile/martr.app/post/3lwyzve7nac2i), but not for `view-transition-name: auto`, which is not really part of the standard. When usings the [declarative-names script](/tools/utensil-drawer/#declarative-names) from The Bag's Utensil Drawer, you also have an alternative for dynamically generating view transition names that works more reliably across browsers.
 * So the main problem might be the missing support for view transition types. Good news here: The Bag's Utensil Drawer now has a [polyfill for view transition types](/tools/utensil-drawer/#usetypespolyfill-always--never) to support them even on browsers that only implement Level 1 of the View Transition API!
