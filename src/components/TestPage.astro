@@ -69,6 +69,8 @@
             document.documentElement.setAttribute("avt", "");
           sessionStorage.getItem("vtbag-pageswap-idx") &&
             document.documentElement.setAttribute("idx", "");
+          CSS.supports("view-transition-name", "auto") &&
+            document.documentElement.setAttribute("vtna", ""); 
           CSS.supports("view-transition-class", "mine") &&
             document.documentElement.setAttribute("vtc", "");
           CSS.supports("view-transition-group", "g") &&

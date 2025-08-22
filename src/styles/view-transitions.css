@@ -88,19 +88,12 @@ main h1 {
   }
 }
 ::view-transition-group(main) {
-  overflow: hidden;
+  overflow: clip;
 }
 
 sl-sidebar-state-persist {
   view-transition-name: sl-sidebar;
 }
-header.header {
-  view-transition-name: header;
-}
-mobile-starlight-toc nav {
-  view-transition-name: mobile-starlight-toc-nav;
-}
-
 
 ::view-transition-group(butterfly1),
 ::view-transition-group(butterfly2) {
