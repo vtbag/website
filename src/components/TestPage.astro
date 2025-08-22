@@ -44,7 +44,7 @@
 
     addEventListener("pageswap", (e) => {
       sessionStorage.removeItem("vtbag-pageswap-idx");
-      ((e.activation?.entry?.index ?? -1) !== -1) &&
+      if ((e.activation?.from?.index ?? -1) !== -1)
         sessionStorage.setItem("vtbag-pageswap-idx", "x");
     });
     addEventListener("load", () => {
@@ -57,11 +57,14 @@
           if (document.startViewTransition) {
             let matchElement = true;
             await document.startViewTransition().ready;
+            document.documentElement.setAttribute("sdvt", "");
             document.getAnimations().forEach((a) => {
               if (a.animationName === "no-match-element") matchElement = false;
             });
-            document.documentElement.setAttribute("sdvt", "");
             matchElement && document.documentElement.setAttribute("vtnme", "");
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--active-view-transition"
+            ) && document.documentElement.setAttribute("avtpc", "");
           }
           "onpageswap" in window &&
             document.documentElement.setAttribute("cdvt", "");
@@ -70,7 +73,7 @@
           sessionStorage.getItem("vtbag-pageswap-idx") &&
             document.documentElement.setAttribute("idx", "");
           CSS.supports("view-transition-name", "auto") &&
-            document.documentElement.setAttribute("vtna", ""); 
+            document.documentElement.setAttribute("vtna", "");
           CSS.supports("view-transition-class", "mine") &&
             document.documentElement.setAttribute("vtc", "");
           CSS.supports("view-transition-group", "g") &&
@@ -113,6 +116,9 @@
   }
   ::view-transition-new(match-element) {
     animation-name: no-match-element;
+  }
+  :active-view-transition {
+    --active-view-transition: "true";
   }
   @keyframes no-match-element {
   }
