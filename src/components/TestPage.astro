@@ -44,7 +44,7 @@
 
     addEventListener("pageswap", (e) => {
       sessionStorage.removeItem("vtbag-pageswap-idx");
-      (e.activation?.entry?.index ?? -1 !== -1) &&
+      ((e.activation?.entry?.index ?? -1) !== -1) &&
         sessionStorage.setItem("vtbag-pageswap-idx", "x");
     });
     addEventListener("load", () => {
