@@ -16,7 +16,9 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
 
 <details name="fail" class="c">
   <summary>Missing opt-in</summary>
-  When enabling cross-document view transitions, both sides of the navigation must opt in to view transitions. You need the `@view-transition` at-rule on the page where you start the navigation and on the page you navigate to.
+  When enabling cross-document view transitions, both sides of the navigation must opt in to view transitions. Whether you use the `@view-transition` at-rule or a framework component like Astro's client router, you must include it on the page where you start the navigation and on the page you navigate to.
+  
+  ### Native View Transitions
   ```css
   @view-transition {
     navigation: auto;
@@ -31,13 +33,35 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
   }
   ```
   It is best to place this rule and your [global view transition styles](/fwvt/enabling/#including-css-on-all-pages) in a shared stylesheet and include it on every page.
+
+  ### Framework Components
+  For Astro, for example, you are best off including the client router in the global layout you use on every page. Other frameworks with view transition support work in a similar way.
+
+```astro title="Layout.astro"
+---
+import { ClientRouter } from "astro:transitions";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
+    <ClientRouter />
+    ...
+```
+Respect for reduced motion preference is already built in, so you do not need to add anything else for Astro.
 </details>
 
 <details name="fail" class="s c">
 <summary>Non-unique view transition names</summary>
-When the View Transition API takes snapshots, it looks for elements with a [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property.  No two elements selected for screenshots in the old state may have the same view transition name. Same is true when the API captures the new images. Duplicate names raise an error and cancel the view transition as if it was explicitly stopped by `skipTransition()`.  Of course, it is OK and often necessary to have the same names for old and new images, as this is the key to the API's shared element transitions.
+When the View Transition API takes snapshots, it looks for elements with a [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property.  No two elements selected for screenshots in the old state may have the same view transition name. Same is true when the API captures the new images. 
 
-Duplicate view transition names during image capturing are likely when you define view transition names in [reusable components](/tips/css/#components) or if you use the same existing slug in multiple places as a view transition name. Often this can be fixed by adding some context to the view transition name, or [assign names automatically](/tips/auto-names/#setting-names-using-javascript) and then use view transition classes for styling.
+Duplicate names raise an error and cancel the view transition as if it was explicitly stopped by `skipTransition()`.  Of course, it is OK and often necessary to have the same names for old and new images, as this is the key to the API's shared element transitions.
+
+Duplicate view transition names during image capturing are likely when you define view transition names in [reusable components](/tips/css/#components) or if you use the same existing slug in multiple places as a view transition name. 
+
+Often this can be fixed by adding some context to the view transition name, or [assign names automatically](/tips/auto-names/#setting-names-using-javascript) and then use view transition classes for styling.
 
 </details>
 
@@ -164,7 +188,9 @@ If you call `skipTransition()` after the animations started but before they end,
 
 <details name="fail" class="c">
   <summary>Unreliable Animations</summary>
-This one can really throw you off: View transitions work sometimes, sometimes they don't. They might work when you open DevTools. And fail as soon as you close them. They work as a charm when you traverse back and forth through the browser history, but they refuse to show up when you click a link to a new page. Sounds familiar?
+When you use components of your UI framework to enable view transitions, this is normally not an issue. But with native cross-document view transitions, this one can really throw you off: 
+
+View transitions work sometimes, sometimes they don't. They might work when you open DevTools. And fail as soon as you close them. They work as a charm when you traverse back and forth through the browser history, but they refuse to show up when you click a link to a new page. Sounds familiar?
 
 The reason could be that the browser starts view transitions too early during page load. If that is the case, the browser needs a bit of help to decide on the right moment. Tell it [what part of the page to wait for](/basics/pseudos/#delaying-cross-document-transitions) before the transition should start.
 
@@ -172,7 +198,7 @@ The reason could be that the browser starts view transitions too early during pa
 
 <details name="fail" class="s c">
 <summary>View transition names are not correctly escaped</summary>
-Not every string is a valid custom ident that works as a view transition name. If your names include characters like e.g. `/`, `&`, or '+', you must [escape](/basics/pseudos/#escaping) them. Otherwise, the browser will ignore your view transition name.
+If you use UI framework support for view transitions, escaping names should be covered by the framework, but when using the View Transition API directly, you must be aware of this: Not every string is a valid custom ident that works as a view transition name. If your names include characters like e.g. `/`, `&`, or '+', you must [escape](/basics/pseudos/#escaping) them. Otherwise, the browser will ignore your view transition name.
 
 You are safe if you stick to `A`-`Z`, `a`-`z`, `0`-`9`, `-` or `_`, as long as the name does not start with a digit or with a dash followed by a digit. For anything else, use `CSS.escape()` to properly escape the characters in your names. If `CSS.escape()` is not available, use a polyfill or the [`escapeViewTransitionName()`](/tools/utensil-drawer/#escapeviewtransitionname) function from the Bag's Utensil Drawer.
 
@@ -284,7 +310,7 @@ instead of the typical
   
   The main causes to watch for are 
   - missing pre-rendering, 
-  - excessive render blocking, 
+  - excessive render blocking, especially when loading large pages during blocking
   - expensive CSS rules and 
   - massive re-layouts. 
   
