@@ -9,7 +9,7 @@ Most of the time, View Transitions just work. This page is for the exceptions: t
 
 You might trip over some of these, and it could make you turn away from the API. That would be unfortunate because view transitions can be a lot of fun for developers and a real benefit for website users. My goal is to catch you before frustration sets in or you walk away, and to offer help with the most common problems that might occur.
 
-These are things that have tripped me up, and I noticed them while helping others, which reassured me that I was not alone. I hope this list proves useful to others as well. I will keep adding items whenever I spot something that might catch you off guard. But to be honest, I am probably a bit blind to some quirks by now. Please help me improve the list by <a class="not-content" target="\_blank" href={`https://bsky.app/intent/compose?text=@vtbag.dev`}><span>sending tips on Bluesky<b>🦋</b></span></a>
+These are things that have tripped me up, and I noticed them while helping others, which reassured me that I was not alone. I hope this list proves useful to others as well. I will keep adding items whenever I spot something that might catch you off guard. To be honest, I am probably a bit blind to some quirks by now. Please help me improve the list by <a class="not-content" target="\_blank" href={`https://bsky.app/intent/compose?text=@vtbag.dev`}><span>sending tips on Bluesky<b>🦋</b></span></a>
 or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?template=feature-request.yml). Anything that tripped you up or seems worth mentioning is welcome and might help others!
 
 ## View Transitions Do Not Even Start
@@ -34,18 +34,18 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
 </details>
 
 <details name="fail" class="s c">
-<summary>Non unique view transition names</summary>
-When the View Transition API takes snapshots, it looks for elements with a [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property.  No two elements selected for screenshots in the old state must have the same view transition name. Same is true when the API captures the new images. Duplicate names raise an error and cancel the view transition as if it was explicitly stopped by `skipTransition()`.  Of course, it is OK and often necessary to have the same names for old and new images, as this is the key to the API's shared element transitions.
+<summary>Non-unique view transition names</summary>
+When the View Transition API takes snapshots, it looks for elements with a [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property.  No two elements selected for screenshots in the old state may have the same view transition name. Same is true when the API captures the new images. Duplicate names raise an error and cancel the view transition as if it was explicitly stopped by `skipTransition()`.  Of course, it is OK and often necessary to have the same names for old and new images, as this is the key to the API's shared element transitions.
 
-Duplicate view transition names during image capturing are likely when you define view transition names in [reusable components](/tips/css/#components) or if you use the same existing slug in multiple places as a view transition name. Often this can be fixed by adding some context to the view transition name, or [assigning names automatically](/tips/auto-names/#setting-names-using-javascript) and use view transition classes for styling.
+Duplicate view transition names during image capturing are likely when you define view transition names in [reusable components](/tips/css/#components) or if you use the same existing slug in multiple places as a view transition name. Often this can be fixed by adding some context to the view transition name, or [assign names automatically](/tips/auto-names/#setting-names-using-javascript) and then use view transition classes for styling.
 
 </details>
 
 <details name="fail" class="c">
   <summary>Cross-origin navigation</summary>
-  Cross document view transitions are only supported if the two pages have the same origin.
+  Cross-document view transitions are only supported if the two pages have the same origin.
 
-The _origin_ of a URL is the part up to the first single slash. For cross-document view transitions, the protocol (`http:` vs `https:`), the domain, and the port must be identical. Also check for cross-origin redirects.
+The _origin_ of a URL is the part up to the first single slash. For cross-document view transitions, the protocol (`http:` vs `https:`), the domain, and the port must be identical. You should also check for cross-origin redirects.
 
 `https://vtbag.dev/x/` and `http://unsafe.vtbag.dev:1234/y/` fail the same-origin test for all three reasons: different protocol, different domain and different port.
 
@@ -57,7 +57,7 @@ If you have such a different origin navigation, there is nothing you can do to t
 
 <details name="fail" class="s">
 <summary>Errors while executing the update callback</summary>
-Oh, that one is tricky because it can often go unnoticed for a while. If your code throws while executing the update callback, the API will silently ignore it  and just not start the animations.
+Oh, that one is tricky because it can often go unnoticed for a while. If your code throws while executing the update callback, the API will silently ignore it and will not start the animations.
 
 It might be a good idea to catch and log failures during the update to detect this situation when it happens.
 
