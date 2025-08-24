@@ -122,7 +122,7 @@ Thus all contained definitions only exist just during the view transition. Here 
   }
 }
 /* keyframe definitions outside the type guard 
-   because you cant have `:root @keyframes name {}` */
+   because you can't have `:root @keyframes name {}` */
 ```
 One of the main benefits of this pattern is that view transition names are only defined during the view transition with that specific type and thus can not conflict with other unrelated view transition use cases. When the transition ends, they are gone. No need to tidy up afterward.
 
