@@ -252,18 +252,22 @@ function sidebar() {
           label: "Pseudo-Smooth-Scrolling?",
           link: "/tips/pseudo-smooth-scrolling/",
         },
-        { label: "Automatic Names", link: "/tips/auto-names/",
-          badge: { text: "Updated!", variant: "success" } as Badge },
+        { label: "Automatic Names", link: "/tips/auto-names/" },
         {
           label: "Retaining Interactivity",
           link: "/tips/interactivity/",
+        },
+        {
+          label: "Why View Transitions Might Fail",
+          link: "tips/view-transition-fails-and-fixes/",
+          badge: { text: "New!", variant: "success" } as Badge
         },
       ],
     },
     { label: "BagLog", link: "/baglog" },
     {
       label: "All Demos",
-      collapsed: true,
+      collapsed: false,
       items: [
         {
           label: "Inspection Chamber in Action",
@@ -274,7 +278,7 @@ function sidebar() {
         { label: "Preserved State (exp.)", link: "/crossing/over-the-top/1/" },
         { label: "Turn Signal Directions", link: "/signal-demo/bag/" },
         { label: "Image Viewer Demo", link: "/viewer-demo/" },
-        { label: "Fishpond Demo", link: "/link-demo/" },
+        { label: "🌟 Fishpond Demo", link: "/link-demo/" },
         { label: "Pseudo-Smooth-Scrolling", link: "/shaft-demo/1/" },
         { label: "Instant scrolling with Cam-Shaft", link: "/shaft-demo2/1/" },
         {
@@ -285,11 +289,11 @@ function sidebar() {
           label: "Simulated Nested View Transition Groups",
           link: "/basics/hide-and-seek/solution/",
         },
-        { label: "Swirling Image Gallery", link: "/tips/auto-names/" },
-        { label: "Derived Trajectories", link: "/vector-demo/" },
-        { label: "Game of Life", link: "/chaining-demo/" },
+        { label: "🌟 Swirling Image Gallery", link: "/tips/auto-names/" },
+        { label: "🌟 Derived Trajectories", link: "/vector-demo/" },
+        { label: "🌟 Game of Life", link: "/chaining-demo/" },
         {
-          label: "Tower of Hanoi",
+          label: "🌟Tower of Hanoi",
           link: "https://fun-with-view-transitions.pages.dev/episode/7/page.html",
         },
       ],
