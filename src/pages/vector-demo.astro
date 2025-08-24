@@ -70,8 +70,8 @@ const SIZE = 12;
     margin-bottom: 1ex;
   }
   .hidden {
-    opacity: 0;
-    transform: translateX(-50px);
+    transform: scale(0);
+
   }
   img {
     max-width: 80%;
@@ -82,8 +82,7 @@ const SIZE = 12;
     top: 2ex;
     left: 2ex;
     z-index: 1;
-    transition: all 0.25s ease-in-out;
-    transform: translateX(0);
+    transition: all 0.5s ease-in-out;
   }
   main {
     position: fixed;
@@ -261,7 +260,8 @@ const SIZE = 12;
 
   document.addEventListener("DOMContentLoaded", () => {
     createElements();
-    addEventListener("click", async () => {
+    addEventListener("click", async (e) => {
+      if (e.defaultPrevented) return;
       const transition = mayStartViewTransition(shuffleElements, {
         collisionBehavior: "chaining", useTypesPolyfill: "auto",
       });
@@ -270,7 +270,8 @@ const SIZE = 12;
         transition.types.add("with-vectors");
       });
     });
-    document.querySelector("button")?.addEventListener("click", () => {
+    document.querySelector("button")?.addEventListener("click", (e) => {
+      e.preventDefault();
       document.querySelector("img")?.classList.toggle("hidden");
     });
   });
