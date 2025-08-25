@@ -36,6 +36,7 @@ While I add more pages, I'm also happy that I can offer some links to previous w
 
 |When|What|Where|
 |---|---|---|
+|2025-08-25|Expose the currently active view transition object as `activeViewTransition` on the document, or on an element for scoped view transitions.| [Level 2, Exposing current transition](https://drafts.csswg.org/css-view-transitions-2/#active-view-transition)  | 
 |2025-06-18| The `old`, `new`, and `image-pair` pseudos now also inherit the timing function, iteration count, direction, play state animation poperties.|[Level 1, User Agent Styles](https://drafts.csswg.org/css-view-transitions-1/#ua-styles)
 |2025-06-16| Nested view transition groups are children of a new pseudo-element, which is the sibling of the image pair. The border width of this `::view-transition-group-children()` pseudo-element gets automatically copied over from the original element.|[Level 2, Group Children](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-children-pseudo)|
 |2025-03-24| Change to `view-transition-name: auto` when the element has an id property: Instead of using the id as view transition name, now generates a random name like match-element. |[Level 2, View Transition Name](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name) |
@@ -48,7 +49,6 @@ These may or may not make it into the spec.
 |When|What|Where|
 |---|---|---|
 |2025-08-05|Introduce DOM nodes as proxies to pseudo-elements. This would for example allow us to define an event listener for `::view-transition-new(button)` using such a proxy.|[#12575](https://github.com/w3c/csswg-drafts/issues/12575)|
-|2025-06-27|Expose the currently active view transition object as `activeViewTransition` on the document, or on an element for scoped view transitions.| [#12407](https://github.com/w3c/csswg-drafts/issues/12407)  | 
 |2025-06-18| Also copy border radius and corner shape form old and new original elements and animate the `::view-transition-group-children()` from old to new values.|[#12357](https://github.com/w3c/csswg-drafts/issues/12357), [#12363](https://github.com/w3c/csswg-drafts/issues/12363)  |
 |2025-05-28|User defined view transition names must not start with `-ua-` as those are reserved for the user agent, e.g. for `match-element` and `auto`.|[#12241](https://github.com/w3c/csswg-drafts/issues/12241) |
 |2025-01-29| `::view-transition-new(*) { pointer-events: auto }` to forward pointer events from the pseudo-element to the original element.|[#11596](https://github.com/w3c/csswg-drafts/issues/11596) |
