@@ -219,12 +219,12 @@ main kbd {
 }
 
 :root {
-  font-size: 14px;
+  font-size: 0.9rem;
 }
 
 @media (min-width: 50em) {
   :root {
-    font-size: 16px;
+    font-size: 1rem;
   }
 }
 
