@@ -1,8 +1,4 @@
-@media not (prefers-reduced-motion) {
-  @view-transition {
-    navigation: auto;
-  }
-}
+
 main {
   view-transition-name: main;
 }
