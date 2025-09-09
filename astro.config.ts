@@ -260,7 +260,7 @@ function sidebar() {
         {
           label: "Why View Transitions Might Fail",
           link: "tips/view-transition-fails-and-fixes/",
-          badge: { text: "New!", variant: "success" } as Badge
+          badge: { text: "Updated!", variant: "success" } as Badge
         },
       ],
     },

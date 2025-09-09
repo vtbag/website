@@ -241,9 +241,12 @@ You have no chance to lift a normal DOM element high enough to obscure one of th
 
 <details name="fail" class="c s">
   <summary>Build tools rewrite CSS and break selectors</summary>
-  You can spend hours staring at your CSS and questioning your own sanity. If you’ve been squinting at your IDE long enough, take a look at the page source as the browser actually sees it. Sometimes all the helpful UX tricks can get in your way. Here’s an example that often trips me up when working with Astro, even though I should really know better by now.
+  TL;DR: The CSS that reaches the browser might not be the same as what you see in your IDE. 
 
-  Even though this example is about CSS rewriting in **Astro**, the same thing can happen with **Vue**, **Svelte**,  or other frontend frameworks or even with some overzealous PostCSS plugin.
+
+  You can spend hours staring at your CSS and questioning your own sanity. After you’ve been squinting at your IDE long enough, take a look at the page source as the browser actually sees it. Sometimes all the helpful UX tricks can get in your way. Here’s an example that often trips me up when working with Astro, even though I should really know better by now.
+
+  Even though the first example is about CSS rewriting in **Astro**, the same thing can happen with **Vue**, **Svelte**,  or other frontend frameworks or even with some overzealous PostCSS plugin or plain CSS Modules, as shown in the second example.
 
 
   Look at this example of a style element in a `Layout.astro` file. This shows the recommended way to consistently slow down all your view transition animations to 2 seconds.
@@ -285,6 +288,45 @@ Or move your pseudo-element styles into a global style element using `<style is:
   }
 </style>
 ```
+### CSS Modules
+
+Here is another example from this category, kindly shared by [@larsejaas.bsky.social](https://bsky.app/profile/larsejaas.bsky.social/post/3ly4llcqf522e): When you currently use [CSS modules](https://github.com/css-modules/css-modules) with Vite, the content of your module file&hellip;
+```css title="style.module.css"
+.box {
+  view-transition-class: my-box;
+}
+::view-transition-group(.my-box) {
+  animation-duration: 0.5s;
+}
+```
+&hellip;might be sent to the browser as&hellip;
+```css title="What the browser sees"
+._box_1p56a_15 {
+  view-transition-class: my-box;
+}
+::view-transition-group(._my-box_1p56a_15) {
+  animation-duration: 0.5s;
+}
+```
+Note how scoping changed the view transition class name in the second selector. We now have an unused view transition class named `my-box` and an undefine view transition class named `_my-box_1p56a_15`.
+
+Even when your CSS Module implementation might transform the original CSS into&hellip;
+```css title="What the browser sees"
+._box_1p56a_15 {
+  view-transition-class: _my-box_1p56a_15;
+}
+::view-transition-group(._my-box_1p56a_15) {
+  animation-duration: 0.5s;
+}
+```
+&hellip;this is not much better, as it would not allow you to use the same view transition class in different modules. And it will no work at all if you have the definition of the view transition class and its use in different CSS modules.
+
+The best way here is to stop scoping with the `:global()` pseudo-class like this
+```css title="style.module.css"
+::view-transition-group(:global(.my-box)) {...}
+```
+After all, view-transition-names are global, aren't they? <small>_(&hellip;skimming through the spec&hellip;)_</small> 
+
 
 </details>
 
