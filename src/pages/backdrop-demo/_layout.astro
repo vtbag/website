@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <style is:global>
+      @view-transition {
+        navigation: auto;
+      }
+      :root {
+        view-transition-name: none;
+      }
+      h1 {
+        view-transition-name: h1;
+        width: fit-content;
+      }
+
+      a {
+        view-transition-name: a;
+      }
+      dialog::backdrop {
+        backdrop-filter: blur(8px);
+      }
+      p {
+        font-size: 40px;
+      }
+    </style>
+  </head>
+  <body
+    ><slot />
+    <script is:inline>
+      document.querySelector("dialog").showModal();
+    </script>
+  </body>
+</html>
