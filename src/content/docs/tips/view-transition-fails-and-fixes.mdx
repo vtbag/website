@@ -133,6 +133,15 @@ transition.updateCallbackDone.catch((e) => {
 
 But the patience of browsers isn't endless. After a few seconds, about 4 for Chrome, the view transitions will be skipped with an error and animations will not even start.
 
+To make sure that error does not vanish unnoticed, keep an eye on the ready promise:
+```js
+const transition = document.startViewTransition(...);
+transition.ready.catch((e) => {
+  console.error("error before ready", e);
+})
+```
+
+
 Better do all preparations before calling `startViewTransition()` and limit the work done in the update callback to a minimum.
 
 </details>
