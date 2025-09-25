@@ -69,14 +69,15 @@ interface Document {
 
 ### ViewTransition Object
 
-The `startViewTransition()` function returns an object that includes promises, the current transition types, and a function to skip the animations.
+The `startViewTransition()` function returns an object that includes promises, the current transition types, the root/scope of a scoped view transition, and a function to skip the animations.
 
 ```ts
 interface ViewTransition {
   readonly updateCallbackDone: Promise<undefined>;
   readonly ready: Promise<undefined>;
   readonly finished: Promise<undefined>;
-  readonly types: Set<string>;
+  readonly types?: Set<string>;
+  readonly transitionRoot?: Element;
   skipTransition(): void;
 }
 ```
