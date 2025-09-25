@@ -73,12 +73,12 @@ For both alternatives, start by installing the package from npm:
 ```sh
 npm i -D @vtbag/utensil-drawer
 ```
+
 ### Bundled Script Usage (cross-document)
 
 For use with cross-document view transitions you load the `declarative-names.js` script on every page that needs declarative view transition names and specify what names to assign with the `data-vtbag-decl` attribute.
 
 For vite-based frameworks like Nuxt and Astro this is straight forward:
-
 
 <Tabs>
 <TabItem label="Astro">
@@ -96,16 +96,15 @@ import declarativeNamesURL from "@vtbag/utensil-drawer/declarative-names?url";
 
 ```vue
 <script setup>
-import { useHead } from '#imports'
-import declarativeNamesUrl from '@vtbag/utensil-drawer/declarative-names?url'
+import { useHead } from "#imports";
+import declarativeNamesUrl from "@vtbag/utensil-drawer/declarative-names?url";
 
 useHead({
-  script: [
-    { src: declarativeNamesUrl, attrs: { 'data-vtbag-decl': '...' } }
-  ]
-})
+  script: [{ src: declarativeNamesUrl, attrs: { "data-vtbag-decl": "..." } }],
+});
 </script>
 ```
+
 </TabItem>
 <TabItem label="plain HTML">
 After installing the package from npm, copy it to a place where it can be served to the browser.
@@ -118,7 +117,9 @@ cp node_modules/@vtbag/utensil-drawer/lib/bundled/declarative-names.js public/de
   <script src="/declarative-names.js" data-vtbag-decl="..."></script>
 </head>
 ```
+
 Don't forget to update the copy once you update the npm package!
+
 </TabItem>
 </Tabs>
 
@@ -381,15 +382,14 @@ Copy [`dom-view-transitions-level2.d.ts`](http://github.com/vtbag/utensil-drawer
 
 ```ts
 declare global {
-  type UpdateCallback = undefined | (() => void | Promise<void>);
-  type StartViewTransitionParameter = {
-    types?: string[] | Set<string>;
-    update?: UpdateCallback;
-  };
-
   interface Document {
     startViewTransition?(
-      param?: StartViewTransitionParameter | UpdateCallback
+      param?: StartViewTransitionOptions | ViewTransitionUpdateCallback
+    ): ViewTransition;
+  }
+  interface Element {
+    startViewTransition?(
+      param?: StartViewTransitionOptions | ViewTransitionUpdateCallback
     ): ViewTransition;
   }
   interface PageSwapEvent extends Event {
@@ -417,7 +417,8 @@ declare global {
   }
 
   interface ViewTransition {
-    types?: Set<string>;
+    readonly types?: Set<string>;
+    readonly transitionRoot?: Element;
   }
   interface Window {
     navigation?: Navigation;
@@ -575,7 +576,7 @@ In your stylesheets, you can have your `:active-view-transition-type()` and `:ac
 
 ### Current View Transition
 
-The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active. Looking forward to native support via [`document.activeViewTransition`](https://drafts.csswg.org/css-view-transitions-2/#active-view-transition). 
+The module also exports `getCurrentViewTransition()` to access the active global view transition object. Iff the function returns undefined, no view transition is currently active. Looking forward to native support via [`document.activeViewTransition`](https://drafts.csswg.org/css-view-transitions-2/#active-view-transition).
 
 ## The postcss-active-view-transition-type PostCSS Plugin
 
@@ -613,16 +614,14 @@ module.exports = {
 The plugin support a `mode` option:
 
 - `"in-place"` (the default) rewrites the selectors in place,
-- `"append"` appends the rewritten rules to the original stylesheet. 
-
+- `"append"` appends the rewritten rules to the original stylesheet.
 
 The recommended value depends on your setting of the `useTypesPolyfill` extension when calling `mayStartViewTransition`: Use `"in-place"` for `useTypesPolyfill: "always"`. Use `"append"` for `useTypesPolyfill: "auto"`.
 
 The following table shows how to combine the plugin and the polyfill parameters in more detail.
 
-
-| When to use                                                                                                                                                                                                    | useTypesPolyfill | postcss-active-view-transition-type mode |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ---------------------------------------- |
-| Activate the polyfill only where needed and have original and rewritten rules in your CSS                                                                                                     | 'auto'           | 'append'                                 |
+| When to use                                                                                                                                                                                                         | useTypesPolyfill | postcss-active-view-transition-type mode |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ---------------------------------------- |
+| Activate the polyfill only where needed and have original and rewritten rules in your CSS                                                                                                                           | 'auto'           | 'append'                                 |
 | You can avoid duplication of rules if you do not use types with cross-document view transitions and all same-document view transitions are started using `mayStartViewTransition()` with `useTypesPlugin: 'always'` | 'always'         | 'in-place'                               |
-| If you do not want to use the polyfill                                                                                                                                                                         | 'never'          | n.a.                                     |
+| If you do not want to use the polyfill                                                                                                                                                                              | 'never'          | n.a.                                     |
