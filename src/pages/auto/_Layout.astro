@@ -65,7 +65,7 @@ const { title } = Astro.props;
   <script>
     console.log(navigator.userAgent);
     document.querySelector("#button")?.addEventListener("click", async () => {
-      await document.startViewTransition().ready;
+      document.startViewTransition && await document.startViewTransition().ready;
       document.getAnimations().forEach((x) => {
         const a = x as CSSAnimation;
         if (a.animationName.startsWith("stop")) {

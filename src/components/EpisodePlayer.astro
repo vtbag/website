@@ -133,7 +133,7 @@ import EpisodeGrid from "./EpisodeGrid.astro";
       e.style.transition = "";
       e.style.width = getComputedStyle(e).width;
       document.startViewTransition
-        ? document.startViewTransition({update, types:new Set(["same"])})
+        ? document.startViewTransition({update, types:["same"]})
         : update();
 
       function update() {
