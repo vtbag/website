@@ -189,6 +189,13 @@ The special value `none` removes a potentially set view transition name.
 
 Other special names are [`match-element`](#auto-generated-names-match-element) and [`auto`](#auto-generated-names-auto), and all names beginning with `-ua-` as in _u_ser-_a_gent, as this is a reserved namespace for browser generated view transition names. 
 
+:::note
+Setting an element's view-transition-name has a few [lesser-known effects on rendering](https://drafts.csswg.org/css-view-transitions-1/#named-and-transitioning):
+* It creates a stacking context.
+* It flattens child elements in 3D space, similar to `transform-style: flat`.
+* It establishes a backdrop root.
+:::
+
 ### Escaping
 Do not quote the names. They are not strings but [custom-ident](https://developer.mozilla.org/de/docs/Web/CSS/custom-ident) values. Ensure proper escaping of special characters. The simplest, most portable approach is to just use upper and lower case letters from A to Z, digits from 0 to 9, an underscore `_` or a hyphen `-` character. But don't start the name with a positive or negative number. 
 
