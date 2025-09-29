@@ -56,7 +56,9 @@
           sessionStorage.removeItem("vtbag-test-page");
           if (document.startViewTransition) {
             let matchElement = true;
-            await document.startViewTransition().ready;
+            const transition = document.startViewTransition();
+            transition.types && transition.types.add("test");
+            await transition.ready;
             document.documentElement.setAttribute("sdvt", "");
             document.getAnimations().forEach((a) => {
               if (a.animationName === "no-match-element") matchElement = false;
@@ -65,6 +67,9 @@
             getComputedStyle(document.documentElement).getPropertyValue(
               "--active-view-transition"
             ) && document.documentElement.setAttribute("avtpc", "");
+            getComputedStyle(document.documentElement).getPropertyValue(
+              "--active-view-transition-type"
+            ) && document.documentElement.setAttribute("avttpc", "");
           }
           "onpageswap" in window &&
             document.documentElement.setAttribute("cdvt", "");
@@ -119,6 +124,9 @@
   }
   :active-view-transition {
     --active-view-transition: "true";
+  }
+  :active-view-transition-type(test) {
+    --active-view-transition-type: "true";
   }
   @keyframes no-match-element {
   }

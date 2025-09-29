@@ -24,6 +24,7 @@ This page shows whether your current browser <span id="browser"></span>has nativ
 | [view-transition-name: auto](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name)             | <span id="vtna"/> |
 | [Active view transition property](https://drafts.csswg.org/css-view-transitions-2/#active-view-transition)             | <span id="avt"/>   |
 | [Active view transition pseudo class](https://drafts.csswg.org/css-view-transitions-2/#the-active-view-transition-pseudo)             | <span id="avtpc"/>   |
+| [Active view transition type pseudo class](https://drafts.csswg.org/css-view-transitions-2/#the-active-view-transition-type-pseudo)             | <span id="avttpc"/>   |
 | [Nested view transition groups](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-prop)             | <span id="vtg"/>   |
 | [View transition group children](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-children-pseudo) | <span id="vtgc"/>  |
 | [Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md)                      | <span id="svt"/>   |
@@ -42,6 +43,7 @@ For browser compatibility data regarding the View Transition API see [the mdn pa
 <style>{`
 	#avt,
 	#avtpc,
+	#avttpc,
 	#cdvt,
 	#idx,
 	#nav,
@@ -60,6 +62,7 @@ For browser compatibility data regarding the View Transition API see [the mdn pa
 
 	:root[avt] #avt,
 	:root[avtpc] #avtpc,
+	:root[avttpc] #avttpc,
 	:root[cdvt] #cdvt,
 	:root[idx] #idx,
 	:root[nav] #nav,
