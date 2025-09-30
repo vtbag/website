@@ -34,5 +34,8 @@
     "sharp": "^0.34.3",
     "starlight-image-zoom": "^0.13.0",
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "astro-webrings": "^0.1.1"
   }
 }
