@@ -104,9 +104,6 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
 ```css
 ::view-transition-group(x) {
   animation-name: -ua-view-transition-group-anim-x;
-  animation-duration: <inherited>;
-  animation-delay: <inherited>;
-  animation-fill-mode: <inherited>;
 }
 @keyframes -ua-view-transition-group-anim-x {
   0% {
@@ -123,33 +120,54 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
   }
 }
 ```
-The `animation-timing-function`, `animation-iteration-count` and, `animation-direction` properties keep their default values: `ease`, `1`, and `normal`, respectively. 
-
 
 The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the new image's size, transform, and position. I.e. if the original element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honored by the generated transform.
+
+
+### Group-Children Animation
+
+The `::view-transition-group-children` pseudo-element was only introduced recently. The spec does not yet describe the animations that the API applies to this element. So details might change.
+
+It was added to make clipping the children of containers more precise. Border-width, border-radius, and corner-shape play an important role here. 
+
+Just like with group animations, the transition begins with the values of the old element and gradually morphs them into the values of the new element.
+
+```css
+::view-transition-group-children(x) {
+  animation-name: -ua-view-transition-group-children-anim-x;
+}
+@keyframes -ua-view-transition-group-children-anim-x {
+  0% {
+    border-width: <old border-width>;
+    border-radius: <old border-radius>;
+    corner-shape: <old corner-shape>;
+  }
+  100% {
+    border-width: <new border-width>;
+    border-radius: <new border-radius>;
+    corner-shape: <new corner-shape>;
+  }
+}
+```
+
+Border-style and border-color do not need to change. They are set to [solid and transparent](#non-animation-properties).
+
 
 ### Cross-Fade of the Images
 
 The typical cross-fade effect of view transitions is implemented by animations defined on the pseudo-elements for the old and new images. The definitions are the same for all view transition names.
 
 ```css
-::view-transition-image-pair(x),
-::view-transition-old(x),
-::view-transition-new(x) {
-  animation-duration: inherit;
-  animation-delay: inherit;
-  animation-fill-mode: inherit;
-  /* newly added */
-  animation-timing-function: inherit;
-  animation-iteration-count: inherit;
-	animation-direction: inherit;
-	animation-play-state: inherit;
-}
+
 ::view-transition-old(x) {
-  animation-name: -ua-view-transition-fade-out, -ua-mix-blend-mode-plus-lighter
+  animation-name:
+    -ua-view-transition-fade-out,
+    -ua-mix-blend-mode-plus-lighter;
 }
 ::view-transition-new(x) {
-  animation-name: -ua-view-transition-fade-in, -ua-mix-blend-mode-plus-lighter
+  animation-name:
+    -ua-view-transition-fade-in,
+    -ua-mix-blend-mode-plus-lighter;
 }
 @keyframes -ua-view-transition-fade-out {
   0% {
@@ -177,53 +195,85 @@ The typical cross-fade effect of view transitions is implemented by animations d
 }
 ```
 
-
 `-ua-mix-blend-mode-plus-lighter` is only added if the image pair has both images. For some background on `-ua-mix-blend-mode-plus-lighter` see the [section about mix blend modes](/tips/over-exposure/#set-the-correct-mix-blend-mode).
-
-The `animation-timing-function`, `animation-iteration-count` and, `animation-direction` properties keep their default values: `ease`, `1`, and `normal`, respectively. 
-
-
-The values for `animation-duration`, `animation-delay`, and `animation-fill-mode` are inherited from the view transition image pair, which inherits them from the view transition group.  The [API sets the defaults](/basics/styling/#group--morph-animation) to `0.25s`, `0s`, and `both`. Due to these default inherits you might want to prefer setting the individual `animation-...` properties instead of using the `animation` shortcut, which would reset `animation-duration`, `animation-delay` and `animation-fill-mode` to `0s`, `0s`, and `none` if not explicitly stated otherwise.
-
-Using `inherit` in your own definitions is a good idea as it allows for control over several animations at once. For example you can set the duration of all unchanged morph and cross-fade animations with a single rule:
-```css
-::view-transition-group(*) {
-  animation-duration: 500ms; /* all groups, which pass down to the image-pairs, which pass down to the old and new images. */
-}  
-```
-
-
 
 
 ### Image-Pair Animation
 
 The View Transition API does not assign any animations to the `::view-transition-image-pair(x)` pseudo-elements as those elements are mainly added for render isolation and morph 1:1 with the `::view-transition-group(x)` elements.
 
-But of course, you can add animations to those elements. This has the benefit that you can modify the effect of the morph animation without the need to override the API-generated animations for `::view-transition-group(x)`.
+Of course, you can add animations to those elements. This has the benefit that you can modify the effect of the morph animation without the need to override the API-generated animations for `::view-transition-group(x)`.
+
+### Inherited Animation Properties
+
+The values for `animation-duration`, `animation-delay`, and `animation-fill-mode` are inherited from parent in the pseudo-element tree.
+
+The [API sets the defaults](/basics/styling/#group--morph-animation) to `0.25s`, `0s`, and `both`. 
+
+Recently, all other animation properties but `animation-name` where added to the list.
+
+```css
+::view-transition-group(*),
+::view-transition-group-children(*),
+::view-transition-image-pair(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation-duration: inherit;
+  animation-delay: inherit;
+  animation-fill-mode: inherit;
+  
+  /* newly added */
+  animation-timing-function: inherit;
+  animation-iteration-count: inherit;
+  animation-direction: inherit;
+  animation-play-state: inherit;
+}
+```
+If the browser only supports the short list, the `animation-timing-function`, `animation-iteration-count`, `animation-direction`, and `animation-play-state` properties keep their default values: `ease`, `1`, `normal`, and `running` respectively.
+
+Due to these default inherits you might want to prefer setting the individual `animation-...` properties instead of using the `animation` shortcut, which would reset `animation-duration`, `animation-delay` and `animation-fill-mode` to `0s`, `0s`, and `none` if not explicitly stated otherwise.
+
+For example you can set the duration of all unchanged morph and cross-fade animations with a single rule:
+
+```css
+::view-transition-group(*) {
+  animation-duration: 500ms; /* all groups, which pass down to the image-pairs, which pass down to the old and new images. */
+}
+```
+
+Using `inherit` in your own definitions is a good idea as it allows for control over several animations at once. 
 
 ### Non-Animation Properties
 
 Of course styling view transition pseudo-elements is not limited to animations. The browser's user agent stylesheet also contains examples for such styling:
 
 ```css
-:root::view-transition {
+
+::view-transition {
   position: absolute;
   inset: 0;
 }
 
-:root::view-transition-group(*) {
+::view-transition-group(*) {
   position: absolute;
   top: 0;
   left: 0;
 }
 
-:root::view-transition-image-pair(*) {
+::view-transition-group-children(*) {
+  position: absolute;
+  inset: 0px;
+  border-style: solid;
+  border-color: transparent;
+}
+
+::view-transition-image-pair(*) {
   position: absolute;
   inset: 0;
 }
 
-:root::view-transition-old(*),
-:root::view-transition-new(*) {
+::view-transition-old(*),
+::view-transition-new(*) {
   position: absolute;
   inset-block-start: 0;
   inline-size: 100%;
@@ -277,7 +327,9 @@ If multiple class names are used to identify a pseudo element, all must match. T
   /* ... */
 }
 ```
+
 Or shorter, without the star:
+
 ```css
 ::view-transition-group(.nav-link) {
   /* ... */
@@ -304,7 +356,7 @@ Often you want to support different animations for a given view transition pseud
 
 While it is active, a view transition might have a set of identifiers called _types_ that can be used in CSS pseudo-classes to select different rules. During the view transition, the set can be altered at any time by assigning to the `types` property of the viewTransition object.
 
-This mechanism can be used to [increase isolation and/or composability](/tips/css/#the-active-type-guard) of independent view transition use cases. 
+This mechanism can be used to [increase isolation and/or composability](/tips/css/#the-active-type-guard) of independent view transition use cases.
 
 The initial set of types can be set when calling `startViewTransition()` or it might be specified using the `types` property inside a `@view-transition` rule.
 
@@ -369,7 +421,6 @@ There is an additional pseudo-class that does not take type parameters.
 
 This selector will match the the `:root` element while a view transition is active. You can use this for example to [change the shape of the pointer](/tips/pointer/) during view transitions.
 
-
 While view transition types are a Level 2 feature, they [can be polyfilled](/tools/utensil-drawer/#the-postcss-active-view-transition-type-postcss-plugin) if you want to use them with Level 1 implementations.
 
 When you navigate forth and back through the pages of this site, you see an example on how types are used to select different animation.
@@ -393,12 +444,14 @@ See the [Turn-Signal documentation](/tools/turn-signal/#switching-transition-nam
 
 ## Prefix Pseudo-Elements with `:root`?
 
-The user agent stylesheet example above is an excerpt from the [View Transition Draft Spec](https://drafts.csswg.org/css-view-transitions-1/). There the pseudo-elements are prefixed with the the `:root` pseudo-class selector.
+In the [View Transition Draft Spec](https://drafts.csswg.org/css-view-transitions-1/) the pseudo-elements are prefixed with the the `:root` pseudo-class selector.
 
-The scope of view transitions is the whole document. Until _scoped_ view transitions change this in the future, all pseudo-elements that the API generates are children of the document's root element and can be targeted using the CSS `:root` selector. So `::view-transition-group(x)` and `:root::view-transition-group(x)` currently are the same thing.
+The scope of view transitions is the whole document. Until (element) _scoped_ view transitions change this in the future, all pseudo-elements that the API generates are children of the document's root element and can be targeted using the CSS `:root` selector. So `::view-transition-group(x)` and `:root::view-transition-group(x)` currently are the same thing.
+
+Note that `:root` has a different meaning inside shadow DOMs. But that is a whole different story.
 
 With scoped view transitions, `:root::view-transition*` will still select only pseudo-elements of the document root, while `::view-transition*` will target pseudo-elements of any element. Should I prefix all rules with `:root`? Right now, I do not. Scoped view transitions will be another (smaller) game changer, and I expect to refactor things anyway once they become available.
 
 When you use these patterns in your own stylesheets, be aware that the specificities differ: `:root::view-transition-group(x)` with a specificity of _(0, 1, 1)_ is more specific than `::view-transition-group(x)` with a specificity of _(0, 0, 1)_.
 
-Now you might conclude that you also need to prefix your view transition pseudo-elements with `:root` if you want to override the defaults. That is not the case. The user agent stylesheet has the least important origin and is overridden by user stylesheet rules &mdash; independent of specificity.
+Now you might conclude that you also need to prefix your view transition pseudo-elements with `:root` if you want to override the defaults. That is not the case. The user agent stylesheet has the least important origin and is overridden by user stylesheet rules independent of specificity.
