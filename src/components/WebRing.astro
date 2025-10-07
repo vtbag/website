@@ -3,18 +3,17 @@ import WebringBadge from "astro-webrings/badge";
 ---
 
 <style>
-  #webring {
+  #cssjoy {
     display: grid;
     grid-template-columns: auto auto auto;
     grid-template-rows: auto auto;
     justify-items: center;
     max-width: fit-content;
-    margin: 7rem auto 3rem auto;
+    margin: 7rem auto 1rem auto;
 
     border: 1px #888 dotted;
     border-radius: 8px;
     padding-top: 0.5rem;
-
 
     p {
       grid-column: 1 / span 3;
@@ -37,8 +36,31 @@ import WebringBadge from "astro-webrings/badge";
       }
     }
   }
+
+  #foh {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+    max-width: fit-content;
+    margin-inline:auto;
+    
+    border: 1px #888 dotted;
+    border-radius: 8px;
+    padding-top: 1rem;
+    padding-bottom: 0.75rem;
+    a {
+      text-decoration: none;
+      padding: 0 0.75rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: color 0.2s ease-in-out;
+      line-height: 2;
+      padding-bottom: 0.25rem;
+    }
+
+  }
 </style>
-<div id="webring">
+<div id="cssjoy">
   <!--p><a href="https://cs.sjoy.lol/">CSS JOY <span>Webring</span></a></p-->
   <p>CSS JOY Webring</p>
 
@@ -46,8 +68,15 @@ import WebringBadge from "astro-webrings/badge";
     >&lt;<span>Prev</span></a
   ><a href="https://webri.ng/webring/cssjoy/random?via=https://vtbag.dev/"
     >&lt;<span>Random</span>&gt;</a
-  ><a href="https://webri.ng/webring/cssjoy/next?via=https://vtbag.dev/"><span>Next</span>&gt;</a
+  ><a href="https://webri.ng/webring/cssjoy/next?via=https://vtbag.dev/"
+    ><span>Next</span>&gt;</a
   >
 </div>
-
-<div style="width: fit-content; margin-inline:auto"><WebringBadge site="vtbag.dev" ring="friends-of-houston" /></div>
+<div id="foh">
+  <a href="https://astro-webrings.lou.gg/prev?site=vtbag.dev&ring=friends-of-houston"
+    >&lt;<span>Prev</span></a
+  ><WebringBadge site="vtbag.dev" ring="friends-of-houston" />
+  <a href="https://astro-webrings.lou.gg/next?site=vtbag.dev&ring=friends-of-houston"
+    ><span>Next</span>&gt;</a
+  >
+</div>
