@@ -57,9 +57,9 @@ Part two indeed adds extensions for cross-document view transitions, but also fe
 
 The new features defined in Level 2 of the view transition API are in deed written as extensions to the Level 1 spec. They can easily be merged into one specification. But the interesting part here is not the document structure but the implication from incremental releasing of the two parts.
 
-Up to now, all vendors have implemented and released Level 1 first before they went on to Level2. For Chrome and Edge there was a period of over 12 month before level 2 got released. For Safari, it had been 3 month. Now Firefox is actively working on Level 1 of the API as it is part of Interop 2025. It's unclear when Level 2 will be released.
+Up to now, all vendors have implemented and released Level 1 first before they went on to Level2. For Chrome and Edge there was a period of over 12 month before level 2 got released. For Safari, it had been 3 month. Firefox just released Level 1 of the API as it is part of Interop 2025. It's unclear when Level 2 will be released.
 
-For the Chromium based browsers, this was not a problem as when they released Level 1 support there where no othr browsers that understood Level 2. When Safari came out, this was different, but it did not take that lon for them to deliver Level 2 after that.
+For the Chromium based browsers, this was not a problem as when they released Level 1 support there where no other browsers that understood Level 2. When Safari came out, this was different, but it did not take that lon for them to deliver Level 2 after that.
 
 ### Same-Document Features Missing in Level 1
 The problem is not same-document vs. cross-document. The problem is that there are Safari and Chrome browser versions out there in the wild that support only Level 1 of the API. To say it more clearly: Soon you can use same-document view transitions on all major browsers, but if you want to support them all, you can't use the extensions from the Level 2 list above. 
@@ -67,13 +67,15 @@ The problem is not same-document vs. cross-document. The problem is that there a
 This might be obvious for the more experimental stuff like nested view transition groups or scoped view transitions.
 
 But for simple same-document view transitions, there are some highly desirable features that we cannot use cross-browser before Level 2 becomes baseline.
+- no support for the option parameter when calling `document.startViewTransition()`
 - no view transition classes
 - no view transition types and their pseudo-classes
 - no auto-generated view transition names with match-element (or auto)
 
 ### What Happens when Firefox Releases Level 1
 
-Actually, Firefox Nightly not only supports Level 1 of the View Transition API, but also brings some Level 2 features:
-* Firefox Nightly already [has support for `view-transition-class`](https://bsky.app/profile/vtbag.dev/post/3ltwvggp7xc2u) and the [`:active-view-transition` pseudo-class](/basics/test-page/).
-* Firefox Nightly already [has support for `view-transition-name: match-element`](https://bsky.app/profile/martr.app/post/3lwyzve7nac2i), but not for `view-transition-name: auto`, which is not really part of the standard. When usings the [declarative-names script](/tools/utensil-drawer/#declarative-names) from The Bag's Utensil Drawer, you also have an alternative for dynamically generating view transition names that works more reliably across browsers.
+Firefox , starting with v144, not only supports Level 1 of the View Transition API, but also brings some Level 2 features:
+* Firefox already [has support for `view-transition-class`](https://bsky.app/profile/vtbag.dev/post/3ltwvggp7xc2u) and the [`:active-view-transition` pseudo-class](/basics/test-page/).
+* Firefox already [has support for `view-transition-name: match-element`](https://bsky.app/profile/martr.app/post/3lwyzve7nac2i), but not for `view-transition-name: auto`, which is not really part of the standard. When usings the [declarative-names script](/tools/utensil-drawer/#declarative-names) from The Bag's Utensil Drawer, you also have an alternative for dynamically generating view transition names that works more reliably across browsers.
 * So the main problem might be the missing support for view transition types. Good news here: The Bag's Utensil Drawer now has a [polyfill for view transition types](/tools/utensil-drawer/#usetypespolyfill-always--never) to support them even on browsers that only implement Level 1 of the View Transition API!
+* And even if you do not care about types yet, you can sill benefit from the fact that [mayStartViewTransition](/tools/utensil-drawer/#maystartviewtransition) also offers the Level 2 signature with options, even if the underlying API implementation does not. 
