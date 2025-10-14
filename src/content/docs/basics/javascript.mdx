@@ -121,10 +121,15 @@ You can dynamically add or remove view transition types during the view transiti
 
 View transition types are a feature of Level 2 of the View Transition API. They [can be polyfilled](/tools/utensil-drawer/#the-postcss-active-view-transition-type-postcss-plugin) if you want to use them with Level 1 implementations.
 
+#### transitionRoot
+
+For scoped view transitions, this property returns the element on which `Element.startViewTransition` was called. For view transitions started on the `document`, either same-document or cross-document, it returns `null`.  This property is only implemented in browsers that support scoped view transitions.
 
 ### Checking for an Active View Transition
 
-Today, the View Transition API does not offer a way to check whether some view transition is currently active or not. Chances are good, that this [will change](/basics/api/#upcoming-topics) soon. If you use  [`mayStartViewTransition`](/tools/utensil-drawer/#maystartviewtransition) from the Utensil Drawer, you can access the most recent `ViewTransition` object by calling [getCurrentViewTransition](/tools/utensil-drawer/#current-view-transition). 
+The View Transition API now offers a way to check whether some view transition is currently active or not. If so, the `document.activeViewTransition()` function returns the ViewTransition object of a currently active view transition. This works for same-document and cross-document view transition alike, but does not yet seem to work for scoped view transition when calling `Element.activeViewTransition()`.
+
+If you use  [`mayStartViewTransition`](/tools/utensil-drawer/#maystartviewtransition) from the Utensil Drawer, you can access the current `ViewTransition` object by calling [getCurrentViewTransition](/tools/utensil-drawer/#current-view-transition). 
 
 ### Canceling and Chaining
 
