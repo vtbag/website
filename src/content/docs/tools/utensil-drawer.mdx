@@ -494,6 +494,8 @@ export interface StartViewTransitionExtensions {
 	collisionBehavior?: 'skipOld' | 'chaining' | 'skipNew' | 'never'; // default is "skipOld"
 	speedUpWhenChained?: number; // default is 1.0
   useTypesPolyfill?: 'always' | 'auto' | 'never';
+	catchErrors?: boolean; // default is true
+	scope?: Document | Element; // default is document
 }
 ```
 
@@ -595,6 +597,13 @@ Setting `useTypesPolyfill: "never"` completely disables the polyfill. This is th
 Setting `useTypesPolyfill: "auto"` enables the polyfill in browsers that do support Level 1 but not Level 2 of the View Transition API.
 
 In your stylesheets, you can have your `:active-view-transition-type()` and `:active-view-transition` selectors automatically be rewritten to checks for the inserted classes by using the Bag's [postcss-active-view-transition-type](#the-postcss-active-view-transition-type-postcss-plugin) PostCSS plugin.
+
+### catchErrors
+
+Enabled by default adds catch clauses to the `updateCallbackDone` and `ready` promises of a newly created vei transition to log errors to the console when they happen.
+
+### scope
+Defaults to `document`. If you pass an element, the underlying call to `startViewTransition` goes to that element to start a scoped view transition. Requires support for scoped view transitions from the browser.  
 
 ### Current View Transition
 
