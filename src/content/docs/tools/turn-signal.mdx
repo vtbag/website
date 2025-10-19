@@ -209,10 +209,10 @@ You can use the view transition types set by the scripts in your CSS to select d
 This example shows how to use a cross-fade effect by default and to replace that with a sliding animation iff a view transition type called `shift-right` is set.
 ```css
 ::view-transition-old(main) {
-  animation: 200ms both fade-out;
+  animation-duration: 200ms;
 }
 ::view-transition-new(main) {
-  animation: 200ms both fade-in;
+  animation-duration: 200ms;
 }
 :active-view-transition-type(shift-right) {
   &::view-transition-old(main) {

@@ -22,6 +22,7 @@ This page shows whether your current browser <span id="browser"></span>has nativ
 | [view-transition-class](https://drafts.csswg.org/css-view-transitions-2/#view-transition-class-prop)                     | <span id="vtc"/>   |
 | [view-transition-name: match-element](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name)             | <span id="vtnme"/> |
 | [view-transition-name: auto](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name)             | <span id="vtna"/> |
+| [`ViewTransition.prototype.waitUntil()`](https://drafts.csswg.org/css-view-transitions-2/#dom-viewtransition-waituntil)|<span id="wut"/>|
 | [Active view transition property](https://drafts.csswg.org/css-view-transitions-2/#active-view-transition)             | <span id="avt"/>   |
 | [Active view transition pseudo class](https://drafts.csswg.org/css-view-transitions-2/#the-active-view-transition-pseudo)             | <span id="avtpc"/>   |
 | [Active view transition type pseudo class](https://drafts.csswg.org/css-view-transitions-2/#the-active-view-transition-type-pseudo)             | <span id="avttpc"/>   |
@@ -54,7 +55,8 @@ For browser compatibility data regarding the View Transition API see [the mdn pa
 	#vtg,
 	#vtgc,
 	#vtna,
-	#vtnme {
+	#vtnme,
+	#wut {
 		&::before {
 			content: 'Not supported';
 		}
@@ -73,7 +75,8 @@ For browser compatibility data regarding the View Transition API see [the mdn pa
 	:root[vtg] #vtg,
 	:root[vtgc] #vtgc,
 	:root[vtna] #vtna,
-	:root[vtnme] #vtnme
+	:root[vtnme] #vtnme,
+	:root[wut] #wut
 	 {
 		&::before {
 			content: 'Supported';

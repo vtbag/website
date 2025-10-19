@@ -36,6 +36,7 @@ declare global {
 	interface ViewTransition {
 		readonly types?: Set<string>;
 		readonly transitionRoot?: Element;
+		waitUntil(promise: Promise<any>): void;
 	}
 	interface Window {
 		navigation?: Navigation;

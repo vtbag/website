@@ -495,12 +495,12 @@ Here's the prescribed solution:
 /* When going from Page 1 to Page 2
 keep the browser generated fade-out, but add a shrink animation to the old one line image */
 .page2::view-transition-old(header) {
-  animation-name: -ua-view-transition-fade-out, shrink;
+  animation-name: shrink, -ua-view-transition-fade-out, -ua-mix-blend-mode-plus-lighter;
 }
 /* When navigating from Page 2 to Page 1
-keep the browser generated fade-in but add a grow animation the new two line image */
+keep the browser generated fade-in but add a grow animation to the new two line image */
 .page1::view-transition-new(header) {
-  animation-name: -ua-view-transition-fade-in, grow;
+  animation-name: grow, -ua-view-transition-fade-in, -ua-mix-blend-mode-plus-lighter;
 }
 ::view-transition-group(header) {
   animation-timing-function: ease-in-out;

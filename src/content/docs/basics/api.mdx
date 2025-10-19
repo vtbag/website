@@ -36,6 +36,10 @@ While I add more pages, I'm also happy that I can offer some links to previous w
 
 |When|What|Where|
 |---|---|---|
+|2025-10-17|The view transitionObject offers a `waitUntil()` function that can be called with a promise. Now the view transitions `finished` promise does not only wait for the animations on pseudo-elements to end, but also waits for all promises passed via `waitUntil()` to settle.|[Level 2, waitUntil](https://drafts.csswg.org/css-view-transitions-2/#dom-viewtransition-waituntil)| 
+|2025-10-02|Scoped view transitions, where `startViewTransition()` can be called on DOM elements. View transitions started with `document.startViewTransition()` are called _global_ view transitions.|[Level 2, Scoped View Transitions](https://drafts.csswg.org/css-view-transitions-2/#scoped-vt)
+|2025-10-02| The `transitionRoot` property of the view transition object returns the root element of a scoped view transition. For a global view transition it returns the `documentElement`|[Level 2, transitionRoot](https://drafts.csswg.org/css-view-transitions-2/#dom-viewtransition-transitionroot)|
+|2025-10-02|The new value `view-transition` for the `contain` property ensures that view transition names are not visible outside a subtree|[Level 2, View Transition Name Isolation](https://drafts.csswg.org/css-view-transitions-2/#contain-view-transition)|
 |2025-08-25|Expose the currently active view transition object as `activeViewTransition` on the document, or on an element for scoped view transitions.| [Level 2, Exposing current transition](https://drafts.csswg.org/css-view-transitions-2/#active-view-transition)  | 
 |2025-06-18| The `old`, `new`, and `image-pair` pseudos now also inherit the timing function, iteration count, direction, play state animation poperties.|[Level 1, User Agent Styles](https://drafts.csswg.org/css-view-transitions-1/#ua-styles)
 |2025-06-16| Nested view transition groups are children of a new pseudo-element, which is the sibling of the image pair. The border width of this `::view-transition-group-children()` pseudo-element gets automatically copied over from the original element.|[Level 2, Group Children](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-children-pseudo)|
@@ -55,7 +59,6 @@ These may or may not make it into the spec.
 |2025-05-28|User defined view transition names must not start with `-ua-` as those are reserved for the user agent, e.g. for `match-element` and `auto`.|[#12241](https://github.com/w3c/csswg-drafts/issues/12241) |
 |2025-01-29| `::view-transition-new(*) { pointer-events: auto }` to forward pointer events from the pseudo-element to the original element.|[#11596](https://github.com/w3c/csswg-drafts/issues/11596) |
 2024-06-13| `transitionRoot` property of the `ViewTransition` object reports the DOM element the scoped view transition was called on.|[comment on #9908](https://github.com/w3c/csswg-drafts/issues/9908#issuecomment-2165621635)|
-2023-09-23| Scoped view transitions, where `startViewTransition()` can be called on DOM elements.|[Explainer: Scoped View Transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md) |
 
 
 

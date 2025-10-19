@@ -381,7 +381,11 @@ selector {
 }
 ```
 Here the definition of the view transition name creates a view transition group `my-name`. Adding the `view-transition-group` property makes the `my-name` group a child of the `other` group defined elsewhere.
-Reserved values are `none`, `normal`, `contain`, and `nearest` with their obvious ;-) meaning.
+Reserved values are `none`, `normal`, `contain`, and `nearest`.
+
+When the property is set to `contain`, it will automatically become the parent of contained elements.
+
+While pseudo-elements can be moved independently of their named elements' position in the DOM, grouping is more restricted. A parent-child relationship in the view transition tree can only exist if the named elements also are descendants in the DOM
 
 ```c
 ::view-transition                           // the parent of all groups

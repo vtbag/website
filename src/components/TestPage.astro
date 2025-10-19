@@ -57,6 +57,7 @@
           if (document.startViewTransition) {
             let matchElement = true;
             const transition = document.startViewTransition();
+            transition.waitUntil && document.documentElement.setAttribute("wut", "");
             transition.types && transition.types.add("test");
             await transition.ready;
             document.documentElement.setAttribute("sdvt", "");
