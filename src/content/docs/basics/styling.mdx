@@ -446,11 +446,11 @@ See the [Turn-Signal documentation](/tools/turn-signal/#switching-transition-nam
 
 In the [View Transition Draft Spec](https://drafts.csswg.org/css-view-transitions-1/) the pseudo-elements are prefixed with the the `:root` pseudo-class selector.
 
-The scope of view transitions is the whole document. Until (element) _scoped_ view transitions change this in the future, all pseudo-elements that the API generates are children of the document's root element and can be targeted using the CSS `:root` selector. So `::view-transition-group(x)` and `:root::view-transition-group(x)` currently are the same thing.
+The scope of view transitions is the whole document. Until (element) _scoped_ view transitions change this in the future, all pseudo-elements that the API generates are children of the document's root element and can be targeted using the CSS `:root` selector. So `::view-transition-group(x)`, which is a short-cut for `*::view-transition-group(x)` and `:root::view-transition-group(x)` currently are the same thing.
 
 Note that `:root` has a different meaning inside shadow DOMs. But that is a whole different story.
 
-With scoped view transitions, `:root::view-transition*` will still select only pseudo-elements of the document root, while `::view-transition*` will target pseudo-elements of any element. Should I prefix all rules with `:root`? Right now, I do not. Scoped view transitions will be another (smaller) game changer, and I expect to refactor things anyway once they become available.
+With scoped view transitions, `:root::view-transition*` will still select only pseudo-elements of the document root, while `::view-transition*` will target pseudo-elements of any element. Should I prefix all rules with `:root`? Right now, I do not. Scoped view transitions will be another game changer, and I expect to refactor things anyway once they become available.
 
 When you use these patterns in your own stylesheets, be aware that the specificities differ: `:root::view-transition-group(x)` with a specificity of _(0, 1, 1)_ is more specific than `::view-transition-group(x)` with a specificity of _(0, 0, 1)_.
 
