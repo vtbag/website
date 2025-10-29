@@ -598,6 +598,8 @@ Setting `useTypesPolyfill: "auto"` enables the polyfill in browsers that do supp
 
 In your stylesheets, you can have your `:active-view-transition-type()` and `:active-view-transition` selectors automatically be rewritten to checks for the inserted classes by using the Bag's [postcss-active-view-transition-type](#the-postcss-active-view-transition-type-postcss-plugin) PostCSS plugin.
 
+If you prefer not to use this polyfill, you can also [apply this pattern manually](https://events-3bg.pages.dev/jotter/in-all-major-browsers/#view-transition-types).
+
 ### catchErrors
 
 Enabled by default adds catch clauses to the `updateCallbackDone` and `ready` promises of a newly created vei transition to log errors to the console when they happen.
