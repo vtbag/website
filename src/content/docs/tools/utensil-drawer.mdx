@@ -521,7 +521,7 @@ The [Game of Life](/chaining-demo/) uses the same technique to decouple the calc
 
 #### Automatic Integration
 
-The [Tower of Hanoi](https://fun-with-view-transitions.pages.dev/episode/7/page.html) demo, [covered by its own episode of Fun with View Transitions](/fwvt/playing/) makes multiple independent calls to `mayStartViewTransition`. One animates the disk movements, another updates the progress bar and counters. A separate view transition runs when the puzzle is solved, and yet another comes in when switching between light and dark mode.
+The [Tower of Hanoi](https://fun-with-view-transitions.pages.dev/episode/7/page) demo, [covered by its own episode of Fun with View Transitions](/fwvt/playing/) makes multiple independent calls to `mayStartViewTransition`. One animates the disk movements, another updates the progress bar and counters. A separate view transition runs when the puzzle is solved, and yet another comes in when switching between light and dark mode.
 
 These transitions are conceptually and technically independent. Some share the same trigger, but not all. From the user's perspective, the result appears as a single coordinated transition, even though there is no shared or global app code managing synchronization.
 
