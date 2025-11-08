@@ -294,7 +294,7 @@ function sidebar() {
         { label: "🌟 Game of Life 🦊", link: "/chaining-demo/" },
         {
           label: "🌟Tower of Hanoi 🦊",
-          link: "https://fun-with-view-transitions.pages.dev/episode/7/page.html",
+          link: "https://fun-with-view-transitions.pages.dev/episode/7/page",
         },
       ],
     },
