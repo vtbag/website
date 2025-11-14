@@ -1,3 +1,15 @@
 User-agent: * 
 Allow: /
+Disallow: /auto/
+Disallow: /backdrop-demo/
+Disallow: /cards/
+Disallow: /*-demo/
+Disallow: /*-demo2/
+Disallow: /demo/
+Disallow: /demo-explainer/
+Disallow: /forge/
+Disallow: /hide-and-seek/list-*
+Disallow: /inspection-chamber-demo/
+Disallow: /tests/
+Disallow: /tmp/
 Sitemap: https://vtbag.dev/sitemap-index.xml

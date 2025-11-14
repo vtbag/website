@@ -12,7 +12,7 @@ import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
 import type { Badge } from "node_modules/@astrojs/starlight/schemas/badge";
-
+import sitemap from '@astrojs/sitemap';
 import og from "astro-og";
 
 export default defineConfig({
@@ -157,6 +157,21 @@ export default defineConfig({
     vtbot({ autoLint: false, loadingIndicator: false }),
     inoxToolsPortalGun(),
     og(),
+    sitemap({
+      filter: (page) =>
+        /**/!page.startsWith('https://vtbag.dev/auto/')
+        && !page.startsWith('https://vtbag.dev/backdrop-demo/')
+        && !page.startsWith('https://vtbag.dev/cards/')
+        && !page.includes('-demo/')
+        && !page.includes('-demo2/')
+        && !page.startsWith('https://vtbag.dev/demo/')
+        && !page.startsWith('https://vtbag.dev/demo-explainer/')
+        && !page.startsWith('https://vtbag.dev/forge/')
+        && !page.startsWith('https://vtbag.dev/hide-and-seek/list-')
+        && !page.startsWith('https://vtbag.dev/inpection-chamber-demo/')
+        && !page.startsWith('https://vtbag.dev/tests/')
+        && !page.startsWith('https://vtbag.dev/tmp/')
+    }),
   ],
 
   vite: {

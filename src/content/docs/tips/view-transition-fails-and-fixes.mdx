@@ -240,7 +240,7 @@ The view transition pseudo-elements are created in the order in which their name
 
 Pseudo-elements are rendered in the order they were created. Thus elements from the new DOM might obscure elements from the old DOM. And within an image pair, the new image is painted in front of the old one. 
 
-You can not change this by setting `z-index` on the named DOM elements. But you can set [`z-index` on the pseudo-elements]((/basics/pseudos/#reordering-pseudo-elements-using-z-index)) to change the paint order.
+You can not change this by setting `z-index` on the named DOM elements. But you can set [`z-index` on the pseudo-elements](/basics/pseudos/#reordering-pseudo-elements-using-z-index) to change the paint order.
 
 The pseudo-elements created by the View Transition API float in their own stacking context high above everything else on the page. As a consequence it might look as if elements with a view transition name pop out of the page during the view transition, suddenly drawn in front of elements that overlapped them in the original DOM.   
 
