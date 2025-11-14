@@ -2,13 +2,14 @@ User-agent: *
 Allow: /
 Disallow: /auto/
 Disallow: /backdrop-demo/
+Disallow: /basics/hide-and-seek/list-*
 Disallow: /cards/
+Disallow: /crossing/
 Disallow: /*-demo/
 Disallow: /*-demo2/
 Disallow: /demo/
 Disallow: /demo-explainer/
 Disallow: /forge/
-Disallow: /hide-and-seek/list-*
 Disallow: /inspection-chamber-demo/
 Disallow: /tests/
 Disallow: /tmp/
