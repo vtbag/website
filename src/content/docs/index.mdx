@@ -1,6 +1,6 @@
 ---
-title: "@vtbag"
-description: "The Bag of Tricks for View Transitions: Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!"
+title: "The Bag of Tricks for View Transitions"
+description: "Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!"
 hero:
   tagline: Website for the @vtbag umbrella
   image:
@@ -26,7 +26,6 @@ head:
   - tag: script
     attrs:
       type: "application/ld+json"
-      data-vtbot-linter: "ignore"
     content: '{"@context": "https://schema.org", "@type": "WebSite", "name": "@vtbag", "url": "https://vtbag.dev/"}'
   - tag: meta
     attrs:
@@ -43,7 +42,7 @@ import WebRing from "@/components/WebRing.astro"
 <NoViewTransitions/>
 <ReducedMotion/>
 
-<script>{`document.querySelector(".tagline").innerHTML = "The Bag of Tricks for View Transitions<br><hr><br><strong>Tools</strong>, <strong>Tips</strong>, and <strong>Tricks</strong> to <strong>Enhance</strong> your <strong>Dev Skills</strong> with the <strong>View Transition API</strong>!"`}</script>
+<script>{`document.querySelector(".tagline").innerHTML = "<strong>Tools</strong>, <strong>Tips</strong>, and <strong>Tricks</strong> to <strong>Enhance</strong> your <strong>Dev Skills</strong> with the <strong>View Transition API</strong>!"`}</script>
 
 <style>{`
   :root {

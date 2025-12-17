@@ -128,7 +128,7 @@ export default defineConfig({
       ],
       lastUpdated: true,
       pagination: true,
-      favicon: "/bag4.png",
+      favicon: "/bag4.ico",
       logo: {
         src: "./src/assets/mini-bag.webp",
       },
