@@ -83,12 +83,12 @@ export default defineConfig({
       },
       head: [
         {
-          tag: "meta",
-          attrs: {
-            property: "og:image",
-            content: "https://vtbag.dev/social.png",
-          },
+          tag: "meta", attrs: { property: "og:image", content: "https://vtbag.dev/social.png", }
         },
+        { tag: "meta", attrs: { property: "article:publisher", content: "https://bsky.app/profile/vtbag.dev" } },
+        { tag: "meta", attrs: { property: "article:author", content: "https://bsky.app/profile/martr.app" } },
+        { tag: "meta", attrs: { property: "article:tag", content: "view transitions" } },
+        { tag: "meta", attrs: { property: "article:section", content: "Articles" } },
         {
           tag: "meta",
           attrs: {
