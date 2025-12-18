@@ -7,7 +7,7 @@ head:
       property: "og:image"
       content: "/concurrent-og.png"
 ---
-
+{/* 
 When a view transition starts while another view transition is still active, the former gets canceled.
 
 What does that mean and how can we improve this situation?
@@ -22,3 +22,4 @@ When a call is made to `startViewTransition` while the active view transition's 
 former update callbacks.
 
 On the other hand, if the active view transition was `ready` and animations have been started, the active `::view-transition` pseudo-element tree is removed. This will stop all animations associated with the pseudo-elements and finally stop the active view transition. This looks like all animations abruptly skip to their end before the new view transition starts from there.
+*/}
