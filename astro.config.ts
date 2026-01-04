@@ -199,7 +199,7 @@ function sidebar() {
       link: "/vtbag/",
     },
     {
-      label: "Basics",
+      label: "Basic Information",
       items: [
         { label: "Test Your Browser", link: "/basics/test-page/" },
         { label: "View Transition API", link: "/basics/api/" },
@@ -224,7 +224,7 @@ function sidebar() {
       ],
     },
     {
-      label: "Tools",
+      label: "Tools & Libraries",
       items: [
         { label: "Inspection Chamber", link: "/tools/inspection-chamber/" },
         { label: "Element Crossing", link: "/tools/element-crossing/" },
@@ -281,7 +281,7 @@ function sidebar() {
     },
     { label: "BagLog", link: "/baglog" },
     {
-      label: "All Demos",
+      label: "All Tech Demos",
       collapsed: false,
       items: [
         {

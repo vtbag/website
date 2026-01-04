@@ -1,8 +1,9 @@
 ---
 title: "The Bag of Tricks for View Transitions"
 description: "Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!"
+template: splash
 hero:
-  tagline: Website for the @vtbag umbrella
+  tagline: "Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!"
   image:
     file: ../../assets/bag.png
   actions:
@@ -10,10 +11,10 @@ hero:
       link: /vtbag/
       icon: right-arrow
       variant: primary
-    - text: For Astro
+    - text: Sister Site for Astro's Client Router
       link: https://events-3bg.pages.dev
       icon: external
-      variant: minimal
+      variant: secondary
 head:
   - tag: meta
     attrs:
@@ -35,18 +36,23 @@ renderBlocking: legal
 ---
 
 import Bsky from "@/components/Bsky.astro";
-import NoViewTransitions from "@/components/NoViewTransitions.astro"
-import ReducedMotion from "@/components/ReducedMotion.astro"
-import WebRing from "@/components/WebRing.astro"
+import NoViewTransitions from "@/components/NoViewTransitions.astro";
+import ReducedMotion from "@/components/ReducedMotion.astro";
+import WebRing from "@/components/WebRing.astro";
+import { CardGrid, Card } from "@astrojs/starlight/components";
+import { Icon } from "@astrojs/starlight/components";
 
-<NoViewTransitions/>
-<ReducedMotion/>
+<NoViewTransitions />
+<ReducedMotion />
 
 <script>{`document.querySelector(".tagline").innerHTML = "<strong>Tools</strong>, <strong>Tips</strong>, and <strong>Tricks</strong> to <strong>Enhance</strong> your <strong>Dev Skills</strong> with the <strong>View Transition API</strong>!"`}</script>
 
 <style>{`
   :root {
     --sl-content-width: 80%;
+  }
+  div.hero {
+    padding-top: 2vmin;
   }
   main .hero img {
     view-transition-name: logo;
@@ -76,10 +82,30 @@ import WebRing from "@/components/WebRing.astro"
 
 <p class="smallCTA">Spark up a discussion on <a href="https://discord.gg/jUqfqJT5">the Bag's Discord</a> or on <span><b>🦋</b></span> Bluesky! Hit the <Bsky /> buttons to share your thoughts and please stay connected with <a target="_blank" href="https://bsky.app/profile/vtbag.dev">The Bag</a> and <a target="_blank" href="https://bsky.app/profile/martr.app">me</a> for all the latest!</p>
 
-import { Icon } from '@astrojs/starlight/components';
+<CardGrid stagger>
+<Card title="Basic Information" icon="open-book">
+Everything you ever wanted to know about the View Transition API, in one place.
+Explore what your browser is capable of and what is new in the API specification.
+Dive into examples and see what holds the world of pseudo elements and their styling together at its core.
+</Card>
+<Card title="Tools & Libraries" icon="pen">
+As you dig deeper into View Transitions, you will quickly see how a little JavaScript here and there can unlock much more and make things even more fun. You do not have to build everything yourself. The Bag provides battle tested libraries and tools that make working with View Transitions easier, more enjoyable, and practical for real projects.
+</Card>
+<Card title="Fun with View Transitions" icon="pen">
+A journey told in episodes, starting with simple use cases and moving toward more
+advanced applications. Along the way, it covers basic setup, image morphing,
+fixing broken text transitions, and extended same page examples.
+</Card>
+<Card title="Tips & Tricks" icon="pen">
+What would a bag of tricks be without a few tips and tricks along the way? Everything here comes straight from real world practice, built for real world use. I have stumbled through the rough edges, chased down the weird bugs, and made all the mistakes already, so you do not have to.
+</Card>
+<Card title="Tech Demos" icon="pen">
+Last but not least, it is all about "show, don't tell". New techniques are always easier to grasp when you can see them in action instead of just reading about them. The Tech Demos section at the end of the navigation links to all the examples, and there are, if I may say so with a bit of modesty, a few real gems in there.
+</Card>
+</CardGrid>
+
 
 <WebRing />
-
 
 <div id="legal">
 Built with <Icon name="starlight" color="darkgoldenrod" label="The Starlight logo" /> [Starlight](https://starlight.astro.build).\
@@ -89,8 +115,8 @@ Code samples are licensed under the ISC License
 
 <style>{`
 
-  main p {
-    max-width: 70%;
+  .smallCTA {
+    max-width: 85%;
     margin-inline: auto;
   }
   p span b {
