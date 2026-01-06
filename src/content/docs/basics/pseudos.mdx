@@ -499,7 +499,7 @@ With cross-document transitions the browser has to guess what would be a good ti
 
 Start of view transitions will always await the `<head>` to be loaded. External stylesheets inside the head will also be awaited for. If you want to make sure that view transitions wait for an external script, add the `blocking="render"` attribute to the script element. You can also instruct view transitions to wait until some fragment URL of the current page is loaded by adding a link to the `<head>`  like this:
 ```html
-<link rel="expect" href="#somewhere" blocking="render"/>
+<link rel="expect" href="#somewhere" blocking="render">
 ```
 If the fragment in the `href` attribute does not exist on the page, view transitions will wait for the entire page to load before they start. Just note that the browser may log an error in this case, and it might cancel the view transition entirely if the load takes too long.
 
