@@ -130,6 +130,11 @@ export default defineConfig({
 
       social: [
         {
+          icon: "rss",
+          label: "RSS",
+          href: "/feed.xml",
+        },
+        {
           icon: "github",
           label: "GitHub",
           href: "https://github.com/vtbag/website",

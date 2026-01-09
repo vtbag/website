@@ -8,15 +8,15 @@
     <link>https://vtbag.dev/</link>
     <description>Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 16:24:12 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 09 Jan 2026 16:50:37 GMT</lastBuildDate>
     
   <item>
     <title><![CDATA[The View Transition API]]></title>
     <link>https://vtbag.dev//basics/api/</link>
     <guid isPermaLink="true">https://vtbag.dev//basics/api/</guid>
     
-    <dc:date>2024-08-20T20:10:17.000Z</dc:date>
-    <pubDate>Sun, 19 Oct 2025 22:56:45 GMT</pubDate>
+    <dc:date>2026-01-09T16:37:16.000Z</dc:date>
+    <pubDate>Tue, 20 Aug 2024 20:10:17 GMT</pubDate>
     <description><![CDATA[Basics information about the View Transition browser API]]></description>
     <enclosure
         url="/api-og.png"
@@ -29,8 +29,8 @@
     <link>https://vtbag.dev//basics/styling/</link>
     <guid isPermaLink="true">https://vtbag.dev//basics/styling/</guid>
     
-    <dc:date>2024-10-23T12:29:56.000Z</dc:date>
-    <pubDate>Sat, 04 Oct 2025 19:17:47 GMT</pubDate>
+    <dc:date>2025-10-04T19:17:47.000Z</dc:date>
+    <pubDate>Wed, 23 Oct 2024 12:29:56 GMT</pubDate>
     <description><![CDATA[Styling view transitions including :active-view-transition-type and view-transition-class]]></description>
     <enclosure
         url="/styling-og.png"
@@ -43,8 +43,8 @@
     <link>https://vtbag.dev//tools/utensil-drawer/</link>
     <guid isPermaLink="true">https://vtbag.dev//tools/utensil-drawer/</guid>
     
-    <dc:date>2024-11-25T15:37:59.000Z</dc:date>
-    <pubDate>Sat, 04 Oct 2025 19:16:43 GMT</pubDate>
+    <dc:date>2025-10-04T19:16:43.000Z</dc:date>
+    <pubDate>Mon, 25 Nov 2024 15:37:59 GMT</pubDate>
     <description><![CDATA[A growing collection of lightweight utilities to help you craft polished view transitions.]]></description>
     <enclosure
         url="/drawer-og.png"
@@ -57,8 +57,8 @@
     <link>https://vtbag.dev//tips/view-transition-fails-and-fixes/</link>
     <guid isPermaLink="true">https://vtbag.dev//tips/view-transition-fails-and-fixes/</guid>
     
-    <dc:date>2025-06-30T22:46:08.000Z</dc:date>
-    <pubDate>Tue, 09 Sep 2025 19:00:06 GMT</pubDate>
+    <dc:date>2025-09-09T19:00:06.000Z</dc:date>
+    <pubDate>Mon, 30 Jun 2025 22:46:08 GMT</pubDate>
     <description><![CDATA[Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.]]></description>
     <enclosure
         url="https://vtbag.dev/social.png"
@@ -71,8 +71,8 @@
     <link>https://vtbag.dev//basics/pseudos/</link>
     <guid isPermaLink="true">https://vtbag.dev//basics/pseudos/</guid>
     
-    <dc:date>2024-09-19T15:17:21.000Z</dc:date>
-    <pubDate>Wed, 06 Aug 2025 11:36:01 GMT</pubDate>
+    <dc:date>2025-08-06T11:36:01.000Z</dc:date>
+    <pubDate>Thu, 19 Sep 2024 15:17:21 GMT</pubDate>
     <description><![CDATA[What are those pseudo-elements of the View Transition API and how can I style and animate them?]]></description>
     <enclosure
         url="/pseudos-og.png"
@@ -85,8 +85,8 @@
     <link>https://vtbag.dev//fwvt/playing/</link>
     <guid isPermaLink="true">https://vtbag.dev//fwvt/playing/</guid>
     
-    <dc:date>2025-06-30T22:46:08.000Z</dc:date>
-    <pubDate>Sat, 19 Jul 2025 18:34:33 GMT</pubDate>
+    <dc:date>2025-07-19T18:34:33.000Z</dc:date>
+    <pubDate>Mon, 30 Jun 2025 22:46:08 GMT</pubDate>
     <description><![CDATA[Fun With View Transitions, Episode 7: Tips, tricks, and fresh ideas to spark your own view transition magic!]]></description>
     <enclosure
         url="/fwvt-og.png"
@@ -113,8 +113,8 @@
     <link>https://vtbag.dev//tips/css/</link>
     <guid isPermaLink="true">https://vtbag.dev//tips/css/</guid>
     
-    <dc:date>2024-08-20T20:10:17.000Z</dc:date>
-    <pubDate>Thu, 10 Jul 2025 16:23:33 GMT</pubDate>
+    <dc:date>2025-07-10T16:23:33.000Z</dc:date>
+    <pubDate>Tue, 20 Aug 2024 20:10:17 GMT</pubDate>
     <description><![CDATA[Your CSS rules are ignored by the View Transition API? Maybe you put them in the wrong place.]]></description>
     <enclosure
         url="/css-og.png"
@@ -127,8 +127,8 @@
     <link>https://vtbag.dev//basics/frameworks/</link>
     <guid isPermaLink="true">https://vtbag.dev//basics/frameworks/</guid>
     
-    <dc:date>2025-04-26T13:06:54.000Z</dc:date>
-    <pubDate>Wed, 14 May 2025 16:36:27 GMT</pubDate>
+    <dc:date>2025-05-14T16:36:27.000Z</dc:date>
+    <pubDate>Sat, 26 Apr 2025 13:06:54 GMT</pubDate>
     <description><![CDATA[What is special when using React's <ViewTransition />]]></description>
     <enclosure
         url="/bag-og.png"
@@ -183,8 +183,8 @@
     <link>https://vtbag.dev//fwvt/welcome/</link>
     <guid isPermaLink="true">https://vtbag.dev//fwvt/welcome/</guid>
     
-    <dc:date>2025-01-25T12:31:50.000Z</dc:date>
-    <pubDate>Mon, 24 Feb 2025 18:08:47 GMT</pubDate>
+    <dc:date>2025-02-24T18:08:47.000Z</dc:date>
+    <pubDate>Sat, 25 Jan 2025 12:31:50 GMT</pubDate>
     <description><![CDATA[Embark on a journey into the marvelous land of the View Transition API.]]></description>
     <enclosure
         url="/fwvt-og.png"
@@ -197,8 +197,8 @@
     <link>https://vtbag.dev//tips/auto-names/</link>
     <guid isPermaLink="true">https://vtbag.dev//tips/auto-names/</guid>
     
-    <dc:date>2025-02-08T09:55:50.000Z</dc:date>
-    <pubDate>Thu, 13 Feb 2025 00:15:19 GMT</pubDate>
+    <dc:date>2025-02-13T00:15:19.000Z</dc:date>
+    <pubDate>Sat, 08 Feb 2025 09:55:50 GMT</pubDate>
     <description><![CDATA[Explore current methods for automatically generating view transition names.]]></description>
     <enclosure
         url="/auto-og.png"
@@ -225,8 +225,8 @@
     <link>https://vtbag.dev//basics/javascript/</link>
     <guid isPermaLink="true">https://vtbag.dev//basics/javascript/</guid>
     
-    <dc:date>2025-01-08T19:30:16.000Z</dc:date>
-    <pubDate>Sat, 25 Jan 2025 12:31:50 GMT</pubDate>
+    <dc:date>2025-01-25T12:31:50.000Z</dc:date>
+    <pubDate>Wed, 08 Jan 2025 19:30:16 GMT</pubDate>
     <description><![CDATA[How to interact with view transitions using JavaScript]]></description>
     <enclosure
         url="/javascript-og.png"
@@ -281,8 +281,8 @@
     <link>https://vtbag.dev//tools/turn-signal/</link>
     <guid isPermaLink="true">https://vtbag.dev//tools/turn-signal/</guid>
     
-    <dc:date>2024-09-25T11:39:12.000Z</dc:date>
-    <pubDate>Mon, 30 Dec 2024 20:11:15 GMT</pubDate>
+    <dc:date>2024-12-30T20:11:15.000Z</dc:date>
+    <pubDate>Wed, 25 Sep 2024 11:39:12 GMT</pubDate>
     <description><![CDATA[@vtbag/turn-signal simplifies directional view transitions for intuitive history traversal navigation.]]></description>
     <enclosure
         url="/signal-og.png"
@@ -295,8 +295,8 @@
     <link>https://vtbag.dev//basics/hide-and-seek/</link>
     <guid isPermaLink="true">https://vtbag.dev//basics/hide-and-seek/</guid>
     
-    <dc:date>2024-11-18T14:35:52.000Z</dc:date>
-    <pubDate>Thu, 05 Dec 2024 16:09:57 GMT</pubDate>
+    <dc:date>2024-12-05T16:09:57.000Z</dc:date>
+    <pubDate>Mon, 18 Nov 2024 14:35:52 GMT</pubDate>
     <description><![CDATA[How to control stacking and clipping of view transition images.]]></description>
     <enclosure
         url="/hide-and-seek-og.png"
@@ -323,8 +323,8 @@
     <link>https://vtbag.dev//tips/over-exposure/</link>
     <guid isPermaLink="true">https://vtbag.dev//tips/over-exposure/</guid>
     
-    <dc:date>2024-09-19T15:17:21.000Z</dc:date>
-    <pubDate>Wed, 23 Oct 2024 12:29:56 GMT</pubDate>
+    <dc:date>2024-10-23T12:29:56.000Z</dc:date>
+    <pubDate>Thu, 19 Sep 2024 15:17:21 GMT</pubDate>
     <description><![CDATA[Why custom fade animations for view transitions might flash.]]></description>
     <enclosure
         url="/over-exposure-og.png"
@@ -379,8 +379,8 @@
     <link>https://vtbag.dev//basics/examples/</link>
     <guid isPermaLink="true">https://vtbag.dev//basics/examples/</guid>
     
-    <dc:date>2024-08-20T20:10:17.000Z</dc:date>
-    <pubDate>Thu, 19 Sep 2024 15:17:21 GMT</pubDate>
+    <dc:date>2024-09-19T15:17:21.000Z</dc:date>
+    <pubDate>Tue, 20 Aug 2024 20:10:17 GMT</pubDate>
     <description><![CDATA[Basic examples on how to use the View Transition API for same-document and cross-document view transitions.]]></description>
     <enclosure
         url="/examples-og.png"
@@ -421,8 +421,8 @@
     <link>https://vtbag.dev//tools/inspection-chamber/</link>
     <guid isPermaLink="true">https://vtbag.dev//tools/inspection-chamber/</guid>
     
-    <dc:date>2024-07-12T10:52:37.000Z</dc:date>
-    <pubDate>Sat, 10 Aug 2024 17:28:08 GMT</pubDate>
+    <dc:date>2024-08-10T17:28:08.000Z</dc:date>
+    <pubDate>Fri, 12 Jul 2024 10:52:37 GMT</pubDate>
     <description><![CDATA[@vtbag/inspection-chamber allows you to examine, judge & optimize all aspects of your view transitions]]></description>
     <enclosure
         url="/chamber-og.png"

@@ -19,8 +19,10 @@ type FeedItem = {
   link: string;
   guid: string;
   author: string | undefined;
-  dcDate: string | undefined;
-  pubDate: Date;
+  firstPublishedStr: string | undefined;
+  firstPublished: Date | null;
+  lastModifiedStr: string | undefined;
+  lastModified: Date | null;
   description?: string;
   image?: string;
 };
@@ -74,7 +76,9 @@ for (const file of files) {
   const author = meta(root, 'author');
 
   const firstPublishedStr = meta(root, 'article:published_time');
-  const lastModified = meta(root, 'og:updated_time') || meta(root, 'article:modified_time');
+  const firstPublished = firstPublishedStr ? new Date(firstPublishedStr) : null;
+  const lastModifiedStr = meta(root, 'og:updated_time') || meta(root, 'article:modified_time');
+  const lastModified = lastModifiedStr ? new Date(lastModifiedStr) : null;
 
   if (!title || !lastModified) continue;
 
@@ -83,14 +87,16 @@ for (const file of files) {
     link,
     guid: link,
     author,
-    dcDate: firstPublishedStr,
-    pubDate: new Date(lastModified),
+    firstPublishedStr,
+    firstPublished, 
+    lastModifiedStr,
+    lastModified,
     description: meta(root, 'og:description') ?? "Missing Description",
     image: meta(root, 'og:image') ?? "/social.png",
   });
 }
 
-items.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+items.sort((a, b) => b.lastModified!.getTime() - a.lastModified!.getTime());
 
 const rssItems = items.map(item => `
   <item>
@@ -98,8 +104,8 @@ const rssItems = items.map(item => `
     <link>${item.link}</link>
     <guid isPermaLink="true">${item.guid}</guid>
     ${item.author ? `<dc:creator>${cdata(item.author)}</dc:creator>` : ''}
-    ${item.dcDate ? `<dc:date>${item.dcDate}</dc:date>` : ''}
-    <pubDate>${rfc822(item.pubDate)}</pubDate>
+    <dc:date>${item.lastModifiedStr}</dc:date>
+    <pubDate>${rfc822(item.firstPublished!)}</pubDate>
     ${item.description ? `<description>${cdata(item.description)}</description>` : ''}
     ${item.image ? `<enclosure
         url="${item.image}"
