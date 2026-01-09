@@ -7,7 +7,8 @@ export const collections = {
 		loader: docsLoader(),
 		schema: docsSchema({
 			extend: z.object({
-				renderBlocking: z.string().optional()
+				renderBlocking: z.string().optional(),
+				updateThreshold: z.number().optional().default(20),
 			}),
 		})
 	}),
