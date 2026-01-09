@@ -13,17 +13,12 @@ import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
 import type { Badge } from "node_modules/@astrojs/starlight/schemas/badge";
 import sitemap from '@astrojs/sitemap';
-import og from "astro-og";
 
 export default defineConfig({
   image: { remotePatterns: [{ protocol: "https" }] },
   devToolbar: { enabled: true },
   site: "https://vtbag.dev",
   compressHTML: false,
-
-  redirects: {
-    "/inspection-chamber/": "/tools/inspection-chamber/",
-  },
 
   experimental: {
     preserveScriptOrder: true,
@@ -156,7 +151,6 @@ export default defineConfig({
     }),
     vtbot({ autoLint: false, loadingIndicator: false }),
     inoxToolsPortalGun(),
-    og(),
     sitemap({
       filter: (page) =>
         /**/!page.startsWith('https://vtbag.dev/auto/')
