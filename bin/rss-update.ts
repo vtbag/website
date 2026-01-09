@@ -4,7 +4,7 @@ import path from 'node:path';
 import { parse } from 'node-html-parser';
 
 const SITE_URL = 'https://vtbag.dev/';
-const OUTPUT = 'public/feed.xml';
+const OUTPUT = 'public/rss.xml';
 
 const CONTENT_DIRS = [
   'dist/basics',

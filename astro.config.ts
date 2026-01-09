@@ -132,7 +132,7 @@ export default defineConfig({
         {
           icon: "rss",
           label: "RSS",
-          href: "/feed.xml",
+          href: "/rss.xml",
         },
         {
           icon: "github",
