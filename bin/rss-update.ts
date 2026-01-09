@@ -19,8 +19,6 @@ type FeedItem = {
   link: string;
   guid: string;
   author: string | undefined;
-  firstPublishedStr: string | undefined;
-  firstPublished: Date | null;
   lastModifiedStr: string | undefined;
   lastModified: Date | null;
   description?: string;
@@ -75,8 +73,6 @@ for (const file of files) {
   const link = toUrl(file);
   const author = meta(root, 'author');
 
-  const firstPublishedStr = meta(root, 'article:published_time');
-  const firstPublished = firstPublishedStr ? new Date(firstPublishedStr) : null;
   const lastModifiedStr = meta(root, 'og:updated_time') || meta(root, 'article:modified_time');
   const lastModified = lastModifiedStr ? new Date(lastModifiedStr) : null;
 
@@ -87,8 +83,6 @@ for (const file of files) {
     link,
     guid: link,
     author,
-    firstPublishedStr,
-    firstPublished, 
     lastModifiedStr,
     lastModified,
     description: meta(root, 'og:description') ?? "Missing Description",
@@ -104,8 +98,7 @@ const rssItems = items.map(item => `
     <link>${item.link}</link>
     <guid isPermaLink="true">${item.guid}</guid>
     ${item.author ? `<dc:creator>${cdata(item.author)}</dc:creator>` : ''}
-    <dc:date>${item.lastModifiedStr}</dc:date>
-    <pubDate>${rfc822(item.firstPublished!)}</pubDate>
+    <pubDate>${rfc822(item.lastModified!)}</pubDate>
     ${item.description ? `<description>${cdata(item.description)}</description>` : ''}
     ${item.image ? `<enclosure
         url="${item.image}"
