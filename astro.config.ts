@@ -126,6 +126,7 @@ export default defineConfig({
       favicon: "/bag4.ico",
       logo: {
         src: "./src/assets/mini-bag.webp",
+        alt: "vtbag logo",
       },
 
       social: [
