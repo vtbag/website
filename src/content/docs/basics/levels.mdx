@@ -39,7 +39,7 @@ Part two indeed adds extensions for cross-document view transitions, but also fe
 ### Cross-Document
 * The `@view-transition{ navigation: auto }` at-rule to opt in to [cross-document view transitions](/basics/javascript/#cross-document-view-transitions). 
 * `pageswap` and `pagereveal` [events](/basics/javascript/#pageswap-and-pagereveal-events) that give access to the view transition object on the old and new page.
-* An [`activation`](/basics/javascript/#activation-object) property on `pageswap` holds a `NavigationActivation` object from the Navigation API. There are no equivalent on properties on `pagereveal`. Use `navigation.activation` from the Navigation API instead.
+* An [`activation`](/basics/javascript/#activation-object) property on `pageswap` holds a `NavigationActivation` object from the Navigation API. There are no equivalent properties on `pagereveal`. Use `navigation.activation` from the Navigation API instead.
 
 ### Extensions for Both, Same- and Cross-Document 
 * The [`view-transition-class`](/basics/styling/#with-classes) property and selector syntax to address multiple pseudo-elements with a single selector.

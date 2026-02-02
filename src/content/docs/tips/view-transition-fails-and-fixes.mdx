@@ -429,7 +429,7 @@ Typically, browsers suppress view transitions on navigation if they already have
 
 The `popstate` and `navigation` events have a `hasUAVisualTransition` property which you can use to skip your own view transitions when the browser has already started a native one.
 
-Sadly, `popstate` does not fire for cross-document navigation, and evn though it is now baseline not all browsers versions support the Navigation API.
+Sadly, `popstate` does not fire for cross-document navigation, and even though it is now baseline, not all browsers versions support the Navigation API.
 
 As a last resort, you could completely skip view transitions when the `activation.navigationType` of the `pageswap` event equals `'traverse'`.
 
