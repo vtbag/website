@@ -151,14 +151,38 @@ The [`mayStartViewTransition()`](/tools/utensil-drawer/#maystartviewtransition) 
 
 ### Scoped View Transitions
 
-[Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md) are rooted at arbitrary DOM elements. Instead of calling `document.startViewTransition()` it's `element.startViewTransition()`. This has some severe advantages:
+[Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md) are rooted at arbitrary DOM elements.
+ 
+Instead of calling 
+```
+document.startViewTransition()
+``` 
+it's 
+```
+element.startViewTransition()
+``` 
+This has some severe advantages:
 
 - Rendering is only blocked on the DOM subtree rooted at element. The rest of the page is still interactive.
 - There can be several scoped view transitions on the page and they can independently perform in parallel.
 
-Rumor has it that the root element of the scoped view transition needs to have its `contain` CSS property set to `layout` (or `strict`).
-
 Scoped view transitions are not widely supported jet. If your [browser supports](/basics/test-page/) them, this site features a [small example on clipping](/basics/hide-and-seek/#clipping-with-scoped-view-transition-groups).
+
+#### view-transition-scope
+
+To prevent clashes between different view transitions that reference the same elements, the API inserts
+```
+view-transition-scope: auto;
+```
+on the transition root. The transition root is either the document root or the element on which `element.startViewTransition()` was called. When automatically inserted by the API, this property exists only for the lifetime of the triggering view transition. The only valid values for `view-transition-scope` are `auto` and `none`.
+
+`view-transition-scope` defines a visibility boundary for view transition names. When it is set to `auto` on an element, all view transition names defined within that element's DOM subtree are hidden from view transitions that are rooted outside of that subtree. 
+
+Without additional precautions, elements effectively get claimed by the first view transition that encounters them. This can lead to accidental coupling between unrelated transitions that just happen to reference the same elements.
+
+To avoid this, it might be better to define these boundaries explicitly. By setting `view-transition-scope: auto` ahead of time on elements that may act as view transition roots, you can clearly assign which elements belong to which transition and prevent unintended interactions between concurrent or overlapping view transitions.
+
+
 
 ## Cross-Document View Transitions
 

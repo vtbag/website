@@ -14,28 +14,27 @@ import TestPage from "../../../components/TestPage.astro";
 
 This page shows whether your current browser <span id="browser"></span>has native support for view transitions and related APIs like the Navigation API and Speculation Rules.
 
-| Feature                                                                                                                  | Support?           |
-| ------------------------------------------------------------------------------------------------------------------------ | ------------------ |
-| [Same-document view transitions](https://drafts.csswg.org/css-view-transitions-1)                                        | <span id="sdvt"/>  |
-| [Cross-document view transitions](https://drafts.csswg.org/css-view-transitions-2)                                       | <span id="cdvt"/>  |
-| [PageSwapEvent.activation.\*.index](https://drafts.csswg.org/css-view-transitions-2/#old-doc-event)                      | <span id="idx"/>   |
-| [view-transition-class](https://drafts.csswg.org/css-view-transitions-2/#view-transition-class-prop)                     | <span id="vtc"/>   |
-| [view-transition-name: match-element](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name)             | <span id="vtnme"/> |
-| [view-transition-name: auto](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name)             | <span id="vtna"/> |
-| [`ViewTransition.prototype.waitUntil()`](https://drafts.csswg.org/css-view-transitions-2/#dom-viewtransition-waituntil)|<span id="wut"/>|
-| [Active view transition property](https://drafts.csswg.org/css-view-transitions-2/#active-view-transition)             | <span id="avt"/>   |
-| [Active view transition pseudo class](https://drafts.csswg.org/css-view-transitions-2/#the-active-view-transition-pseudo)             | <span id="avtpc"/>   |
-| [Active view transition type pseudo class](https://drafts.csswg.org/css-view-transitions-2/#the-active-view-transition-type-pseudo)             | <span id="avttpc"/>   |
-| [Nested view transition groups](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-prop)             | <span id="vtg"/>   |
-| [View transition group children](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-children-pseudo) | <span id="vtgc"/>  |
-| [Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md)                      | <span id="svt"/>   |
-| [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API)                                        | <span id="nav"/>   |
-| [Speculation Rules](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)                              | <span id="spec"/>  |
+| Feature                                                                                                                             | Support?            |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| [Same-document view transitions](https://drafts.csswg.org/css-view-transitions-1)                                                   | <span id="sdvt"/>   |
+| [Cross-document view transitions](https://drafts.csswg.org/css-view-transitions-2)                                                  | <span id="cdvt"/>   |
+| [PageSwapEvent.activation.\*.index](https://drafts.csswg.org/css-view-transitions-2/#old-doc-event)                                 | <span id="idx"/>    |
+| [view-transition-class](https://drafts.csswg.org/css-view-transitions-2/#view-transition-class-prop)                                | <span id="vtc"/>    |
+| [view-transition-name: match-element](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name)                        | <span id="vtnme"/>  |
+| [view-transition-name: auto](https://drafts.csswg.org/css-view-transitions-2/#additions-to-vt-name)                                 | <span id="vtna"/>   |
+| [`ViewTransition.prototype.waitUntil()`](https://drafts.csswg.org/css-view-transitions-2/#dom-viewtransition-waituntil)             | <span id="wut"/>    |
+| [Active view transition property](https://drafts.csswg.org/css-view-transitions-2/#active-view-transition)                          | <span id="avt"/>    |
+| [Active view transition pseudo class](https://drafts.csswg.org/css-view-transitions-2/#the-active-view-transition-pseudo)           | <span id="avtpc"/>  |
+| [Active view transition type pseudo class](https://drafts.csswg.org/css-view-transitions-2/#the-active-view-transition-type-pseudo) | <span id="avttpc"/> |
+| [Nested view transition groups](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-prop)                        | <span id="vtg"/>    |
+| [View transition group children](https://drafts.csswg.org/css-view-transitions-2/#view-transition-group-children-pseudo)            | <span id="vtgc"/>   |
+| [Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md)                                 | <span id="svt"/>    |
+| [view-transition-scope](https://drafts.csswg.org/css-view-transitions-2/#view-transition-scope-prop)                                | <span id="vts"/>    |
+| [Navigation API](https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API)                                                   | <span id="nav"/>    |
+| [Speculation Rules](https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API)                                         | <span id="spec"/>   |
 
 <div class="test"></div>
 <div class="test-match-element"></div>
-
-
 
 For browser compatibility data regarding the View Transition API see [the mdn page](https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API#browser_compatibility).
 
@@ -59,6 +58,7 @@ Visit [Bramus' View Transitions Feature Explorer](https://www.bram.us/2025/10/17
 	#vtgc,
 	#vtna,
 	#vtnme,
+	#vts,
 	#wut {
 		&::before {
 			content: 'Not supported';
@@ -79,6 +79,7 @@ Visit [Bramus' View Transitions Feature Explorer](https://www.bram.us/2025/10/17
 	:root[vtgc] #vtgc,
 	:root[vtna] #vtna,
 	:root[vtnme] #vtnme,
+	:root[vts] #vts,
 	:root[wut] #wut
 	 {
 		&::before {
