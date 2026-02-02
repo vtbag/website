@@ -240,11 +240,11 @@ For your own site, you will have more specific knowledge of what to wait for. Yo
 
 If you've been following along, you'll be rewarded with a site that delivers smooth page transitions across all your navigations.
 
-These are the default settings the Navigation API applies when used without additional configuration:
+These are the default settings the View Transition API applies when used without additional configuration:
 
 - A single animation spans the entire viewport.
 - The animation lasts 250 milliseconds using CSS's default `ease` timing function.
-- The animation is a cross-fade: the opacity of the old page fades out from 1 to 0, while the opacity of the new page fades in from 0 to 1.
+- The animation is a cross fade: the old page fades out as its opacity goes from 1 to 0, while the new page fades in with its opacity going from 0 to 1.
 - The animation kicks in when you follow links and if you traverse through the browser history using backward / forward navigation.
 - Loading a page via the address bar or explicitly reloading a page (pressing <kbd>F5</kbd> or <kbd>Cmd</kbd>-<kbd>R</kbd>) will not show view transitions.
 

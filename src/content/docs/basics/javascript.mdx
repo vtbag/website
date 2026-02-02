@@ -217,4 +217,4 @@ Similarly, `pagereveal` listeners allow you to tweak view transition names and t
 
 ### Activation Object
 
-The `pageswap` event also provides a [`NavigationActivation`](https://developer.mozilla.org/en-US/docs/Web/API/NavigationActivation) object via its `activation` property, offering details about the current page (`from`) and next page (`entry`). While the `pagereveal` event does not include this property, in browsers supporting the Navigation API, you can use `navigation.activation` to access information about the previous page (`from`) and current page (`entry`).
+The `pageswap` event also provides a [`NavigationActivation`](https://developer.mozilla.org/en-US/docs/Web/API/NavigationActivation) object via its `activation` property, offering details about the current page (`from`) and next page (`entry`). While the `pagereveal` event does not include this property you can use `navigation.activation` to access information about the previous page (`from`) and current page (`entry`). Use with some caution: the Navigation API only became baseline in late 2025.
