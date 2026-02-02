@@ -170,11 +170,11 @@ Scoped view transitions are not widely supported jet. If your [browser supports]
 
 #### view-transition-scope
 
-To prevent clashes between different view transitions that reference the same elements, the API automatically (well, not automatically yet for Chrome 146.0.7665.0) inserts
+To avoid conflicts between multiple scoped view transitions that target the same elements, the API adds
 ```
 view-transition-scope: auto;
 ```
-on the transition root. The transition root is either the document root or the element on which `element.startViewTransition()` was called. When automatically inserted by the API, this property exists only for the lifetime of the triggering view transition. The only valid values for `view-transition-scope` are `auto` and `none`.
+to the transition root. The transition root is either the document root or the element on which `element.startViewTransition()` was called. This is not fully automatic yet. As of Chrome 146.0.7665.0, it still requires explicit handling. When automatically inserted by the API, this property exists only for the lifetime of the triggering view transition. The only valid values for `view-transition-scope` are `auto` and `none`.
 
 `view-transition-scope` defines a visibility boundary for view transition names. When it is set to `auto` on an element, all view transition names defined within that element's DOM subtree are hidden from view transitions that are rooted outside of that subtree. 
 
