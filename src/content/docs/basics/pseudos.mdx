@@ -8,7 +8,7 @@ head:
       content: "/pseudos-og.png"
 ---
 
-import Media from "@/components/Media.astro"
+import Media from "@/components/Media.astro";
 
 What are those pseudo-elements of the View Transition API and how can I style and animate them?
 
@@ -19,7 +19,6 @@ Without further customization, none of your actual DOM elements are directly vis
 ## The Theater Curtain
 
 Think of it like a theater: A curtain drops, painted with the last scene, while the stage is being rebuilt behind it. On the curtain, images gradually shift to depict the next scene. Then, the curtain lifts to reveal the new stage. Just like in modern theater, there can be multiple curtains: some closer to the audience, others further back.
-
 
 <style>{`
     .container {
@@ -122,24 +121,23 @@ Think of it like a theater: A curtain drops, painted with the last scene, while 
 
 `}</style>
 
-
 <div style="margin-top: 50px">
-<div class="container not-content">
-  <div class="rectangle">::view-transition</div>
-  <div class="rectangle small">1</div>
-  <div class="rectangle small">2</div>
-  <div class="rectangle small">3</div>
-  <div class="rectangle small">4</div>
-  <div class="rectangle small">5</div>
-  <div class="rectangle small">6</div>
-  <div class="rectangle small">7</div>
-  <div class="rectangle">DOM</div>
-  <div class="rectangle small">3</div>
-  <div class="rectangle small">4</div>
-  <div class="rectangle small">5</div>
-  <div class="rectangle small">6</div>
-  <div class="rectangle small">7</div>
-</div>
+  <div class="container not-content">
+    <div class="rectangle">::view-transition</div>
+    <div class="rectangle small">1</div>
+    <div class="rectangle small">2</div>
+    <div class="rectangle small">3</div>
+    <div class="rectangle small">4</div>
+    <div class="rectangle small">5</div>
+    <div class="rectangle small">6</div>
+    <div class="rectangle small">7</div>
+    <div class="rectangle">DOM</div>
+    <div class="rectangle small">3</div>
+    <div class="rectangle small">4</div>
+    <div class="rectangle small">5</div>
+    <div class="rectangle small">6</div>
+    <div class="rectangle small">7</div>
+  </div>
 </div>
 
 While theater can create magic, view transitions go even further with their "curtains." These curtains not only move independently, but they can also change in size, orientation, opacity, and more. Some curtains even act as dynamic surfaces, projecting constantly changing content.
@@ -153,7 +151,7 @@ Now that we've covered the general concept, we can move on from the magic and di
 You tell the view transition API which elements should be animated by assigning `view-transition-name` CSS properties to HTML elements. You can use inline styling or a stylesheet to assign the view transition name.
 
 ```html title="Assigning a view transition name using inline styling"
-<main style="view-transition-name: main">
+<main style="view-transition-name: main"></main>
 ```
 
 ```css title="Assigning a view transition name with a stylesheet"
@@ -164,20 +162,22 @@ main {
 
 Capturing of images happens in two passes. One captures images of the old DOM state before the view transition, and the other pass captures the new images of the target state.
 
-For both passes, when the View Transition API captures the images to be animated, the **view transition names have to be unique** in the DOM. 
+For both passes, when the View Transition API captures the images to be animated, the **view transition names have to be unique** in the DOM.
 
-There are two exceptions: 
+There are two exceptions:
+
 - The API ignores the `view-transition-name` of a fragmented element, i.e. an element that consists of two or more boxes, like an inline element that spans two lines. View transition names assigned to such elements are ignored.
 
-- The API also ignores the `view-transition-name` of an element if that element is not rendered, like the `<head>`, or if it is skipped. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance have  their `display` CSS property set to `none`. This can also be done by setting an HTML element's hidden attribute or property. Looking for an example? This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site. This trick also works with an ancestor with `content-visibility: hidden` but not with a simple `visibility: hidden` directly on the element.
-
+- The API also ignores the `view-transition-name` of an element if that element is not rendered, like the `<head>`, or if it is skipped. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance have their `display` CSS property set to `none`. This can also be done by setting an HTML element's hidden attribute or property. Looking for an example? This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site. This trick also works with an ancestor with `content-visibility: hidden` but not with a simple `visibility: hidden` directly on the element.
 
 The static user agent stylesheet provides one default name for the document, called `root`.
+
 ```css title="static user agent stylesheet"
 :root {
   view-transition-name: root;
 }
 ```
+
 <a id="opt-out"></a>
 This default defines an animation for the current viewport. If you want to animate only parts of the document, you can opt out of the global transition by overriding that default in your own styles by setting the value to `none`.
 ```css
@@ -187,25 +187,27 @@ This default defines an animation for the current viewport. If you want to anima
 ```
 The special value `none` removes a potentially set view transition name.
 
-Other special names are [`match-element`](#auto-generated-names-match-element) and [`auto`](#auto-generated-names-auto), and all names beginning with `-ua-` as in _user-agent_, as this is a reserved namespace for browser generated view transition names. 
+Other special names are [`match-element`](#auto-generated-names-match-element) and [`auto`](#auto-generated-names-auto), and all names beginning with `-ua-` as in _user-agent_, as this is a reserved namespace for browser generated view transition names.
 
 :::note
 Setting an element's view-transition-name has a few [lesser-known effects on rendering](https://drafts.csswg.org/css-view-transitions-1/#named-and-transitioning):
-* It creates a stacking context.
-* It flattens child elements in 3D space, similar to `transform-style: flat`.
-* It establishes a backdrop root.
-:::
+
+- It creates a stacking context.
+- It flattens child elements in 3D space, similar to `transform-style: flat`.
+- It establishes a backdrop root.
+  :::
 
 ### Escaping
-Do not quote the names. They are not strings but [custom-ident](https://developer.mozilla.org/de/docs/Web/CSS/custom-ident) values. Ensure proper escaping of special characters. The simplest, most portable approach is to just use upper and lower case letters from A to Z, digits from 0 to 9, an underscore `_` or a hyphen `-` character. But don't start the name with a positive or negative number. 
+
+Do not quote the names. They are not strings but [custom-ident](https://developer.mozilla.org/de/docs/Web/CSS/custom-ident) values. Ensure proper escaping of special characters. The simplest, most portable approach is to just use upper and lower case letters from A to Z, digits from 0 to 9, an underscore `_` or a hyphen `-` character. But don't start the name with a positive or negative number.
 
 While all other characters with a code < 128 need to be escaped, codes > 127 like 😄 seem to work just fine in view transition names. In browsers, you can use `CSS.escape()` to properly escape strings as custom identifiers.
 
 It is not important to have much imagination when choosing names. They can be the similar to the `id` of an element or name of a unique tag like `body` or `footer`.
 
-
 ### Auto-Generated Names: match-element
-The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined as it acts as a marker for elements for which the API should generate view transition groups. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](/tips/auto-names/). 
+
+The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined as it acts as a marker for elements for which the API should generate view transition groups. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](/tips/auto-names/).
 
 However, it is also possible to do this with only CSS by using the `match-element` value, no JavaScript needed.
 
@@ -219,18 +221,19 @@ Using `match-element` assigns a generated name that is bound to the DOM element.
 Those names typically look like `-ua-....` with some random suffix.
 Two different elements are always assigned different values.
 
+How could you style your pseudo-elements, if they have an unknown random name? The general approach here is to also assign a view transition class.
 
-How could you style your pseudo-elements, if they have an unknown random name? The general approach here is to also assign a view transition class. 
 ```css
 .card {
   view-transition-name: match-element;
   view-transition-class: card;
 }
 ```
-The class name does not need to be unique across elements. Then [use the view transition class name](/basics/styling/#with-classes) in your style rules. 
 
-This works fine for **same-document** view transitions on supporting browsers. 
-For **cross-document** view transitions, generated names for the two document should never be the same. Therefore groups created from `match-element` in cross-document view transitions will always have image-pairs with a single old or new image, only. 
+The class name does not need to be unique across elements. Then [use the view transition class name](/basics/styling/#with-classes) in your style rules.
+
+This works fine for **same-document** view transitions on supporting browsers.
+For **cross-document** view transitions, generated names for the two document should never be the same. Therefore groups created from `match-element` in cross-document view transitions will always have image-pairs with a single old or new image, only.
 
 :::caution
 Safari seems to handle `match-element` like `none` in cross-document view transitions, i.e. it does not generate any names when view transitions are enabled via `@view-transition{navigate-auto}`. It does generate names when the transition ist started by calling `startViewTransition()`.
@@ -246,13 +249,14 @@ Browser also defined `auto` as a special value for `view-transition-name`, but i
 
 ```css
 selector {
-  view-transition-name: auto; 
+  view-transition-name: auto;
 }
 ```
-This is similar to `match-element` but it also takes the `id` property of an HTML element into account: If the `id` property is set, `auto` generates the same view transition name for all elements with that `id`, independent of the document that element belongs to. 
-Different ids generate different view transition names. 
 
-So the main use case here is to match elements with the same id in cross-document view transitions. But it also works with `startViewTransition`. Just make sure that your `id` values are unique as it should be even if not enforced by browsers. Otherwise you might get duplicate view transition names and the view transition gets skipped with an error. 
+This is similar to `match-element` but it also takes the `id` property of an HTML element into account: If the `id` property is set, `auto` generates the same view transition name for all elements with that `id`, independent of the document that element belongs to.
+Different ids generate different view transition names.
+
+So the main use case here is to match elements with the same id in cross-document view transitions. But it also works with `startViewTransition`. Just make sure that your `id` values are unique as it should be even if not enforced by browsers. Otherwise you might get duplicate view transition names and the view transition gets skipped with an error.
 
 Different browsers and browser versions show divergent behavior. Safari uses the `id` value as view transition name. On some Webkit versions you might also see `-ua-id-<id>`, where `<id>` is the element's `id` value. Chrome uses random values similar to those generated for `match-element`.
 
@@ -265,9 +269,11 @@ As with `match-element`, if `id` is not set, Safari does not seem to generate ra
 _Not available across browsers, yet._
 
 On recent Chromium browsers you could use the following incantation to re-use the `id` attribute as an view transition name:
+
 ```css
 view-transition-name: attr(id type(<custom-ident>), none);
 ```
+
 Here `type(<custom-ident>)` is necessary to make the id a custom-ident, and `none` is the default value to be used if there is no `id` attribute.
 
 Fun fact: The following works in Chrome like the original Safari version of `auto`: Use the `id` attribute if defined, otherwise make up some name.
@@ -276,10 +282,8 @@ Fun fact: The following works in Chrome like the original Safari version of `aut
 view-transition-name: attr(id type(<custom-ident>), match-element);
 ```
 
-
-
-
 ### Dynamic Names
+
 Of course view transition names do not need to be static. You can assign them conditionally, e.g. inside a media query or with a selector that checks for a special CSS class further up the DOM. Another interesting way for conditional assignment of view transition names is to let them [depend on view transition types](/basics/styling/#conditional-view-transitions).
 
 Because they are animatable CSS properties, view transition names can even be changed using other animations. So if you like you could automatically change a name over time or depending on the scroll position with scroll-driven animations.
@@ -324,8 +328,8 @@ inspect(top.document.querySelector("#vtbag-main-frame").contentDocument.querySel
 ```
 
 Here `root` is the automatically assigned `view-transition-name` for the document's documentElement (:root). `myName` is an arbitrary example `view-transition-name`.
-</details>
 
+</details>
 
 ### Old and New Image Pseudos
 
@@ -342,8 +346,8 @@ This might be confusing, as the original element is usually hidden behind the `:
 If you capture an element with width _w_ and height _h_, the pseudo-element will have the same height and width. But in addition it will also show the _overflowing ink_, like box-shadows, of the original element outside the _w x h_ rectangle.
 
 #### Important Exception
-The View Transition API handles the image of the root `<html>` element in a special way. It covers only the viewport, not the entire page and no overflowing ink. If you shift this image up or down, it won't reveal anything beyond the viewport's boundaries. To capture the entire page, use the `<body>` element instead of the `<html>` element. However, keep in mind that browsers may consider such an image too large. They might capture only part of it, skip it, or even cancel the entire view transition. Chromium appears to implement partial capture for oversized images.
 
+The View Transition API handles the image of the root `<html>` element in a special way. It covers only the viewport, not the entire page and no overflowing ink. If you shift this image up or down, it won't reveal anything beyond the viewport's boundaries. To capture the entire page, use the `<body>` element instead of the `<html>` element. However, keep in mind that browsers may consider such an image too large. They might capture only part of it, skip it, or even cancel the entire view transition. Chromium appears to implement partial capture for oversized images.
 
 ### Groups and Image-Pairs
 
@@ -371,21 +375,11 @@ The image-pairs are the direct parents of the `::view-transition-old` and `::vie
 
 #### Nested View Transition Groups
 
-With the one to one relation between groups and image pairs, the group looks a bit redundant. This 1:1 relationship [will change in the future](https://drafts.csswg.org/css-view-transitions-2/#nested-view-transition-groups). Today the groups form a simple sequence and the order of the elements in this list also defines the standard paint order of the pseudos.
+With the one to one relation between groups and image pairs, the group looks a bit redundant. This 1:1 relationship changes with nested view transition groups. Without nesting, the view transition groups form a simple sequence and the order of the elements in this list also defines the standard paint order of the pseudos.
 
-Nested view transition groups will add the possibility to arrange view transition groups in trees.
-```css
-selector {
-  view-transition-name: my-name;
-  view-transition-group: other;
-}
-```
-Here the definition of the view transition name creates a view transition group `my-name`. Adding the `view-transition-group` property makes the `my-name` group a child of the `other` group defined elsewhere.
-Reserved values are `none`, `normal`, `contain`, and `nearest`.
+Nested view transition groups  add the possibility to arrange view transition groups in trees. Nested view transition groups are especially helpful as they allow [clipping of child groups](/basics/hide-and-seek/#clipping-with-nested-view-transition-groups).
 
-When the property is set to `contain`, it will automatically become the parent of contained elements.
-
-While pseudo-elements can be moved independently of their named elements' position in the DOM, grouping is more restricted. A parent-child relationship in the view transition tree can only exist if the named elements also are descendants in the DOM
+The nesting of groups is implemented using a `view-transition-group-children` pseudo-element. It exists only in groups that really have children.
 
 ```c
 ::view-transition                           // the parent of all groups
@@ -399,16 +393,48 @@ While pseudo-elements can be moved independently of their named elements' positi
           ::view-transition-old(my-name)
 ```
 
-Nested view transition groups are especially interesting as they will allow [clipping of child groups](/basics/hide-and-seek/#clipping-with-nested-view-transition-groups).
+Nested view transition groups and the `::view-transition-group-children` pseudo-element are a relatively new features. Check whether your browser already [supports](/basics/test-page/) it.
 
 
-The `::view-transition-group-children` pseudo-element is a relatively new addition to the View Transition API. Check whether your browser already [supports](/basics/test-page/) it. 
+Historical note: In browsers that support nested groups but do not yet support `::view-transition-group-children`, nested groups are direct children of the parent `::view-transition-group`, and they may appear before the image-pair.
 
-If supported, `::view-transition-group-children` appears after the parent group's image-pair (if any) and becomes the direct parent of all nested groups. This pseudo-element is only inserted for groups where the `view-transition-group` property is set. The name in parentheses for a group children pseudo-element matches that of its group.   
-
-In browsers that support nested group names but do not yet support `::view-transition-group-children`, nested groups are direct children of the parent `::view-transition-group`, and they may appear before the image-pair.  
+The `::view-transition-group-children` pseudo-element appears after the parent group's image-pair (if any) and becomes the direct parent of all nested groups. This pseudo-element is only inserted for groups where the `view-transition-group` property is set. The name in parentheses for a group children pseudo-element matches that of its group.
 
 
+
+
+When it creates a `::view-transition-group-children` pseudo element, the View Transition API also adds an [animation that morphs the border values](/basics/styling/#group-children-animation) of the old image to those of the new image.
+
+
+You define the nesting by setting the `view-transition-group` property on an element. The `view-transition-group` property only works on an element that also has a `view-transition-name`, as it determines how the new group is inserted into the tree of view transition groups. Special values for `view-transition-group` are `normal`, `nearest`, and `contain`. You can also use the name of another group as a value to declare the new group being a child of the referenced group.
+
+
+If you do not explicitly set the `view-transition-group` property of an element, it defaults to `normal`.
+
+###### view-transition-group: ident
+
+```css
+selector {
+  view-transition-name: my-name;
+  view-transition-group: other;
+}
+```
+
+Here the definition of the view transition name creates a view transition group `my-name`. Adding the `view-transition-group` property makes the `my-name` group a child of the `other` group defined elsewhere. You can not reference arbitrary groups, only those created for ancestors of the current element: A parent-child relationship in the view transition tree can only exist if the named elements also are descendants in the DOM. If the name is not found (for an ancestor), the new group will be inserted as a child of the `::view-transition` pseudo-element. 
+
+##### view-transition-group: none
+You can force a new group to be a child of the `::view-transition` root by setting `view-transition-group: none`.
+
+##### view-transition-group: normal
+
+If an element has `view-transition-group: normal`, a newly created view transition group for that element will be inserted as a child of the nearest view transition group that itself was created from an element with a `view-transition-group` value other than `normal`. In other words: the parent view transition group is determined by visiting parent DOM elements until an element is found that has a `view-transition-name !== none` and a `view-transition-group` value that is either `nearest`, `contain`, or some group name. If no parent group is found the new group will become a child of the `::view-transition` pseudo-element.
+
+##### view-transition-group: nearest
+
+The `nearest` value has the similar effect as normal, but a bit simpler. The difference is that during the traversal of the parent elements in the DOM the view transition group of the element that creates one will be used as parent group. Again, if no such group is found, the `::view-transition` pseudo-element will be the parent of the group.
+
+##### view-transition-group: contain
+For identifying a parent for the new group, `contain`  works the same way as `normal`. Setting `view-transition-group: contain is mainly a handy shortcut to make a view transition group the automatic parent of all groups created by elements that are descendants of this element and do explicitly set their view-transition group.
 
 
 
@@ -416,7 +442,7 @@ In browsers that support nested group names but do not yet support `::view-trans
 
 The `::view-transition-old` pseudo elements are created **in the paint-order** of the elements of the old DOM. When an element with a `view-transition-name` is encountered, its old image is captured. During this process, other elements with view transition names are effectively ignored, as if their `visibility` were set to `hidden`. This ensures that the images have "holes" where other images can be properly placed.
 
-The image of the `:root` element, if not [opted out](#opt-out), covers the whole viewport. Its view transition group is the first in the list of `::view-transition-group` children of the `::view-transition` pseudo-element.  Subsequent groups are added after the root group once their old images have been created.
+The image of the `:root` element, if not [opted out](#opt-out), covers the whole viewport. Its view transition group is the first in the list of `::view-transition-group` children of the `::view-transition` pseudo-element. Subsequent groups are added after the root group once their old images have been created.
 
 <div style="width: fit-content; margin: 0 auto">
 <Media>
@@ -432,7 +458,7 @@ The image of the `:root` element, if not [opted out](#opt-out), covers the whole
 
 For same-document view transitions, the creation of old images is the first step after calling `startViewTransition()`. For cross-document view transitions, creation of old images occurs right after the `pageswap` event is fired. The new images are processed when the `updateCallbackDone` promise resolves (for same-document view transitions) or right after the `pagereveal` event fires (for cross-document view transitions).
 
-The process for creating new images is similar to the creation of old image pseudos.  The key difference is that a `::view-transition-group` for a specific `view-transition-name` may already exist when the `::view-transition-new` image is created. In such cases, the new image is added to the existing `::view-transition-image-pair` of that group. The image pair will then contain both the old and new images, always in that order.
+The process for creating new images is similar to the creation of old image pseudos. The key difference is that a `::view-transition-group` for a specific `view-transition-name` may already exist when the `::view-transition-new` image is created. In such cases, the new image is added to the existing `::view-transition-image-pair` of that group. The image pair will then contain both the old and new images, always in that order.
 
 If no existing group is found, a `new ::view-transition-image-pair` and `::view-transition-group` pseudo-element is created for the `view-transition-name` and added to the end of the `::view-transition` pseudo-element's group list. This pair will then contain only the new image.
 
@@ -461,7 +487,7 @@ When examining the `::view-transition-groups` in order, the elements at the star
 
 Before the view transition starts, the pseudo elements are rendered on top of the current page.
 
-The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport including scrollbars, and retractable UI parts on mobile. The spec refers to this as the _snapshot containing block_. The `::view-transition` pseudo-element is fully transparent by default.  It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set `pointer-events: none` on it).
+The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport including scrollbars, and retractable UI parts on mobile. The spec refers to this as the _snapshot containing block_. The `::view-transition` pseudo-element is fully transparent by default. It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set `pointer-events: none` on it).
 
 The transition groups are rendered [in the order they were created](#creation-of-pseudo-elements), which is the same as the order in which they appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
 
@@ -474,6 +500,7 @@ One advantage of using images and a separate _view transition layer_ is that ani
 For example, if an element is partially hidden by other elements and you assign it a view transition name, it may unexpectedly appear in front them during the transition. To manage this, either treat it as a feature or avoid such cases. Alternatively, you can assign a view transition name to the obscuring elements. This ensures that they also define images in the _view transition layer_.
 
 ### Reordering Pseudo-Elements Using z-index
+
 The View Transition API stacks the images in the original paint order. You can use the `z-index` CSS property to rearrange the view transition groups:
 
 ```css
@@ -484,28 +511,28 @@ The View Transition API stacks the images in the original paint order. You can u
 
 If you have prominent elements on your page that should always be in the foreground, even through view transitions, consider giving them an view transition name to lift them to the _view transition layer_ and raise them there with an appropriate `z-index`.
 
-
 The same approach can also be used to move the old image in front of the new image inside its image pair:
+
 ```css
 ::view-transition-old(important-old) {
   z-index: 1;
 }
 ```
 
-
 ## Delaying Cross Document Transitions
 
 With cross-document transitions the browser has to guess what would be a good time to start the animaitons of the view transition. It needs to load at least the HTML with the elements that should participate in a view transition. And it definitively needs to load the stylesheets that describe the view transition. But it would be a bad user experience if it would wait for a long page to load completely and await all scripts to run before the transition starts.
 
-Start of view transitions will always await the `<head>` to be loaded. External stylesheets inside the head will also be awaited for. If you want to make sure that view transitions wait for an external script, add the `blocking="render"` attribute to the script element. You can also instruct view transitions to wait until some fragment URL of the current page is loaded by adding a link to the `<head>`  like this:
+Start of view transitions will always await the `<head>` to be loaded. External stylesheets inside the head will also be awaited for. If you want to make sure that view transitions wait for an external script, add the `blocking="render"` attribute to the script element. You can also instruct view transitions to wait until some fragment URL of the current page is loaded by adding a link to the `<head>` like this:
+
 ```html
-<link rel="expect" href="#somewhere" blocking="render">
+<link rel="expect" href="#somewhere" blocking="render" />
 ```
+
 If the fragment in the `href` attribute does not exist on the page, view transitions will wait for the entire page to load before they start. Just note that the browser may log an error in this case, and it might cancel the view transition entirely if the load takes too long.
 
 Try pointing the `href` to an HTML element that ends just _below the fold_ to avoid disrupting the incremental loading of the rest of your page.
 
-
-I haven't yet been able to wait for an image to load, but the View Transition API points toward a different approach.  [Example 5](https://drafts.csswg.org/css-view-transitions-2/#cross-doc-examples) suggests checking if an image has fully loaded, and if not, modifying the view transitions to handle the situation rather than waiting for the image to load.
+I haven't yet been able to wait for an image to load, but the View Transition API points toward a different approach. [Example 5](https://drafts.csswg.org/css-view-transitions-2/#cross-doc-examples) suggests checking if an image has fully loaded, and if not, modifying the view transitions to handle the situation rather than waiting for the image to load.
 
 Prefetching or preloading resources can significantly reduce wait times. On Chromium browsers, you can use speculation rules to handle preloading.
