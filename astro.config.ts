@@ -16,7 +16,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   image: { remotePatterns: [{ protocol: "https" }] },
-  devToolbar: { enabled: true },
+  devToolbar: { enabled: false },
   site: "https://vtbag.dev",
   compressHTML: false,
 
@@ -214,11 +214,11 @@ function sidebar() {
         },
         { label: "Styling View Transitions", link: "/basics/styling/" },
         { label: "JavaScript API", link: "/basics/javascript/" },
-        { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/" },
+        { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/",
+          badge: { text: "Updated!", variant: "success" } as Badge },
         {
           label: "API Levels and Implications",
-          link: "/basics/levels/",
-          badge: { text: "New!", variant: "success" } as Badge,
+          link: "/basics/levels/"
         },
         { label: "Web Framework Support", link: "/basics/frameworks/" },
       ],
@@ -233,8 +233,7 @@ function sidebar() {
         {
           label: "Utensil Drawer",
           link: "/tools/utensil-drawer/",
-          badge: { text: "Updated!", variant: "success" } as Badge,
-        },
+          },
       ],
     },
     {
@@ -250,7 +249,6 @@ function sidebar() {
         {
           label: "Playing",
           link: "/fwvt/playing/",
-          badge: { text: "New!", variant: "success" } as Badge,
         },
       ],
     },
@@ -275,7 +273,6 @@ function sidebar() {
         {
           label: "Why View Transitions Might Fail",
           link: "tips/view-transition-fails-and-fixes/",
-          badge: { text: "Updated!", variant: "success" } as Badge
         },
       ],
     },

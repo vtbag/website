@@ -203,9 +203,14 @@ In the early versions of the View Transition API, the transition groups form a f
 
 Nested view transition groups introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy. The example to the right is built with nested view transition groups. If it doesn't look right, check whether your [browser has support](/basics/test-page/) for them.
 
-Clipping the list elements at the list container prevents them from being drawn outside the list element. However, if clipped at the parent group, they seem to fly in front of the scrollbars and the border.
+Clipping the peudos of the list elements at the `::view-transition-group-children`  pseudo of th list container prevents them from being drawn outside the list element. However, they seem to fly in front of the scrollbars. [This will change.](https://issues.chromium.org/issues/475236700). In the meanwhile you make the group-children pseudo some pixels smaller to keep the scrollbar visible during the animation.
 
-Clipping at the `::view-transition-group-children` element respects the border. If you make it some pixels smaller, you can keep the scrollbar visible during the animation.
+```css
+    ::view-transition-group-children(ul) {
+      overflow: clip;
+      width: calc(100% - 18px); // quick fix for https://issues.chromium.org/issues/475236700
+    }
+```
 
 <a id="clipping-with-scoped-view-transition-groups"></a>
 ### Clipping with **Scoped** View Transitions
@@ -219,12 +224,32 @@ Clipping at the `::view-transition-group-children` element respects the border. 
 ></iframe>
 </SidePicture>
 
-_Scoped_ view transitions are still a bit further in the future. Once available, they will also enable clipping view transition animations on any DOM element. Early implementations really worked well for clipping. In contrast to nested view transition groups, the elements used to move behind the scrollbars.
+_Scoped_ view transitions are still a bit further in the future. Once available, they will also enable clipping view transition animations. 
+They will even enable two different approaches. 
 
-Current implementations of scoped view transitions do not seem to help much for clipping. Have to revisit this examples shortly.
+The view transition pseudo elements can be clipped at containers outside the view transition root. In or example, we could run a scoped view transition on the (overflowing) `<ul>` element and put a container with `overflow:scroll` around it, which we use it to clip the pseudo elements so they could not escape. 
+<p style="clear: both"></p>
+```css 
+div {
+  overflow: clip;
+  & ul {
+    contain: layout;
+  }
+}
+```
 
+Alternatively, we can opt out of self-participating by removing the `root` view transition name for `<ul>` and clip at the root pseudo element of the view transition:
+```css
+ul {
+  view-transition-name: none;
+  contain: layout;
+}
+ul::view-transition {
+  overflow: clip;
+}
+```
 
-So until _nested_ view transition groups and _scoped_ view transitions are supported by all major browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
+Until _nested_ view transition groups and _scoped_ view transitions are supported by all major browsers, we have to play some tricks to simulate the clipping. See the next section on how to do that.
 
 ## Taming Images of Clipped Elements
 

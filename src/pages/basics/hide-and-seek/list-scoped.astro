@@ -56,6 +56,7 @@ import Layout from "@/layouts/Layout.astro";
       border: 1px solid grey;
       contain: layout;
       scrollbar-gutter: stable;
+      view-transition-name: none;
     }
     li {
       padding: 10px;
@@ -63,6 +64,9 @@ import Layout from "@/layouts/Layout.astro";
       background-color: #822;
       margin: 5px;
       border-radius: 5px;
+    }
+    #ul::view-transition {
+      overflow: clip;
     }
     #ul::view-transition-group(*) {
       animation-duration: 0.8s;
