@@ -13,6 +13,7 @@ import Media from "@/components/Media.astro";
 import EpisodeNav from "@/components/EpisodeNav.astro";
 import wb from "@/assets/wb.png";
 import "@/styles/fwvt.css";
+import CTA from "../../../components/CTA.astro";
 
 <script type="module">{`setTimeout(()=>{document.querySelectorAll("video").forEach(v=>v.style.visibility="visible")},1000)`}</script>
 
@@ -50,7 +51,10 @@ Hello, Astronauts, and welcome to a very special episode of _Fun with View Trans
 
 See how we sprinkle some browser-native, cross-document view transition magic on your Astro Starlight site.
 
-Get it all automatically  by [installing the pre-configured Starlight plugin](https://events-3bg.pages.dev/library/StarlightPlugin/) or take the full walkthrough below!
+**Get it all automatically  by installing the pre-configured**
+<CTA>[Starlight plugin](https://events-3bg.pages.dev/library/StarlightPlugin/)</CTA> 
+<style>{`#cta {margin-bottom: 1lh}`}</style>
+**&hellip;or take the full walkthrough below!**
 
 </div>
 </div>
