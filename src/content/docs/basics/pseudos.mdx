@@ -160,7 +160,7 @@ main {
 }
 ```
 
-Capturing of images happens in two passes. One captures images of the old DOM state before the view transition, and the other pass captures the new images of the target state.
+Capturing of images happens in two passes. One captures images of the old DOM state before the view transition, and the other pass captures the new elements of the target state.
 
 For both passes, when the View Transition API captures the images to be animated, the **view transition names have to be unique** in the DOM.
 
@@ -440,7 +440,7 @@ For identifying a parent for the new group, `contain`  works the same way as `no
 
 ## Creation of Pseudo-Elements
 
-The `::view-transition-old` pseudo elements are created **in the paint-order** of the elements of the old DOM. When an element with a `view-transition-name` is encountered, its old image is captured. During this process, other elements with view transition names are effectively ignored, as if their `visibility` were set to `hidden`. This ensures that the images have "holes" where other images can be properly placed.
+The `::view-transition-old` pseudo elements are created **in paint-order** of the elements of the old DOM. When an element with a `view-transition-name` is encountered, its old image is captured. During this process, other elements with view transition names are effectively ignored, as if their `visibility` were set to `hidden`. This ensures that the images have "holes" where other images can be properly placed.
 
 The image of the `:root` element, if not [opted out](#opt-out), covers the whole viewport. Its view transition group is the first in the list of `::view-transition-group` children of the `::view-transition` pseudo-element. Subsequent groups are added after the root group once their old images have been created.
 
@@ -479,7 +479,7 @@ If no existing group is found, a `new ::view-transition-image-pair` and `::view-
 
 As with the old DOM, the pre-order depth-first traversal of the new DOM typically identifies the `:root` element as the first to have its image captured.
 
-In a typical setup, where the View Transition API automatically assigns the `root` view transition name to the `:root` element in both the old and new DOM, the group for the `root` transition name will already exist when the image of the `:root` element is captured in the new DOM. Thus, the first five lines of the output, [as shown above](#groups-and-image-pairs), are common in most settings.
+In a typical setup, where the View Transition API automatically assigns the `root` view transition name to the `:root` element in both the old and new DOM, the group for the `root` transition name will already exist when the `:root` element is captured in the new DOM. Thus, the first five lines of the output, [as shown above](#groups-and-image-pairs), are common in most settings.
 
 When examining the `::view-transition-groups` in order, the elements at the start of the list will have at least an old image, while those towards the end will have at least a new image.
 

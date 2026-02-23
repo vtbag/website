@@ -209,11 +209,11 @@ Both events include a `viewTransition` property, which holds a `ViewTransition` 
 For `pageswap`, if `viewTransition` is defined, its promises will never settle because the page is unloaded before it is "updated".
 For `pagereveal`, if `viewTransition` is defined, its `updateCallbackDone` promise is immediately settled.
 
-The events allow you to manipulate the DOM or CSS properties right before snapshots are taken or the new page's live images are captured. In particular, they allow for [setting view transition types](/basics/styling/#with-types) for the current view transition.
+The events allow you to manipulate the DOM or CSS properties right before snapshots are taken or the new page's live elements are captured. In particular, they allow for [setting view transition types](/basics/styling/#with-types) for the current view transition.
 
 In a `pageswap` listener, you can define view transition types by adding them to `event.viewTransition.types`, which are then only applied to the old page. The types can be used to [control via CSS](/tools/turn-signal/#switching-transition-names) what view transition names are defined on the old page. You can also directly modify view transition names in the listener as snapshots for the `::view-transition-old` pseudo elements are taken after this event is dispatched.
 
-Similarly, `pagereveal` listeners allow you to tweak view transition names and types for the new page. Again, live images for the `::view-transition-new` pseudo-elements are being captured after the event.
+Similarly, `pagereveal` listeners allow you to tweak view transition names and types for the new page. Again, live element for the `::view-transition-new` pseudo-elements are being captured after the event.
 
 ### Activation Object
 
