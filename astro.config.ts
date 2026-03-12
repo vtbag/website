@@ -20,10 +20,6 @@ export default defineConfig({
   site: "https://vtbag.dev",
   compressHTML: false,
 
-  experimental: {
-    preserveScriptOrder: true,
-    headingIdCompat: true,
-  },
   prefetch: false,
 
   markdown: {
@@ -154,6 +150,9 @@ export default defineConfig({
     }),
     d2({
       skipGeneration: process.env.GITHUB_ACTIONS === "true",
+      theme: {
+        default: "0",
+      },
     }),
     vtbot({ autoLint: false, loadingIndicator: false }),
     inoxToolsPortalGun(),
