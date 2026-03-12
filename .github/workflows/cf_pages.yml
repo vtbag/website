@@ -40,7 +40,7 @@ jobs:
           restore-keys: astro-cache
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
       - name: Build with Astro
         run: npm run build
