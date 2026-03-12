@@ -154,11 +154,11 @@ The [`mayStartViewTransition()`](/tools/utensil-drawer/#maystartviewtransition) 
 [Scoped view transitions](https://github.com/WICG/view-transitions/blob/main/scoped-transitions.md) are rooted at arbitrary DOM elements.
  
 Instead of calling 
-```
+```js
 document.startViewTransition()
 ``` 
 it's 
-```
+```js
 element.startViewTransition()
 ``` 
 This has some severe advantages:
@@ -171,7 +171,7 @@ Scoped view transitions are not widely supported jet. If your [browser supports]
 #### view-transition-scope
 
 To avoid conflicts between multiple scoped view transitions that target the same elements, the API adds
-```
+```css
 view-transition-scope: all;
 ```
 to the transition root. The transition root is either the document root or the element on which `element.startViewTransition()` was called. This is not fully automatic yet. As of Chrome 146.0.7665.0, it still requires explicit handling. When automatically inserted by the API, this property exists only for the lifetime of the triggering view transition. The only valid values for `view-transition-scope` are `all` and `none`.
