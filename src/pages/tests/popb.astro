@@ -1,0 +1,329 @@
+---
+import Layout from './_pop-layout.astro';
+---
+
+<Layout>
+	<div class="page-container">
+		<nav class="nav-header">
+			<h1 class="logo">Quantum</h1>
+			<a href="../popa/" class="nav-link">Explore Neural</a>
+		</nav>
+
+		<main class="main-content">
+			<section class="hero">
+				<div class="hero-visual">
+					<div class="gradient-blob blob-1"></div>
+					<div class="gradient-blob blob-2"></div>
+					<div class="quantum-sphere">
+						<div class="sphere-ring ring-1"></div>
+						<div class="sphere-ring ring-2"></div>
+						<div class="sphere-ring ring-3"></div>
+					</div>
+				</div>
+
+				<div class="hero-content">
+					<h2>Quantum Computing Platform</h2>
+					<p class="subtitle">Simulate quantum circuits with photonic precision</p>
+					<p class="description">
+						Access the next frontier of computing with our quantum simulation engine.
+						Run complex algorithms across distributed quantum processors with full
+						error mitigation.
+					</p>
+
+					<div class="features">
+						<div class="feature-item">
+							<span class="feature-number">1000+</span>
+							<span class="feature-label">Qubits available</span>
+						</div>
+						<div class="feature-item">
+							<span class="feature-number">99.2%</span>
+							<span class="feature-label">Fidelity rate</span>
+						</div>
+						<div class="feature-item">
+							<span class="feature-number">24/7</span>
+							<span class="feature-label">Cloud access</span>
+						</div>
+					</div>
+
+					<button class="cta-button">Start Experimenting</button>
+				</div>
+			</section>
+		</main>
+	</div>
+</Layout>
+
+<style>
+	.page-container {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		position: relative;
+		overflow-x: hidden;
+	}
+
+	.nav-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 24px 48px;
+		border-bottom: 1px solid light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));
+	}
+
+	.logo {
+		font-size: 24px;
+		font-weight: 700;
+		margin: 0;
+		background: linear-gradient(90deg, #06b6d4 0%, #0891b2 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.nav-link {
+		padding: 10px 24px;
+		background: light-dark(
+			linear-gradient(135deg, #06b6d4 0%, #0891b2 100%),
+			linear-gradient(135deg, #164e63 0%, #0e7490 100%)
+		);
+		color: white;
+		border-radius: 8px;
+		font-weight: 600;
+		font-size: 14px;
+		box-shadow: 0 4px 12px light-dark(rgba(6, 182, 212, 0.3), rgba(6, 182, 212, 0.2));
+	}
+
+	.nav-link:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px light-dark(rgba(6, 182, 212, 0.4), rgba(6, 182, 212, 0.3));
+	}
+
+	.main-content {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 48px 24px;
+	}
+
+	.hero {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 64px;
+		align-items: center;
+		max-width: 1200px;
+		width: 100%;
+	}
+
+	.hero-content {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		order: 2;
+	}
+
+	.hero-content h2 {
+		font-size: 48px;
+		font-weight: 700;
+		margin: 0;
+		line-height: 1.2;
+		color: light-dark(#111827, #f5f5f5);
+	}
+
+	.subtitle {
+		font-size: 20px;
+		font-weight: 600;
+		color: light-dark(#06b6d4, #22d3ee);
+		margin: 0;
+	}
+
+	.description {
+		font-size: 16px;
+		color: light-dark(#6b7280, #d1d5db);
+		margin: 0;
+		line-height: 1.7;
+	}
+
+	.features {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+		margin: 16px 0;
+	}
+
+	.feature-item {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.feature-number {
+		font-size: 28px;
+		font-weight: 700;
+		background: linear-gradient(90deg, #06b6d4 0%, #0891b2 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.feature-label {
+		font-size: 13px;
+		color: light-dark(#6b7280, #9ca3af);
+		font-weight: 500;
+	}
+
+	.cta-button {
+		align-self: flex-start;
+		padding: 14px 32px;
+		background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+		color: white;
+		border-radius: 8px;
+		font-weight: 600;
+		font-size: 16px;
+		box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+	}
+
+	.cta-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px rgba(6, 182, 212, 0.4);
+	}
+
+	.hero-visual {
+		position: relative;
+		height: 400px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		order: 1;
+	}
+
+	.gradient-blob {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(40px);
+		opacity: 0.6;
+	}
+
+	.blob-1 {
+		width: 300px;
+		height: 300px;
+		background: light-dark(
+			linear-gradient(135deg, #06b6d4 0%, #0891b2 100%),
+			linear-gradient(135deg, #164e63 0%, #0e7490 100%)
+		);
+		top: -50px;
+		left: -50px;
+	}
+
+	.blob-2 {
+		width: 250px;
+		height: 250px;
+		background: light-dark(
+			linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%),
+			linear-gradient(135deg, #6d28d9 0%, #164e63 100%)
+		);
+		bottom: -30px;
+		right: -30px;
+	}
+
+	.quantum-sphere {
+		position: relative;
+		z-index: 10;
+		width: 160px;
+		height: 160px;
+		background: light-dark(
+			radial-gradient(circle, rgba(6, 182, 212, 0.2) 0%, transparent 70%),
+			radial-gradient(circle, rgba(34, 211, 238, 0.15) 0%, transparent 70%)
+		);
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.sphere-ring {
+		position: absolute;
+		border-radius: 50%;
+		border: 2px solid light-dark(
+			rgba(6, 182, 212, 0.3),
+			rgba(34, 211, 238, 0.2)
+		);
+	}
+
+	.ring-1 {
+		width: 160px;
+		height: 160px;
+		border-style: solid;
+	}
+
+	.ring-2 {
+		width: 110px;
+		height: 110px;
+		border-style: dashed;
+	}
+
+	.ring-3 {
+		width: 60px;
+		height: 60px;
+		border-style: dotted;
+	}
+
+	@media (max-width: 768px) {
+		.nav-header {
+			padding: 16px 24px;
+		}
+
+		.logo {
+			font-size: 20px;
+		}
+
+		.nav-link {
+			padding: 8px 16px;
+			font-size: 13px;
+		}
+
+		.main-content {
+			padding: 32px 16px;
+		}
+
+		.hero {
+			grid-template-columns: 1fr;
+			gap: 40px;
+		}
+
+		.hero-content {
+			order: 2;
+		}
+
+		.hero-visual {
+			order: 1;
+			height: 300px;
+		}
+
+		.hero-content h2 {
+			font-size: 32px;
+		}
+
+		.subtitle {
+			font-size: 16px;
+		}
+
+		.description {
+			font-size: 14px;
+		}
+
+		.features {
+			grid-template-columns: 1fr;
+			gap: 16px;
+		}
+
+		.blob-1 {
+			width: 200px;
+			height: 200px;
+		}
+
+		.blob-2 {
+			width: 150px;
+			height: 150px;
+		}
+	}
+</style>
