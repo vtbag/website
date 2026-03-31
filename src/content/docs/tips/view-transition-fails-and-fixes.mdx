@@ -35,7 +35,14 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
     }
   }
   ```
-  It is best to place this rule and your [global view transition styles](/fwvt/enabling/#including-css-on-all-pages) in a shared stylesheet and include it on every page.
+    Failure to include the opt-in on the target side of a cross-document view transition might lead to a general, not very helpful error message:
+  ```text del={1}
+  Uncaught (in promise) AbortError: Transition was skipped
+  ``` 
+  
+  It is best to place this rule together with your global view transition styles in a shared stylesheet and [include it on every page](/fwvt/enabling/#including-css-on-all-pages) .
+
+
 
   ### Framework Components
   For Astro, for example, you are best off including the client router in the global layout you use on every page. Other frameworks with view transition support work in a similar way.
