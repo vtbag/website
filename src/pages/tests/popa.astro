@@ -34,7 +34,7 @@ import Layout from './_pop-layout.astro';
 						</div>
 					</div>
 
-					<button id="popover-trigger" class="cta-button">Learn More</button>
+					<button popovertarget="info-popover" popovertargetaction="show" class="cta-button">Learn More</button>
 				</div>
 
 				<div class="hero-visual">
@@ -68,18 +68,6 @@ import Layout from './_pop-layout.astro';
 	</div>
 </Layout>
 
-<script>
-	document.addEventListener('DOMContentLoaded', () => {
-		const trigger = document.getElementById('popover-trigger');
-		const popover = document.getElementById('info-popover');
-
-		if (trigger && popover) {
-			trigger.addEventListener('click', () => {
-				popover.showPopover();
-			});
-		}
-	});
-</script>
 
 <style>
 	.page-container {
