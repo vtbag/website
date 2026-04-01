@@ -40,7 +40,16 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
   Uncaught (in promise) AbortError: Transition was skipped
   ``` 
   
-  It is best to place this rule together with your global view transition styles in a shared stylesheet and [include it on every page](/fwvt/enabling/#including-css-on-all-pages) .
+  It might seem best to place this rule together with your global view transition styles in a shared stylesheet and [include it on every page](/fwvt/enabling/#including-css-on-all-pages). This is fine if the opt-in to view transitions is at the start of the stylesheet.
+
+#### Potential Pitfall: Unreliable Detection of the Opt-in
+
+  A particularly perfidious pitfall occurs when the `@view-transition` at-rule is present but not reliably detected by the browser. This can happen in Chrome, for example, when the at-rule is placed in an external stylesheet after tons of other CSS.
+
+  According to the specification, the check for `@view-transition { navigation: auto }` happens together with the `pagereveal` event just before the first rendering. In theory, that means the browser should wait for render blocking resources such as external stylesheets linked in the `<head>`. However, Chrome may perform this check [without necessarily waiting for external CSS](https://issues.chromium.org/issues/383014860#comment9).
+
+  The safest approach is therefore to place the opt in for cross document view transitions early in the `<head>` inside an inline `<style>` element.
+
 
 
 
