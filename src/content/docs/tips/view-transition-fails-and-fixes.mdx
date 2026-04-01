@@ -40,7 +40,7 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
   Uncaught (in promise) AbortError: Transition was skipped
   ``` 
   
-  It might seem best to place this rule together with your global view transition styles in a shared stylesheet and [include it on every page](/fwvt/enabling/#including-css-on-all-pages). This seems to be fine if the @view-transition opt-in is at the start of the stylesheet. But I recommend to place it in an style element in the `<head>`, see next section. 
+  It might seem best to place this rule together with your global view transition styles in a shared stylesheet and [include it on every page](/fwvt/enabling/#including-css-on-all-pages). This seems to be fine if the @view-transition opt-in is at the start of the stylesheet. But I recommend to place it in an `<style>` element within the `<head>`, see next section. 
 
 #### Potential Pitfall: Unreliable Detection of the Opt-in
 
