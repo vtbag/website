@@ -1,0 +1,23 @@
+---
+import Crossing from "astro-vtbot/components/ElementCrossing.astro";
+---
+
+<html>
+  <head>
+    <Crossing />
+    <title>Text Y</title>
+  </head>
+  <body>
+    <span data-vtbag-x="#button">span1</span>
+    <a href="/tests/z/">goto z</a>
+    <a href="/tests/z2/">goto z2</a>
+    <p id="p" style="color: blue" data-vtbag-x="-color">p1</p>
+    <script>
+      document
+        .querySelectorAll<HTMLButtonElement>("button")
+        .forEach((b) =>
+          b.addEventListener("click", () => (b.innerText = "" + new Date()))
+        );
+    </script>
+  </body>
+</html>
