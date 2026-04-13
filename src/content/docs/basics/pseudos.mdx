@@ -168,8 +168,37 @@ There are two exceptions:
 
 - The API ignores the `view-transition-name` of a fragmented element, i.e. an element that consists of two or more boxes, like an inline element that spans two lines. View transition names assigned to such elements are ignored.
 
-- The API also ignores the `view-transition-name` of an element if that element is not rendered, like the `<head>`, or if it is skipped. For instance, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance have their `display` CSS property set to `none`. This can also be done by setting an HTML element's hidden attribute or property. Looking for an example? This technique is utilized in the intra-document [image morph examples](/basics/examples/#image-morph-examples) on this site. This trick also works with an ancestor with `content-visibility: hidden` but not with a simple `visibility: hidden` directly on the element.
+- The API also ignores the `view-transition-name` of an element if that element is not rendered or skipped. 
 
+### Hiding View Transition Names
+There are several ways to prevent the rendering of an element and thus to hide its view transition name.
+
+You can hide elements by adding the `hidden` attribute. 
+|HTML attribute|effect|
+|-|-|
+|`hidden`|hides view transition names of subtree|
+
+Or you can use CSS properties to hide view transition names:
+
+|CSS property|value|Hides view transition names&hellip;|
+|-|-|-| 
+|`display`|`none`| &hellip;of the subtree| 
+|`display`|`contents`|&hellip;of the element, only|
+|`content-visibility`|`hidden`|&hellip;of the subtree|
+|`view-transition-scope`|`all`|&hellip;of the subtree|
+|`visibility`|`hidden`|<span style="color: red;">&hellip;none</span>|
+
+Here `view-transition-scope` is a new CSS property that is currently only supported in Chrome. With value `all` it hides the view transition names of its subtree but does not change the rendering of the elements. 
+
+With these mechanisms to hide view transition names, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance are hidden. 
+
+Looking for an example? This technique is utilized in the intra-document [image morph examples](/demo/BasicS/) on this site, where one element has `display: none` and the other has `display: block`. 
+
+This trick also works with `content-visibility: hidden` but not with a simple `visibility: hidden` directly on the element. 
+
+
+
+### Special Names
 The static user agent stylesheet provides one default name for the document, called `root`.
 
 ```css title="static user agent stylesheet"
