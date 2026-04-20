@@ -23,6 +23,13 @@ const images = [bag, chamber, crossing, signal, shaft];
     <meta charset="utf-8" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style is:global>
+      @media (prefers-reduced-motion: no-preference) {
+        @view-transition {
+          navigation: auto;
+        }
+      }
+    </style>
     <link rel="icon" href="/bag3.png" type="image/png" />
     <LightDark />
     <script is:inline data-selector="header a" src={turnSignal}></script>
@@ -42,11 +49,6 @@ const images = [bag, chamber, crossing, signal, shaft];
       }
     </script>
      <style is:global>
-      @media (prefers-reduced-motion: no-preference) {
-        @view-transition {
-          navigation: auto;
-        }
-      }
       @keyframes slideFromRight {
         from {
           transform: translateX(100vw);
