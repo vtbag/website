@@ -1,0 +1,406 @@
+---
+import Layout from './_pop-layout.astro';
+---
+
+<Layout>
+	<div class="page-container">
+		<nav class="nav-header">
+			<h1 class="logo">Neural</h1>
+			<a href="../popb/" class="nav-link">Explore Quantum</a>
+		</nav>
+
+		<main class="main-content">
+			<section class="hero">
+				<div class="hero-content">
+					<h2>Neural Inference Engine</h2>
+					<p class="subtitle">Real-time AI model optimization with 10x faster inference</p>
+					<p class="description">
+						Process complex neural networks at scale with our proprietary compression
+						technology. Deploy models that learn and adapt in milliseconds.
+					</p>
+
+					<div class="features">
+						<div class="feature-item">
+							<span class="feature-number">10M+</span>
+							<span class="feature-label">Inferences/sec</span>
+						</div>
+						<div class="feature-item">
+							<span class="feature-number">97%</span>
+							<span class="feature-label">Accuracy retained</span>
+						</div>
+						<div class="feature-item">
+							<span class="feature-number">60%</span>
+							<span class="feature-label">Cost reduction</span>
+						</div>
+					</div>
+
+					<button popovertarget="info-popover" popovertargetaction="show" class="cta-button">Learn More</button>
+				</div>
+
+				<div class="hero-visual">
+					<div class="gradient-blob blob-1"></div>
+					<div class="gradient-blob blob-2"></div>
+					<div class="tech-grid">
+						<div class="grid-cell"></div>
+						<div class="grid-cell"></div>
+						<div class="grid-cell"></div>
+						<div class="grid-cell"></div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<div id="info-popover" popover="auto" class="info-popover">
+			<div class="popover-header">
+				<h3>Neural Inference Features</h3>
+				<button popovertarget="info-popover" popovertargetaction="hide" class="close-btn">
+					×
+				</button>
+			</div>
+			<ul class="popover-list">
+				<li>GPU-accelerated matrix operations</li>
+				<li>Multi-precision quantization</li>
+				<li>Dynamic batch optimization</li>
+				<li>Zero-copy tensor management</li>
+				<li>Live model swapping without downtime</li>
+			</ul>
+		</div>
+	</div>
+</Layout>
+
+
+<style>
+	.page-container {
+		display: flex;
+		flex-direction: column;
+		min-height: 100vh;
+		position: relative;
+		overflow-x: hidden;
+	}
+
+	.nav-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 24px 48px;
+		border-bottom: 1px solid light-dark(rgba(0, 0, 0, 0.08), rgba(255, 255, 255, 0.08));
+	}
+
+	.logo {
+		font-size: 24px;
+		font-weight: 700;
+		margin: 0;
+		background: linear-gradient(90deg, #3b82f6 0%, #1e40af 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.nav-link {
+		padding: 10px 24px;
+		background: light-dark(
+			linear-gradient(135deg, #3b82f6 0%, #2563eb 100%),
+			linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)
+		);
+		color: white;
+		border-radius: 8px;
+		font-weight: 600;
+		font-size: 14px;
+		box-shadow: 0 4px 12px light-dark(rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.2));
+	}
+
+	.nav-link:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px light-dark(rgba(59, 130, 246, 0.4), rgba(59, 130, 246, 0.3));
+	}
+
+	.main-content {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 48px 24px;
+	}
+
+	.hero {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 64px;
+		align-items: center;
+		max-width: 1200px;
+		width: 100%;
+	}
+
+	.hero-content {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+	}
+
+	.hero-content h2 {
+		font-size: 48px;
+		font-weight: 700;
+		margin: 0;
+		line-height: 1.2;
+		color: light-dark(#111827, #f5f5f5);
+	}
+
+	.subtitle {
+		font-size: 20px;
+		font-weight: 600;
+		color: light-dark(#3b82f6, #60a5fa);
+		margin: 0;
+	}
+
+	.description {
+		font-size: 16px;
+		color: light-dark(#6b7280, #d1d5db);
+		margin: 0;
+		line-height: 1.7;
+	}
+
+	.features {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 24px;
+		margin: 16px 0;
+	}
+
+	.feature-item {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	.feature-number {
+		font-size: 28px;
+		font-weight: 700;
+		background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		background-clip: text;
+	}
+
+	.feature-label {
+		font-size: 13px;
+		color: light-dark(#6b7280, #9ca3af);
+		font-weight: 500;
+	}
+
+	.cta-button {
+		align-self: flex-start;
+		padding: 14px 32px;
+		background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+		color: white;
+		border-radius: 8px;
+		font-weight: 600;
+		font-size: 16px;
+		box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+	}
+
+	.cta-button:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 8px 16px rgba(59, 130, 246, 0.4);
+	}
+
+	.hero-visual {
+		position: relative;
+		height: 400px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.gradient-blob {
+		position: absolute;
+		border-radius: 50%;
+		filter: blur(40px);
+		opacity: 0.6;
+	}
+
+	.blob-1 {
+		width: 300px;
+		height: 300px;
+		background: light-dark(
+			linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%),
+			linear-gradient(135deg, #1e40af 0%, #6d28d9 100%)
+		);
+		top: -50px;
+		right: -50px;
+	}
+
+	.blob-2 {
+		width: 250px;
+		height: 250px;
+		background: light-dark(
+			linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%),
+			linear-gradient(135deg, #164e63 0%, #1e40af 100%)
+		);
+		bottom: -30px;
+		left: -30px;
+	}
+
+	.tech-grid {
+		position: relative;
+		z-index: 10;
+		display: grid;
+		grid-template-columns: repeat(2, 60px);
+		gap: 16px;
+		background: light-dark(
+			rgba(255, 255, 255, 0.8),
+			rgba(15, 23, 42, 0.8)
+		);
+		backdrop-filter: blur(10px);
+		padding: 24px;
+		border-radius: 16px;
+		border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+	}
+
+	.grid-cell {
+		width: 60px;
+		height: 60px;
+		background: light-dark(
+			linear-gradient(135deg, #e0e7ff 0%, #f0e7fe 100%),
+			linear-gradient(135deg, #312e81 0%, #4c1d95 100%)
+		);
+		border-radius: 12px;
+		border: 1px solid light-dark(
+			rgba(59, 130, 246, 0.2),
+			rgba(139, 92, 246, 0.2)
+		);
+	}
+
+	.info-popover {
+		position: fixed;
+		z-index: 1000;
+		padding: 24px;
+		background: light-dark(
+			linear-gradient(135deg, #ffffff 0%, #f8fafc 100%),
+			linear-gradient(135deg, #1e293b 0%, #0f172a 100%)
+		);
+		border: 1px solid light-dark(
+			rgba(0, 0, 0, 0.1),
+			rgba(255, 255, 255, 0.1)
+		);
+		border-radius: 16px;
+		box-shadow: 0 20px 60px light-dark(
+			rgba(0, 0, 0, 0.15),
+			rgba(0, 0, 0, 0.5)
+		);
+		width: 90%;
+		max-width: 400px;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		backdrop-filter: blur(10px);
+	}
+
+	.popover-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 16px;
+	}
+
+	.popover-header h3 {
+		font-size: 18px;
+		font-weight: 700;
+		margin: 0;
+		color: light-dark(#111827, #f5f5f5);
+	}
+
+	.close-btn {
+		font-size: 28px;
+		color: light-dark(#6b7280, #9ca3af);
+		width: 32px;
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.close-btn:hover {
+		color: light-dark(#111827, #f5f5f5);
+	}
+
+	.popover-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+
+	.popover-list li {
+		padding: 12px;
+		background: light-dark(
+			rgba(59, 130, 246, 0.08),
+			rgba(59, 130, 246, 0.1)
+		);
+		border-radius: 8px;
+		font-size: 14px;
+		color: light-dark(#374151, #d1d5db);
+		border-left: 3px solid light-dark(#3b82f6, #60a5fa);
+	}
+
+	@media (max-width: 768px) {
+		.nav-header {
+			padding: 16px 24px;
+		}
+
+		.logo {
+			font-size: 20px;
+		}
+
+		.nav-link {
+			padding: 8px 16px;
+			font-size: 13px;
+		}
+
+		.main-content {
+			padding: 32px 16px;
+		}
+
+		.hero {
+			grid-template-columns: 1fr;
+			gap: 40px;
+		}
+
+		.hero-content h2 {
+			font-size: 32px;
+		}
+
+		.subtitle {
+			font-size: 16px;
+		}
+
+		.description {
+			font-size: 14px;
+		}
+
+		.features {
+			grid-template-columns: 1fr;
+			gap: 16px;
+		}
+
+		.hero-visual {
+			height: 300px;
+		}
+
+		.blob-1 {
+			width: 200px;
+			height: 200px;
+		}
+
+		.blob-2 {
+			width: 150px;
+			height: 150px;
+		}
+
+		.info-popover {
+			width: 85%;
+			max-width: 350px;
+		}
+	}
+</style>

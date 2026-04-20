@@ -11,22 +11,22 @@ main h1 {
 }
 
 :active-view-transition-type(forward)::view-transition-old(main) {
-  animation: forwardsSwingOut 500ms ease-in-out;
+  animation: forwardsSwingOut 250ms ease-in-out;
 }
 :active-view-transition-type(forward)::view-transition-new(main) {
-  animation: forwardsSwingIn 500ms ease-in-out;
+  animation: forwardsSwingIn 250ms ease-in-out;
 }
 :active-view-transition-type(backward)::view-transition-old(main) {
-  animation: backwardsSwingOut 500ms ease-in-out;
+  animation: backwardsSwingOut 250ms ease-in-out;
 }
 :active-view-transition-type(backward)::view-transition-new(main) {
-  animation: backwardsSwingIn 500ms ease-in-out;
+  animation: backwardsSwingIn 250ms ease-in-out;
 }
 :active-view-transition-type(same)::view-transition-old(root) {
-  animation: shake-old 500ms ease-in-out;
+  animation: shake-old 250ms ease-in-out;
 }
 :active-view-transition-type(same)::view-transition-new(root) {
-  animation: shake-new 500ms ease-in-out;
+  animation: shake-new 250ms ease-in-out;
 }
 
 @keyframes forwardsSwingOut {

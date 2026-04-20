@@ -39,7 +39,7 @@ Part two indeed adds extensions for cross-document view transitions, but also fe
 ### Cross-Document
 * The `@view-transition{ navigation: auto }` at-rule to opt in to [cross-document view transitions](/basics/javascript/#cross-document-view-transitions). 
 * `pageswap` and `pagereveal` [events](/basics/javascript/#pageswap-and-pagereveal-events) that give access to the view transition object on the old and new page.
-* An [`activation`](/basics/javascript/#activation-object) property on `pageswap` holds a `NavigationActivation` object from the Navigation API, even if the browser doesn't otherwise support the Navigation API. But there is nothing equivalent on `pagereveal`.
+* An [`activation`](/basics/javascript/#activation-object) property on `pageswap` holds a `NavigationActivation` object from the Navigation API. There are no equivalent properties on `pagereveal`. Use `navigation.activation` from the Navigation API instead.
 
 ### Extensions for Both, Same- and Cross-Document 
 * The [`view-transition-class`](/basics/styling/#with-classes) property and selector syntax to address multiple pseudo-elements with a single selector.
@@ -47,7 +47,7 @@ Part two indeed adds extensions for cross-document view transitions, but also fe
 * [Generated view transition names](/basics/pseudos/#auto-generated-names-match-element) with `view-transition-name: auto` and `view-transition-name: match-element`.
 * [Nested view transition groups](/basics/pseudos/#nested-view-transition-groups) with the `::view-transition-group-children()` pseudo element.
 
-## Future extensions
+## Upcoming extensions
 
 * [Scoped view transitions](/basics/javascript/#scoped-view-transitions)
 
@@ -77,5 +77,6 @@ But for simple same-document view transitions, there are some highly desirable f
 Firefox , starting with v144, not only supports Level 1 of the View Transition API, but also brings some Level 2 features:
 * Firefox already [has support for `view-transition-class`](https://bsky.app/profile/vtbag.dev/post/3ltwvggp7xc2u) and the [`:active-view-transition` pseudo-class](/basics/test-page/).
 * Firefox already [has support for `view-transition-name: match-element`](https://bsky.app/profile/martr.app/post/3lwyzve7nac2i), but not for `view-transition-name: auto`, which is not really part of the standard. When usings the [declarative-names script](/tools/utensil-drawer/#declarative-names) from The Bag's Utensil Drawer, you also have an alternative for dynamically generating view transition names that works more reliably across browsers.
-* So the main problem might be the missing support for view transition types. Good news here: The Bag's Utensil Drawer now has a [polyfill for view transition types](/tools/utensil-drawer/#usetypespolyfill-always--never) to support them even on browsers that only implement Level 1 of the View Transition API!
+* In the meanwhile, Firefox also supports `:active-view-transition-type()`.
+* So the main problem might be the missing support for view transition types in older versions. Good news here: The Bag's Utensil Drawer now has a [polyfill for view transition types](/tools/utensil-drawer/#usetypespolyfill-always--never) to support them even on browsers that only implement Level 1 of the View Transition API!
 * And even if you do not care about types yet, you can still benefit from the fact that [mayStartViewTransition](/tools/utensil-drawer/#maystartviewtransition) also offers the Level 2 signature with options, even if the underlying API implementation does not. 

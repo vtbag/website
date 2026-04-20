@@ -2,8 +2,9 @@
 import { spawnSync } from "child_process";
 import { basename, dirname } from "path";
 
-const { lang, lastUpdated } = Astro.locals.starlightRoute;
-const gitDate = (f: string) =>
+let { lang, lastUpdated } = Astro.locals.starlightRoute;
+const threshold = Astro.locals.starlightRoute.entry?.data?.updateThreshold;
+const published = (f: string) =>
   spawnSync(
     "git",
     [
@@ -19,9 +20,44 @@ const gitDate = (f: string) =>
       encoding: "utf-8",
     }
   ).stdout?.trim();
+
+const updated = (f: string) => {
+  const cmd = `git log --follow --numstat --format=%ct ${basename(f)} |paste -d' ' - - - | awk '$2 - $3 > ${threshold} {print $1; exit}'`;
+  const res = spawnSync("bash", ["-c", cmd], {
+    cwd: dirname(f),
+    encoding: "utf-8",
+  }).stdout?.trim();
+  return res;
+};
 const firstPublished = new Date(
-  Number(gitDate(Astro.locals.starlightRoute.entry.filePath) + "000")
+  Number(published(Astro.locals.starlightRoute.entry.filePath) + "000")
 );
+lastUpdated = new Date(
+  Number(updated(Astro.locals.starlightRoute.entry.filePath) + "000")
+);
+
+const head = Astro.locals.starlightRoute.head;
+head.push({
+  tag: "meta",
+  attrs: {
+    property: "og:updated_time",
+    content: lastUpdated?.toISOString() ?? "",
+  },
+});
+head.push({
+  tag: "meta",
+  attrs: {
+    property: "article:modified_time",
+    content: lastUpdated?.toISOString() ?? "",
+  },
+});
+head.push({
+  tag: "meta",
+  attrs: {
+    property: "article:published_time",
+    content: firstPublished.toISOString(),
+  },
+});
 ---
 
 {

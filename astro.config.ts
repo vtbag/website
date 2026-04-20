@@ -13,7 +13,6 @@ import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
 import type { Badge } from "node_modules/@astrojs/starlight/schemas/badge";
 import sitemap from '@astrojs/sitemap';
-import og from "astro-og";
 
 export default defineConfig({
   image: { remotePatterns: [{ protocol: "https" }] },
@@ -21,14 +20,6 @@ export default defineConfig({
   site: "https://vtbag.dev",
   compressHTML: false,
 
-  redirects: {
-    "/inspection-chamber/": "/tools/inspection-chamber/",
-  },
-
-  experimental: {
-    preserveScriptOrder: true,
-    headingIdCompat: true,
-  },
   prefetch: false,
 
   markdown: {
@@ -83,12 +74,12 @@ export default defineConfig({
       },
       head: [
         {
-          tag: "meta",
-          attrs: {
-            property: "og:image",
-            content: "https://vtbag.dev/social.png",
-          },
+          tag: "meta", attrs: { property: "og:image", content: "https://vtbag.dev/social.png", }
         },
+        { tag: "meta", attrs: { property: "article:publisher", content: "https://bsky.app/profile/vtbag.dev" } },
+        { tag: "meta", attrs: { property: "article:author", content: "https://bsky.app/profile/martr.app" } },
+        { tag: "meta", attrs: { property: "article:tag", content: "view transitions" } },
+        { tag: "meta", attrs: { property: "article:section", content: "Articles" } },
         {
           tag: "meta",
           attrs: {
@@ -128,12 +119,18 @@ export default defineConfig({
       ],
       lastUpdated: true,
       pagination: true,
-      favicon: "/bag4.png",
+      favicon: "/bag4.ico",
       logo: {
         src: "./src/assets/mini-bag.webp",
+        alt: "vtbag logo",
       },
 
       social: [
+        {
+          icon: "rss",
+          label: "RSS",
+          href: "/rss.xml",
+        },
         {
           icon: "github",
           label: "GitHub",
@@ -153,10 +150,12 @@ export default defineConfig({
     }),
     d2({
       skipGeneration: process.env.GITHUB_ACTIONS === "true",
+      theme: {
+        default: "0",
+      },
     }),
     vtbot({ autoLint: false, loadingIndicator: false }),
     inoxToolsPortalGun(),
-    og(),
     sitemap({
       filter: (page) =>
         /**/!page.startsWith('https://vtbag.dev/auto/')
@@ -199,7 +198,7 @@ function sidebar() {
       link: "/vtbag/",
     },
     {
-      label: "Basics",
+      label: "Basic Information",
       items: [
         { label: "Test Your Browser", link: "/basics/test-page/" },
         { label: "View Transition API", link: "/basics/api/" },
@@ -214,17 +213,17 @@ function sidebar() {
         },
         { label: "Styling View Transitions", link: "/basics/styling/" },
         { label: "JavaScript API", link: "/basics/javascript/" },
-        { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/" },
+        { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/",
+          badge: { text: "Updated!", variant: "success" } as Badge },
         {
           label: "API Levels and Implications",
-          link: "/basics/levels/",
-          badge: { text: "New!", variant: "success" } as Badge,
+          link: "/basics/levels/"
         },
         { label: "Web Framework Support", link: "/basics/frameworks/" },
       ],
     },
     {
-      label: "Tools",
+      label: "Tools & Libraries",
       items: [
         { label: "Inspection Chamber", link: "/tools/inspection-chamber/" },
         { label: "Element Crossing", link: "/tools/element-crossing/" },
@@ -233,8 +232,7 @@ function sidebar() {
         {
           label: "Utensil Drawer",
           link: "/tools/utensil-drawer/",
-          badge: { text: "Updated!", variant: "success" } as Badge,
-        },
+          },
       ],
     },
     {
@@ -250,7 +248,6 @@ function sidebar() {
         {
           label: "Playing",
           link: "/fwvt/playing/",
-          badge: { text: "New!", variant: "success" } as Badge,
         },
       ],
     },
@@ -275,13 +272,12 @@ function sidebar() {
         {
           label: "Why View Transitions Might Fail",
           link: "tips/view-transition-fails-and-fixes/",
-          badge: { text: "Updated!", variant: "success" } as Badge
         },
       ],
     },
     { label: "BagLog", link: "/baglog" },
     {
-      label: "All Demos",
+      label: "All Tech Demos",
       collapsed: false,
       items: [
         {

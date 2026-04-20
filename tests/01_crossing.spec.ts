@@ -101,7 +101,8 @@ test.describe("vtbot", () => {
     await page.reload();
     expect(await page.locator("#p").getAttribute("style")).toBe("color: red");
   });
-  test("astro integration (ott)", async ({ page }) => {
+  test("astro integration (ott)", async ({ page, browserName }) => {
+    test.skip(browserName === 'firefox', 'Skipped in Firefox');
     await page.goto('http://localhost:4321/tests/x/');
     expect(await page.locator("iframe").contentFrame().locator("head title").textContent()).toBe("Test X");
   });

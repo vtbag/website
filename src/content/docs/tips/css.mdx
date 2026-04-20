@@ -82,7 +82,13 @@ is ease with the [declarative-names script](/tools/utensil-drawer/#declarative-n
 
 ## Scoping with Types
 
-We are all looking forward to [scoped view transitions](/basics/javascript/#scoped-view-transitions), but in the meanwhile we need some practical solutions.
+When you start to trigger different view transitions on the same page, you will notice that it is rather easy to end up with conflicting defintions. 
+* You want different sets of elements to transition depending of the use case, e.g. a section of the form should expand when a checkbox got checked, but a whole page should fade in when navigating to it.
+* You want different animations for the same element depending on the use case, e.g. a card should expand when selected but shrink to a point when deleted.
+* You want to style other elements, that are not animated by the View Transition API, e.g. style buttons as disabled while they won't react during the animation.
+
+What you need is a mechnism to isolate the definitions for different use cases. View transition types are a great tool for that. You can use them to guard the CSS definitions for each use case, so they only apply during the view transition of that specific use case.
+
 
 ### Preparation
 Currently, I use the following approach to organize CSS definitions for view transitions.  All starts with a modular definition of how I want to apply a view transition.
@@ -96,7 +102,11 @@ Currently, I use the following approach to organize CSS definitions for view tra
 1. Finally, I define new key frames and timing function as required, always checking whether there is some potential for standardization and reuse. 
 
 ### The Active Type Guard
-After those preparations, I use pattern where I guard the CSS rules with an [active view transition type](/basics/styling/#active-view-transition-types). For same-document view transitions, the type is passed in the options object to `startViewTransition()`. This way the type is active right from the begin of the view transition, even before the old images are captured. And it is automatically removed right after the the lat animation ends.  For cross-document view transitions, you can set the type with the `types` property of the `@view-transition` at-rule or within a listener for `pageswap` and `pagereveal` events.   
+After those preparations, I use pattern where I guard the CSS rules with an [active view transition type](/basics/styling/#active-view-transition-types). 
+
+For same-document view transitions, the type is passed in the options object to `startViewTransition()`. This way the type is active right from the begin of the view transition, even before the old images are captured. And it is automatically removed right after the last animation ends.  
+
+For cross-document view transitions, you can set the type with the `types` property of the `@view-transition` at-rule or within a listener for `pageswap` and `pagereveal` events.   
 
 Thus all contained definitions only exist just during the view transition. Here is an example:
 ```css
@@ -128,7 +138,7 @@ One of the main benefits of this pattern is that view transition names are only 
 
 :::note
 This pattern works well in all current browser versions that natively support the View Transition API.
-With older Chromium and Safari browsers and with Firefox currently supporting Level 1 view transitions only, this breaks [because `:active-view-transition-type` is only available with Level 2 of the API](/basics/levels/#same-document-features-missing-in-level-1).
+With older browsers versions this breaks [because `:active-view-transition-type` is only available with Level 2 of the API](/basics/levels/#same-document-features-missing-in-level-1).
 
 Therefore, the Bag provides a [polyfill for view transition types](/tools/utensil-drawer/#usetypespolyfill-always--auto--never) that allows you to use them even with browsers that support only Level 1 of the View Transition API.
 
@@ -179,5 +189,5 @@ Same hold for the auto-generated view transition name example: it works for all 
 ## Conclusion
 I'm still exploring paths and alternatives but this would be my current recommendations:
 1. For complex pages, ensuring the uniqueness of view transition names might be easier if you assign them dynamically in the browser using JavaScript, or in a page global action on the server.
-2. Placing your view transition animation definitions in a global CSS file can be a good approach. This ensures that both the old and new pages use the same definitions, so you do not have to worry about where to put them. Just make sure your keyframe and view transition names are either globally unique or intentionally the same.
+2. Placing your view transition animation definitions in a global CSS file can be a good approach. This ensures that both the old and new pages use the same definitions, so you do not have to worry about where to put them. Just make sure your keyframe and view transition names are either globally unique or intentionally the same. Just make sure that the @view-transition at-rule occurs in the first few bytes of the CSS file. Otherwise the browser might ignore it.
 3. Utilizing [view transition classes and types](/basics/styling/#with-classes) can help decouple usage from definitions, making your code more flexible."

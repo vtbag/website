@@ -213,8 +213,6 @@ The [API sets the defaults](/basics/styling/#group--morph-animation) to `0.25s`,
 Recently, all other animation properties but `animation-name` where added to the list.
 
 ```css
-::view-transition-group(*),
-::view-transition-group-children(*),
 ::view-transition-image-pair(*),
 ::view-transition-old(*),
 ::view-transition-new(*) {
@@ -258,13 +256,8 @@ Of course styling view transition pseudo-elements is not limited to animations. 
   position: absolute;
   top: 0;
   left: 0;
-}
-
-::view-transition-group-children(*) {
-  position: absolute;
-  inset: 0px;
-  border-style: solid;
-  border-color: transparent;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
 }
 
 ::view-transition-image-pair(*) {
@@ -278,6 +271,13 @@ Of course styling view transition pseudo-elements is not limited to animations. 
   inset-block-start: 0;
   inline-size: 100%;
   block-size: auto;
+}
+
+::view-transition-group-children(*) {
+  position: absolute;
+  inset: 0px;
+  border-style: solid;
+  border-color: transparent;
 }
 ```
 

@@ -1,9 +1,12 @@
 This page features links to a previous and a next page. The HTML for these two links has an additional `data-vtbag-link-types` attribute:
 
 ```html
-<a href="/viewer-demo/3/" data-vtbag-link-types="next/prev">Prev</a>
-<a href="." data-vtbag-link-types="same">Same</a>
-<a href="/viewer-demo/2/" data-vtbag-link-types="prev/next">Next</a>
+<a href="/viewer-demo/3/" 
+   data-vtbag-link-types="next/prev">Prev</a>
+<a href="."
+   data-vtbag-link-types="same">Same</a>
+<a href="/viewer-demo/2/" 
+   data-vtbag-link-types="prev/next">Next</a>
 ```
 
 The identifiers after the slash (/) are set as view transition types on forward navigation. The identifiers before the slash are used as view transition types for history back traversals. You might even specify three values `a/b/c` for backward, same, and forward directions. Or a single value, which will then be used for all directions.

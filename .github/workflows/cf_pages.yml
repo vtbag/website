@@ -17,16 +17,18 @@ jobs:
     name: Build
     if: ${{ github.repository_owner == 'vtbag' }}
     runs-on: ubuntu-latest
+    env:
+      npm_config_legacy_peer_deps: "true"
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "18"
+          node-version: "24"
           cache: npm
           cache-dependency-path: ./package-lock.json
 
@@ -38,7 +40,7 @@ jobs:
           restore-keys: astro-cache
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build with Astro
         run: npm run build

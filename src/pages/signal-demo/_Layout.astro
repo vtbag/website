@@ -41,47 +41,7 @@ const images = [bag, chamber, crossing, signal, shaft];
         ]
       }
     </script>
-  </head>
-  <body>
-    <header style="display:flex">
-      <div style="width: 30vw"><h2>Turn-Signal Demo</h2></div>
-      <div
-        style="view-transition-name: signal; width: fit-content; display:flex; overflow: auto; align-items:center"
-      >
-        {
-          pages.map((page, idx) => (
-            <a
-              class:list={{ selected: pathname.endsWith(`/${page}/`) }}
-              href={`/signal-demo/${page}/`}
-              style="padding: 10px; text-decoration: none; color: black"
-            >
-              <Image width="80" src={images[idx] ?? bag} alt={page} />
-            </a>
-          ))
-        }
-      </div>
-      <a id="back" style="width: 10vw" href="/tools/turn-signal/">Leave Demo</a>
-    </header>
-    <script is:inline>
-      document.querySelector("a.selected").scrollIntoView({
-        behavior: "instant",
-        block: "center",
-        inline: "center",
-      });
-    </script>
-    <main>
-      <hr /><p>
-        This is a demo of the Turn-Signal script.<br />
-         Click the round buttons in the header above to navigate to another
-        page.<br />
-         Use your browser's back and forward buttons to navigate between pages.<br
-        />
-         See how the direction of the view transitions changes based on the
-        order of pages and your history traversals.
-      </p><Bsky /><hr />
-      <slot />
-    </main>
-    <style is:global>
+     <style is:global>
       @media (prefers-reduced-motion: no-preference) {
         @view-transition {
           navigation: auto;
@@ -199,5 +159,45 @@ const images = [bag, chamber, crossing, signal, shaft];
         border-color: #8888;
       }
     </style>
+  </head>
+  <body>
+    <header style="display:flex">
+      <div style="width: 30vw"><h2>Turn-Signal Demo</h2></div>
+      <div
+        style="view-transition-name: signal; width: fit-content; display:flex; overflow: auto; align-items:center"
+      >
+        {
+          pages.map((page, idx) => (
+            <a
+              class:list={{ selected: pathname.endsWith(`/${page}/`) }}
+              href={`/signal-demo/${page}/`}
+              style="padding: 10px; text-decoration: none; color: black"
+            >
+              <Image width="80" src={images[idx] ?? bag} alt={page} />
+            </a>
+          ))
+        }
+      </div>
+      <a id="back" style="width: 10vw" href="/tools/turn-signal/">Leave Demo</a>
+    </header>
+    <script is:inline>
+      document.querySelector("a.selected").scrollIntoView({
+        behavior: "instant",
+        block: "center",
+        inline: "center",
+      });
+    </script>
+    <main>
+      <hr /><p>
+        This is a demo of the Turn-Signal script.<br />
+         Click the round buttons in the header above to navigate to another
+        page.<br />
+         Use your browser's back and forward buttons to navigate between pages.<br
+        />
+         See how the direction of the view transitions changes based on the
+        order of pages and your history traversals.
+      </p><Bsky /><hr />
+      <slot />
+    </main>
   </body>
 </html>
