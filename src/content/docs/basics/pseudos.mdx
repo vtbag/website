@@ -182,13 +182,14 @@ Or you can use CSS properties to hide view transition names:
 
 |CSS property|value|Hides view transition names&hellip;|
 |-|-|-| 
-|`display`|`none`| &hellip;of the subtree| 
+|`display`|`none`| &hellip;of the subtree, incl. its root| 
 |`display`|`contents`|&hellip;of the element, only|
-|`content-visibility`|`hidden`|&hellip;of the subtree|
-|`view-transition-scope`|`all`|&hellip;of the subtree|
+|`content-visibility`|`hidden`|&hellip;of the subtree excl. its root|
+|`view-transition-scope`|`all`|&hellip;of the subtree from ancestors|
 |`visibility`|`hidden`|<span style="color: red;">&hellip;none</span>|
 
-Here `view-transition-scope` is a new CSS property that is currently only supported in Chrome. With value `all` it hides the view transition names of its subtree but does not change the rendering of the elements. 
+Here `view-transition-scope` is a relatively new CSS property that is currently only supported in Chrome. With value `all` it hides the view transition names of its subtree but does not change the rendering of the elements. 
+It hides the names from view transitions rooted at an ancestor of the scoped element, but not from a view transition rooted at the scoped element itself or its descendants.
 
 With these mechanisms to hide view transition names, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance are hidden. 
 
