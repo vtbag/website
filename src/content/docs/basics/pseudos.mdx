@@ -164,29 +164,34 @@ Capturing of images happens in two passes. One captures images of the old DOM st
 
 For both passes, when the View Transition API captures the images to be animated, the **view transition names have to be unique** in the DOM.
 
-There are two exceptions:
+Under certain circumstances, the API ignores view transition names on elements. When the view transition name of an element is ignored, it can not conflict with another element with the same name.
 
-- The API ignores the `view-transition-name` of a fragmented element, i.e. an element that consists of two or more boxes, like an inline element that spans two lines. View transition names assigned to such elements are ignored.
+There are two main cases where the View Transition API ignores view transition names:
 
-- The API also ignores the `view-transition-name` of an element if that element is not rendered or skipped. 
+1. The API ignores the `view-transition-name` of a fragmented element, i.e. an element that consists of two or more boxes, like an inline element that spans two lines. View transition names assigned to such elements are ignored.
 
-### Hiding View Transition Names
+2. The more important case: View transition names are ignored if the element with the `view-transition-name` property is not rendered at the moment the View Transition API captures the images.  
+
+### When Names are Ignored
 There are several ways to prevent the rendering of an element and thus to hide its view transition name.
 
-You can hide elements by adding the `hidden` attribute. 
-|HTML attribute|effect|
+On the HTML side, you can hide elements by adding the `hidden` attribute or by putting them inside a closed details element.
+
+|HTML|Effect|
 |-|-|
-|`hidden`|hides view transition names of subtree|
+|`hidden` attribute|Ignores view transition names inside the subtree rooted at the element|
+|closed `<details>` element|Ignores view transition names inside the `<details>` element as long as they are not part of the first `<summary>` child| 
 
-Or you can use CSS properties to hide view transition names:
 
-|CSS property|value|Hides view transition names&hellip;|
+You can also use CSS properties to hide view transition names:
+
+|CSS Property|Value|Effect|
 |-|-|-| 
-|`display`|`none`| &hellip;of the subtree, incl. its root| 
-|`display`|`contents`|&hellip;of the element, only|
-|`content-visibility`|`hidden`|&hellip;of the subtree excl. its root|
-|`view-transition-scope`|`all`|&hellip;of the subtree from ancestors|
-|`visibility`|`hidden`|<span style="color: red;">&hellip;none</span>|
+|`display`|`none`|Ignores view transition names of the subtree including its root| 
+|`display`|`contents`|Ignores view transition names of the element, only, but not of its descendants|
+|`content-visibility`|`hidden`|Ignores view transition names of the subtree excluding its root|
+|`view-transition-scope`|`all`|Hides view transition names of the subtree from the element's ancestors|
+|`visibility`|`hidden`|<span style="color: red;">Has no effect on hiding view-transition names</span>|
 
 Here `view-transition-scope` is a relatively new CSS property that is currently only supported in Chrome. With value `all` it hides the view transition names of its subtree but does not change the rendering of the elements. 
 It hides the names from view transitions rooted at an ancestor of the scoped element, but not from a view transition rooted at the scoped element itself or its descendants.
