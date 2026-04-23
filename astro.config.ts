@@ -16,7 +16,7 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   image: { remotePatterns: [{ protocol: "https" }] },
-  devToolbar: { enabled: true },
+  devToolbar: { enabled: false },
   site: "https://vtbag.dev",
   compressHTML: false,
 
