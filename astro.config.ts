@@ -206,15 +206,17 @@ function sidebar() {
           label: "View Transition Examples",
           link: "/basics/examples/",
         },
-        { label: "Names and Pseudo-Elements", link: "/basics/pseudos/" },
+        {
+          label: "Names and Pseudo-Elements", link: "/basics/pseudos/",
+          badge: { text: "Updated!", variant: "success" } as Badge
+        },
         {
           label: "Mechanics of Default Animations",
           link: "/basics/default-animations/",
         },
         { label: "Styling View Transitions", link: "/basics/styling/" },
         { label: "JavaScript API", link: "/basics/javascript/" },
-        { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/",
-          badge: { text: "Updated!", variant: "success" } as Badge },
+        { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/", },
         {
           label: "API Levels and Implications",
           link: "/basics/levels/"
@@ -232,7 +234,7 @@ function sidebar() {
         {
           label: "Utensil Drawer",
           link: "/tools/utensil-drawer/",
-          },
+        },
       ],
     },
     {

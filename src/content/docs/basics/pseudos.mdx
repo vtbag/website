@@ -172,19 +172,19 @@ There are two main cases where the View Transition API ignores view transition n
 
 2. The more important case: View transition names are ignored if the element with the `view-transition-name` property is not rendered at the moment the View Transition API captures the images.  
 
-### When Names are Ignored
+### How to Hide Names
 
-There are several ways to prevent an element from rendering and therefore hide its view transition name.
+There are several ways to prevent an element from rendering and therefore hide its view transition name from the API.
 
 On the HTML side, you can hide elements by adding the `hidden` attribute or by placing them inside a closed `<details>` element.
 
 |HTML|Effect|
 |-|-|
 |`hidden` attribute|Ignores view transition names inside the subtree rooted at the element|
-|closed `<details>` element|Ignores view transition names inside the `<details>` element as long as they are not part of the first `<summary>` child| 
+|closed `<details>` element|Ignores view transition names inside the `<details>` element, as long as they are not part of the first `<summary>` child|
 
 <style>{`
-  #hiding-propertiestd td:nth-child(2) {
+  #hiding-properties td:nth-child(2) {
     white-space: nowrap;
   }
 `}</style>
@@ -198,12 +198,12 @@ You can also use CSS properties to hide view transition names:
 |`display`|`contents`|Ignores view transition names of the element only, but not of its descendants|
 |`content-visibility`|`hidden`|Ignores view transition names of the subtree, excluding its root|
 |`view-transition-scope`|`all`|Hides view transition names of the subtree from the element's ancestors|
-|`visibility`|`hidden`|<span style="color: red;">Has no effect on hiding view-transition names</span>|
-|`visibility`|`collapse`|<span style="color: orange;">Hides names where it completely removes elements, but shows  inconsistent behaviour between browsers</span>|
+|`visibility`|`hidden`|<span style="color: red;">Has no effect on hiding view transition names</span>|
+|`visibility`|`collapse`|<span style="color: orange;">Hides names where it completely removes elements, but shows inconsistent behaviour between browsers</span>|
 </div>
 
 
-Here, `view-transition-scope` is a relatively new CSS property that is currently supported only in Chrome. With value `all`, it hides the view transition names of its subtree without changing how the elements are rendered. 
+Here, `view-transition-scope` is a relatively new CSS property that is currently supported only in Chrome. With the value `all`, it hides the view transition names of its subtree without changing how the elements are rendered.
 It hides the names from view transitions rooted at an ancestor of the scoped element, but not from a view transition rooted at the scoped element itself or its descendants.
 
 With these mechanisms for hiding view transition names, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance are hidden. 
