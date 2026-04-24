@@ -21,7 +21,7 @@ The user provides a selection from a file open in the editor. If no selection is
 - Do not include a diff in chat unless the user explicitly asks for one.
 
 ## Procedure
-0. Language: Assume British English unless specified otherwise. 
+0. Language: Even though existing text may use American English, British English preferred. 
 1. Preserve intent:
 Keep technical meaning, claims, and links unchanged unless clearly incorrect.
 2. Fix correctness:

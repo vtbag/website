@@ -31,7 +31,7 @@ Use this guide when proofreading or drafting pages in `src/content/docs/basics`.
 ## Sentence and Punctuation Patterns
 - Mix short directive sentences with longer explanatory ones.
 - Favour plain wording over marketing phrasing.
-- American spelling is common in existing content.
+- Even though American spelling can be found in existing content, British English is preferred.
 
 ## Proofreading Priorities
 - Preserve technical meaning and implementation details.
