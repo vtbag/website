@@ -26,6 +26,7 @@ Use this guide when proofreading or drafting pages in `src/content/docs/basics`.
 - Keep API, CSS, and pseudo-element identifiers exact and unchanged.
 - Use consistent terms such as `view-transition-name`, `view-transition-class`, and `startViewTransition()`.
 - Inline code is used heavily for CSS properties, selectors, and API members.
+- Pseudo-element names (e.g. `::before`, `::after`, `::view-transition-old`) must be in backticks everywhere, including inside Markdown table cells.
 
 ## Sentence and Punctuation Patterns
 - Mix short directive sentences with longer explanatory ones.
