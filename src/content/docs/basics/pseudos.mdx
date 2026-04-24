@@ -176,13 +176,13 @@ There are two main cases where the View Transition API ignores view transition n
 
 There are several ways to prevent an element from rendering and therefore hide its view transition name from the API.
 
-On the HTML side, you can hide elements by adding the `hidden` attribute or by placing them inside a closed `<details>` element.
+On the HTML side, you can hide elements by adding the `hidden` attribute or by placing them inside a closed `<details>` element. For the pseudo-elements `::before` and `::after`, setting `content: none` hides their view transition names.
 
 |HTML|Effect|
 |-|-|
 |`hidden` attribute|Ignores view transition names inside the subtree rooted at the element|
-|closed `<details>` element|Ignores view transition names inside the `<details>` element, as long as they are not part of the first `<summary>` child|
-
+|Closed `<details>` element|Ignores view transition names inside the `<details>` element, as long as they are not part of the first `<summary>` child|
+|A `::before` or `::after` pseudo-element with `content: none`|Ignores the view transition name of the pseudo-element|
 <style>{`
   #hiding-properties td:nth-child(2) {
     white-space: nowrap;
