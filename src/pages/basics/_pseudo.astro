@@ -1,0 +1,100 @@
+---
+
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Grand Hotel</title>
+  </head>
+  <body>
+    <button>Click</button>
+    <div class="outer">
+      <div class="container">
+        <div
+          id="ball"
+          style="view-transition-name: ball; width:200px; height: 200px;border-radius: 50%; background-color: darkgreen"
+        >
+          <ul>
+            <li>item 1</li>
+            <li>item 2</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      const container = document.querySelector<HTMLElement>(".container")!;
+      const outer = container?.parentElement!;
+      const button = document.querySelector("button")!;
+      button.addEventListener("click", (e) => {
+        console.log("Button click");
+        e.preventDefault();
+        e.stopPropagation();
+        if (container.activeViewTransition) {
+          document.head.insertAdjacentHTML(
+            "beforeend",
+            `<style id="temp-styles">
+     
+            </style>`,
+          );
+          outer.startViewTransition!(() => {});
+        }
+      });
+
+      document.addEventListener("click", () => {
+        console.log("state change");
+
+        container.startViewTransition!(() => {
+          const state = container.getAttribute("data-state");
+          container.style.alignItems =
+            state !== "2" ? "flex-start" : "flex-end";
+          container.setAttribute("data-state", state !== "2" ? "2" : "1");
+        });
+      });
+    </script>
+  </body>
+
+  <style is:global>
+    ::view-transition-group(*) {
+      animation-duration: 5s;
+    }
+
+    .outer,
+    .container {
+      contain: paint;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 16px;
+      gap: 12px;
+    }
+
+    ::view-transition-group(ball) {
+      view-transition-name: ball;
+    }
+    .container {
+      view-transition-name: none;
+      view-transition-scope: none !important;
+      &::view-transition-group(ball) {
+        view-transition-scope: none !important;
+      }
+    }
+  </style>
+</html>
