@@ -3,11 +3,13 @@ declare global {
 		startViewTransition?(
 			param?: StartViewTransitionOptions | ViewTransitionUpdateCallback
 		): ViewTransition;
+		activeViewTransition?: ViewTransition;
 	}
 	interface Element {
 		startViewTransition?(
 			param?: StartViewTransitionOptions | ViewTransitionUpdateCallback
 		): ViewTransition;
+		activeViewTransition?: ViewTransition;
 	}
 	interface PageSwapEvent extends Event {
 		viewTransition?: ViewTransition;
@@ -36,13 +38,18 @@ declare global {
 	interface ViewTransition {
 		readonly types?: Set<string>;
 		readonly transitionRoot?: Element;
-		waitUntil(promise: Promise<any>): void;
+		waitUntil(promise: Promise<unknown>): void;
 	}
 	interface Window {
 		navigation?: Navigation;
 	}
 	interface Navigation {
 		activation: NavigationActivation;
+	}
+
+	interface CSSStyleDeclaration {
+		viewTransitionGroup: string;
+		viewTransitionScope: string;
 	}
 }
 export {};
