@@ -169,9 +169,7 @@ false && fs.writeFileSync(HTML_OUTPUT, html);
 const MARKDOWN_OUTPUT = 'src/content/docs/rss.md';
 
 const markdownItems = items.map(item => `
-- [${item.title}](${item.link}) updated ${rfc822(item.lastModified!)}
-
-${item.description ? `${item.description}` : ''}
+- [${item.title}](${item.link}): ${item.description} (Last updated ${rfc822(item.lastModified!)})
 `).join('');
 
 const markdown = `
