@@ -9,7 +9,6 @@ export const collections = {
 		schema: docsSchema({
 			extend: z.object({
 				renderBlocking: z.string().optional(),
-				updateThreshold: z.number().optional().default(20),
 			}),
 		})
 	}),

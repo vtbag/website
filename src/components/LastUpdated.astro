@@ -3,7 +3,6 @@ import { spawnSync } from "child_process";
 import { basename, dirname } from "path";
 
 let { lang, lastUpdated } = Astro.locals.starlightRoute;
-const threshold = Astro.locals.starlightRoute.entry?.data?.updateThreshold;
 const published = (f: string) =>
   spawnSync(
     "git",
@@ -22,7 +21,7 @@ const published = (f: string) =>
   ).stdout?.trim();
 
 const updated = (f: string) => {
-  const cmd = `git log --follow --numstat --format=%ct ${basename(f)} |paste -d' ' - - - | awk '$2 - $3 > ${threshold} {print $1; exit}'`;
+  const cmd = `git log --follow --format=%ct ${basename(f)} | head -n 1`;
   const res = spawnSync("bash", ["-c", cmd], {
     cwd: dirname(f),
     encoding: "utf-8",
@@ -32,7 +31,8 @@ const updated = (f: string) => {
 const firstPublished = new Date(
   Number(published(Astro.locals.starlightRoute.entry.filePath) + "000")
 );
-lastUpdated = new Date(
+// use starlights value
+lastUpdated ||= new Date(
   Number(updated(Astro.locals.starlightRoute.entry.filePath) + "000")
 );
 
