@@ -174,7 +174,6 @@ export default defineConfig({
         && !page.startsWith('https://vtbag.dev/crossing/')
         && !page.startsWith('https://vtbag.dev/tests/')
         && !page.startsWith('https://vtbag.dev/tmp/'),
-        customPages: ['https://vtbag.dev/rss.html'],
 
     }),
   ],
@@ -202,7 +201,7 @@ function sidebar() {
     {
       label: "@vtbag",
       link: "/vtbag/",
-    },
+    }, 
     {
       label: "Basic Information",
       items: [

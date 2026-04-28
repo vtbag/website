@@ -162,6 +162,27 @@ ${htmlItems}
 </html>
 `;
 
-fs.writeFileSync(HTML_OUTPUT, html);
+false && fs.writeFileSync(HTML_OUTPUT, html);
+// console.log(`HTML written to ${HTML_OUTPUT}`);
 
-console.log(`HTML written to ${HTML_OUTPUT}`);
+
+const MARKDOWN_OUTPUT = 'src/content/docs/rss.md';
+
+const markdownItems = items.map(item => `
+- [${item.title}](${item.link}) updated ${rfc822(item.lastModified!)}
+
+${item.description ? `${item.description}` : ''}
+`).join('');
+
+const markdown = `
+---
+title: Latest updates
+description: Last update dates of all articles on vtbag.dev
+---
+
+${markdownItems}
+`;
+
+fs.writeFileSync(MARKDOWN_OUTPUT, markdown);
+
+console.log(`Markdown written to ${MARKDOWN_OUTPUT}`);
