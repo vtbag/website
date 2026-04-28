@@ -8,17 +8,56 @@
     <link>https://vtbag.dev/</link>
     <description>Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 09 Jan 2026 17:32:30 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2026 09:13:44 GMT</lastBuildDate>
     
+  <item>
+    <title><![CDATA[View Transition Names and Generated Pseudo-Elements]]></title>
+    <link>https://vtbag.dev//basics/pseudos/</link>
+    <guid isPermaLink="true">https://vtbag.dev//basics/pseudos/</guid>
+    
+    <pubDate>Mon, 13 Apr 2026 19:40:21 GMT</pubDate>
+    <description><![CDATA[What are those pseudo-elements of the View Transition API and how can I style and animate them?]]></description>
+    <enclosure
+        url="/pseudos-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
   <item>
     <title><![CDATA[The View Transition API]]></title>
     <link>https://vtbag.dev//basics/api/</link>
     <guid isPermaLink="true">https://vtbag.dev//basics/api/</guid>
     
-    <pubDate>Mon, 20 Oct 2025 16:37:16 GMT</pubDate>
+    <pubDate>Thu, 12 Mar 2026 14:56:38 GMT</pubDate>
     <description><![CDATA[Basics information about the View Transition browser API]]></description>
     <enclosure
         url="/api-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[Playing Hide and Seek]]></title>
+    <link>https://vtbag.dev//basics/hide-and-seek/</link>
+    <guid isPermaLink="true">https://vtbag.dev//basics/hide-and-seek/</guid>
+    
+    <pubDate>Thu, 05 Feb 2026 14:23:05 GMT</pubDate>
+    <description><![CDATA[How to control stacking and clipping of view transition images.]]></description>
+    <enclosure
+        url="/hide-and-seek-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[View Transition JavaScript API]]></title>
+    <link>https://vtbag.dev//basics/javascript/</link>
+    <guid isPermaLink="true">https://vtbag.dev//basics/javascript/</guid>
+    
+    <pubDate>Mon, 02 Feb 2026 10:57:11 GMT</pubDate>
+    <description><![CDATA[How to interact with view transitions using JavaScript]]></description>
+    <enclosure
+        url="/javascript-og.png"
         type="image/jpeg"
       />
   </item>
@@ -58,19 +97,6 @@
     <description><![CDATA[Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.]]></description>
     <enclosure
         url="https://vtbag.dev/social.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[View Transition Names and Generated Pseudo-Elements]]></title>
-    <link>https://vtbag.dev//basics/pseudos/</link>
-    <guid isPermaLink="true">https://vtbag.dev//basics/pseudos/</guid>
-    
-    <pubDate>Wed, 06 Aug 2025 11:36:01 GMT</pubDate>
-    <description><![CDATA[What are those pseudo-elements of the View Transition API and how can I style and animate them?]]></description>
-    <enclosure
-        url="/pseudos-og.png"
         type="image/jpeg"
       />
   </item>
@@ -206,19 +232,6 @@
   </item>
 
   <item>
-    <title><![CDATA[View Transition JavaScript API]]></title>
-    <link>https://vtbag.dev//basics/javascript/</link>
-    <guid isPermaLink="true">https://vtbag.dev//basics/javascript/</guid>
-    
-    <pubDate>Sat, 25 Jan 2025 12:31:50 GMT</pubDate>
-    <description><![CDATA[How to interact with view transitions using JavaScript]]></description>
-    <enclosure
-        url="/javascript-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
     <title><![CDATA[Check and Control the Image Animations!]]></title>
     <link>https://vtbag.dev//fwvt/customizing/</link>
     <guid isPermaLink="true">https://vtbag.dev//fwvt/customizing/</guid>
@@ -266,19 +279,6 @@
     <description><![CDATA[@vtbag/turn-signal simplifies directional view transitions for intuitive history traversal navigation.]]></description>
     <enclosure
         url="/signal-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[Playing Hide and Seek]]></title>
-    <link>https://vtbag.dev//basics/hide-and-seek/</link>
-    <guid isPermaLink="true">https://vtbag.dev//basics/hide-and-seek/</guid>
-    
-    <pubDate>Thu, 05 Dec 2024 16:09:57 GMT</pubDate>
-    <description><![CDATA[How to control stacking and clipping of view transition images.]]></description>
-    <enclosure
-        url="/hide-and-seek-og.png"
         type="image/jpeg"
       />
   </item>
