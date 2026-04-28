@@ -126,3 +126,42 @@ const rss = `<?xml version="1.0" encoding="UTF-8"?>
 fs.writeFileSync(OUTPUT, rss.trim() + '\n');
 
 console.log(`RSS written to ${OUTPUT}`);
+
+const HTML_OUTPUT = 'public/rss.html';
+const buildDate = rfc822(new Date());
+
+const htmlItems = items.map(item => `
+    <article>
+      <h2><a href="${item.link}">${item.title}</a></h2>
+      <p class="meta">
+        <time datetime="${item.lastModified!.toISOString()}">${rfc822(item.lastModified!)}</time>
+        ${item.author ? ` &mdash; <span class="author">${item.author}</span>` : ''}
+      </p>
+      ${item.description ? `<p>${item.description}</p>` : ''}
+    </article>`).join('\n');
+
+const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>@vtbag: The Bag of Tricks for View Transitions</title>
+  <meta name="description" content="Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!"/>
+  <link rel="alternate" type="application/rss+xml" title="@vtbag RSS Feed" href="/rss.xml"/>
+</head>
+<body>
+  <header>
+    <h1><a href="${SITE_URL}">@vtbag: The Bag of Tricks for View Transitions</a></h1>
+    <p>Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!</p>
+    <p><small>Last updated: ${buildDate}</small></p>
+  </header>
+  <main>
+${htmlItems}
+  </main>
+</body>
+</html>
+`;
+
+fs.writeFileSync(HTML_OUTPUT, html);
+
+console.log(`HTML written to ${HTML_OUTPUT}`);
