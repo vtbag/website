@@ -203,7 +203,7 @@ You can also use CSS properties to hide view transition names:
 </div>
 
 
-Here, `view-transition-scope` is a relatively new CSS property that is currently supported only in Chrome. With the value `all`, it hides the view transition names of its subtree without changing how the elements are rendered.
+ [`view-transition-scope`](/basics/javascript/#view-transition-scope) hides the view transition names of its subtree without changing how the elements are rendered.
 It hides the names from view transitions rooted at an ancestor of the scoped element, but not from a view transition rooted at the scoped element itself or its descendants.
 
 With these mechanisms for hiding view transition names, you can use the same `view-transition-name` multiple times within the same DOM, provided that all but one instance are hidden. 
