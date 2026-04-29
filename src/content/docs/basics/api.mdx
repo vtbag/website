@@ -34,8 +34,8 @@ While I add more pages, I'm also happy that I can offer some links to previous w
 
 |When|What|Where|
 |---|---|---|
-|2026-03-09|`view-transition-scope: all` replaces `view-transition-scope: auto`. You can use this property to hide view transition names inside a DOM subtree from view transitions started outside of it.|[view-transition-scope](https://drafts.csswg.org/css-view-transitions-2/#view-transition-scope-prop)
-|2026-01-26|`view-transition-scope: auto` replaces `contain: view-transition`. You can use this property to hide view transition names inside a DOM subtree from view transitions started outside of it.|[view-transition-scope](https://drafts.csswg.org/css-view-transitions-2/#view-transition-scope-prop)
+|2026-03-09|~~`view-transition-scope: auto`~~ was replaced by `view-transition-scope: all`. You can use this property to hide view transition names inside a DOM subtree from view transitions started outside of it.|[view-transition-scope](https://drafts.csswg.org/css-view-transitions-2/#view-transition-scope-prop)
+|2026-01-26|~~`contain: view-transition`~~ was replaced by ~~`view-transition-scope: auto`~~. |[view-transition-scope](https://drafts.csswg.org/css-view-transitions-2/#view-transition-scope-prop)
 ||Level 1 of the spec was merged into Level 2. Level 1 is only for historical reference. Development of the API now happens solely in the Level 2 document.||  
 |2025-10-17|The view transition object offers a [`waitUntil()`](/basics/javascript/#waituntil) function that can be called with a promise. Now the view transitions `finished` promise does not only wait for the animations on pseudo-elements to end, but also waits for all promises passed via `waitUntil()` to settle.|[Level 2, waitUntil](https://drafts.csswg.org/css-view-transitions-2/#dom-viewtransition-waituntil)| 
 |2025-10-02|[Scoped view transitions](/basics/javascript/#scoped-view-transitions), where `startViewTransition()` can be called on DOM elements. To distinguish (element-)scoped view transitions from what we had before, cross-document view transitions and view transitions started with `document.startViewTransition()` might also be called _global_ view transitions.|[Level 2, Scoped View Transitions](https://drafts.csswg.org/css-view-transitions-2/#scoped-vt)
@@ -59,7 +59,6 @@ These may or may not make it into the spec.
 |2025-06-18| Also copy border radius and corner shape form old and new original elements and animate the `::view-transition-group-children()` from old to new values.|[#12357](https://github.com/w3c/csswg-drafts/issues/12357), [#12363](https://github.com/w3c/csswg-drafts/issues/12363)  |
 |2025-05-28|User defined view transition names must not start with `-ua-` as those are reserved for the user agent, e.g. for `match-element` and `auto`.|[#12241](https://github.com/w3c/csswg-drafts/issues/12241) |
 |2025-01-29| `::view-transition-new(*) { pointer-events: auto }` to forward pointer events from the pseudo-element to the original element.|[#11596](https://github.com/w3c/csswg-drafts/issues/11596) |
-2024-06-13| `transitionRoot` property of the `ViewTransition` object reports the DOM element the scoped view transition was called on.|[comment on #9908](https://github.com/w3c/csswg-drafts/issues/9908#issuecomment-2165621635)|
 
 
 
