@@ -162,7 +162,7 @@ main {
 
 Capturing of images happens in two passes. One captures images of the old DOM state before the view transition, and the other pass captures the new elements of the target state.
 
-For both passes, when the View Transition API captures the images to be animated, the **view transition names have to be unique** in the DOM.
+For both passes, when the View Transition API captures the images to be animated, the **view transition names have to be unique** in the DOM. Otherwise, the API will skip the entire view transition, or in newer versions [drop the non-unique elements](/basics/api/#recent-changes).
 
 Under certain circumstances, the API ignores view transition names on elements. When the view transition name of an element is ignored, it can not conflict with another element with the same name.
 
@@ -407,7 +407,7 @@ The View Transition API handles the image of the root `<html>` element in a spec
 
 ### Groups and Image-Pairs
 
-Because view transition names must be unique inside their DOM, there can be at most one old image and one new image with a given name. The API assumes that elements with the same `view-transition-name` on both the old and the new pages represent the same logical concept. It is not necessary for these elements to be implemented the same way or even use the same HTML tags. The old and new images form a pair, and this pair is the only child of the group. Both `::view-transition-group` and `::view-transition-image-pair` are named using the `view-transition-name`. All groups are direct children of the `::view-transition` pseudo-element. Thus, a typical structure looks like this, where a pair can have one or two children.
+Because view transition names must be unique inside their DOM, there can be at most one old image and one new image with a given name. The API assumes that elements with the same `view-transition-name` on both the old and the new view represent the same logical concept. It is not necessary for these elements to be implemented the same way or even use the same HTML tags. The old and new images form a pair, and this pair is the only child of the group. Both `::view-transition-group` and `::view-transition-image-pair` are named using the `view-transition-name`. All groups are direct children of the `::view-transition` pseudo-element. Thus, a typical structure looks like this, where a pair can have one or two children.
 
 ```c
 ::view-transition                       // the parent of all groups

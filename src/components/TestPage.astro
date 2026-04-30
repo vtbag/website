@@ -57,7 +57,8 @@
           if (document.startViewTransition) {
             let matchElement = true;
             const transition = document.startViewTransition();
-            transition.waitUntil && document.documentElement.setAttribute("wut", "");
+            transition.waitUntil &&
+              document.documentElement.setAttribute("wut", "");
             transition.types && transition.types.add("test");
             await transition.ready;
             document.documentElement.setAttribute("sdvt", "");
@@ -66,10 +67,10 @@
             });
             matchElement && document.documentElement.setAttribute("vtnme", "");
             getComputedStyle(document.documentElement).getPropertyValue(
-              "--active-view-transition"
+              "--active-view-transition",
             ) && document.documentElement.setAttribute("avtpc", "");
             getComputedStyle(document.documentElement).getPropertyValue(
-              "--active-view-transition-type"
+              "--active-view-transition-type",
             ) && document.documentElement.setAttribute("avttpc", "");
           }
           "onpageswap" in window &&
@@ -104,7 +105,32 @@
             " " +
             browserInfo.version.replace(/(\.0)+$/, "") +
             ") ";
+
           history.replaceState(history.state, "", "/basics/test-page/");
+
+          if (document.startViewTransition) {
+            document.querySelectorAll("main > div").forEach((div) => {
+              div.style.viewTransitionName = "test";
+            });
+            transition = document.startViewTransition();
+            transition.ready.then(
+              () => {
+                console.log("Transition ready promise resolved");
+                transition.skipTransition();
+                document.documentElement.setAttribute("rdn", "");
+                document.querySelectorAll("main > div").forEach((div) => {
+                  div.style.viewTransitionName = "";
+                });
+              },
+              (e) => {
+                console.log("Transition ready promise rejected ", e);
+                document.documentElement.removeAttribute("rdn");
+                document.querySelectorAll("main > div").forEach((div) => {
+                  div.style.viewTransitionName = "";
+                });
+              },
+            );
+          }
         }
       }, 1000);
     });

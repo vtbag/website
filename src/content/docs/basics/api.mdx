@@ -31,9 +31,11 @@ While I add more pages, I'm also happy that I can offer some links to previous w
 [https://drafts.csswg.org/css-view-transitions-1/](https://drafts.csswg.org/css-view-transitions-1/) _(now also part of the Level 2 document)_
 
 #### Recent Changes
+Test whether your browser supports the latest features of the View Transition API on [this test page](/basics/test-page/).
 
 |When|What|Where|
 |---|---|---|
+|2026-04-29|Duplicate view transition names will be ignored instead of causing the view transition to fail. Originally, if the same view transition name was found twice during a capturing phase, the view transition was skipped. The new behaviour will automatically remove view transition names with non-unique definitions and continue the view transition with the remaining unique names. (_Not yet supported by any browser_) |[View Transition Activation](https://drafts.csswg.org/css-view-transitions-2/#activate-view-transition)|
 |2026-03-09|`view-transition-scope: auto` (_outdated_) was superseded by [`view-transition-scope: all`](/basics/javascript/#view-transition-scope). You can use this property to hide view transition names inside a DOM subtree from view transitions started outside of it.|[view-transition-scope](https://drafts.csswg.org/css-view-transitions-2/#view-transition-scope-prop)
 |2026-01-26|`contain: view-transition` (_outdated_) was superseded by `view-transition-scope: auto` (_outdated_). |[view-transition-scope](https://drafts.csswg.org/css-view-transitions-2/#view-transition-scope-prop)
 ||Level 1 of the spec was merged into Level 2. Level 1 is only for historical reference. Development of the API now happens solely in the Level 2 document.||  

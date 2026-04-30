@@ -317,7 +317,7 @@ When you have CSS rules for a large number of view transition names, you can use
 This feature is available beginning with Level 2 of the View Transition API.
 :::
 
-Similar to the `view-transition-name` property, you can assign `view-transition-class` values to DOM elements. While view transition names have to be unique in the DOM, view transition class values need not and typically will not be unique.
+Similar to the `view-transition-name` property, you can assign `view-transition-class` values to DOM elements. While view transition names have to be unique in the DOM, view transition class values need not be, and typically are not, unique.
 
 When looking at how the view transition classes are used, the similarity to CSS classes is rather obvious. You use them inside the pseudo-element selectors, prefixed by a dot (`.`).
 If multiple class names are used to identify a pseudo element, all must match. The following CSS rule can be used to address all view transition groups that have the `nav-link` view transition class:

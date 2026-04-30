@@ -76,7 +76,9 @@ Respect for reduced motion preference is already built in, so you do not need to
 <summary>Non-unique view transition names</summary>
 When the View Transition API takes snapshots, it looks for elements with a [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property.  No two elements selected for screenshots in the old state may have the same view transition name. Same is true when the API captures the new images. 
 
-Duplicate names raise an error and cancel the view transition as if it was explicitly stopped by `skipTransition()`.  Of course, it is OK and often necessary to have the same names for old and new images, as this is the key to the API's shared element transitions.
+In the original design of the View Transition API, duplicate names raised an error and cancelled the view transition, as if it had been explicitly stopped by `skipTransition()`. Newer versions may simply ignore duplicate names.
+
+Of course, it is OK and often necessary to have the same names for old and new images, as this is the key to the API's shared element transitions.
 
 Duplicate view transition names during image capturing are likely when you define view transition names in [reusable components](/tips/css/#components) or if you use the same existing slug in multiple places as a view transition name. 
 
