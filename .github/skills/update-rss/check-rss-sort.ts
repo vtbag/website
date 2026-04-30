@@ -1,14 +1,12 @@
-const fs = require('fs');
+import { parseRss, readRssFile } from './rss-utils.ts';
 
-const xml = fs.readFileSync('public/rss.xml', 'utf8');
-const items = [...xml.matchAll(/<item>[\s\S]*?<\/item>/g)].map((match) => match[0]);
-let previousTimestamp = Infinity;
+const items = parseRss(readRssFile()).items;
+let previousTimestamp = Number.POSITIVE_INFINITY;
 let isSorted = true;
 
 for (const item of items) {
-  const guid = (item.match(/<guid[^>]*>([^<]+)<\/guid>/) || [])[1];
-  const pubDate = (item.match(/<pubDate>([^<]+)<\/pubDate>/) || [])[1];
-  const timestamp = Date.parse(pubDate);
+  const { guid, pubDate } = item;
+  const timestamp = Date.parse(pubDate ?? '');
 
   if (Number.isNaN(timestamp)) {
     console.log(`INVALID_DATE ${guid} | ${pubDate}`);
