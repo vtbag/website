@@ -25,14 +25,20 @@ none
 4. For each entry listed as CHANGED: the `guid` value is the URL of the page; derive the source file path from it (e.g. `https://vtbag.dev/basics/api/` → `src/content/docs/basics/api.mdx`). Check whether the change since the old `pubDate` is minor:
   - Find the commit that was current as of the committed `pubDate`: `git log --before="<committedPubDate>" -1 --format="%H" -- <sourceFile>`
   - Get the diff to the current file: `git --no-pager diff <hash> -- <sourceFile>`
-  - A diff is **minor** if it only contains changes in whitespace, punctuation, order, cross-links, or rephrasings that do not add or remove meaningful facts.
-  - A diff is **substantive** if it adds new information, removes existing information, or changes technical facts.
+  - A diff is **minor** if the page keeps the same user-facing purpose and technical takeaways, even when wording is expanded or reorganized for clarity.
+  - Treat as **minor**: grammar/style fixes, formatting, link updates, readability rewrites, sentence/paragraph reshuffling, and examples or clarifications that do not change recommendations or factual claims.
+  - A diff is **substantive** only if it changes what the reader should do or believe: new/removed features, changed compatibility/support statements, changed API semantics, changed recommended patterns, or added/removed constraints/caveats.
+  - If uncertain, apply this test: if an experienced reader would keep the same implementation decisions after reading both versions, classify as **minor**.
   - If the change is minor, replace the new `pubDate` in `public/rss.xml` with the old committed values. Do not make any matching edit in `src/content/docs/rss.md`.
   - If the change is substantive, keep the new `pubDate` as is.
 
 5. ADDED entries (new `guid` not in `HEAD`) always keep their new `pubDate` without review.
 
 6. After all `pubDate` adjustments are done, ensure that the `<item>` entries in `public/rss.xml` are sorted by `pubDate` in descending order, with the newest entries first. If reverting a minor change makes an entry older than the items around it, move the whole `<item>` block to its correct position. Do not reorder `src/content/docs/rss.md`.
+
+7. Validate the final result:
+  - Run `node .github/skills/update-rss/diff-rss.cjs` again and confirm that only the intended substantive entries still appear under CHANGED.
+  - Run `node .github/skills/update-rss/check-rss-sort.cjs` and confirm it prints `RSS_SORT_OK`.
 
 ## URL to source file mapping
 - `https://vtbag.dev/<path>/` → `src/content/docs/<path>.mdx` (or `.md`)
