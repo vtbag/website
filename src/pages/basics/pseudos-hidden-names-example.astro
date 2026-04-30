@@ -2,7 +2,9 @@
 import room1 from "@/assets/room1.jpg";
 import room2 from "@/assets/room2.jpg";
 import hotel from "@/assets/hotel.jpg";
-import map from "@/assets/map.png";
+import map from "@/assets/map.png"; 
+
+import { Image } from "astro:assets";
 ---
 
 <!doctype html>
@@ -20,8 +22,8 @@ import map from "@/assets/map.png";
         <!-- Panel A: Hotel Info -->
         <div class="panel panel-a">
           <h1>Grand Hotel</h1>
-          <img
-            src={hotel.src}
+          <Image
+            src={hotel}
             alt="Grand Hotel exterior"
             class="hotel-image"
           />
@@ -30,8 +32,8 @@ import map from "@/assets/map.png";
         <!-- Panel B: Map or Directions -->
         <div class="panel panel-b" >
           <div class="view-state-1" style="view-transition-name: map">
-            <img
-              src={map.src}
+            <Image
+              src={map}
               alt="Hotel location map"
               class="small-map"
             />
@@ -52,7 +54,11 @@ import map from "@/assets/map.png";
           <div class="view-state-1" style="view-transition-name: rooms">
             <div class="rooms-grid">
               <div class="room-card">
-                <img src={room1.src} alt="Standard room" class="room-image" />
+                <Image
+                  src={room1}
+                  alt="Standard room"
+                  class="room-image"
+                />
                 <h3>Standard Room</h3>
                 <p>
                   Comfortable 30 m² room with ocean views and modern amenities.
@@ -60,7 +66,11 @@ import map from "@/assets/map.png";
                 <span class="price">$129/night</span>
               </div>
               <div class="room-card">
-                <img src={room2.src} alt="Deluxe room" class="room-image" />
+                <Image
+                  src={room2}
+                  alt="Deluxe room"
+                  class="room-image"
+                />
                 <h3>Deluxe Suite</h3>
                 <p>
                   Spacious 50 m² suite with king bed, sofa, and panoramic views.
@@ -69,8 +79,8 @@ import map from "@/assets/map.png";
             </div>
           </div>
           <div class="view-state-2" style="view-transition-name: map;">
-            <img
-              src={map.src}
+            <Image
+              src={map}
               alt="Hotel and surrounding area"
               class="large-map"
             />
