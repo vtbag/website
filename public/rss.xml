@@ -8,14 +8,14 @@
     <link>https://vtbag.dev</link>
     <description>Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Apr 2026 13:27:41 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2026 18:26:20 GMT</lastBuildDate>
     
   <item>
     <title><![CDATA[The View Transition API]]></title>
     <link>https://vtbag.dev/basics/api/</link>
     <guid isPermaLink="true">https://vtbag.dev/basics/api/</guid>
     
-    <pubDate>Sun, 26 Apr 2026 12:40:26 GMT</pubDate>
+    <pubDate>Thu, 30 Apr 2026 12:52:17 GMT</pubDate>
     <description><![CDATA[Basics information about the View Transition browser API]]></description>
     <enclosure
         url="/api-og.png"
@@ -28,10 +28,62 @@
     <link>https://vtbag.dev/basics/pseudos/</link>
     <guid isPermaLink="true">https://vtbag.dev/basics/pseudos/</guid>
     
-    <pubDate>Fri, 24 Apr 2026 19:08:37 GMT</pubDate>
+    <pubDate>Thu, 30 Apr 2026 12:52:17 GMT</pubDate>
     <description><![CDATA[What are those pseudo-elements of the View Transition API and how can I style and animate them?]]></description>
     <enclosure
         url="/pseudos-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[Test Your Browser's View Transition Capabilities]]></title>
+    <link>https://vtbag.dev/basics/test-page/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/test-page/</guid>
+    
+    <pubDate>Thu, 30 Apr 2026 12:52:17 GMT</pubDate>
+    <description><![CDATA[Check what part of the View Transition API is supported by your browser]]></description>
+    <enclosure
+        url="/test-page-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[View Transitions: What Could Possibly Go Wrong?]]></title>
+    <link>https://vtbag.dev/tips/view-transition-fails-and-fixes/</link>
+    <guid isPermaLink="true">https://vtbag.dev/tips/view-transition-fails-and-fixes/</guid>
+    
+    <pubDate>Thu, 30 Apr 2026 12:52:17 GMT</pubDate>
+    <description><![CDATA[Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.]]></description>
+    <enclosure
+        url="https://vtbag.dev/social.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[View Transition JavaScript API]]></title>
+    <link>https://vtbag.dev/basics/javascript/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/javascript/</guid>
+    
+    <pubDate>Wed, 29 Apr 2026 21:53:44 GMT</pubDate>
+    <description><![CDATA[How to interact with view transitions using JavaScript]]></description>
+    <enclosure
+        url="/javascript-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[Playing Hide and Seek]]></title>
+    <link>https://vtbag.dev/basics/hide-and-seek/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/hide-and-seek/</guid>
+    
+    <pubDate>Wed, 29 Apr 2026 18:03:42 GMT</pubDate>
+    <description><![CDATA[How to control stacking and clipping of view transition images.]]></description>
+    <enclosure
+        url="/hide-and-seek-og.png"
         type="image/jpeg"
       />
   </item>
@@ -50,19 +102,6 @@
   </item>
 
   <item>
-    <title><![CDATA[View Transitions: What Could Possibly Go Wrong?]]></title>
-    <link>https://vtbag.dev/tips/view-transition-fails-and-fixes/</link>
-    <guid isPermaLink="true">https://vtbag.dev/tips/view-transition-fails-and-fixes/</guid>
-    
-    <pubDate>Mon, 20 Apr 2026 14:06:28 GMT</pubDate>
-    <description><![CDATA[Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.]]></description>
-    <enclosure
-        url="https://vtbag.dev/social.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
     <title><![CDATA[API Levels and Implications]]></title>
     <link>https://vtbag.dev/basics/levels/</link>
     <guid isPermaLink="true">https://vtbag.dev/basics/levels/</guid>
@@ -71,19 +110,6 @@
     <description><![CDATA[What are those levels of the View Transition API, and what does that mean for me as a dev?]]></description>
     <enclosure
         url="/bag-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[View Transition JavaScript API]]></title>
-    <link>https://vtbag.dev/basics/javascript/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/javascript/</guid>
-    
-    <pubDate>Thu, 12 Mar 2026 15:03:26 GMT</pubDate>
-    <description><![CDATA[How to interact with view transitions using JavaScript]]></description>
-    <enclosure
-        url="/javascript-og.png"
         type="image/jpeg"
       />
   </item>
@@ -128,19 +154,6 @@
   </item>
 
   <item>
-    <title><![CDATA[Playing Hide and Seek]]></title>
-    <link>https://vtbag.dev/basics/hide-and-seek/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/hide-and-seek/</guid>
-    
-    <pubDate>Thu, 05 Feb 2026 14:23:05 GMT</pubDate>
-    <description><![CDATA[How to control stacking and clipping of view transition images.]]></description>
-    <enclosure
-        url="/hide-and-seek-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
     <title><![CDATA[Ladies and Gentlemen, Start Your Engines!]]></title>
     <link>https://vtbag.dev/fwvt/enabling/</link>
     <guid isPermaLink="true">https://vtbag.dev/fwvt/enabling/</guid>
@@ -162,19 +175,6 @@
     <description><![CDATA[@vtbag/turn-signal simplifies directional view transitions for intuitive history traversal navigation.]]></description>
     <enclosure
         url="/signal-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[Test Your Browser's View Transition Capabilities]]></title>
-    <link>https://vtbag.dev/basics/test-page/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/test-page/</guid>
-    
-    <pubDate>Mon, 02 Feb 2026 10:57:11 GMT</pubDate>
-    <description><![CDATA[Check what part of the View Transition API is supported by your browser]]></description>
-    <enclosure
-        url="/test-page-og.png"
         type="image/jpeg"
       />
   </item>
