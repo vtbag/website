@@ -39,9 +39,7 @@ export function addBar(first:number) {
 
 const storedWidth = () => ~~sessionStorage.getItem("vtbag-bar")!;
 
-// @ts-expect-error
 (window.navigation as EventTarget)?.addEventListener("navigate", (event) => {
-  // @ts-expect-error
   const e = event as NavigateEvent;
   console.log("event:", "navigate", e);
 
