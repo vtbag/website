@@ -10,12 +10,13 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.7",
-    "@astrojs/starlight": "^0.38.1",
+    "@astrojs/starlight": "^0.38.4",
+    "@cloudflare/workers-types": "^4.20260502.1",
     "@expressive-code/plugin-collapsible-sections": "^0.41.7",
     "@expressive-code/plugin-line-numbers": "^0.41.7",
     "@inox-tools/portal-gun": "^2.0.0",
     "@playwright/test": "^1.58.2",
-    "@types/node": "^25.5.0",
+    "@types/node": "^25.6.0",
     "@vtbag/cam-shaft": "^1.0.6",
     "@vtbag/element-crossing": "^1.1.0",
     "@vtbag/inspection-chamber": "^1.0.24",
@@ -35,6 +36,7 @@
     "sharp": "^0.34.5",
     "starlight-image-zoom": "^0.14.1",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.87.0"
   }
 }
