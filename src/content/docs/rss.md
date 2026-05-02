@@ -5,7 +5,13 @@ description: Last update dates of all articles on vtbag.dev
 ---
 
 
-- [The View Transition API](https://vtbag.dev/basics/api/): Basics information about the View Transition browser API (Last updated Thu, 30 Apr 2026 12:52:17 GMT)
+- [The Turn-Signal](https://vtbag.dev/tools/turn-signal/): @vtbag/turn-signal simplifies directional view transitions for intuitive history traversal navigation. (Last updated Sat, 02 May 2026 20:35:51 GMT)
+
+- [@vtbag: Overview](https://vtbag.dev/vtbag/): What are those Bags of Tricks? (Last updated Sat, 02 May 2026 17:07:03 GMT)
+
+- [The View Transition API](https://vtbag.dev/basics/api/): Basics information about the View Transition browser API (Last updated Fri, 01 May 2026 08:38:07 GMT)
+
+- [Make Your Images Glide Across the Screen](https://vtbag.dev/fwvt/morphing/): Let's add the morph animations that have made the View Transition API so renowned. (Last updated Thu, 30 Apr 2026 22:04:03 GMT)
 
 - [View Transition Names and Generated Pseudo-Elements](https://vtbag.dev/basics/pseudos/): What are those pseudo-elements of the View Transition API and how can I style and animate them? (Last updated Thu, 30 Apr 2026 12:52:17 GMT)
 
@@ -35,8 +41,6 @@ description: Last update dates of all articles on vtbag.dev
 
 - [Ladies and Gentlemen, Start Your Engines!](https://vtbag.dev/fwvt/enabling/): How to enable browser-native cross-document view transitions on your multi-page site. (Last updated Mon, 02 Feb 2026 20:23:16 GMT)
 
-- [The Turn-Signal](https://vtbag.dev/tools/turn-signal/): @vtbag/turn-signal simplifies directional view transitions for intuitive history traversal navigation. (Last updated Mon, 02 Feb 2026 20:23:16 GMT)
-
 - [Flickering during Cross-Fade Animations?](https://vtbag.dev/tips/over-exposure/): Why custom fade animations for view transitions might flash. (Last updated Wed, 21 Jan 2026 14:21:35 GMT)
 
 - [The Utensil Drawer](https://vtbag.dev/tools/utensil-drawer/): A growing collection of lightweight utilities to help you craft polished view transitions. (Last updated Tue, 20 Jan 2026 17:59:04 GMT)
@@ -47,8 +51,6 @@ description: Last update dates of all articles on vtbag.dev
 
 - [The Inspection Chamber](https://vtbag.dev/tools/inspection-chamber/): @vtbag/inspection-chamber allows you to examine, judge & optimize all aspects of your view transitions (Last updated Tue, 06 Jan 2026 15:32:00 GMT)
 
-- [@vtbag: Overview](https://vtbag.dev/vtbag/): What are those Bags of Tricks? (Last updated Sun, 04 Jan 2026 22:42:00 GMT)
-
 - [Playing Tower of Hanoi](https://vtbag.dev/fwvt/playing/): Fun With View Transitions, Episode 7: Tips, tricks, and fresh ideas to spark your own view transition magic! (Last updated Sat, 08 Nov 2025 07:35:44 GMT)
 
 - [Why View Transitions Might Break on Mobile](https://vtbag.dev/fwvt/uncovering/): Figure out why view transitions might fail on mobile for no clear reason. (Last updated Sat, 08 Nov 2025 07:35:44 GMT)
@@ -58,8 +60,6 @@ description: Last update dates of all articles on vtbag.dev
 - [Hello, and welcome to Fun with View Transitions!](https://vtbag.dev/fwvt/welcome/): Embark on a journey into the marvelous land of the View Transition API. (Last updated Tue, 14 Oct 2025 21:23:20 GMT)
 
 - [Default View Transition Animations](https://vtbag.dev/basics/default-animations/): Mastering the fundamentals is key to creating seamless animations with the View Transition API. Here's a quick guide to get you started. (Last updated Sat, 02 Aug 2025 18:42:31 GMT)
-
-- [Make Your Images Glide Across the Screen](https://vtbag.dev/fwvt/morphing/): Let's add the morph animations that have made the View Transition API so renowned. (Last updated Wed, 30 Jul 2025 16:49:39 GMT)
 
 - [Support in Web Frameworks](https://vtbag.dev/basics/frameworks/): What is special when using React's <ViewTransition /> (Last updated Thu, 10 Jul 2025 16:23:33 GMT)
 
