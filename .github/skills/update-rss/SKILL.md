@@ -23,7 +23,7 @@ disable-model-invocation: false
 
 1. Run `npm run build` to update last update dates for all pages. Stop immediately if the build fails.
 
-2. After the build completes successfully, run `node bin/rss-update.ts` to update the `public/rss.xml` file. Do not run this in parallel with the build. The script also updates `src/content/docs/rss.md`, and that generated file should be kept as produced by the script. Do not restore `src/content/docs/rss.md` to `HEAD`, and do not manually edit it in this workflow. Only `public/rss.xml` is reviewed and corrected manually. The script reassigns dates to all entries based on file modification times, even if the actual content changes are minor.
+2. After the build completes successfully, run `node bin/rss-update.ts` to update the `public/rss.xml` file. Do not run this in parallel with the build. The script also updates `src/content/docs/recent-updates.md`, and that generated file should be kept as produced by the script. Do not restore `src/content/docs/recent-updates.md` to `HEAD`, and do not manually edit it in this workflow. Only `public/rss.xml` is reviewed and corrected manually. The script reassigns dates to all entries based on file modification times, even if the actual content changes are minor.
 
 3. Run `node .github/skills/update-rss/diff-rss.ts` to identify which existing entries have changed `pubDate` values versus `HEAD`, and which are brand new. The output now includes the source content path for each entry, so do not derive the path manually from the URL unless the script reports an unresolved fallback path.
 
@@ -47,7 +47,7 @@ disable-model-invocation: false
   - Inline GUIDs: `node .github/skills/update-rss/apply-rss-date-overrides.ts <guid> <guid> ...`
   - Or use a file with one GUID per line: `node .github/skills/update-rss/apply-rss-date-overrides.ts --guid-file /tmp/minor-rss-guids.txt`
   - The script restores `pubDate` values from `HEAD` only for the selected GUIDs and automatically re-sorts all `<item>` entries in `public/rss.xml` by descending `pubDate`.
-  - Do not make any matching edit in `src/content/docs/rss.md`, and do not restore that file to `HEAD`.
+  - Do not make any matching edit in `src/content/docs/recent-updates.md`, and do not restore that file to `HEAD`.
 
 7. Validate the final result:
   - Run `node .github/skills/update-rss/diff-rss.ts` again and confirm that only the intended substantive entries still appear under CHANGED.

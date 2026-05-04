@@ -4,6 +4,7 @@ title: Latest updates
 description: Last update dates of all articles on vtbag.dev
 ---
 
+This list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 
 - [The Turn-Signal](https://vtbag.dev/tools/turn-signal/): @vtbag/turn-signal simplifies directional view transitions for intuitive history traversal navigation. (Last updated Sat, 02 May 2026 20:35:51 GMT)
 
