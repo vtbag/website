@@ -128,7 +128,7 @@ fs.writeFileSync(OUTPUT, rss.trim() + '\n');
 console.log(`RSS written to ${OUTPUT}`);
 
 
-const MARKDOWN_OUTPUT = 'src/content/docs/rss.md';
+const MARKDOWN_OUTPUT = 'src/content/docs/recent-updates.md';
 
 const markdownItems = items.map(item => `
 - [${item.title}](${item.link}): ${item.description} (Last updated ${rfc822(item.lastModified!)})
@@ -140,6 +140,7 @@ title: Latest updates
 description: Last update dates of all articles on vtbag.dev
 ---
 
+This list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 ${markdownItems}
 `;
 
