@@ -36,28 +36,6 @@ lastUpdated ||= new Date(
   Number(updated(Astro.locals.starlightRoute.entry.filePath) + "000")
 );
 
-const head = Astro.locals.starlightRoute.head;
-head.push({
-  tag: "meta",
-  attrs: {
-    property: "og:updated_time",
-    content: lastUpdated?.toISOString() ?? "",
-  },
-});
-head.push({
-  tag: "meta",
-  attrs: {
-    property: "article:modified_time",
-    content: lastUpdated?.toISOString() ?? "",
-  },
-});
-head.push({
-  tag: "meta",
-  attrs: {
-    property: "article:published_time",
-    content: firstPublished.toISOString(),
-  },
-});
 ---
 
 {
@@ -84,3 +62,8 @@ head.push({
     </p>
   )
 }
+<portal-gate to="end:head">
+  <meta property="og:updated_time" content={lastUpdated?.toISOString() ?? ""} />
+  <meta property="article:modified_time" content={lastUpdated?.toISOString() ?? ""} />
+  <meta property="article:published_time" content={firstPublished.toISOString()} />
+</portal-gate>
