@@ -19,6 +19,7 @@ type FeedItem = {
   link: string;
   guid: string;
   author: string | undefined;
+  firstPublished: string | undefined;
   lastModifiedStr: string | undefined;
   lastModified: Date | null;
   description?: string;
@@ -72,7 +73,7 @@ for (const file of files) {
   const title = meta(root, 'og:title') ?? root.querySelector('title')?.text;
   const link = toUrl(file);
   const author = meta(root, 'author');
-
+  const firstPublished = meta(root, 'article:published_time');
   const lastModifiedStr = meta(root, 'og:updated_time') || meta(root, 'article:modified_time');
   const lastModified = lastModifiedStr ? new Date(lastModifiedStr) : null;
 
@@ -83,6 +84,7 @@ for (const file of files) {
     link,
     guid: link,
     author,
+    firstPublished,
     lastModifiedStr,
     lastModified,
     description: meta(root, 'og:description') ?? "Missing Description",
@@ -131,16 +133,19 @@ console.log(`RSS written to ${OUTPUT}`);
 const MARKDOWN_OUTPUT = 'src/content/docs/recent-updates.md';
 
 const markdownItems = items.map(item => `
-- [${item.title}](${item.link}): ${item.description} (Last updated ${rfc822(item.lastModified!)})
+- [${item.title}](${item.link})\\
+${item.description}\\
+<small>First published ${rfc822(new Date(item.firstPublished!))}</small>\\
+<small>Last updated ${rfc822(item.lastModified!)}</small>
 `).join('');
 
 const markdown = `
 ---
-title: Latest updates
+title: Recent updates
 description: Last update dates of all articles on vtbag.dev
 ---
 
-This list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
+This list shows last update dates for all articles on vtbag.dev. The list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 ${markdownItems}
 `;
 
