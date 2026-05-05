@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "ai-search-query-logger",
-  "main": "src/workers/vitas.ts",
+  "main": "src/workers/query-logger.ts",
   "compatibility_date": "2026-04-22",
   // KV namespace for storing query logs
   "kv_namespaces": [
