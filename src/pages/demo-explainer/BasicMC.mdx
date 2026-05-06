@@ -28,10 +28,14 @@ The key is to imagine a canvas where the new image of the button starts one scre
 
 ```css ins={1-6}
 ::view-transition-old(nav) {
-  animation: 1s ease-in-out slideOut;
+  animation-name: slideOut;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
 }
 ::view-transition-new(nav) {
-  animation: 1s ease-in-out slideIn;
+  animation-name: slideIn;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
 }
 ```
 

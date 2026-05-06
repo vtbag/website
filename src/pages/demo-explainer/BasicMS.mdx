@@ -27,7 +27,9 @@ The next step is to determine what is to be animated and how. The new image sits
   display: none;
 }
 ::view-transition-new(head) {
-  animation: shake 0.75s ease-out ;
+  animation-name: shake;
+  animation-duration: 0.75s;
+  animation-timing-function: ease-out;
   transform-origin: 120px 20px;
 }
 ```

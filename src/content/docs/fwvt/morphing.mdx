@@ -227,10 +227,15 @@ h2 {
   overflow: hidden;
 }
 ::view-transition-old(subtitle) {
-  animation: turn-out 500ms linear both;
+  animation-name: turn-out;
+  animation-duration: 500ms;
+  animation-timing-function: linear;
 }
 ::view-transition-new(subtitle) {
-  animation: turn-in 500ms 100ms linear both;
+  animation-name: turn-in;
+  animation-duration: 500ms;
+  animation-delay: 100ms;
+  animation-timing-function: linear;
 }
 @keyframes turn-out { to { transform: translateX(-100%)}}
 @keyframes turn-in { from { transform: translateX(100%)}}

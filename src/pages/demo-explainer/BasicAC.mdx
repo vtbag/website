@@ -25,10 +25,14 @@ For the shrinking and growing, we use the same `zoom-out` keyframes, but for the
 
 ```css ins={1-6}
 ::view-transition-old(img) {
-  animation: 1s zoom-out forwards;
+  animation-name: zoom-out;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
 }
 ::view-transition-new(img) {
-  animation: 1s reverse zoom-out;
+  animation-name: zoom-out;
+  animation-duration: 1s;
+  animation-direction: reverse;
 }
 ```
 

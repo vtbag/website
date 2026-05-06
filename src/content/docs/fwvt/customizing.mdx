@@ -145,14 +145,11 @@ We can select and animate these pseudo-elements just like `<img>` or `<div>` ele
 
 ```css
 ::view-transition-old(root) {
-  animation: 250ms ease 0ms 1 normal both -ua-view-transition-fade-out;
-  animation-duration: inherit;
+  animation-name: fade-out;
 }
 ```
 
-
-
-Fortunately, we don't need to define this ourselves. This exact animation is already applied by the View Transition API through the browser's built-in user-agent stylesheet as the default behavior.
+Fortunately, we don't need to define this ourselves. This fade animation is already applied by the View Transition API through the browser's built-in user-agent stylesheet as the default behavior.
 
 Well, not _exactly_ this, but very close. [See for yourself!](/basics/styling/#cross-fade-of-the-images)!
 
@@ -160,13 +157,12 @@ Similarly, the API provides a built-in animation to fade in the new image:
 
 ```css
 ::view-transition-new(root) {
-  animation: 250ms ease 0ms 1 normal both -ua-view-transition-fade-in;
-  animation-duration: inherit;
+  animation-name: fade-in;
 }
 ```
 
 
-The animation duration of 0.25s is set on the `::view-transition-group(root)` and inherited through the `::view-transition-image-pair(root)`. This explains why we noted _"The animation lasts 250 milliseconds using CSS’s default ease timing function."_ at the [end of Episode One](/fwvt/enabling/#reviewing-our-progress-so-far#:~:text=The%20animation%20lasts,function.).
+The animation duration of 0.25s is set on the `::view-transition-group(root)` and [inherited](/basics/styling/#inherited-animation-properties) through the `::view-transition-image-pair(root)`. This explains why we noted _"The animation lasts 250 milliseconds using CSS's default ease timing function."_ at the [end of Episode One](/fwvt/enabling/#reviewing-our-progress-so-far#:~:text=The%20animation%20lasts,function.).
 
 
 ## Can We Modify those Values?
@@ -192,7 +188,7 @@ Okay, 10 seconds is far too long for a practical transition, but this exaggerate
 
 * It gives you **time to inspect the pseudo-elements** in your browser's developer tools. These elements are temporarily attached to the `<html>` element and only exist for the duration of the animation.
 
-* This also gives you first-hand **experience with one current limitation** of the View Transition API: although you can see the new page during the animation, you can’t interact with it until the transition ends.
+* This also gives you first-hand **experience with one current limitation** of the View Transition API: although you can see the new page during the animation, you can't interact with it until the transition ends.
 
 Manually setting long animation durations isn't the best way to inspect or debug view transitions, though. In a later episode, we will explore how to delay and pause view transitions using your browser's developer tools and the [Inspection Chamber](/tools/inspection-chamber/).
 
@@ -214,7 +210,9 @@ Definitively! Let's replace the cross-fade with a more dynamic animation where t
   animation-duration: 150ms;
 }
 ::view-transition-new(root) {
-  animation: 150ms 100ms both slide-up;
+  animation-name: slide-up;
+  animation-duration: 150ms;
+  animation-delay: 100ms;
 }
 @keyframes slide-up {
   from {

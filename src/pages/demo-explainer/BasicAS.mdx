@@ -31,12 +31,17 @@ Next thing is to define the animations: We shrink the old images until they are 
 ```css ins={1-10}
 ::view-transition-old(tab1),
 ::view-transition-old(tab2) {
-  animation: shrink 0.2s forwards;
+  animation-name: shrink;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
   transform-origin: top;
 }
 ::view-transition-new(tab1),
 ::view-transition-new(tab2) {
-  animation: grow 0.8s 0.2s backwards;
+  animation-name: grow;
+  animation-duration: 0.8s;
+  animation-delay: 0.2s;
+  animation-fill-mode: backwards;
   transform-origin: top;
 }
 ```

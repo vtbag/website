@@ -455,7 +455,7 @@ We can remove the fade animation and instead clip the images at the border of th
 ```css
 ::view-transition-old(content),
 ::view-transition-new(content) {
-  animation: none; /* removes the fade animations */
+  animation-name: none; /* removes the fade animations */
   block-size: 100%;
   inline-size: auto;
 }
@@ -472,7 +472,7 @@ We can remove the fade animation and instead clip the images at the border of th
 }
 ```
 
-Once again, we set the height/block-size to 100% and the width/inline-size to auto. `animation: none` removes the fading animations for both the old and new images. On transitions to Page 2, we only show the wider new image, while transitions back to Page 1 show the wider old image. Here `page1` and `page2` are CSS classes on the `:root` elements of Page 1 and Page 2, respectively. These classes were introduced for the sake of simplicity, making it easier to support page-dependent styling in our exercises.
+Once again, we set the height/block-size to 100% and the width/inline-size to auto. `animation-name: none` removes the fading animations for both the old and new images. On transitions to Page 2, we only show the wider new image, while transitions back to Page 1 show the wider old image. Here `page1` and `page2` are CSS classes on the `:root` elements of Page 1 and Page 2, respectively. These classes were introduced for the sake of simplicity, making it easier to support page-dependent styling in our exercises.
 
 Switching off the smaller image is a subtle adjustment to avoid the [over exposure effect](/tips/over-exposure/) of `mix-blend-mode: plus-lighter`. Nobody would notice that during a view transition. But as y'all now examine the animations frame by frame using the Chamber, I want them to be perfect. For a preview of the result, see the "after" video above.
 

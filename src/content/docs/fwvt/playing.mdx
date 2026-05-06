@@ -475,19 +475,20 @@ The Utensil-Drawer's `mayStartViewTransition` function exploits this fact to off
 
 This demo hides plenty of small perks for you to uncover in the code. Here is a guide to help you find them.
 
-### Embrace Inheritance
+### Avoid Shorthand Properties, Embrace Inheritance
 
 Most view transition examples tell you to use the `animation` shorthand property when defining animations like this:
 
 ```css del={2}
 ::view-transition-image-pair(.disk) {
-  animation: 0.5s both lift-and-shift;
+  animation: 0.5s both lift-and-shift; 
+  /* works, but better avoid shorthand properties */
 }
 ````
 
-When you use the shorthand property, you have to define a duration, and likely explicitly specify `both` for the fill mode. Otherwise, you get `0s` and `none` as defaults. You end up ignoring the well-crafted inheritance rules in the spec for `animation-duration`, `animation-delay`, and `animation-fill-mode`. Normally, these cascade down from the group to the image-pair, and then to the old and new image _"...so that by default, the animation timing set on a ::view-transition-group() will dictate the animation timing of all its descendants"_.
+When you use the shorthand property, you have to define a duration, and likely explicitly specify `both` for the fill mode. Otherwise, you get `0s` and `none` as defaults. You end up ignoring the well-crafted [inheritance rules](/basics/styling/#inherited-animation-properties) in the spec for `animation-duration`, `animation-delay`, and `animation-fill-mode`. Normally, these cascade down from the group to the image-pair, and then to the old and new image _"...so that by default, the animation timing set on a `::view-transition-group()` will dictate the animation timing of all its descendants"_.
 
-That is why the `view-transition.css` file of this demo does not use the `animation` shorthand. Instead, it defines the individual `animation-*` properties separately:
+That is why the `view-transition.css` file of this demo uses individual `animation-*` [longhand properties](/basics/styling/#longhand-and-shorthand-properties) instead of the `animation` shorthand property. This allows us to set the duration of all animations in one place, on the group, and have it cascade down to all image pairs and images:
 
 ```css ins={2,3}
 ::view-transition-image-pair(.disk) {
@@ -496,7 +497,7 @@ That is why the `view-transition.css` file of this demo does not use the `animat
 }
 ```
 
-Bonus perk: As a result, there is just one rule to change the duration of all animations in this demo:
+Bonus perk: Thanks to the inheritance definitions, you only need one rule to change the duration of all animations in this demo:
 
 ```css {2}
 ::view-transition-group(*) {

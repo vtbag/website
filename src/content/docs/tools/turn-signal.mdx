@@ -208,18 +208,16 @@ You can use the view transition types set by the scripts in your CSS to select d
 
 This example shows how to use a cross-fade effect by default and to replace that with a sliding animation iff a view transition type called `shift-right` is set.
 ```css
-::view-transition-old(main) {
-  animation-duration: 200ms;
-}
+::view-transition-old(main),
 ::view-transition-new(main) {
   animation-duration: 200ms;
 }
 :active-view-transition-type(shift-right) {
   &::view-transition-old(main) {
-    animation: 200ms both slide-out-to-left;
+    animation-name: slide-out-to-left;
   }
   &::view-transition-new(main) {
-    animation: 200ms both slide-in-from-right;
+    animation-name: slide-in-from-right;
   }
 }
 ```
