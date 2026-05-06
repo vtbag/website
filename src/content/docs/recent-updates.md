@@ -6,10 +6,40 @@ description: Last update dates of all articles on vtbag.dev
 
 This list shows last update dates for all articles on vtbag.dev. The list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 
+- [Styling View Transitions](https://vtbag.dev/basics/styling/)\
+Styling view transitions including :active-view-transition-type and view-transition-class\
+<small>First published Wed, 23 Oct 2024 12:29:56 GMT</small>\
+<small>Last updated Wed, 06 May 2026 14:36:24 GMT</small>
+
+- [Check and Control the Image Animations!](https://vtbag.dev/fwvt/customizing/)\
+How to override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements.\
+<small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
+<small>Last updated Wed, 06 May 2026 14:36:24 GMT</small>
+
+- [On a Trip to the Text Morphology Clinic](https://vtbag.dev/fwvt/healing/)\
+Join Dr. Bag on patient rounds as we explore text-morph animations crafted with the View Transition API. Discover common issues, explore diagnostic techniques, and apply effective treatments.\
+<small>First published Fri, 07 Feb 2025 20:56:44 GMT</small>\
+<small>Last updated Wed, 06 May 2026 14:36:24 GMT</small>
+
+- [Make Your Images Glide Across the Screen](https://vtbag.dev/fwvt/morphing/)\
+Let's add the morph animations that have made the View Transition API so renowned.\
+<small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
+<small>Last updated Wed, 06 May 2026 14:36:24 GMT</small>
+
+- [Playing Tower of Hanoi](https://vtbag.dev/fwvt/playing/)\
+Fun With View Transitions, Episode 7: Tips, tricks, and fresh ideas to spark your own view transition magic!\
+<small>First published Mon, 30 Jun 2025 22:46:08 GMT</small>\
+<small>Last updated Wed, 06 May 2026 14:36:24 GMT</small>
+
 - [The Turn-Signal](https://vtbag.dev/tools/turn-signal/)\
 @vtbag/turn-signal simplifies directional view transitions for intuitive history traversal navigation.\
 <small>First published Wed, 25 Sep 2024 11:39:12 GMT</small>\
-<small>Last updated Sat, 02 May 2026 20:35:51 GMT</small>
+<small>Last updated Wed, 06 May 2026 14:36:24 GMT</small>
+
+- [Pseudo-Smooth-Scrolling](https://vtbag.dev/tips/pseudo-smooth-scrolling/)\
+Instant scrolling on a page with view transition might lead to an unexpected smooth-scrolling effect. \
+<small>First published Fri, 04 Oct 2024 20:56:41 GMT</small>\
+<small>Last updated Tue, 05 May 2026 13:39:15 GMT</small>
 
 - [@vtbag: Overview](https://vtbag.dev/vtbag/)\
 What are those Bags of Tricks?\
@@ -21,29 +51,14 @@ Basics information about the View Transition browser API\
 <small>First published Tue, 20 Aug 2024 20:10:17 GMT</small>\
 <small>Last updated Fri, 01 May 2026 08:38:07 GMT</small>
 
-- [Make Your Images Glide Across the Screen](https://vtbag.dev/fwvt/morphing/)\
-Let's add the morph animations that have made the View Transition API so renowned.\
-<small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
-<small>Last updated Thu, 30 Apr 2026 22:04:03 GMT</small>
-
 - [View Transition Names and Generated Pseudo-Elements](https://vtbag.dev/basics/pseudos/)\
 What are those pseudo-elements of the View Transition API and how can I style and animate them?\
 <small>First published Thu, 19 Sep 2024 15:17:21 GMT</small>\
 <small>Last updated Thu, 30 Apr 2026 12:52:17 GMT</small>
 
-- [Styling View Transitions](https://vtbag.dev/basics/styling/)\
-Styling view transitions including :active-view-transition-type and view-transition-class\
-<small>First published Wed, 23 Oct 2024 12:29:56 GMT</small>\
-<small>Last updated Thu, 30 Apr 2026 12:52:17 GMT</small>
-
 - [Test Your Browser's View Transition Capabilities](https://vtbag.dev/basics/test-page/)\
 Check what part of the View Transition API is supported by your browser\
 <small>First published Thu, 07 Nov 2024 11:34:52 GMT</small>\
-<small>Last updated Thu, 30 Apr 2026 12:52:17 GMT</small>
-
-- [Check and Control the Image Animations!](https://vtbag.dev/fwvt/customizing/)\
-How to override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements.\
-<small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
 <small>Last updated Thu, 30 Apr 2026 12:52:17 GMT</small>
 
 - [View Transitions: What Could Possibly Go Wrong?](https://vtbag.dev/tips/view-transition-fails-and-fixes/)\
@@ -121,20 +136,10 @@ Bump your view transition images into position to avoid that unexpected pseudo-s
 <small>First published Fri, 12 Jul 2024 10:52:37 GMT</small>\
 <small>Last updated Tue, 06 Jan 2026 15:32:00 GMT</small>
 
-- [Playing Tower of Hanoi](https://vtbag.dev/fwvt/playing/)\
-Fun With View Transitions, Episode 7: Tips, tricks, and fresh ideas to spark your own view transition magic!\
-<small>First published Mon, 30 Jun 2025 22:46:08 GMT</small>\
-<small>Last updated Sat, 08 Nov 2025 07:35:44 GMT</small>
-
 - [Why View Transitions Might Break on Mobile](https://vtbag.dev/fwvt/uncovering/)\
 Figure out why view transitions might fail on mobile for no clear reason.\
 <small>First published Tue, 29 Apr 2025 17:47:16 GMT</small>\
 <small>Last updated Sat, 08 Nov 2025 07:35:44 GMT</small>
-
-- [On a Trip to the Text Morphology Clinic](https://vtbag.dev/fwvt/healing/)\
-Join Dr. Bag on patient rounds as we explore text-morph animations crafted with the View Transition API. Discover common issues, explore diagnostic techniques, and apply effective treatments.\
-<small>First published Fri, 07 Feb 2025 20:56:44 GMT</small>\
-<small>Last updated Sun, 19 Oct 2025 22:56:45 GMT</small>
 
 - [Hello, and welcome to Fun with View Transitions!](https://vtbag.dev/fwvt/welcome/)\
 Embark on a journey into the marvelous land of the View Transition API.\
@@ -150,11 +155,6 @@ Mastering the fundamentals is key to creating seamless animations with the View 
 What is special when using React's <ViewTransition />\
 <small>First published Sat, 26 Apr 2025 13:06:54 GMT</small>\
 <small>Last updated Thu, 10 Jul 2025 16:23:33 GMT</small>
-
-- [Pseudo-Smooth-Scrolling](https://vtbag.dev/tips/pseudo-smooth-scrolling/)\
-Instant scrolling on a page with view transition might lead to an unexpected smooth-scrolling effect. \
-<small>First published Fri, 04 Oct 2024 20:56:41 GMT</small>\
-<small>Last updated Thu, 06 Feb 2025 13:57:11 GMT</small>
 
 - [Pointer Flickering](https://vtbag.dev/tips/pointer/)\
 Your cursor can be a tricky shape-shifter during view transitions. Here's how to keep it in line.\
