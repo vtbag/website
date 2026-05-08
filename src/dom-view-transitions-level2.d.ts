@@ -36,7 +36,6 @@ declare global {
 	}
 
 	interface ViewTransition {
-		readonly types?: Set<string>;
 		readonly transitionRoot?: Element;
 		waitUntil(promise: Promise<unknown>): void;
 	}

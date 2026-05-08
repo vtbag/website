@@ -88,6 +88,16 @@ export default defineConfig({
           },
         },
         {
+          tag: "script",
+          attrs: { type: "module" },
+          content: `
+          document.addEventListener('starlight:theme-change', (e) => {
+            e.preventDefault();
+            const { theme, resolvedTheme } = e.detail;
+            document.startViewTransition({types: ['light-dark'],  update: () => (document.documentElement.dataset.theme = resolvedTheme)});
+          });`,
+        },
+        {
           tag: "meta",
           attrs: {
             name: "googlebot",
@@ -169,7 +179,7 @@ export default defineConfig({
         && !page.startsWith('https://vtbag.dev/basics/hide-and-seek/list-')
         && !page.startsWith('https://vtbag.dev/basics/hide-and-seek/list/')
         && !page.startsWith('https://vtbag.dev/basics/hide-and-seek/problem/')
-        && !page.startsWith('https://vtbag.dev/basics/hide-and-seek/solution/')      
+        && !page.startsWith('https://vtbag.dev/basics/hide-and-seek/solution/')
         && !page.startsWith('https://vtbag.dev/basics/pseudos-')
         && !page.startsWith('https://vtbag.dev/crossing/')
         && !page.startsWith('https://vtbag.dev/tests/')
@@ -189,7 +199,19 @@ export default defineConfig({
         allow: [".."],
       },
       allowedHosts: [".trycloudflare.com"],
-    } /*
+    },
+    optimizeDeps: {
+      
+      include: [
+        'unified',
+        'remark-parse',
+        'remark-rehype',
+        'rehype-stringify',
+        'rehype-expressive-code',
+        '@expressive-code/core'  // Covers Shiki/plugin deps
+      ]
+    }
+    /*
     plugins: [visualizer({
       brotliSize: true
     })]*/,
@@ -201,7 +223,7 @@ function sidebar() {
     {
       label: "@vtbag",
       link: "/vtbag/",
-    }, 
+    },
     {
       label: "Basic Information",
       items: [

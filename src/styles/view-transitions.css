@@ -197,3 +197,34 @@ button[data-open-modal] {
 footer div a {
   view-transition-name: footer-link;
 }
+
+
+:active-view-transition-type(light-dark) { 
+  * {
+    view-transition-name: none !important;
+  }
+  .logo img {
+    view-transition-name: logo !important;
+  }
+  #cta {
+    view-transition-name: cta !important;
+  }
+  :root {
+    view-transition-name: root;
+  }
+  &::view-transition-old(root){
+    animation-name: none;
+  } 
+  &::view-transition-new(root){
+    animation-name: clip;
+  }
+}
+@keyframes clip {
+  from {
+    clip-path: inset(0 0 0 100%)
+  }
+  to {
+    clip-path: inset(0 0 0 0)
+  }
+}
+  

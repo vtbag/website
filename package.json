@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "./bin/build",
     "preview": "astro preview",
-    "test": "npx playwright test"
+    "test": "npx playwright test",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.7",
@@ -28,6 +29,7 @@
     "astro-webrings": "^0.1.4",
     "baseline-status": "^1.1.1",
     "node-html-parser": "^7.1.0",
+    "patch-package": "^8.0.1",
     "postcss-active-view-transition-type": "^0.0.7",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
