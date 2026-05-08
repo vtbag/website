@@ -223,7 +223,7 @@ function sidebar() {
     {
       label: "@vtbag",
       link: "/vtbag/",
-    },
+    }, 
     {
       label: "Basic Information",
       items: [
@@ -316,6 +316,7 @@ function sidebar() {
         { label: "State Loss on Navigation", link: "/crossing/plain/1/" },
         { label: "Preserved State", link: "/crossing/vanilla/1/" },
         { label: "Preserved State (exp.)", link: "/crossing/over-the-top/1/" },
+        { label: "Google Demo, but with link-types plumbing", link: "/navigation-types/" },
         { label: "Turn Signal Directions", link: "/signal-demo/bag/" },
         { label: "Image Viewer Demo", link: "/viewer-demo/" },
         { label: "🌟 Fishpond Demo", link: "/link-demo/" },

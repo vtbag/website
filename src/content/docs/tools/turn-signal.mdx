@@ -52,6 +52,7 @@ The Turn-Signal scripts are designed for use with cross-document view transition
 import { Card } from "@astrojs/starlight/components";
 import { CardGrid } from "@astrojs/starlight/components";
 import { Image } from 'astro:assets';
+import linkTypes from "@/assets/monsters.png"
 import viewer from "@/assets/viewer-demo.png"
 import fishpond from "@/assets/pond.png"
 import forced from "@/assets/ft.png"
@@ -59,6 +60,15 @@ import dark_signal from "@/pages/demo-explainer/_TurnSignalDemo-dark.png"
 import light_signal from "@/pages/demo-explainer/_TurnSignalDemo-light.png"
 
 <CardGrid>
+<Card title="Link-Types Demo">
+
+<span id="link-types"><a href="/navigation-types/"><Image src={linkTypes} alt="viewer" data-zoom-off/></a></span>
+
+Took a shiny Google demo and replaced their View Transition Toolkit with the Bag's _link-types_ script.
+
+See the [Link Types Demo](/navigation-types/) to learn how link annotations control transition types and animations.
+</Card>
+
 <Card title="Turn-Signal Demo">
 
 <span id="signal"><a href="/signal-demo/bag/" data-vtbag-link-types="same/open"><span class="light:sl-hidden"><Image src={dark_signal} alt="signal" data-zoom-off/></span><span class="dark:sl-hidden"><Image src={light_signal} alt="signal" data-zoom-off/></span></a></span>
