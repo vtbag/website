@@ -1,0 +1,269 @@
+/**
+ * Copyright 2026 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+@layer demo {
+  /* Enabled cross-document view transitions */
+  @view-transition { navigation: auto; }
+
+  /* When navigating between detail and overview, capture the images */
+  :active-view-transition-type(from-detail):active-view-transition-type(to-index),
+  :active-view-transition-type(from-index):active-view-transition-type(to-detail) {
+    .monster-detail img {
+      view-transition-name: attr(id type(<custom-ident>), none);
+      view-transition-class: photo;
+    }
+
+    .monster-overview img {
+      view-transition-name: attr(id type(<custom-ident>), none);
+      view-transition-class: photo;
+    }
+
+    &::view-transition-new(.photo):only-child {
+      animation: pop-in ease 0.25s forwards;
+    }
+    &::view-transition-old(.photo):only-child {
+      animation: pop-out ease 0.25s forwards;
+    }
+  }
+  @keyframes pop-in { from { transform: scale(0.5); opacity: 0; } }
+  @keyframes pop-out { to { transform: scale(0.5); opacity: 0; } }
+
+
+  /* When going from index to about, slide all to the right */
+  :active-view-transition-type(from-index):active-view-transition-type(to-about) {
+    &::view-transition-group(*) { animation-duration: 0.5s; }
+
+    &::view-transition-new(root) {
+      animation-name: slide-from-right;
+    }
+    &::view-transition-old(root) {
+      animation-name: slide-to-left;
+    }
+  }
+  /* When going from about to index, slide all to the left */
+  :active-view-transition-type(from-about):active-view-transition-type(to-index) {
+    &::view-transition-group(*) { animation-duration: 0.5s; }
+
+    &::view-transition-new(root) {
+      animation-name: slide-from-left;
+    }
+    &::view-transition-old(root) {
+      animation-name: slide-to-right;
+    }
+  }
+  @keyframes slide-from-right { from { translate: 100% 0; } }
+  @keyframes slide-to-left { to { translate: -100% 0; } }
+  @keyframes slide-from-left { from { translate: -100% 0; } }
+  @keyframes slide-to-right { to { translate: 100% 0; } }
+}
+
+@layer demo.support {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  }
+
+  select, input {
+    font-family: inherit;
+  }
+
+  html, body {
+    height: 100%;
+  }
+
+  html {
+    padding: 2em;
+  }
+}
+
+@layer demo.layout {
+  @layer navigation {
+    nav {
+      display: flex;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(12px);
+      padding: 12px 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      width: fit-content;
+      margin: 0 auto 32px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #4a5568;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      font-size: 0.95em;
+    }
+
+    nav a:hover {
+      background: rgba(0, 0, 0, 0.04);
+      color: #1a202c;
+    }
+
+    nav a.active {
+      background: #1a202c;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+  }
+  @layer content {
+    .boxes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      list-style: none;
+      padding: 0;
+    }
+    .boxes li a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: white;
+      padding: 15px;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .boxes li a:hover {
+      border-color: #000;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+    }
+    .boxes li img {
+      width: 120px;
+      height: 120px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      object-fit: cover;
+      background: #f8f9fa;
+    }
+    .boxes li span {
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+
+    .monster-detail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      background: white;
+      padding: 24px;
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.05);
+    }
+    .monster-detail img {
+      width: 200px;
+      height: 200px;
+      border-radius: 24px;
+      margin-bottom: 24px;
+      object-fit: cover;
+    }
+    .monster-detail p {
+      line-height: 1.6;
+      color: #4a5568;
+      font-size: 1.1em;
+    }
+    .monster-overview {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+      background: white;
+      padding: 24px;
+      border-radius: 24px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.05);
+    }
+
+    .back-nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 32px;
+    }
+
+    .back-btn {
+      text-decoration: none;
+      color: #4a5568;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 12px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 0.2s;
+    }
+
+    .back-btn:hover {
+      background: #f8f9fa;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+  }
+}
+
+
+/* martrapp: adoptions for vtbag turn-signal */
+
+@layer demo {
+
+  /* When navigating between detail and overview, capture the images */
+  :active-view-transition-type(details) {
+    .monster-detail img {
+      view-transition-name: auto;
+      view-transition-name: attr(id type(<custom-ident>), none);
+      view-transition-class: photo;
+    }
+
+    .monster-overview img {
+      view-transition-name: auto;
+
+      view-transition-name: attr(id type(<custom-ident>), none);
+      view-transition-class: photo;
+    }
+
+    &::view-transition-new(.photo):only-child {
+      animation: pop-in ease 0.25s forwards;
+    }
+    &::view-transition-old(.photo):only-child {
+      animation: pop-out ease 0.25s forwards;
+    }
+  }
+
+
+  /* When going from index to about, slide all to the right */
+  :active-view-transition-type(left) {
+    &::view-transition-group(*) { animation-duration: 0.5s; }
+
+    &::view-transition-new(root) {
+      animation-name: slide-from-right;
+    }
+    &::view-transition-old(root) {
+      animation-name: slide-to-left;
+    }
+  }
+  /* When going from about to index, slide all to the left */
+  :active-view-transition-type(right) {
+    &::view-transition-group(*) { animation-duration: 0.5s; }
+
+    &::view-transition-new(root) {
+      animation-name: slide-from-left;
+    }
+    &::view-transition-old(root) {
+      animation-name: slide-to-right;
+    }
+  }
+}

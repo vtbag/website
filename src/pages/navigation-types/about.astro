@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--
+ Copyright 2026 Google LLC
+ SPDX-License-Identifier: Apache-2.0
+-->
+ <!-- martrapp: Ported to Astro. Adopted script and links to demonstrate vtbags link-types-->
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Navigation Types Demo - About</title>
+    <link rel="stylesheet" href="/navigation-types/styles.css">
+    <script is:inline src="/navigation-types/link-types.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <nav>
+        <a data-vtbag-link-types="right/same/left" href="../demo/">Home</a>
+        <a data-vtbag-link-types="left/same/right" href="../about/" class="active">About</a>
+    </nav>
+    <div class="monster-detail">
+        <h1>About the Monsters</h1>
+        <p>The monsters are wonderful creatures from different galaxies. They are all friendly and helpful. Each monster has their own unique personality and gifts. Whether it's Zorp's boundless energy or Fluffy's soothing hums, you'll find a friend in every corner of the universe!</p>
+    </div>
+</body>
+</html>

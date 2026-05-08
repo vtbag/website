@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!-- martrapp: Ported to Astro. Adopted title and links to demonstrate vtbags link-types -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Link Types Demo - vtbag.dev</title>
+    <!-- martrapp: moved/renamed stylesheet, same content --> 
+    <link rel="stylesheet" href="./global.css">
+    <script is:inline>
+         const theme = localStorage.getItem('theme') || 'system';
+         document.documentElement.setAttribute('data-theme', theme);
+    </script>
+    <link rel="shortcut icon" href="/bag4.ico" type="image/x-icon">
+</head>
+<body class="shell-container">
+    <div class="shell-main">
+        <div class="shell-frame">
+            <div class="shell-nav-bar">
+                <button id="nav-back" title="Back">&larr;</button>
+                <button id="nav-forward" title="Forward">&rarr;</button>
+                <button id="nav-reload" title="Reload">&#x21BB;</button>
+                <div class="shell-url-bar">
+                    <span id="nav-url">/demo</span>
+                </div>
+            </div>
+            <!-- martrapp: adopted src, same content -->
+            <iframe id="demo-iframe" src="/navigation-types/demo/" title="Navigation Types Demo"></iframe>
+        </div>
+    </div>
+    <footer class="shell-footer mobile-only">
+        <p><code>view-transitions-toolkit</code> is a Chrome DevRel Project.<br>
+            Source Code available <a href="https://github.com/googlechromelabs/view-transitions-toolkit">on GitHub</a> – <a href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p>
+            S
+    </footer>
+    <aside class="shell-sidebar">
+        <div class="shell-header">
+            <a href="/tools/turn-signal/" class="shell-back"><span>&larr;</span> Back to Turn-Signal</a>
+            <div class="theme-switcher">
+                <button class="theme-btn" data-mode="light" aria-label="Light Theme">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:16px;height:16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h1M3 12h1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                </button>
+                <button class="theme-btn" data-mode="system" aria-label="System Theme">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:16px;height:16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20h6l-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2-2v10a2 2 0 002 2z" />
+                    </svg>
+                </button>
+                <button class="theme-btn" data-mode="dark" aria-label="Dark Theme">
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:16px;height:16px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <div class="shell-explanation">
+            <h2>Link Types Demo</h2>
+            <p>The fun part about open web features: you can mix, and choose the tools that fit your project best.</p>
+            <h4>This is a port of the <a href="https://chrome.dev/view-transitions-toolkit/navigation-types/">Navigation Type Demo</a> from Google's View Transitions Toolkit</h4>
+            <p>I swapped the toolkit for the Bag's <code>@vtbag/turn-signal/link-types</code> script, which lets you annotate view transition types directly at the link level.</p>
+            <p>Turns out there are several good ways to get to the same destination, each with their own flavor.</p>
+            <hr>
+            <h3>The Code</h3>
+            <p>There is no <code>routeMap</code>, just attributes on the links to specify the view transition type for the navigation.</p>
+            <pre><code>
+&lt;!-- In demo.html --> 
+&lt;a data-vtbag-link-types="left" href="../demo/">Home&lt;/a>
+&lt;a data-vtbag-link-types="right" href="../about/">About&lt;/a>
+&lt;a data-vtbag-link-types="details" href="../detail/1/">...&lt;/a>
+
+&lt;!-- In 1.html -->
+&lt;a data-vtbag-link-types="details" href="../../demo/">&larr; Back to Monsters&lt;/a>
+            </code></pre>
+            <p>The CSS is the same as in the original demo, only the active view transition selector is simpler.</p>
+            <pre><code>{`:active-view-transition-type(left) {
+    &::view-transition-group(*) { animation-duration: 0.5s; }
+
+    &::view-transition-new(root) {
+        animation-name: slide-from-right;
+    }
+    &::view-transition-old(root) {
+        animation-name: slide-to-left;
+    }
+}`}</code></pre>
+            <p>Same for the index / details navigation:</p>
+            <pre><code>{`:active-view-transition-type(details) {
+    .monster-detail img {
+        view-transition-name: auto;    
+        view-transition-name: attr(id type(), none);
+        view-transition-class: photo;
+    }
+
+    .monster-overview img {
+        view-transition-name: auto;    
+        view-transition-name: attr(id type(), none);
+        view-transition-class: photo;
+    }
+}`}
+            </code></pre>
+            <p>With the additional <code>view-transition-name: auto;</code> property, the demo also works in Safari.</p>
+            <hr>
+            <h3>Backward History Traversal</h3>
+            <p>You can specify not only the view transition type for when a link is clicked, but also a type for when the link is traversed in reverse during backward history navigation.</p>
+            <pre><code>data-vtbag-link-types="left / right"</code></pre>
+            <p>Or even:</p>
+            <pre><code>data-vtbag-link-types="left / same / right"</code></pre>
+            <p>Read more in the <a href="https://vtbag.dev/tools/turn-signal/#link-types">documentation</a>.</p>
+        </div>
+        <footer class="shell-footer desktop-only">
+            <p><code>view-transitions-toolkit</code> is a Chrome DevRel Project.<br>
+            Source Code available <a href="https://github.com/googlechromelabs/view-transitions-toolkit">on GitHub</a> – <a href="https://www.apache.org/licenses/LICENSE-2.0.txt">Apache License, Version 2.0</a></p>
+            <p>The vtbag adaptation is part of the vtbag-website and is also available <a href="https://github.com/vtbag/website/tree/main/src/pages/navigation-links">on GitHub</a></p>
+        </footer>
+    </aside>
+
+    <script is:inline src="/navigation-types/shared.js"></script>
+</body>
+</html>
