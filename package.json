@@ -11,19 +11,19 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.7",
-    "@astrojs/starlight": "^0.38.5",
-    "@cloudflare/workers-types": "^4.20260505.1",
+    "@astrojs/starlight": "^0.39.2",
+    "@cloudflare/workers-types": "^4.20260509.1",
     "@expressive-code/plugin-collapsible-sections": "^0.42.0",
     "@expressive-code/plugin-line-numbers": "^0.42.0",
     "@inox-tools/portal-gun": "^2.0.0",
     "@playwright/test": "^1.58.2",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.2",
     "@vtbag/cam-shaft": "^1.0.6",
     "@vtbag/element-crossing": "^1.1.0",
     "@vtbag/inspection-chamber": "^1.0.24",
     "@vtbag/turn-signal": "^1.3.1",
     "@vtbag/utensil-drawer": "^1.2.16",
-    "astro": "^6.2.2",
+    "astro": "^6.3.1",
     "astro-d2": "^0.10.0",
     "astro-vtbot": "^2.1.11",
     "astro-webrings": "^0.1.4",
@@ -44,6 +44,6 @@
     "tsx": "^4.21.0",
     "typescript": "^6.0.3",
     "unified": "^11.0.5",
-    "wrangler": "^4.88.0"
+    "wrangler": "^4.90.0"
   }
 }
