@@ -141,28 +141,14 @@ Despite their unconventional names, these pseudo-elements behave like any other 
 
 ## Cross-Fade Rules
 
-We can select and animate these pseudo-elements just like `<img>` or `<div>` elements. For instance, we can fade out the old image using the following CSS rule:
+We can select and animate these pseudo-elements just like `<img>` or `<div>` elements. 
 
-```css
-::view-transition-old(root) {
-  animation-name: fade-out;
-}
-```
+The default animation defined by the View Transition API is a cross-fade between the old and new image. It does a simultaneous fade-out of the old image and a fade-in of the new image. Getting those animations right [is a bit tricky](/tips/over-exposure/) as it also requires to set the right mix-blend-mode. 
 
-Fortunately, we don't need to define this ourselves. This fade animation is already applied by the View Transition API through the browser's built-in user-agent stylesheet as the default behavior.
-
-Well, not _exactly_ this, but very close. [See for yourself!](/basics/styling/#cross-fade-of-the-images)!
-
-Similarly, the API provides a built-in animation to fade in the new image:
-
-```css
-::view-transition-new(root) {
-  animation-name: fade-in;
-}
-```
+So if you want a cross fade, just keep the original defaults. If you are curious about the details, [take a look at the user agent stylesheet](/basics/styling/#cross-fade-of-the-images).
 
 
-The animation duration of 0.25s is set on the `::view-transition-group(root)` and [inherited](/basics/styling/#inherited-animation-properties) through the `::view-transition-image-pair(root)`. This explains why we noted _"The animation lasts 250 milliseconds using CSS's default ease timing function."_ at the [end of Episode One](/fwvt/enabling/#reviewing-our-progress-so-far#:~:text=The%20animation%20lasts,function.).
+The View Transition API sets the animation duration to 0.25s on the `::view-transition-group(root)`, which is [inherited](/basics/styling/#inherited-animation-properties) through the `::view-transition-image-pair(root)` down to the `::view-transition-old(root)` and `::view-transition-new(root)` pseudo-elements. This explains why we noted _"The animation lasts 250 milliseconds using CSS's default ease timing function."_ at the [end of Episode One](/fwvt/enabling/#reviewing-our-progress-so-far#:~:text=The%20animation%20lasts,function.).
 
 
 ## Can We Modify those Values?
