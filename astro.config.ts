@@ -183,6 +183,7 @@ export default defineConfig({
         && !page.startsWith('https://vtbag.dev/basics/pseudos-')
         && !page.startsWith('https://vtbag.dev/crossing/')
         && !page.startsWith('https://vtbag.dev/tests/')
+        && !page.startsWith('https://vtbag.dev/navigation-types/')
         && !page.startsWith('https://vtbag.dev/tmp/'),
 
     }),
