@@ -8,8 +8,34 @@
     <link>https://vtbag.dev</link>
     <description>Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Apr 2026 18:26:20 GMT</lastBuildDate>
+    <lastBuildDate>Sat, 09 May 2026 07:08:38 GMT</lastBuildDate>
     
+  <item>
+    <title><![CDATA[Styling View Transitions]]></title>
+    <link>https://vtbag.dev/basics/styling/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/styling/</guid>
+    
+    <pubDate>Sat, 09 May 2026 06:57:28 GMT</pubDate>
+    <description><![CDATA[Styling view transitions including :active-view-transition-type and view-transition-class]]></description>
+    <enclosure
+        url="/styling-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[View Transitions: What Could Possibly Go Wrong?]]></title>
+    <link>https://vtbag.dev/tips/view-transition-fails-and-fixes/</link>
+    <guid isPermaLink="true">https://vtbag.dev/tips/view-transition-fails-and-fixes/</guid>
+    
+    <pubDate>Thu, 30 Apr 2026 12:52:17 GMT</pubDate>
+    <description><![CDATA[Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.]]></description>
+    <enclosure
+        url="https://vtbag.dev/social.png"
+        type="image/jpeg"
+      />
+  </item>
+
   <item>
     <title><![CDATA[The View Transition API]]></title>
     <link>https://vtbag.dev/basics/api/</link>
@@ -45,19 +71,6 @@
     <description><![CDATA[Check what part of the View Transition API is supported by your browser]]></description>
     <enclosure
         url="/test-page-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[View Transitions: What Could Possibly Go Wrong?]]></title>
-    <link>https://vtbag.dev/tips/view-transition-fails-and-fixes/</link>
-    <guid isPermaLink="true">https://vtbag.dev/tips/view-transition-fails-and-fixes/</guid>
-    
-    <pubDate>Thu, 30 Apr 2026 12:52:17 GMT</pubDate>
-    <description><![CDATA[Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.]]></description>
-    <enclosure
-        url="https://vtbag.dev/social.png"
         type="image/jpeg"
       />
   </item>
@@ -154,19 +167,6 @@
   </item>
 
   <item>
-    <title><![CDATA[Ladies and Gentlemen, Start Your Engines!]]></title>
-    <link>https://vtbag.dev/fwvt/enabling/</link>
-    <guid isPermaLink="true">https://vtbag.dev/fwvt/enabling/</guid>
-    
-    <pubDate>Mon, 02 Feb 2026 20:23:16 GMT</pubDate>
-    <description><![CDATA[How to enable browser-native cross-document view transitions on your multi-page site.]]></description>
-    <enclosure
-        url="/fwvt-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
     <title><![CDATA[The Turn-Signal]]></title>
     <link>https://vtbag.dev/tools/turn-signal/</link>
     <guid isPermaLink="true">https://vtbag.dev/tools/turn-signal/</guid>
@@ -180,14 +180,14 @@
   </item>
 
   <item>
-    <title><![CDATA[Styling View Transitions]]></title>
-    <link>https://vtbag.dev/basics/styling/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/styling/</guid>
+    <title><![CDATA[Ladies and Gentlemen, Start Your Engines!]]></title>
+    <link>https://vtbag.dev/fwvt/enabling/</link>
+    <guid isPermaLink="true">https://vtbag.dev/fwvt/enabling/</guid>
     
-    <pubDate>Wed, 21 Jan 2026 14:21:35 GMT</pubDate>
-    <description><![CDATA[Styling view transitions including :active-view-transition-type and view-transition-class]]></description>
+    <pubDate>Mon, 02 Feb 2026 20:23:16 GMT</pubDate>
+    <description><![CDATA[How to enable browser-native cross-document view transitions on your multi-page site.]]></description>
     <enclosure
-        url="/styling-og.png"
+        url="/fwvt-og.png"
         type="image/jpeg"
       />
   </item>
