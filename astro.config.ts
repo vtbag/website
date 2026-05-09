@@ -241,7 +241,8 @@ function sidebar() {
           label: "Mechanics of Default Animations",
           link: "/basics/default-animations/",
         },
-        { label: "Styling View Transitions", link: "/basics/styling/" },
+        { label: "Styling View Transitions", link: "/basics/styling/",
+          badge: { text: "Updated!", variant: "success" } as Badge },
         { label: "JavaScript API", link: "/basics/javascript/" },
         { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/", },
         {
