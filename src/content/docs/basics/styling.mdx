@@ -126,7 +126,7 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
 }
 ```
 
-The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the new image's size, transform, and position. I.e. if the original element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honored by the generated transform.
+The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the size, transform, and position of the _captured element_ of the new image, which may even dynamically change during the view transition. If the captured element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honored by the generated transform.
 
 
 ### Group-Children Animation
