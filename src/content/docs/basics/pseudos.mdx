@@ -263,6 +263,9 @@ It is not important to have much imagination when choosing names. They can be th
 
 ### Auto-Generated Names: match-element
 
+_For same-document view transitions, only_
+
+
 The opposite problem to view transition names not being unique is that elements need to have _any_ `view-transition-name` assigned in order to trigger a group or morph animation. Often, the actual value doesn't matter. What's important is simply having a value defined as it acts as a marker for elements for which the API should generate view transition groups. For large numbers of elements, doing this manually can be cumbersome. You can automate it with JavaScript, as with the headings on this site or in [this demo](/tips/auto-names/).
 
 However, it is also possible to do this with only CSS by using the `match-element` value, no JavaScript needed.
@@ -274,7 +277,7 @@ However, it is also possible to do this with only CSS by using the `match-elemen
 ```
 
 Using `match-element` assigns a generated name that is bound to the DOM element.  
-Those names typically look like `-ua-....` with some random suffix.
+Those names typically look like `-ua-....` [with some random suffix](/tips/auto-names/#auto-generated-names). 
 Two different elements are always assigned different values.
 
 How could you style your pseudo-elements, if they have an unknown random name? The general approach here is to also assign a view transition class.
@@ -284,24 +287,34 @@ How could you style your pseudo-elements, if they have an unknown random name? T
   view-transition-name: match-element;
   view-transition-class: card;
 }
+
+::view-transition-group(.card) {
+  /* styles for all pseudo-elements of cards */
+}
 ```
+Unlike the view transition name, the view transition class name does not need to be unique across elements. Then [use the view transition class name](/basics/styling/#with-classes) in your style rules.
 
-The class name does not need to be unique across elements. Then [use the view transition class name](/basics/styling/#with-classes) in your style rules.
+In this example, you have multiple `.card` elements but you do not care to give them all unique view transition names. You just want to opt them all in for view transitions. The generated pseudo-elements for the card are all styled the same, independent of the individual card. That is what the view-transition-class accomplishes. 
 
-This works fine for **same-document** view transitions on supporting browsers.
+Note that `.card` in line 1 is a CSS class, while `.card` in line 6 is a view transition class. If you find that irritating, you could as well use different identifiers for the two. 
+
+
+
+The special identifier `match-element` works fine for **same-document** view transitions on all browsers.
 For **cross-document** view transitions, generated names for the two document should never be the same. Therefore groups created from `match-element` in cross-document view transitions will always have image-pairs with a single old or new image, only.
 
 :::caution
-Safari seems to handle `match-element` like `none` in cross-document view transitions, i.e. it does not generate any names when view transitions are enabled via `@view-transition{navigate-auto}`. It does generate names when the transition ist started by calling `startViewTransition()`.
+Safari seems to handle `match-element` like `none` in cross-document view transitions, i.e. it does not generate any names when view transitions are enabled via `@view-transition{navigation: auto}`. It does generate names when the transition ist started by calling `startViewTransition()`.
 :::
 
 Until it gets broader, convergent support in browsers, **I would not recommend `match-element`** for cross-document view transitions. There are [alternatives](/tips/auto-names/#how-to-assign-names-automatically) that work cross-browser and also for cross-document navigation.
 
 ### Auto-Generated Names: auto
 
-_`view-transition-name: auto` is a bit of a mess right now. Use with caution._
+_Not available across browsers, yet._
 
-Browser also defined `auto` as a special value for `view-transition-name`, but its semantics are not consistent across browsers and its specification is work in progress. Do not use it (yet).
+_`view-transition-name: auto` is a bit of a mess right now. It is part of the spec, and it was at some point also supported by Chromium browsers, but currently it is only supported in Safari.  Do not use it (yet).
+
 
 ```css
 selector {
@@ -312,12 +325,12 @@ selector {
 This is similar to `match-element` but it also takes the `id` property of an HTML element into account: If the `id` property is set, `auto` generates the same view transition name for all elements with that `id`, independent of the document that element belongs to.
 Different ids generate different view transition names.
 
-So the main use case here is to match elements with the same id in cross-document view transitions. But it also works with `startViewTransition`. Just make sure that your `id` values are unique as it should be even if not enforced by browsers. Otherwise you might get duplicate view transition names and the view transition gets skipped with an error.
+So the main use case here is to match elements with the same id in cross-document view transitions. But it also works with `startViewTransition`. Just make sure that your `id` values are unique as they should be, even if not enforced by browsers. Otherwise you might get duplicate view transition names and the view transition gets skipped with an error.
 
-Different browsers and browser versions show divergent behavior. Safari uses the `id` value as view transition name. On some Webkit versions you might also see `-ua-id-<id>`, where `<id>` is the element's `id` value. Chrome uses random values similar to those generated for `match-element`.
+Safari uses `-ua-id-<id>` as the view transition name. 
 
 :::caution
-As with `match-element`, if `id` is not set, Safari does not seem to generate random names for cross-document view transitions. It does so for same-document view transitions.
+As with `match-element`, if `id` is not set, Safari does not generate random names for cross-document view transitions. It does so if `id` is set and for same-document view transitions.
 :::
 
 ### Using id as View Transition Name
