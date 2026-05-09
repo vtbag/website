@@ -11,7 +11,7 @@ import {
 import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
 import inoxToolsPortalGun from "@inox-tools/portal-gun";
-import type { Badge } from "node_modules/@astrojs/starlight/schemas/badge";
+import type { Badge } from "./node_modules/@astrojs/starlight/schemas/badge";
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
@@ -223,7 +223,7 @@ function sidebar() {
     {
       label: "@vtbag",
       link: "/vtbag/",
-    }, 
+    },
     {
       label: "Basic Information",
       items: [
