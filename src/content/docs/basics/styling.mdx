@@ -12,7 +12,7 @@ import { Steps } from "@astrojs/starlight/components";
 
 The animations introduced by the View Transition API are controlled by CSS rules. The way to make the animations fit your expectations is to alter the [default animation](/basics/default-animations/) by overriding the styles for the [pseudo elements](/basics/pseudos/).
 
-To do this efficiently you should know what the View Transition API defines as defaults and how to easily change these styles if needed. To simplify styling, level 2 of the API introduced helpers in form of the `view-transition-class` property and the `:active-view-transition*` pseudo-classes.
+To do this efficiently you should know what the View Transition API defines as defaults and how to easily change these styles if needed. To simplify styling, level 2 of the API introduced helpers in form of the `view-transition-class` property and the `:active-view-transition...` pseudo-classes.
 
 ## Styling Tasks for View Transitions
 
@@ -117,17 +117,11 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
 
 }
 @keyframes -ua-view-transition-group-anim-x {
-  0% {
+  from {
     backdrop-filter: <old backdrop filter>;
     transform: <matrix to exactly cover the old element>;
     height: <old height>;
     width: <old width>;
-  }
-  100% {
-    backdrop-filter: <new backdrop filter>;
-    transform: <matrix to exactly cover the new element>;
-    height: <new height>;
-    width: <new width>;
   }
 }
 ```
@@ -148,15 +142,10 @@ Just like with group animations, the transition begins with the values of the ol
   animation-name: -ua-view-transition-group-children-anim-x;
 }
 @keyframes -ua-view-transition-group-children-anim-x {
-  0% {
+  from {
     border-width: <old border-width>;
     border-radius: <old border-radius>;
     corner-shape: <old corner-shape>;
-  }
-  100% {
-    border-width: <new border-width>;
-    border-radius: <new border-radius>;
-    corner-shape: <new corner-shape>;
   }
 }
 ```
@@ -458,8 +447,47 @@ The scope of view transitions is the whole document. Until (element) _scoped_ vi
 
 Note that `:root` has a different meaning inside shadow DOMs. But that is a whole different story.
 
-With scoped view transitions, `:root::view-transition*` will still select only pseudo-elements of the document root, while `::view-transition*` will target pseudo-elements of any element. Should I prefix all rules with `:root`? Right now, I do not. Scoped view transitions will be another game changer, and I expect to refactor things anyway once they become available.
+With scoped view transitions, `:root::view-transition...` will still select only pseudo-elements of the document root, while `::view-transition...` will target pseudo-elements of any element. Should I prefix all rules with `:root`? Right now, I do not. Scoped view transitions will be another game changer, and I expect to refactor things anyway once they become available.
 
 When you use these patterns in your own stylesheets, be aware that the specificities differ: `:root::view-transition-group(x)` with a specificity of _(0, 1, 1)_ is more specific than `::view-transition-group(x)` with a specificity of _(0, 0, 1)_.
 
 Now you might conclude that you also need to prefix your view transition pseudo-elements with `:root` if you want to override the defaults. That is not the case. The user agent stylesheet has the least important origin and is overridden by user stylesheet rules independent of specificity.
+
+## Styling Underlying Captured Elements
+
+This might sound weird. The main effect of the View Transition API is to create pseudo-elements for the DOM elements that you have assigned a view transition name to. These pseudo-elements are used to create the animations. So why should you care about styling the original DOM elements? Stay with me, this might become a very useful tool in your toolbox.
+
+OK, some background:
+- Captured elements are the elements in the original DOM that were captured to create the view transition pseudo-elements.
+- The captured element of the `::view-transition-old(x)` pseudo-element was snapshotted during the early capture phase. It may still exist in the current DOM, but it may also be removed, and it surely is in the case of cross-document view transitions. Conceptually, it is gone.
+- The captured element of the `::view-transition-new(x)` pseudo-element is most likely still in the DOM, but it is not visible during the view transition. You can only see it through the `::view-transition-new(x)` pseudo-element. The nature of `::view-transition-new(x)` as a replaced element, where the content is the captured element, means that whatever you do to the captured element is immediately reflected by the `::view-transition-new(x)` pseudo-element.
+
+This last observation is why it is so useful to know how to use both tools: styling the `::view-transition-new(x)` pseudo-element and styling its underlying captured element.
+
+**Styling Pseudo-Element of the Captured Element:**
+Whatever is simple to do with an image is a good candidate for styling the pseudo-element:
+- Changing its size, position, and transformation
+- Changing its opacity and mix-blend-mode
+- Adding filters and animations
+
+**Styling the Captured Element of the New Image:**
+There are some things that you cannot do with an image of a DOM element. That is when you want to interact with the underlying captured element. For example, you might want to change the background colour of the captured element during the view transition. Or you might want to change the content of a text element, or the way its text wraps.
+
+Just be aware that the default styling for the `::view-transition-new(x)` pseudo-element is a fade-in and therefore it is typically not visible at the beginning of the view transiton.
+
+If your old and new image are identical, you can remove the old image and the default animation of the new image:
+```css
+::view-transition-old(x) {
+  display: none;
+}
+::view-transition-old(x),
+::view-transition-new(x) {
+  animation-name: none;
+}
+```
+A practical example where you will do this? A view transition with a video player. That way the video continues to play during the whole transition, no frozen images.
+
+**Moving the Captured Element of the New Image:**
+The captured element does not only provide the content for the displaced `::view-transition-new(*)` element, it also provides the target values for the automatically generated[group animation](#group--morph-animation). 
+
+So if you want to change the target position, size, or transformation of the `::view-transition-group(x)` pseudo-element, you can do this by manipulating the captured element of the new image. This is a powerful tool to change the effect of the morph animation without the need to override the generated keyframes for the group animation.

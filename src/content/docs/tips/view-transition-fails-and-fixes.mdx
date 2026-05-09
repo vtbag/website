@@ -254,7 +254,7 @@ Tip: Move the view transition styling for cross-document view transitions to a g
 
 <details name="fail" class="c s">
 <summary>Stacking order issues</summary>
-The view transition pseudo-elements are created in the order in which their named elements are encountered in the old DOM. After that come the pseudo-elements for the named elements that are part of the new DOM, only. Within an image pair, the new image is created after the old image.
+Capturing visits the elements in paint order and the view transition pseudo-elements are created in the order in which their named elements are encountered in the old DOM. After that come the pseudo-elements for the named elements that are part of the new DOM, only. Within an image pair, the new image is created after the old image.
 
 Pseudo-elements are rendered in the order they were created. Thus elements from the new DOM might obscure elements from the old DOM. And within an image pair, the new image is painted in front of the old one. 
 
