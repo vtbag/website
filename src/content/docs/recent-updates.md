@@ -6,15 +6,25 @@ description: Last update dates of all articles on vtbag.dev
 
 This list shows last update dates for all articles on vtbag.dev. The list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 
-- [View Transition Examples](https://vtbag.dev/basics/examples/)\
-Basic examples on how to use the View Transition API for same-document and cross-document view transitions.\
-<small>First published Tue, 20 Aug 2024 20:10:17 GMT</small>\
-<small>Last updated Sat, 09 May 2026 06:58:06 GMT</small>
+- [View Transition Names and Generated Pseudo-Elements](https://vtbag.dev/basics/pseudos/)\
+What are those pseudo-elements of the View Transition API and how can I style and animate them?\
+<small>First published Thu, 19 Sep 2024 15:17:21 GMT</small>\
+<small>Last updated Sat, 09 May 2026 15:42:35 GMT</small>
+
+- [Automatically Assigned View Transition Names](https://vtbag.dev/tips/auto-names/)\
+Explore current methods for automatically generating view transition names.\
+<small>First published Sat, 08 Feb 2025 09:55:50 GMT</small>\
+<small>Last updated Sat, 09 May 2026 15:42:35 GMT</small>
 
 - [Styling View Transitions](https://vtbag.dev/basics/styling/)\
 Styling view transitions including :active-view-transition-type and view-transition-class\
 <small>First published Wed, 23 Oct 2024 12:29:56 GMT</small>\
-<small>Last updated Sat, 09 May 2026 06:57:28 GMT</small>
+<small>Last updated Sat, 09 May 2026 10:14:48 GMT</small>
+
+- [View Transition Examples](https://vtbag.dev/basics/examples/)\
+Basic examples on how to use the View Transition API for same-document and cross-document view transitions.\
+<small>First published Tue, 20 Aug 2024 20:10:17 GMT</small>\
+<small>Last updated Sat, 09 May 2026 06:58:06 GMT</small>
 
 - [Playing Tower of Hanoi](https://vtbag.dev/fwvt/playing/)\
 Fun With View Transitions, Episode 7: Tips, tricks, and fresh ideas to spark your own view transition magic!\
@@ -66,11 +76,6 @@ Basics information about the View Transition browser API\
 <small>First published Tue, 20 Aug 2024 20:10:17 GMT</small>\
 <small>Last updated Fri, 01 May 2026 08:38:07 GMT</small>
 
-- [View Transition Names and Generated Pseudo-Elements](https://vtbag.dev/basics/pseudos/)\
-What are those pseudo-elements of the View Transition API and how can I style and animate them?\
-<small>First published Thu, 19 Sep 2024 15:17:21 GMT</small>\
-<small>Last updated Thu, 30 Apr 2026 12:52:17 GMT</small>
-
 - [Test Your Browser's View Transition Capabilities](https://vtbag.dev/basics/test-page/)\
 Check what part of the View Transition API is supported by your browser\
 <small>First published Thu, 07 Nov 2024 11:34:52 GMT</small>\
@@ -90,11 +95,6 @@ How to control stacking and clipping of view transition images.\
 What are those levels of the View Transition API, and what does that mean for me as a dev?\
 <small>First published Mon, 14 Jul 2025 18:10:35 GMT</small>\
 <small>Last updated Fri, 03 Apr 2026 23:34:47 GMT</small>
-
-- [Automatically Assigned View Transition Names](https://vtbag.dev/tips/auto-names/)\
-Explore current methods for automatically generating view transition names.\
-<small>First published Sat, 08 Feb 2025 09:55:50 GMT</small>\
-<small>Last updated Thu, 12 Mar 2026 15:03:26 GMT</small>
 
 - [Retain Control While Transitioning](https://vtbag.dev/tips/interactivity/)\
 Normally, you cannot interact with a page while view transition animations are running. Here is why that happens, and how to fix it.\
