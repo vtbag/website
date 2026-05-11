@@ -6,15 +6,15 @@ description: Last update dates of all articles on vtbag.dev
 
 This list shows last update dates for all articles on vtbag.dev. The list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 
+- [Recent updates](https://vtbag.dev/recent-updates/)\
+Last update dates of all articles on vtbag.dev\
+<small>First published Tue, 28 Apr 2026 15:06:01 GMT</small>\
+<small>Last updated Mon, 11 May 2026 19:52:10 GMT</small>
+
 - [Check and Control the Image Animations!](https://vtbag.dev/fwvt/customizing/)\
 How to override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements.\
 <small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
 <small>Last updated Sat, 09 May 2026 17:08:27 GMT</small>
-
-- [Recent updates](https://vtbag.dev/recent-updates/)\
-Last update dates of all articles on vtbag.dev\
-<small>First published Tue, 28 Apr 2026 15:06:01 GMT</small>\
-<small>Last updated Sat, 09 May 2026 16:10:09 GMT</small>
 
 - [View Transition Names and Generated Pseudo-Elements](https://vtbag.dev/basics/pseudos/)\
 What are those pseudo-elements of the View Transition API and how can I style and animate them?\

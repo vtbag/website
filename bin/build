@@ -17,4 +17,5 @@ echo "/*\n  cache-control: max-age=60\n  last-modified: `date -u +'%a, %d %b %Y 
 
 cat dist/_headers
 
+rm -f dist/sitemap-0.xml
 node ./bin/rss-update.ts

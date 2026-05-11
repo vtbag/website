@@ -162,7 +162,7 @@ console.log(`Markdown written to ${MARKDOWN_OUTPUT}`);
 
 // ---------------------------------------------------------------
 
-const SITEMAP_OUTPUT = 'dist/sitemap.xml';
+const SITEMAP_OUTPUT = 'dist/sitemap-index.xml';
 
 const sitemapItems = items.map(item => `
   <url>
