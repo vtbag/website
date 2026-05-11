@@ -6,6 +6,16 @@ description: Last update dates of all articles on vtbag.dev
 
 This list shows last update dates for all articles on vtbag.dev. The list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 
+- [Check and Control the Image Animations!](https://vtbag.dev/fwvt/customizing/)\
+How to override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements.\
+<small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
+<small>Last updated Sat, 09 May 2026 17:08:27 GMT</small>
+
+- [Recent updates](https://vtbag.dev/recent-updates/)\
+Last update dates of all articles on vtbag.dev\
+<small>First published Tue, 28 Apr 2026 15:06:01 GMT</small>\
+<small>Last updated Sat, 09 May 2026 16:10:09 GMT</small>
+
 - [View Transition Names and Generated Pseudo-Elements](https://vtbag.dev/basics/pseudos/)\
 What are those pseudo-elements of the View Transition API and how can I style and animate them?\
 <small>First published Thu, 19 Sep 2024 15:17:21 GMT</small>\
@@ -46,10 +56,10 @@ Most of the time, View Transitions just work. This page is for the exceptions: t
 <small>First published Wed, 25 Sep 2024 11:39:12 GMT</small>\
 <small>Last updated Fri, 08 May 2026 15:46:20 GMT</small>
 
-- [Check and Control the Image Animations!](https://vtbag.dev/fwvt/customizing/)\
-How to override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements.\
-<small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
-<small>Last updated Wed, 06 May 2026 14:36:24 GMT</small>
+- [The Bag of Tricks for View Transitions](https://vtbag.dev/)\
+Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!\
+<small>First published Invalid Date</small>\
+<small>Last updated Fri, 08 May 2026 08:58:57 GMT</small>
 
 - [On a Trip to the Text Morphology Clinic](https://vtbag.dev/fwvt/healing/)\
 Join Dr. Bag on patient rounds as we explore text-morph animations crafted with the View Transition API. Discover common issues, explore diagnostic techniques, and apply effective treatments.\
@@ -69,6 +79,11 @@ Instant scrolling on a page with view transition might lead to an unexpected smo
 - [@vtbag: Overview](https://vtbag.dev/vtbag/)\
 What are those Bags of Tricks?\
 <small>First published Fri, 12 Jul 2024 10:52:37 GMT</small>\
+<small>Last updated Sat, 02 May 2026 17:07:03 GMT</small>
+
+- [AI](https://vtbag.dev/ai/)\
+How generative AI is used on vtbag.dev\
+<small>First published Sun, 10 Aug 2025 19:57:52 GMT</small>\
 <small>Last updated Sat, 02 May 2026 17:07:03 GMT</small>
 
 - [The View Transition API](https://vtbag.dev/basics/api/)\
@@ -155,6 +170,11 @@ Mastering the fundamentals is key to creating seamless animations with the View 
 What is special when using React's <ViewTransition />\
 <small>First published Sat, 26 Apr 2025 13:06:54 GMT</small>\
 <small>Last updated Thu, 10 Jul 2025 16:23:33 GMT</small>
+
+- [The Bag's Bag-Log](https://vtbag.dev/baglog/)\
+The Bag of Tricks for View Transitions will be continuously extended. This is the pile of things to address when time permits.\
+<small>First published Tue, 26 Nov 2024 14:29:15 GMT</small>\
+<small>Last updated Mon, 30 Jun 2025 22:46:08 GMT</small>
 
 - [Pointer Flickering](https://vtbag.dev/tips/pointer/)\
 Your cursor can be a tricky shape-shifter during view transitions. Here's how to keep it in line.\
