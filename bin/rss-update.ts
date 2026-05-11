@@ -12,6 +12,10 @@ const CONTENT_DIRS = [
   'dist/tips',
   'dist/tools',
   'dist/vtbag',
+  'dist/ai',
+  'dist/baglog',
+  'dist/recent-updates',
+ // 'dist/view-transition-api-assistant'
 ];
 
 type FeedItem = {
@@ -61,10 +65,12 @@ function rfc822(date: Date): string {
 }
 
 const files = CONTENT_DIRS.flatMap(dir => walk(dir));
+files.push("dist/index.html"); 
 
 const items: FeedItem[] = [];
 
 for (const file of files) {
+
   const root = readHtml(file);
 
   const draft = meta(root, 'draft');
@@ -74,7 +80,7 @@ for (const file of files) {
   const link = toUrl(file);
   const author = meta(root, 'author');
   const firstPublished = meta(root, 'article:published_time');
-  const lastModifiedStr = meta(root, 'og:updated_time') || meta(root, 'article:modified_time');
+  const lastModifiedStr = meta(root, 'og:updated_time') || meta(root, 'article:modified_time') || root.querySelector("footer time")?.getAttribute("datetime");
   const lastModified = lastModifiedStr ? new Date(lastModifiedStr) : null;
 
   if (!title || !lastModified) continue;
@@ -129,6 +135,7 @@ fs.writeFileSync(OUTPUT, rss.trim() + '\n');
 
 console.log(`RSS written to ${OUTPUT}`);
 
+// ---------------------------------------------------------------
 
 const MARKDOWN_OUTPUT = 'src/content/docs/recent-updates.md';
 
@@ -152,3 +159,29 @@ ${markdownItems}
 fs.writeFileSync(MARKDOWN_OUTPUT, markdown);
 
 console.log(`Markdown written to ${MARKDOWN_OUTPUT}`);
+
+// ---------------------------------------------------------------
+
+const SITEMAP_OUTPUT = 'dist/sitemap.xml';
+
+const sitemapItems = items.map(item => `
+  <url>
+    <loc>${item.link}</loc>
+    <lastmod>${item.lastModified!.toISOString()}</lastmod>
+  </url>
+`).join('');
+
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+    xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+${sitemapItems}
+</urlset>
+`;
+
+fs.writeFileSync(SITEMAP_OUTPUT, sitemap);
+
+console.log(`Sitemap written to ${SITEMAP_OUTPUT}`);
+  
