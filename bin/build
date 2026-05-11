@@ -17,4 +17,4 @@ echo "/*\n  cache-control: max-age=60\n  last-modified: `date -u +'%a, %d %b %Y 
 
 cat dist/_headers
 
-# node ./bin/rss-update.ts
+node ./bin/rss-update.ts
