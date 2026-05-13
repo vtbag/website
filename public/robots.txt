@@ -1,4 +1,6 @@
+Sitemap: https://vtbag.dev/sitemap-index.xml
 User-agent: * 
+Content-Signal: ai-train=no, search=yes
 Allow: /
 Disallow: /auto/
 Disallow: /backdrop-demo/
@@ -13,4 +15,5 @@ Disallow: /forge/
 Disallow: /inspection-chamber-demo/
 Disallow: /tests/
 Disallow: /tmp/
-Sitemap: https://vtbag.dev/sitemap-index.xml
+User-agent: PetalBot
+Disallow: /
