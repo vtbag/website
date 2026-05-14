@@ -218,13 +218,16 @@ footer div a {
   &::view-transition-new(root){
     animation-name: clip;
   }
+  &::view-transition-group(root) {
+    animation-duration: 333ms;
+  }
 }
 @keyframes clip {
   from {
-    clip-path: inset(0 0 0 100%)
+    clip-path: polygon(100% 0, 100% 0, 100% 0, 100% 0)
   }
   to {
-    clip-path: inset(0 0 0 0)
+    clip-path: polygon(0 0, 100% 0, 100% 100%, -30% 130%)
   }
 }
   
