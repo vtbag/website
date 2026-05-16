@@ -1,28 +1,40 @@
 diff --git a/node_modules/@astrojs/starlight/components/ThemeSelect.astro b/node_modules/@astrojs/starlight/components/ThemeSelect.astro
-index a7cd175..d3e9670 100644
+index d3e9670..ed6c93c 100644
 --- a/node_modules/@astrojs/starlight/components/ThemeSelect.astro
 +++ b/node_modules/@astrojs/starlight/components/ThemeSelect.astro
-@@ -48,9 +48,20 @@ import Select from './Select.astro';
+@@ -47,13 +47,13 @@ import Select from './Select.astro';
+ 		matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
  
  	/** Update select menu UI, document theme, and local storage state. */
- 	function onThemeChange(theme: Theme): void {
--		StarlightThemeProvider.updatePickers(theme);
--		document.documentElement.dataset.theme = theme === 'auto' ? getPreferredColorScheme() : theme;
--		storeTheme(theme);
-+	  StarlightThemeProvider.updatePickers(theme);
-+	
-+	  const resolvedTheme = theme === 'auto' ? getPreferredColorScheme() : theme;
-+	  const event = new CustomEvent('starlight:theme-change', {
-+	    cancelable: true,
-+	    detail: { theme, resolvedTheme },
-+	  });
-+  
-+	  const handled = !document.dispatchEvent(event);
-+	  if (!handled) {
-+	    document.documentElement.dataset.theme = resolvedTheme;
-+	  }
-+  
-+	  storeTheme(theme);
- 	}
+-	function onThemeChange(theme: Theme): void {
++	function onThemeChange(theme: Theme, source: 'initial' | 'media' | 'select'): void {
+ 	  StarlightThemeProvider.updatePickers(theme);
+ 	
+ 	  const resolvedTheme = theme === 'auto' ? getPreferredColorScheme() : theme;
+ 	  const event = new CustomEvent('starlight:theme-change', {
+ 	    cancelable: true,
+-	    detail: { theme, resolvedTheme },
++	    detail: { theme, resolvedTheme, source },
+ 	  });
+   
+ 	  const handled = !document.dispatchEvent(event);
+@@ -66,16 +66,16 @@ import Select from './Select.astro';
  
  	// React to changes in system color scheme.
+ 	matchMedia(`(prefers-color-scheme: light)`).addEventListener('change', () => {
+-		if (loadTheme() === 'auto') onThemeChange('auto');
++		if (loadTheme() === 'auto') onThemeChange('auto', 'media');
+ 	});
+ 
+ 	class StarlightThemeSelect extends HTMLElement {
+ 		constructor() {
+ 			super();
+-			onThemeChange(loadTheme());
++			onThemeChange(loadTheme(), "initial");
+ 			this.querySelector('select')?.addEventListener('change', (e) => {
+ 				if (e.currentTarget instanceof HTMLSelectElement) {
+-					onThemeChange(parseTheme(e.currentTarget.value));
++					onThemeChange(parseTheme(e.currentTarget.value), 'select');
+ 				}
+ 			});
+ 		}

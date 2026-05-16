@@ -93,8 +93,12 @@ export default defineConfig({
           content: `
           document.addEventListener('starlight:theme-change', (e) => {
             e.preventDefault();
-            const { theme, resolvedTheme } = e.detail;
-            document.startViewTransition({types: ['light-dark'],  update: () => (document.documentElement.dataset.theme = resolvedTheme)});
+            const { theme, resolvedTheme, source } = e.detail;
+            if (source !== 'initial') {
+              document.startViewTransition({types: ['light-dark'],  update: () => (document.documentElement.dataset.theme = resolvedTheme)});
+            } else {             
+              document.documentElement.dataset.theme = resolvedTheme;
+            }
           });`,
         },
         {
@@ -201,7 +205,7 @@ export default defineConfig({
       allowedHosts: [".trycloudflare.com"],
     },
     optimizeDeps: {
-      
+
       include: [
         'unified',
         'remark-parse',
@@ -241,8 +245,10 @@ function sidebar() {
           label: "Mechanics of Default Animations",
           link: "/basics/default-animations/",
         },
-        { label: "Styling View Transitions", link: "/basics/styling/",
-          badge: { text: "Updated!", variant: "success" } as Badge },
+        {
+          label: "Styling View Transitions", link: "/basics/styling/",
+          badge: { text: "Updated!", variant: "success" } as Badge
+        },
         { label: "JavaScript API", link: "/basics/javascript/" },
         { label: "Playing Hide & Seek", link: "/basics/hide-and-seek/", },
         {
