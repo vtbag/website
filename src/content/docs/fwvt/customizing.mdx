@@ -116,10 +116,9 @@ Let’s jump in!
 
 ## Meet the Pseudo-Elements
 
-
 Our journey begins by uncovering what happens behind the scenes when navigating between pages on a multi-page site with cross-document view transitions enabled.
 
-By applying the `@view-transition { navigation: auto }` CSS at-rule to all pages of your site, the View Transition API dynamically generates five [pseudo-elements](/basics/pseudos/) and injects them as a sub-tree within the document root.
+By applying the `@view-transition { navigation: auto }` CSS at-rule to all pages of your site, the View Transition API dynamically generates the following five [pseudo-elements](/basics/pseudos/) for the document element and injects them as a sub-tree of the document root.
 
 
 ```txt title="Pseudo-elements created by the View Transition API"
@@ -137,7 +136,7 @@ These pseudo-elements actually cover your entire viewport, concealing the origin
 * The `::view-transition-new(root)` is an image that shows the new page's viewport. Nice thing here is, that it is not a static snapshot. While it exists it dynamically reflects any changes happening on the new page.
 * The remaining three pseudo-elements are simple containers, similar to `<div>` elements. We'll revisit their role and how they animate in a future episode.
 
-Despite their unconventional names, these pseudo-elements behave like any other HTML pseudo-elements, making them fully customizable with CSS.
+Despite their unconventional names, these pseudo elements behave much like any other HTML pseudo elements, making them fully customisable with CSS.
 
 ## Cross-Fade Defaults
 
