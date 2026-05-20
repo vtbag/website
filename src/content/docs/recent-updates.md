@@ -6,30 +6,35 @@ description: Last update dates of all articles on vtbag.dev
 
 This list shows last update dates for all articles on vtbag.dev. The list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 
-- [Recent updates](https://vtbag.dev/recent-updates/)\
-Last update dates of all articles on vtbag.dev\
-<small>First published Tue, 28 Apr 2026 15:06:01 GMT</small>\
-<small>Last updated Mon, 11 May 2026 19:52:10 GMT</small>
+- [Styling View Transitions](https://vtbag.dev/basics/styling/)\
+Styling view transitions including :active-view-transition-type and view-transition-class\
+<small>First published Wed, 23 Oct 2024 12:29:56 GMT</small>\
+<small>Last updated Wed, 20 May 2026 08:03:58 GMT</small>
 
-- [Check and Control the Image Animations!](https://vtbag.dev/fwvt/customizing/)\
-How to override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements.\
-<small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
-<small>Last updated Sat, 09 May 2026 17:08:27 GMT</small>
+- [Test Your Browser's View Transition Capabilities](https://vtbag.dev/basics/test-page/)\
+Check what part of the View Transition API is supported by your browser\
+<small>First published Thu, 07 Nov 2024 11:34:52 GMT</small>\
+<small>Last updated Wed, 20 May 2026 08:02:44 GMT</small>
 
 - [View Transition Names and Generated Pseudo-Elements](https://vtbag.dev/basics/pseudos/)\
 What are those pseudo-elements of the View Transition API and how can I style and animate them?\
 <small>First published Thu, 19 Sep 2024 15:17:21 GMT</small>\
-<small>Last updated Sat, 09 May 2026 15:42:35 GMT</small>
+<small>Last updated Wed, 20 May 2026 08:02:19 GMT</small>
+
+- [Check and Control the Image Animations!](https://vtbag.dev/fwvt/customizing/)\
+How to override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements.\
+<small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
+<small>Last updated Tue, 19 May 2026 06:22:16 GMT</small>
+
+- [Recent updates](https://vtbag.dev/recent-updates/)\
+Last update dates of all articles on vtbag.dev\
+<small>First published Tue, 28 Apr 2026 15:06:01 GMT</small>\
+<small>Last updated Mon, 11 May 2026 21:42:57 GMT</small>
 
 - [Automatically Assigned View Transition Names](https://vtbag.dev/tips/auto-names/)\
 Explore current methods for automatically generating view transition names.\
 <small>First published Sat, 08 Feb 2025 09:55:50 GMT</small>\
 <small>Last updated Sat, 09 May 2026 15:42:35 GMT</small>
-
-- [Styling View Transitions](https://vtbag.dev/basics/styling/)\
-Styling view transitions including :active-view-transition-type and view-transition-class\
-<small>First published Wed, 23 Oct 2024 12:29:56 GMT</small>\
-<small>Last updated Sat, 09 May 2026 10:14:48 GMT</small>
 
 - [View Transition Examples](https://vtbag.dev/basics/examples/)\
 Basic examples on how to use the View Transition API for same-document and cross-document view transitions.\
@@ -90,11 +95,6 @@ How generative AI is used on vtbag.dev\
 Basics information about the View Transition browser API\
 <small>First published Tue, 20 Aug 2024 20:10:17 GMT</small>\
 <small>Last updated Fri, 01 May 2026 08:38:07 GMT</small>
-
-- [Test Your Browser's View Transition Capabilities](https://vtbag.dev/basics/test-page/)\
-Check what part of the View Transition API is supported by your browser\
-<small>First published Thu, 07 Nov 2024 11:34:52 GMT</small>\
-<small>Last updated Thu, 30 Apr 2026 12:52:17 GMT</small>
 
 - [View Transition JavaScript API](https://vtbag.dev/basics/javascript/)\
 How to interact with view transitions using JavaScript\
