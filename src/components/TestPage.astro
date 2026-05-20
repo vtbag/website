@@ -72,6 +72,8 @@
             getComputedStyle(document.documentElement).getPropertyValue(
               "--active-view-transition-type",
             ) && document.documentElement.setAttribute("avttpc", "");
+            getComputedStyle(document.documentElement, "::view-transition-new(root)").animationTimingFunction === "linear" && document.documentElement.setAttribute("inherit", "");
+            
           }
           "onpageswap" in window &&
             document.documentElement.setAttribute("cdvt", "");
@@ -143,6 +145,9 @@
   }
   .test-match-element {
     view-transition-name: match-element;
+  }
+  ::view-transition-group(root) {
+    animation-timing-function: linear;  
   }
   ::view-transition-group-children(root) {
     animation-name: -ua-view-transition-fade-out;
