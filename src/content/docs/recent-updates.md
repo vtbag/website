@@ -6,6 +6,11 @@ description: Last update dates of all articles on vtbag.dev
 
 This list shows last update dates for all articles on vtbag.dev. The list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 
+- [Recent updates](https://vtbag.dev/recent-updates/)\
+Last update dates of all articles on vtbag.dev\
+<small>First published Tue, 28 Apr 2026 15:06:01 GMT</small>\
+<small>Last updated Wed, 20 May 2026 08:15:10 GMT</small>
+
 - [Styling View Transitions](https://vtbag.dev/basics/styling/)\
 Styling view transitions including :active-view-transition-type and view-transition-class\
 <small>First published Wed, 23 Oct 2024 12:29:56 GMT</small>\
@@ -25,11 +30,6 @@ What are those pseudo-elements of the View Transition API and how can I style an
 How to override the defaults animations for the ::view-transition-old and ::view-transition-new pseudo-elements.\
 <small>First published Sat, 25 Jan 2025 12:31:50 GMT</small>\
 <small>Last updated Tue, 19 May 2026 06:22:16 GMT</small>
-
-- [Recent updates](https://vtbag.dev/recent-updates/)\
-Last update dates of all articles on vtbag.dev\
-<small>First published Tue, 28 Apr 2026 15:06:01 GMT</small>\
-<small>Last updated Mon, 11 May 2026 21:42:57 GMT</small>
 
 - [Automatically Assigned View Transition Names](https://vtbag.dev/tips/auto-names/)\
 Explore current methods for automatically generating view transition names.\

@@ -13,47 +13,51 @@ disable-model-invocation: false
 ## Input
 - Confirm that git is up to date before starting. This workflow relies on commit history for `pubDate` decisions.
 
-## High-value automation in this skill
-- Use scripts for the repetitive, easy-to-get-wrong parts: mapping RSS entries to source files, restoring selected `pubDate` values, and re-sorting entries.
-- Keep human review focused on classification only: decide minor vs. substantive, then let scripts apply updates.
-- Run steps sequentially: `node bin/rss-update.ts` depends on finished `npm run build` output.
-- **Classification is the critical human task.** The difference between minor and substantive directly affects how readers discover content. A new technique or capability warrants a new `pubDate`.
+## Automation & Workflow
+This workflow is **fully scripted except for one critical decision**: classifying changes as minor or substantive. All other steps—identifying changed entries, extracting source paths, diffing files, restoring dates, and re-sorting—are automated.
+
+- All manual git work is replaced by scripts: `diff-rss.ts`, `diff-file-from-last-build-date.ts`, and `apply-rss-date-overrides.ts`.
+- The **only human/LLM task** is deciding whether a changed entry is minor (keep old pubDate) or substantive (keep new pubDate).
+- This classification directly affects reader discovery: new techniques or capabilities warrant a new `pubDate`; style/grammar fixes do not.
 
 ## Procedure
-0. Ask the user whether git is up to date. Stop immediately if the user says no. This is important because the process relies on commit dates for time stamps.
 
-1. Run `npm run build` to update `public/rss.xml`. Stop immediately if the build fails.
+### Pre-flight check
+0. Ask the user whether git is up to date. Stop the whole process immediately if the user says no. This is critical because the workflow relies on commit history for timestamps.
 
-2. Run `node .github/skills/update-rss/diff-rss.ts` to identify which existing entries have changed `pubDate` values versus `HEAD`, and which are brand new. The output now includes the source content path for each entry, so do not derive the path manually from the URL unless the script reports an unresolved fallback path.
+### Step 1: Build (automated)
+1. Run `npm run build` to update `public/rss.xml`. Stop if the build fails.
 
-3. For each entry listed as CHANGED, use the source file path reported by `node .github/skills/update-rss/diff-rss.ts`. Check whether the change since the old `pubDate` is minor:
-  - Find the commit that was current as of the committed `pubDate`, following renames: `git log --follow --before="<committedPubDate>" -1 --format="%H" -- <sourceFile>`
-  - If that command returns no commit, stop treating it as a routine minor-change candidate and keep the new `pubDate`.
-  - If you need the historical path at that commit, get it with: `git log --follow --before="<committedPubDate>" -1 --name-only --format="" -- <sourceFile>`
-  - Get the diff to the current file:
-    - If the path is unchanged, use: `git --no-pager diff <hash> -- <sourceFile>`
-    - If the file was renamed, compare the historical blob to the current file: `git --no-pager diff <hash>:<historicalPath> -- <sourceFile>`
-  - **⚠️ CRITICAL: Review the FULL diff, not a sample.** If the diff is large (>150 lines), scan the entire output before classifying. Look for red flags:
-    - New section headings (`##`, `###`) indicate substantive additions
-    - Lines showing "moved" or "new" sections in git output
-    - Large blocks of new prose or code examples (not just fixes)
-  - A diff is **minor** if the page keeps the primary functionality described and the key technical concepts remain unchanged, even when wording is expanded or reorganized for clarity.
-  - Treat as **minor**: grammar/style fixes, formatting, link updates, readability rewrites, sentence/paragraph reshuffling, and examples or clarifications that do not change recommendations or factual claims.
-  - A diff is **substantive** only if it changes what the reader should do or believe: new/removed features, changed compatibility/support statements, changed API semantics, changed recommended patterns, added/removed constraints/caveats, **or teaches new techniques/capabilities the reader didn't know before**.
-  - If uncertain, apply this test: if a developer familiar with the technology and its typical use cases would keep the same implementation decisions after reading both versions, classify as **minor**. If they would learn a *new technique* or *new capability*, classify as **substantive**.
-  - Keep a list of CHANGED entry `guid` values that you classify as **minor**.
-  - If the change is substantive, keep the new `pubDate` as is.
+### Step 2: Identify changes (automated)
+2. Run `node .github/skills/update-rss/diff-rss.ts` to detect:
+   - ADDED entries (new GUIDs) → keep new `pubDate`, no review needed
+   - CHANGED entries (existing GUIDs with different `pubDate`) → these need your classification
 
-4. ADDED entries (new `guid` not in `HEAD`) always keep their new `pubDate` without review.
+### Step 3: Classify changes (manual — this is the only decision you make)
+For each CHANGED entry, **you decide: minor or substantive?**
 
-5. After classifying all CHANGED entries, restore the old dates for the minor ones with the script instead of editing XML by hand:
-  - Inline GUIDs: `node .github/skills/update-rss/apply-rss-date-overrides.ts <guid> <guid> ...`
-  - Or use a file with one GUID per line: `node .github/skills/update-rss/apply-rss-date-overrides.ts --guid-file /tmp/minor-rss-guids.txt`
-  - The script restores `pubDate` values from `HEAD` only for the selected GUIDs and automatically re-sorts all `<item>` entries in `public/rss.xml` by descending `pubDate`.
+**To make this decision:**
+- Use `node .github/skills/update-rss/diff-file-from-last-build-date.ts <sourceFile>` to see what changed since the last build date.
+- **MANDATORY:** Classify only after reviewing the complete diff output for the file.
+- Base the decision on the full file diff, not on a shortened or summarized representation.
+- Ask: *Would a developer familiar with this topic learn a new technique or capability, or keep the same implementation decisions?*
 
-6. Validate the final result:
-  - Run `node .github/skills/update-rss/diff-rss.ts` again and confirm that only the intended substantive entries still appear under CHANGED.
-  - Run `node .github/skills/update-rss/check-rss-sort.ts` and confirm it prints `RSS_SORT_OK`.
+**Classification rules:**
+- **Minor** (keep old `pubDate`): grammar/style fixes, formatting, link updates, readability rewrites, paragraph reshuffling, or clarifications that don't change recommendations or facts.
+- **Substantive** (keep new `pubDate`): new/removed features, changed API semantics, changed compatibility statements, changed recommended patterns, new constraints, **or teaches new techniques/capabilities**.
+
+
+Once you classify all CHANGED entries, record the GUIDs you marked as **minor**.
+
+### Step 4: Apply classifications (automated)
+4. Run the script to restore old dates for minor entries:
+   - Inline: `node .github/skills/update-rss/apply-rss-date-overrides.ts <guid> <guid> ...`
+   - Or from file: `node .github/skills/update-rss/apply-rss-date-overrides.ts --guid-file /tmp/minor-guids.txt` (one GUID per line)
+   - The script automatically re-sorts all entries by `pubDate`.
+
+### Step 5: Validate (automated)
+5. Run these validation scripts:
+   - `node .github/skills/update-rss/diff-rss.ts` → confirm only substantive entries appear under CHANGED
 
 ## URL to source file mapping
 - Normally, do not use this mapping because `diff-rss.ts` already reports the source file path.
