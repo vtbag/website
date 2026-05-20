@@ -206,11 +206,10 @@ Of course, you can add animations to those elements. This has the benefit that y
 
 ### Inherited Animation Properties
 
-The values for `animation-duration`, `animation-delay`, and `animation-fill-mode` are inherited from parent in the pseudo-element tree.
+The API explicitly sets the values for [duration and fill-mode](/basics/styling/#group--morph-animation) to `0.25s` and `both` at the group level. All other properties keep their defaults, if you do not explicitly override them:  `animation-timing-function: ease`, `animation-iteration-count: 1`, `animation-direction: normal`, and `animation-play-state: running`.
 
-The [API sets the defaults](/basics/styling/#group--morph-animation) to `0.25s`, `0s`, and `both`. 
+All pseudo-elements (but groups) inherit the `animation-*` values from their parent in the pseudo-element tree.
 
-Recently, all other animation properties but `animation-name` where added to the list.
 
 ```css
 ::view-transition-image-pair(*),
@@ -225,9 +224,9 @@ Recently, all other animation properties but `animation-name` where added to the
   animation-play-state: inherit;
 }
 ```
-If the browser only supports the short list, the `animation-timing-function`, `animation-iteration-count`, `animation-direction`, and `animation-play-state` properties keep their default values: `ease`, `1`, `normal`, and `running` respectively.
 
-Due to these default inherits you might want to prefer setting the individual `animation-...` properties instead of using the `animation` shortcut, which would reset `animation-duration`, `animation-delay` and `animation-fill-mode` to `0s`, `0s`, and `none` if not explicitly stated otherwise.
+Using `inherit` is a good idea as it allows for control over several animations at once. 
+
 
 For example you can set the duration of all unchanged morph and cross-fade animations with a single rule:
 
@@ -237,7 +236,10 @@ For example you can set the duration of all unchanged morph and cross-fade anima
 }
 ```
 
-Using `inherit` in your own definitions is a good idea as it allows for control over several animations at once. 
+Due to these default inherits, you might want to prefer setting the individual `animation-...` properties instead of using the `animation` shorthand. All properties that you do not set explicitly in the shorthand will be reset to their defaults. This will not only override the `inherit` values from the user-agent stylesheet, breaking the original idea of controlling several animations with a single rule. The shorthand would also reset `animation-duration` and `animation-fill-mode` to `0s`, and `none`, which might lead to some hard to detect bugs.
+
+Historical note: In the early days of the API, browsers only inherited duration, delay and fill mode. But today chances are very rare to encounter a browser that does not inherit all animation properties. If you want to be sure, test the browser in question with the [test page](/basics/test-page/).
+
 
 ### Non-Animation Properties
 
