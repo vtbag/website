@@ -12,6 +12,7 @@ txt
 # environment variables# .gitignore
 .dev.vars*
 .env*
+.wrangler
 
 
 # macOS-specific files

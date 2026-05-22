@@ -1,0 +1,11 @@
+---
+import GithubSlugger from 'github-slugger';
+
+let slot = await Astro.slots.render('default');
+const summary = slot.match(/<summary[^>]*>([\s\S]*?)<\/summary>/i)?.[1]?.trim() || '';
+const slugger = new GithubSlugger();
+const slug = slugger.slug(summary);
+console.log(slug);
+slot = slot.replace(/<\/summary><p>/i, `</summary><p id="${slug}">`);
+---
+<details {...Astro.props} set:html={slot} /></details>

@@ -7,6 +7,24 @@ tableOfContents:
 ---
 
 import Bsky from "@/components/Bsky.astro";
+import Details from "@/components/Details.astro";
+
+<script type="module">{`
+  function openDetailsFromHash() {
+    const id = location.hash.slice(1);
+    if (!id) return;
+
+    const target = document.getElementById(id);
+    const details = target?.closest('details');
+    if (details) {
+      details.open = true;
+      details.scrollIntoView({ block: 'start' });
+    }
+  }
+
+  window.addEventListener('hashchange', openDetailsFromHash);
+  openDetailsFromHash();
+`}</script>
 
 Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.
 
@@ -17,8 +35,9 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
 
 ## View Transitions Do Not Even Start
 
-<details name="fail" class="c">
+<Details name="fail" class="c">
   <summary>Missing opt-in</summary>
+
   When enabling cross-document view transitions, both sides of the navigation must opt in to view transitions. Whether you use the `@view-transition` at-rule or a framework component like Astro's client router, you must include it on the page where you start the navigation and on the page you navigate to.
   
   ### Native View Transitions
@@ -70,10 +89,11 @@ import { ClientRouter } from "astro:transitions";
     ...
 ```
 Respect for reduced motion preference is already built in, so you do not need to add anything else for Astro.
-</details>
+</Details>
 
-<details name="fail" class="s c">
+<Details name="fail" class="s c">
 <summary>Non-unique view transition names</summary>
+
 When the View Transition API takes snapshots, it looks for elements with a [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property.  No two elements selected for screenshots in the old state may have the same view transition name. Same is true when the API captures the new images. 
 
 In the original design of the View Transition API, duplicate names raised an error and cancelled the view transition, as if it had been explicitly stopped by `skipTransition()`. Newer versions may simply ignore duplicate names.
@@ -84,10 +104,11 @@ Duplicate view transition names during image capturing are likely when you defin
 
 Often this can be fixed by adding some context to the view transition name, or [assign names automatically](/tips/auto-names/#setting-names-using-javascript) and then use view transition classes for styling.
 
-</details>
+</Details>
 
-<details name="fail" class="c">
+<Details name="fail" class="c">
   <summary>Cross-origin navigation</summary>
+
   Cross-document view transitions are only supported if the two pages have the same origin.
 
 The _origin_ of a URL is the part up to the first single slash. For cross-document view transitions, the protocol (`http:` vs `https:`), the domain, and the port must be identical. You should also check for cross-origin redirects.
@@ -98,10 +119,11 @@ If the origins of the from-page and the to-page differ, or if there had been red
 
 If you have such a different origin navigation, there is nothing you can do to trick the browser into cross-document view transitions.
 
-</details>
+</Details>
 
-<details name="fail" class="s">
+<Details name="fail" class="s">
 <summary>Errors while executing the update callback</summary>
+
 Oh, that one is tricky because it can often go unnoticed for a while. If your code throws while executing the update callback, the API will silently ignore it and will not start the animations.
 
 It might be a good idea to catch and log failures during the update to detect this situation when it happens.
@@ -113,10 +135,11 @@ transition.updateCallbackDone.catch((e) => {
 })
 ```
 
-</details>
+</Details>
 
-<details name="fail" class="s">
-  <summary>Call to `startViewTransition()` while a view transition is active</summary>
+<Details name="fail" class="s">
+  <summary>Call to startViewTransition() while a view transition is active</summary>
+  
   Calling `startViewTransition()` starts an asynchronous action. It takes some
   time to update the DOM, capture the before and after images and to wait for
   the end of the animation.
@@ -143,10 +166,11 @@ transition.updateCallbackDone.catch((e) => {
   ```
    
   Or you can use the `mayStartViewTransition()` function from the Bag's Utensil Drawer with the `collisionBehavior: "chaining"` option to [automatically combine and synchronize](/tools/utensil-drawer/#collisionbehavior-chaining) view transitions. 
-</details>
+</Details>
 
-<details name="fail" class="s">
+<Details name="fail" class="s">
   <summary>Update callback takes too long</summary>
+
   The update callback for `startViewTransition()` should complete as fast as possible. After all, the renderer is blocked while this callback runs and the users can not interact with the site. On the other hand, technically you can do a lot of long running stuff and the View Transition API will wait for this asynchronous function to finish.
 
 But the patience of browsers isn't endless. After a few seconds, about 4 for Chrome, the view transitions will be skipped with an error and animations will not even start.
@@ -162,10 +186,11 @@ transition.ready.catch((e) => {
 
 Better do all preparations before calling `startViewTransition()` and limit the work done in the update callback to a minimum.
 
-</details>
+</Details>
 
-<details name="fail" class="c s">
+<Details name="fail" class="c s">
 <summary>Missing animations</summary>
+
 The view transition ends as soon as the last animation of a view transition pseudo-element ends. If no such animations exist, the view transition ends immediately after taking the snapshots.
 
 How can this happen? These are the most likely triggers:
@@ -191,20 +216,22 @@ How can this happen? These are the most likely triggers:
 There are also other ways to mess up, for example setting animation-name to `none`.
 
 Use the browser's DevTools or the Bag's [Inspection Chamber](/tools/inspection-chamber/) and try to pause your view transition right at the start and examine the generated pseudo-elements and their animations.  
-</details>
+</Details>
 
-<details name="fail" class="c s">
+<Details name="fail" class="c s">
 <summary>Blocked To Reduce Motion</summary>
+
 Of course, you respect the users' preference for reduced motion for [same-document](/basics/javascript/#startviewtransition) and [cross-document](/fwvt/enabling/#respecting-reduced-motion-preferences) view transitions. Good!
 
 But you forgot that you lately tested that feature and set the preference for `prefers-reduced-motion` to `reduce`, either on the OS level or in the browser/DevTools.
 
 Switch it back in your development environment to re-enable view transitions.
 
-</details>
+</Details>
 
-<details name="fail">
+<Details name="fail">
   <summary>Call to `skipTransition()` while a view transition is active</summary>
+
   Calling `skipTransition()` on the ViewTransition object returned by `startViewTransition()` cancels the active view transition.
 
 If you call `skipTransition()` before the [ready promise](/basics/javascript/#promises) fulfills, the view transition API will not insert the `::view-transition` pseudo-element tree and the animations won't start at all.
@@ -212,30 +239,33 @@ If you call `skipTransition()` before the [ready promise](/basics/javascript/#pr
 The update callback will always run to completion, independent of calls to `skipTransition()`.
 
 If you call `skipTransition()` after the animations started but before they end, the view transition API will remove the `::view-transition` pseudo-element tree. This interrupts all animations and reveals the target DOM. It looks like all animations suddenly jumped to their end position.
-</details>
+</Details>
 
 ## View Transitions Do Not Work as Intended
 
-<details name="fail" class="c">
+<Details name="fail" class="c">
   <summary>Unreliable Animations</summary>
+
 When you use components of your UI framework to enable view transitions, this is normally not an issue. But with native cross-document view transitions, this one can really throw you off: 
 
 View transitions work sometimes, sometimes they don't. They might work when you open DevTools. And fail as soon as you close them. They work as a charm when you traverse back and forth through the browser history, but they refuse to show up when you click a link to a new page. Sounds familiar?
 
 The reason could be that the browser starts view transitions too early during page load. If that is the case, the browser needs a bit of help to decide on the right moment. Tell it [what part of the page to wait for](/basics/pseudos/#delaying-cross-document-transitions) before the transition should start.
 
-</details>
+</Details>
 
-<details name="fail" class="s c">
+<Details name="fail" class="s c">
 <summary>View transition names are not correctly escaped</summary>
+
 If you use UI framework support for view transitions, escaping names should be covered by the framework, but when using the View Transition API directly, you must be aware of this: Not every string is a valid custom ident that works as a view transition name. If your names include characters like e.g. `/`, `&`, or '+', you must [escape](/basics/pseudos/#escaping) them. Otherwise, the browser will ignore your view transition name.
 
 You are safe if you stick to `A`-`Z`, `a`-`z`, `0`-`9`, `-` or `_`, as long as the name does not start with a digit or with a dash followed by a digit. For anything else, use `CSS.escape()` to properly escape the characters in your names. If `CSS.escape()` is not available, use a polyfill or the [`escapeViewTransitionName()`](/tools/utensil-drawer/#escapeviewtransitionname) function from the Bag's Utensil Drawer.
 
-</details>
+</Details>
 
-<details name="fail" class="c">
+<Details name="fail" class="c">
   <summary>Missing CSS rules</summary>
+
   Styles to animate view transitions must be available in the updated DOM. That is typically not a problem for same-document view transitions, but for cross-document view transitions, the updated DOM is loaded from the target URL of the navigation.
 
 All styling for the pseudo-elements is taken from the page you navigate to. This is even true for the [styling of exit animations](/tips/css/#animations) on the page you left.
@@ -250,10 +280,11 @@ selector {
 
 Tip: Move the view transition styling for cross-document view transitions to a global stylesheet.
 
-</details>
+</Details>
 
-<details name="fail" class="c s">
+<Details name="fail" class="c s">
 <summary>Stacking order issues</summary>
+
 Capturing visits the elements in paint order and the view transition pseudo-elements are created in the order in which their named elements are encountered in the old DOM. After that come the pseudo-elements for the named elements that are part of the new DOM, only. Within an image pair, the new image is created after the old image.
 
 Pseudo-elements are rendered in the order they were created. Thus elements from the new DOM might obscure elements from the old DOM. And within an image pair, the new image is painted in front of the old one. 
@@ -263,11 +294,12 @@ You can not change this by setting `z-index` on the named DOM elements. But you 
 The pseudo-elements created by the View Transition API float in their own stacking context high above everything else on the page. As a consequence it might look as if elements with a view transition name pop out of the page during the view transition, suddenly drawn in front of elements that overlapped them in the original DOM.   
 
 You have no chance to lift a normal DOM element high enough to obscure one of the view-transition pseudo-elements. But you can assign view transition names to such elements. That way the API will generate additional pseudo-elements, and [those can than be rearranged](/basics/hide-and-seek/#stacking-pseudo-elements) using their `z-index` property.   
-</details>
+</Details>
 
 
-<details name="fail" class="c s">
+<Details name="fail" class="c s">
   <summary>Build tools rewrite CSS and break selectors</summary>
+
   TL;DR: The CSS that reaches the browser might not be the same as what you see in your IDE. 
 
 
@@ -355,10 +387,11 @@ The best way here is to stop scoping with the `:global()` pseudo-class like this
 After all, view-transition-names are global, aren't they? <small>_(&hellip;skimming through the spec&hellip;)_</small> 
 
 
-</details>
+</Details>
 
-<details name="fail" class="c s">
+<Details name="fail" class="c s">
 <summary>Size change of the snapshot containing block</summary>
+
 I wrote a whole [hardboiled detective short story](/fwvt/uncovering/) about this topic. 
 
 TL;DR: watch your overflows and consider to use
@@ -369,10 +402,11 @@ instead of the typical
 ```html
 <meta name="viewport" content="width=device-width, initial-scale=1">
 ```
-</details>
+</Details>
 
-<details name="fail" class="c s">
+<Details name="fail" class="c s">
   <summary>Bad performance</summary>
+
   When your transitions feel slaggy, this may have various reasons, but
   typically it is not the time required for waiting for and capturing snapshots, even though it might be a good practice to restrict the number of view transition groups the API has to generate.  
 
@@ -391,10 +425,11 @@ instead of the typical
   viewport, explicitly setting user agent generated animations to "none" or
   even exclude pseudo element from rendering by setting `display: none`.
 
-</details>
+</Details>
 
-<details name="fail" class="c">
+<Details name="fail" class="c">
   <summary>No reverse animation</summary>
+
 When you replace the default cross-fade animation with a slide from the right or something similar, you might have the expectation that on back navigation, the animation should play the animation in reverse.
 
 The View Transition API can give you a bit of navigation context in its `pagereveal` event. A concept of navigation direction is not part of it. If your browser supports the Navigation API, you can get the information from there. Otherwise, you need to fiddle with the History API.
@@ -403,17 +438,19 @@ When you detect a backward traversal, set a view transition type, or a class or 
 
 Or you use third-party scripts like the [Turn Signal](/tools/turn-signal/) for direction detection and view transition type support.
 
-</details><details name="fail" class="c s">
+</Details><Details name="fail" class="c s">
   <summary>No interactivity during view transitions</summary>
+
   By default, view transitions block all pointer events while the animations run.  
   
   Currently, it is impossible to make one of the view transition pseudo-elements clickable. But you can make sure that pointer events can [reach elements of the DOM behind the view transition layer](/tips/interactivity/#how-to-retain-interactivity).    
   
   For same-document view transitions using several scoped view transitions, instead of one global one, can further increase the interactivity of your page.     
-</details>
+</Details>
 
-<details name="fail" class="c s">
+<Details name="fail" class="c s">
 <summary>Unknown CSS selectors</summary>
+
 This is generally true for CSS, but it can happen more often in the context of view transitions: If the browser does not recognize a selector, it ignores the entire rule. This if true even when known and unknown selectors are combined in a single rule, like this:
 ```css
 .bar, 
@@ -430,17 +467,19 @@ If the browser does not recognize the `:active-view-transition` pseudo-class, it
   property: value;
 }
 ```
-</details>
+</Details>
 
-<details name="fail" class="c s">
+<Details name="fail" class="c s">
   <summary>Typo in the animation-name</summary>
+
   This is a special case of "No animations" above: if the `animation-name`
   doesn't match a `@keyframes` definition, the animation fails silently without
   an error as if `animation-name` were set to `none`.
-</details>
+</Details>
 
-<details name="fail">
+<Details name="fail">
   <summary>Clashes with browser navigation gestures</summary>
+
   Especially on mobile, browsers might support their own gestures and animations for traversing the browser history, like swiping the current page to the right. In combination with view transitions this might look awkward.
 
 Typically, browsers suppress view transitions on navigation if they already have started their own animation.
@@ -451,12 +490,13 @@ Sadly, `popstate` does not fire for cross-document navigation, and even though i
 
 As a last resort, you could completely skip view transitions when the `activation.navigationType` of the `pageswap` event equals `'traverse'`.
 
-</details>
+</Details>
 
 ## Transition Hangs:
 
-<details name="fail">
+<Details name="fail">
   <summary>Paused in DevTools</summary>
+
   This is a classic that has tricked me several times and others before. 
   
   While debugging
@@ -465,14 +505,15 @@ As a last resort, you could completely skip view transitions when the `activatio
   paused it. 
   
   Simple to fix, but sometimes nerve-racking to detect.
-</details>
+</Details>
 
-<details name="fail">
+<Details name="fail">
   <summary>Endless animation</summary>
+  
   You can also pause animations using JavaScript, or set
   `animation-iteration-count` to `infinite`. This or similar actions will ensure
   that the view transition hangs or runs forever.
-</details>
+</Details>
 
 <style>{`
 
@@ -481,16 +522,20 @@ main details {
   border-radius: 16px 0 0 0;
   box-shadow: -1px -1px 4px 0px #8884;
   border: 1px dashed #8884;
-  padding-bottom: 16px;
+  padding: 8px;
 }
 main details::details-content {
   transform: translateX(30px);
   border-radius: 16px 0 0 0;
   padding: 8px 16px;
-  margin-bottom: -16px;
+  margin-bottom: -8px;
   background: #8881;
 }
 
+main summary + p {
+  margin-top: 0;
+  scroll-margin-top: 2.5em;
+}
 main details.c summary::after {
   content:"cross-document";
 }

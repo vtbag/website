@@ -4,53 +4,81 @@ description: "The Bag of Tricks for View Transitions will be continuously extend
 ---
 
 import Bsky from "@/components/Bsky.astro";
+import Details from "@/components/Details.astro";
+
+<script type="module">{`
+  function openDetailsFromHash() {
+    const id = location.hash.slice(1);
+    if (!id) return;
+
+    const target = document.getElementById(id);
+    const details = target?.closest('details');
+    if (details) {
+      details.open = true;
+      details.scrollIntoView({ block: 'start' });
+    }
+  }
+
+  window.addEventListener('hashchange', openDetailsFromHash);
+  openDetailsFromHash();
+`}</script>
+
 
 A place to add potential topics for the future when time permits to address them.
 It would honestly **make my day** if you suggested items for the list or shared what interests you most: <a class=" not-content" target="\_blank" href={`https://bsky.app/intent/compose`}><span>Discuss on <b>🦋</b></span></a> or [open a request on GitHub](https://github.com/vtbag/utensil-drawer/issues).
 
 In no particular order:
 
-<details name="log">
+<Details name="log">
   <summary>All you need to know how image capture handles backdrop-filter</summary>
+
   When capturing images for the pseudo-images, the browser also save meta information: `width`, `height`, the `transform` and `backdrop-filter`. What are the consequences?
-</details>
-<details name="log">
+</Details>
+<Details name="log">
   <summary>View Transition API and Web Components</summary>
+
  How do they help with or hinder view transitions?
-</details>
-<details name="log">
+</Details>
+<Details name="log">
   <summary>Speculation rules</summary>
+  
   Show sensible solutions to pre-render the new page before the cross-document view
   transition starts.
-</details>
-<details name="log">
+</Details>
+<Details name="log">
   <summary>Bfcache & view transitions</summary>
+
   How to cleanup behind you when using the bfcache with view transitions.
-</details>
-<details name="log">
+</Details>
+<Details name="log">
   <summary>Bfcache vs. view transitions</summary>
+
   How to switch off view transitions on history traversals to get snappy navigation
   with pages from the bfcache.
-</details>
-<details name="log">
+</Details>
+<Details name="log">
   <summary>Morph aspect ratio of button with stable text</summary>
+  
   The view transition API turns elements into bitmaps. If you stretch a button, you
   also stretch the button's text, don't you?
-</details>
-<details name="log">
+</Details>
+<Details name="log">
   <summary>How to debug view transitions</summary>
+
   Give a quick tour on how to use the animation section in Chrome's Developer Tools
   and the Inspection Chamber to debug view transitions.
-</details>
-<details name="log">
+</Details>
+<Details name="log">
   <summary>How you can style your filtered items</summary>
+
   You have articles with tags or products in categories? Filter your items and add
   some nice entry and exit animations.
-</details>
-<details name="log">
+</Details>
+<Details name="log">
   <summary>Ways to combine different animations for the same elements</summary>
+
 You have this idea to make some stuff move on click. You have another set of elements that should wobble when transitioning. How to deal with elements that should have both animations? 
-</details>
+</Details>
 
 <style>{`
 
