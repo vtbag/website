@@ -9,9 +9,10 @@ node_modules/
 tmp
 txt
 
-# environment variables
-.env
-.env.production
+# environment variables# .gitignore
+.dev.vars*
+.env*
+
 
 # macOS-specific files
 .DS_Store
