@@ -48,7 +48,7 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
 
   According to the specification, the check for `@view-transition { navigation: auto }` happens together with the `pagereveal` event just before the first rendering. In theory, that means the browser should wait for render blocking resources such as external stylesheets linked in the `<head>`. However, Chrome may perform this check [without necessarily waiting for external CSS](https://issues.chromium.org/issues/383014860#comment9).
 
-  The safest approach is therefore to place the opt-in for cross-document view transitions inside a `<style>` elementearly within the `<head>`.
+  The safest approach is therefore to place the opt-in for cross-document view transitions inside a `<style>` element early within the `<head>`.
 
 
 
