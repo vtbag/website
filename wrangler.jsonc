@@ -1,22 +1,39 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "ai-search-query-logger",
-  "main": "src/workers/query-logger.ts",
+  "name": "ai-chat",
+  "main": "src/vitras/chat.ts",
   "compatibility_date": "2026-04-22",
-  // KV namespace for storing query logs
-  "kv_namespaces": [
+  
+  "workers_dev": false,
+  "preview_urls": false,
+
+  "route": "vtbag.dev/api/chat",
+  
+  "ai_search": [
     {
-      "binding": "QUERY_LOG",
-      "id": "5b6c4eaedc6148d98c1811ca8d9334d6"
+      "binding": "MY_SEARCH",
+      "instance_name": "crimson-hall-5fc7"
     }
   ],
+
+  "vars": {
+    "INSTANCE_ID": "crimson-hall-5fc7",
+    "GATEWAY_ID": "default",
+    "ACCOUNT_ID": "93976b094538bc1a55f9c7bc9100f75e"
+  },
   "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
     "logs": {
-      "enabled": false,
-      "invocation_logs": false
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
     },
     "traces": {
-      "enabled": false
+      "enabled": true,
+      "persist": true,
+      "head_sampling_rate": 1
     }
   }
 }
