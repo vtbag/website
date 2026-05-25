@@ -6,6 +6,7 @@ rag/
 .vscode/
 # dependencies
 node_modules/
+vtbag.dev/
 tmp
 txt
 

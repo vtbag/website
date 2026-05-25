@@ -822,7 +822,7 @@ function buildFiles(files: string[]): void {
 }
 
 
-const createdDemoSymlink = ensureDemoSymlink();
+ensureDemoSymlink();
 
 try {
   const allFiles = walk(DOCS_DIR).filter((file) => !(
@@ -838,7 +838,5 @@ try {
   console.log(allFiles);
   buildFiles(allFiles);
 } finally {
-  if (createdDemoSymlink) {
-    removeDemoSymlink();
-  }
+  removeDemoSymlink();
 }
