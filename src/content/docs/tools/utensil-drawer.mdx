@@ -556,13 +556,14 @@ When `collisionBehavior` is set to `"chaining"`, calls to `mayStartViewTransitio
 Instead, while the old screenshots are not captured yet, the updates are merged into the current transition.
 Calls arriving after capturing old images are queued and played back in a new view transition that begins automatically once the current one has finished.
 
-### collisionBehavior: "chaining-only"
-
-Like before, but not combining updates that arrive before the capturing. Updates arriving while a view transition is running are always queued.
-
-##### speedUpWhenChained
+#### speedUpWhenChained
 
 Triggering a new call during an ongoing transition can also be used to speed up the current animation if `speedUpWhenChained` is set to a value greater than 1.
+
+### collisionBehavior: "chaining-only"
+
+Like `collisionBehavior: "chaining"`, but not combining updates that arrive before the capturing. Updates arriving while a view transition is running are always queued.
+
 
 ### collisionBehavior: "skipNew"
 

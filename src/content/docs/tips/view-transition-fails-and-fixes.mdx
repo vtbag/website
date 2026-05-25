@@ -35,12 +35,14 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
 
 ## View Transitions Do Not Even Start
 
+Let's start with the most annoying category of problems: you click a link, trigger a view transition, and nothing happens. No animation, just a normal navigation, maybe even without an error message. How do you find the first clue to the problem? And how do you fix it?
+
 <Details name="fail" class="c">
   <summary>Missing opt-in</summary>
 
   When enabling cross-document view transitions, both sides of the navigation must opt in to view transitions. Whether you use the `@view-transition` at-rule or a framework component like Astro's client router, you must include it on the page where you start the navigation and on the page you navigate to.
   
-  ### Native View Transitions
+  #### Native View Transitions
   ```css
   @view-transition {
     navigation: auto;
@@ -61,9 +63,9 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
   
   It might seem best to place this rule together with your global view transition styles in a shared stylesheet and [include it on every page](/fwvt/enabling/#including-css-on-all-pages). This seems to be fine if the @view-transition opt-in is at the start of the stylesheet. But I recommend to place it in an `<style>` element within the `<head>`, see next section. 
 
-#### Potential Pitfall: Unreliable Detection of the Opt-in
+##### Potential Pitfall: Unreliable Detection of @view-transition
 
-  A particular pitfall occurs when the `@view-transition` at-rule is present but not reliably detected by the browser. This can happen in Chrome, for example, when the at-rule is placed in an external stylesheet after tons of other CSS.
+  A particular pitfall occurs when the `@view-transition` at-rule is present but not reliably detected by the browser: Sometimes it works, sometimes it doesn't. This can happen in Chrome, for example, when the at-rule is placed in an external stylesheet after tons of other CSS.
 
   According to the specification, the check for `@view-transition { navigation: auto }` happens together with the `pagereveal` event just before the first rendering. In theory, that means the browser should wait for render blocking resources such as external stylesheets linked in the `<head>`. However, Chrome may perform this check [without necessarily waiting for external CSS](https://issues.chromium.org/issues/383014860#comment9).
 
@@ -72,7 +74,7 @@ or [opening an issue on GitHub!](https://github.com/vtbag/website/issues/new?tem
 
 
 
-  ### Framework Components
+  #### Framework Components
   For Astro, for example, you are best off including the client router in the global layout you use on every page. Other frameworks with view transition support work in a similar way.
 
 ```astro title="Layout.astro"
@@ -243,6 +245,8 @@ If you call `skipTransition()` after the animations started but before they end,
 
 ## View Transitions Do Not Work as Intended
 
+Now you have a view transition, but it does not look as you expected. Maybe some animations are missing, or the stacking order is wrong. Here are some common reasons for that and how to fix them.
+
 <Details name="fail" class="c">
   <summary>Unreliable Animations</summary>
 
@@ -250,7 +254,7 @@ When you use components of your UI framework to enable view transitions, this is
 
 View transitions work sometimes, sometimes they don't. They might work when you open DevTools. And fail as soon as you close them. They work as a charm when you traverse back and forth through the browser history, but they refuse to show up when you click a link to a new page. Sounds familiar?
 
-The reason could be that the browser starts view transitions too early during page load. If that is the case, the browser needs a bit of help to decide on the right moment. Tell it [what part of the page to wait for](/basics/pseudos/#delaying-cross-document-transitions) before the transition should start.
+The reason could be that the browser starts view transitions too early during page load. If that is the case, the browser needs a bit of help to decide on the right moment. Use [`blocking="render"` attributes](/basics/pseudos/#delaying-cross-document-transitions), to tell the browser what part of the page to wait for before the transition should start.
 
 </Details>
 
@@ -347,7 +351,7 @@ Or move your pseudo-element styles into a global style element using `<style is:
   }
 </style>
 ```
-### CSS Modules
+#### CSS Modules
 
 Here is another example from this category, kindly shared by [@larsejaas.bsky.social](https://bsky.app/profile/larsejaas.bsky.social/post/3ly4llcqf522e): When you currently use [CSS modules](https://github.com/css-modules/css-modules) with Vite, the content of your module file&hellip;
 ```css title="style.module.css"
@@ -493,6 +497,8 @@ As a last resort, you could completely skip view transitions when the `activatio
 </Details>
 
 ## Transition Hangs:
+
+Ever had the feeling that your view transition just hangs and does not end? Here are some common reasons for that.
 
 <Details name="fail">
   <summary>Paused in DevTools</summary>
