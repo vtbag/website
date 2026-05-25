@@ -146,8 +146,7 @@ ${item.description}\\
 <small>Last updated ${rfc822(item.lastModified!)}</small>
 `).join('');
 
-const markdown = `
----
+const markdown = `---
 title: Recent updates
 description: Last update dates of all articles on vtbag.dev
 ---
