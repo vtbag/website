@@ -25,3 +25,18 @@ const { title, description, image, backlink, prev, next } = Astro.props;
     <div id="vtbag-spacer" style="min-height:100vh"></div>
     <DemoNavigation {prev} {backlink} {next} />
 </Layout>
+<script>
+  function delayedScroll() {
+    const id = location.hash.slice(1);
+    if (!id) return;
+    console.log("Scrolling to", id);
+    setTimeout(() => {
+      const target = document.getElementById(id);
+      console.log("Target element:", target); 
+      target?.scrollIntoView({ block: "start" });
+    }, 0);
+  }
+
+  window.addEventListener("hashchange", delayedScroll);
+  delayedScroll();
+</script>

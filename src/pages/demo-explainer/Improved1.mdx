@@ -1,5 +1,8 @@
 ---
+demoTitle: "View Transition Example: Improved Inline to Block Text Morph"
 layout: "@/layouts/ExplainerLayout.astro"
+demoText: "The 'repaired' version of the inline to block morph. Here the link and the heading are forced to share the same aspect ratio."
+title: "How does it work?"
 ---
 
 In the analysis of the [failing transition](/demo/Fail1/), discovered that although the link and heading appeared visually similar, their aspect ratios differed. The unexpected text enlargement of the link was caused by the [default behavior of morph transitions](/basics/default-animations/#how-the-boxes-morph), where both the old and new images expand to fit the width of the group's pseudo-element while maintaining their original aspect ratios.

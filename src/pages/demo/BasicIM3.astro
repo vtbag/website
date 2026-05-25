@@ -7,12 +7,12 @@ import Demo from "@/layouts/DemoLayout.astro";
   backlink="/basics/examples/#basicim3"
   prev="/demo/BasicIM2/"
   next="/demo/BasicIM4/"
-  description="A slightly optimized morph transition between two different images of different aspect ratio"
+  description="This example shows how to prevent morphing view transitions between two different images from growing beyond the original size of the old and new images."
   image="/bag-og.png"
 >
   <p>
-    This example shows how to prevent images to grow beyond the the original
-    size of the old and new images.
+    This example shows how to prevent morphing view transitions between two different
+    images from growing beyond the original size of the old and new images.
   </p>
 
   <div id="DOM1" class="active">
@@ -23,7 +23,7 @@ import Demo from "@/layouts/DemoLayout.astro";
         <p>This is a teaser text for the card. (Click to start)</p>
       </div>
     </div>
-    <div style="height: 3.5em"/>
+    <div style="height: 3.5em"></div>
   </div>
   <div id="DOM2">
     <article>
@@ -103,11 +103,11 @@ import Demo from "@/layouts/DemoLayout.astro";
           elem.classList.remove("active");
           elem
             .parentElement!.querySelector(
-              elem.id === "DOM1" ? "#DOM2" : "#DOM1"
+              elem.id === "DOM1" ? "#DOM2" : "#DOM1",
             )
             ?.classList.add("active");
         });
-      })
+      }),
     );
     function mayViewTransition(fun: () => void) {
       // @ts-ignore
