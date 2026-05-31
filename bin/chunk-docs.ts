@@ -170,6 +170,23 @@ function normalizeInlineText(text: string): string {
     .trim();
 }
 
+function isInternalLinkTarget(target: string): boolean {
+  const trimmed = target.trim();
+  if (!trimmed) return false;
+
+  if (trimmed.startsWith('#')) return true;
+  if (trimmed.startsWith('/')) return true;
+  if (trimmed.startsWith('./') || trimmed.startsWith('../')) return true;
+  if (trimmed.startsWith(`${SITE_URL}/`) || trimmed === SITE_URL) return true;
+
+  return false;
+}
+
+function toMarkdownLink(label: string, target: string): string {
+  const linkLabel = label || target;
+  return `[${linkLabel}](${target})`;
+}
+
 function pathToPageUrl(filePath: string): string {
   const rel = path.relative(DOCS_DIR, filePath).replace(/\\/g, '/');
   const noExt = rel.replace(/\.(mdx|md)$/i, '');
@@ -225,7 +242,11 @@ function renderInline(node: AstNode): string {
       return ' ';
     case 'link': {
       const label = renderInlineChildren(node.children);
-      return label || decodeEntities(node.url ?? '');
+      const target = decodeEntities(node.url ?? '').trim();
+      if (target && isInternalLinkTarget(target)) {
+        return toMarkdownLink(label, target);
+      }
+      return label || target;
     }
     case 'image':
       return normalizeInlineText(node.alt ?? '');
