@@ -12,14 +12,27 @@
   "ai_search": [
     {
       "binding": "MY_SEARCH",
-      "instance_name": "crimson-hall-5fc7"
+      "instance_name": "flat-sky-3b86",
+      "remote": true
+    }
+  ],
+  "ai": {
+    "binding": "AI",
+    "remote": true
+  },
+
+  "kv_namespaces": [
+    {
+      "binding": "CHUNK_KV",
+      "id": "eda256522f38460e8ca622cd6cead733"
     }
   ],
 
   "vars": {
     "INSTANCE_ID": "crimson-hall-5fc7",
     "GATEWAY_ID": "default",
-    "ACCOUNT_ID": "93976b094538bc1a55f9c7bc9100f75e"
+    "ACCOUNT_ID": "93976b094538bc1a55f9c7bc9100f75e",
+    "LOCAL": "true"
   },
   "observability": {
     "enabled": true,
