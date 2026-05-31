@@ -280,7 +280,7 @@ If an element’s style attribute already contains a view-transition-name, it wi
 
 ## escapeViewTransitionName()
 
-The `escapeViewtransitionName()` function [escapes](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident) characters in a string, making it safe to use as a view transition name.
+The `escapeViewTransitionName()` function [escapes](https://developer.mozilla.org/en-US/docs/Web/CSS/custom-ident) characters in a string, making it safe to use as a view transition name.
 
 ```sh
 npm i -D @vtbag/utensil-drawer
@@ -306,7 +306,7 @@ In most cases, you know your page layout and can predict where elements with vie
 
 That's where the `setVectors()` function comes in:
 
-Assume `::view-transition-group(<group>)` having _width1_, _height1_ morphs form _(x1, y1)_, to _(x2, y2)_ having _width2_, _height2_. Calling `setVectors()` when the view transitions `ready` promise fulfills, adds the following CSS definitions to your page:
+Assume `::view-transition-group(<group>)` having _width1_, _height1_ morphs form _(x1, y1)_, to _(x2, y2)_ having _width2_, _height2_. Calling `setVectors()` when the view transitions `ready` promise fulfils, adds the following CSS definitions to your page:
 
 ```css
 :root {

@@ -151,7 +151,7 @@ transition.updateCallbackDone.catch((e) => {
   This allows you to directly interact with the view transition object returned
   by the call. Your code continues and runs in parallel to the view transition.
 
-  Thus you can directly followup with another call to `startViewTransition()`.
+  Thus you can directly follow up with another call to `startViewTransition()`.
   If that happens while the former view transition is still active, it has the
   same effect as calling `skipTransition()`: The current animations of the
   active view transition are stopped immediately or do not even start.
@@ -236,7 +236,7 @@ Switch it back in your development environment to re-enable view transitions.
 
   Calling `skipTransition()` on the ViewTransition object returned by `startViewTransition()` cancels the active view transition.
 
-If you call `skipTransition()` before the [ready promise](/basics/javascript/#promises) fulfills, the view transition API will not insert the `::view-transition` pseudo-element tree and the animations won't start at all.
+If you call `skipTransition()` before the [ready promise](/basics/javascript/#promises) fulfils, the view transition API will not insert the `::view-transition` pseudo-element tree and the animations won't start at all.
 
 The update callback will always run to completion, independent of calls to `skipTransition()`.
 
@@ -371,7 +371,7 @@ Here is another example from this category, kindly shared by [@larsejaas.bsky.so
   animation-duration: 0.5s;
 }
 ```
-Note how scoping changed the view transition class name in the second selector. We now have an unused view transition class named `my-box` and an undefine view transition class named `_my-box_1p56a_15`.
+Note how scoping changed the view transition class name in the second selector. We now have an unused view transition class named `my-box` and an undefined view transition class named `_my-box_1p56a_15`.
 
 Even when your CSS Module implementation might transform the original CSS into&hellip;
 ```css title="What the browser sees"

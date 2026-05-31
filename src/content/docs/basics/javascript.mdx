@@ -89,7 +89,7 @@ interface ViewTransition {
 
 The promises allow you to hook into the different stages of the view transition process.
 
-- The `updateCallbackDone` promise resolves once the update callback fulfills. You can use this to (synchronously) make last-minute changes before the new images are created. If the update function rejects, the `updateCallbackDone` promise rejects, too. View transition processing ends, and the `ready` and `finished` promises also reject.
+- The `updateCallbackDone` promise resolves once the update callback fulfils. You can use this to (synchronously) make last-minute changes before the new images are created. If the update function rejects, the `updateCallbackDone` promise rejects, too. View transition processing ends, and the `ready` and `finished` promises also reject.
 
 - The `ready` promise settles once the pseudo-elements have been inserted into the DOM. Inserting the pseudo-elements triggers their animations. For example, you can use this promise to add your own JavaScript animations using the Web Animation API. If there are errors, like duplicate view transition names, the `ready` promise will reject.
 
@@ -138,7 +138,7 @@ The View Transition API now offers a way to check whether some view transition i
 
 If you use [`mayStartViewTransition`](/tools/utensil-drawer/#maystartviewtransition) from the Utensil Drawer, you can access the current `ViewTransition` object by calling [getCurrentViewTransition](/tools/utensil-drawer/#current-view-transition).
 
-### Canceling and Chaining
+### Cancelling and Chaining
 
 Calling `startViewTransition()` while another view transition is active will interrupt the current view transition, fast forward to the end state of the animations, and start the new view transition from there.
 

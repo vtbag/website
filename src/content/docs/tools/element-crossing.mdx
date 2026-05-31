@@ -100,7 +100,7 @@ import crossing from "@vtbag/element-crossing?url";
 </html>;
 ```
 
-To experiment with the over-the-top flavor include the `@vtbag/element-crossing/experimental` and the `@vtbag/element-crossing` script in that order.
+To experiment with the over-the-top flavour include the `@vtbag/element-crossing/experimental` and the `@vtbag/element-crossing` script in that order.
 
 ## Vanilla Configuration
 
@@ -108,7 +108,7 @@ To move state to the next page, you need to tell the Element Crossing for which 
 
 ### Expressions
 
-The `data-vtbag-x` attribute accepts a string that has to fullfil the following grammar:
+The `data-vtbag-x` attribute accepts a string that has to fulfil the following grammar:
 
 <div style="width:fit-content; margin-inline:auto">
 <Media>
@@ -255,7 +255,7 @@ The values of the id expressions used here are arbitrary as long as they are uni
 
 Make sure to read the [disclaimer](#disclaimer) above. Over the Top is just a playground, not meant for production, and it may never get extended and polished enough for that.
 
-The Over-the-Top flavor provides one additional expression for the `data-vtbag-x` attribute and an additional API similar to `window.sessionStorage`.
+The Over-the-Top flavour provides one additional expression for the `data-vtbag-x` attribute and an additional API similar to `window.sessionStorage`.
 
 ### Additional `elem` Expression
 
@@ -300,6 +300,6 @@ Here are the earlier examples revisited with the new capabilities:
 
 This first version has some known limitations.
 
-- Using the Over-the-Top flavored Element Crossing can corrupt the remaining browser history for pages within its coverage area if you leave and then re-enter that area using the browser's back/forward navigation.
+- Using the Over-the-Top flavoured Element Crossing can corrupt the remaining browser history for pages within its coverage area if you leave and then re-enter that area using the browser's back/forward navigation.
 
 - Initially, entries in sessionStorage were not cleared after use. This worked well for view transitions. However, when performing a full page reload, it became confusing to see the DOM differ from what was originally in the HTML file. The current solution is to clear the sessionStorage entry after each page load and skipping the value restoration for anything other than a cross-document view transition. Stay tuned for further updates.

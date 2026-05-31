@@ -207,7 +207,7 @@ This effect leverages the fact that during view transitions, the new image is [p
 
 The `main-mask-forward` animation reveals the new image from the right, the `main-mask-backward` animation reveals it from the left.
 
-nterestingly, we do not need to animate the old image at all. It simply remains beneath the new one, fully visible with no fade-out or other effects. By assigning `none` to the `animation-name` property of `::view-transition-old(main)`, we cancel both [default animations](/basics/styling/#cross-fade-of-the-images), the  `-ua-view-transition-fade-out` and the  `-ua-mix-blend-mode-plus-lighter`. This ensures the old image stays visible throughout the animation, gradually obscured by the expanding, unclipped portion of the new image.
+Interestingly, we do not need to animate the old image at all. It simply remains beneath the new one, fully visible with no fade-out or other effects. By assigning `none` to the `animation-name` property of `::view-transition-old(main)`, we cancel both [default animations](/basics/styling/#cross-fade-of-the-images), the  `-ua-view-transition-fade-out` and the  `-ua-mix-blend-mode-plus-lighter`. This ensures the old image stays visible throughout the animation, gradually obscured by the expanding, unclipped portion of the new image.
 
 
 

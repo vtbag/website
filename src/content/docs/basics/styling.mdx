@@ -22,9 +22,9 @@ There are three parts that you influence with CSS when it comes to view transiti
 - Setup animations for elements participating in a view transition
 - Trigger CSS for things other than animations
 
-### Add DOM Elements as Groups to View Transitions
+### Add Elements to View Transitions
 
-If you want a DOM element to participate in view transitions with an individual animation, you assign a value to the [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property of the element. The browser will then generate three or four [pseudo-elements](/basics/pseudos/#types-of-pseudo-elements) for each _visible_ DOM element with a view transition name. These are a transition group, an image pair, and at least one of the old or new image pseudos.
+If you want a DOM element to participate in view transitions with an individual animation, you assign a value to the [`view-transition-name`](/basics/pseudos/#view-transition-names) CSS property of the element. The browser will then generate three to five [pseudo-elements](/basics/pseudos/#types-of-pseudo-elements) for each _rendered_ DOM element with a view transition name _n_. These are a `::view-transition-group(n)`, a `::view-transition-image-pair(n)`, at least one of the `::view-transition-old(n)` or `::view-transition-new(n)` image pseudos, and potentially a `::view-transition-group-children(n)`  element, in case of nested view transition groups.
 
 ### Define Animations for View Transitions
 
@@ -126,7 +126,7 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
 }
 ```
 
-The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the size, transform, and position of the _captured element_ of the new image, which may even dynamically change during the view transition. If the captured element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honored by the generated transform.
+The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the size, transform, and position of the _captured element_ of the new image, which may even dynamically change during the view transition. If the captured element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honoured by the generated transform.
 
 
 ### Group-Children Animation
@@ -359,7 +359,7 @@ This mechanism can be used to [increase isolation and/or composability](/tips/cs
 
 The initial set of types can be set when calling `startViewTransition()` or it might be specified using the `types` property inside a `@view-transition` rule.
 
-```ts title="Level 2 signature of startViewTranstion()"
+```ts title="Level 2 signature of startViewTransition()"
 document.startViewTransition({ types: ["boom"], update: changeTheDOM });
 ```
 
@@ -475,7 +475,7 @@ Whatever is simple to do with an image is a good candidate for styling the pseud
 **Styling the Captured Element of the New Image:**
 There are some things that you cannot do with an image of a DOM element. That is when you want to interact with the underlying captured element. For example, you might want to change the background colour of the captured element during the view transition. Or you might want to change the content of a text element, or the way its text wraps.
 
-Just be aware that the default styling for the `::view-transition-new(x)` pseudo-element is a fade-in and therefore it is typically not visible at the beginning of the view transiton.
+Just be aware that the default styling for the `::view-transition-new(x)` pseudo-element is a fade-in and therefore it is typically not visible at the beginning of the view transition.
 
 If your old and new image are identical, you can remove the old image and the default animation of the new image:
 ```css

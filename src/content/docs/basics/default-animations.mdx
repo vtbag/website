@@ -10,7 +10,7 @@ head:
 
 If you do not specify custom animations, the View Transition API automatically assigns two types of animations to the pseudo-elements:
 
-* **Exit/Entry animations**, which consist of fade-out animation fromm 100% to 0% opacity for the old image and a fade-in animation from 0% to 100% opacity for the new image.
+* **Exit/Entry animations**, which consist of fade-out animation from 100% to 0% opacity for the old image and a fade-in animation from 0% to 100% opacity for the new image.
 * **Group (or Morph) animations**, where the transition group animates differences  in width, height, and position starting from the values of the old image and gradually reaching the values of the new one.  Morph animations are only defined for groups containing both the old and new image.
 
 ## Really?
@@ -33,7 +33,7 @@ By default, both types of animations, entry/exit and group/morph, occur simultan
 
 The above description states that the group animation morphs from the size and position values of the old image to the values of the new image. But how does this work exactly? Morph animations are only defined for groups that have both, the old and the new image. The height, width and position of the group pseudo-element is copied over from the old element. The image pair, the only child of the group, fills the whole group. The old and the new image are inside the image pair, where the new image is rendered above the old image. If the new image is fully transparent at the beginning of the animation, the screen shows the old image in its old position.
 
-During the morph animation, the group moves to the final position of the new image. Doing so, it takes the image-pair and the images withing with it. At the same time, the width and height of the group element transitions towards the width and height of the new image. This change in size might force the images inside the image-pair to react with size changes as well.
+During the morph animation, the group moves to the final position of the new image. Doing so, it takes the image-pair and the images within with it. At the same time, the width and height of the group element transitions towards the width and height of the new image. This change in size might force the images inside the image-pair to react with size changes as well.
 
 Let's assume we start with an old image with an aspect ratio of 2:3 and morph this into a 3:2 new image.
 

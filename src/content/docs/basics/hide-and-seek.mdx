@@ -203,7 +203,7 @@ In the early versions of the View Transition API, the transition groups form a f
 
 Nested view transition groups introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy. The example to the right is built with nested view transition groups. If it doesn't look right, check whether your [browser has support](/basics/test-page/) for them.
 
-Clipping the peudos of the list elements at the `::view-transition-group-children`  pseudo of th list container prevents them from being drawn outside the list element. However, they seem to fly in front of the scrollbars. [This will change.](https://issues.chromium.org/issues/475236700). In the meanwhile you make the group-children pseudo some pixels smaller to keep the scrollbar visible during the animation.
+Clipping the pseudos of the list elements at the `::view-transition-group-children`  pseudo of th list container prevents them from being drawn outside the list element. However, they seem to fly in front of the scrollbars. [This will change.](https://issues.chromium.org/issues/475236700). In the meanwhile you make the group-children pseudo some pixels smaller to keep the scrollbar visible during the animation.
 
 ```css
     ::view-transition-group-children(ul) {
@@ -313,7 +313,7 @@ Another way to simulate `overflow: hidden` or nested view transition groups is t
 <SidePicture>
 It might sound a bit weird, to fight unwanted images with even more images, but the idea is simple: put an [additional curtain](/basics/pseudos/#the-theater-curtain) in front of your stage to hide what you don't want the audience to see.
 
-In some cases it might be sufficient to have some rectangles colored in your site's background color, add a `view-transition-name`, and move their pseudo-images into place as part of the view transition. These rectangles might also have children like paragraphs or buttons, which will then show up on top.
+In some cases it might be sufficient to have some rectangles coloured in your site's background color, add a `view-transition-name`, and move their pseudo-images into place as part of the view transition. These rectangles might also have children like paragraphs or buttons, which will then show up on top.
 
 <iframe
   slot="pic"
@@ -321,7 +321,7 @@ In some cases it might be sufficient to have some rectangles colored in your sit
   src="/basics/hide-and-seek/list-stencil2/"
 ></iframe>
 
-The list on the left contains two checkerboard `<div>` elements: one before and one after the list. A button is nested within the lower `<div>`. Both `<div>` elements are assigned view transition names, `stencil1` and `stencil2`. As a result, the `<div>`s produce pseudo-elements that act as visual blockers, effectively concealing any list items that overflow beyond their intended boundaries during the view transition.
+The list on the left contains two chequerboard `<div>` elements: one before and one after the list. A button is nested within the lower `<div>`. Both `<div>` elements are assigned view transition names, `stencil1` and `stencil2`. As a result, the `<div>`s produce pseudo-elements that act as visual blockers, effectively concealing any list items that overflow beyond their intended boundaries during the view transition.
 
 </SidePicture>
 

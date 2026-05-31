@@ -82,12 +82,12 @@ is ease with the [declarative-names script](/tools/utensil-drawer/#declarative-n
 
 ## Scoping with Types
 
-When you start to trigger different view transitions on the same page, you will notice that it is rather easy to end up with conflicting defintions. 
+When you start to trigger different view transitions on the same page, you will notice that it is rather easy to end up with conflicting definitions. 
 * You want different sets of elements to transition depending of the use case, e.g. a section of the form should expand when a checkbox got checked, but a whole page should fade in when navigating to it.
 * You want different animations for the same element depending on the use case, e.g. a card should expand when selected but shrink to a point when deleted.
 * You want to style other elements, that are not animated by the View Transition API, e.g. style buttons as disabled while they won't react during the animation.
 
-What you need is a mechnism to isolate the definitions for different use cases. View transition types are a great tool for that. You can use them to guard the CSS definitions for each use case, so they only apply during the view transition of that specific use case.
+What you need is a mechanism to isolate the definitions for different use cases. View transition types are a great tool for that. You can use them to guard the CSS definitions for each use case, so they only apply during the view transition of that specific use case.
 
 
 ### Preparation

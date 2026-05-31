@@ -371,10 +371,12 @@ Setting the images' width to match the width of the group-pseudo container scale
 <style>{`
 .desc {display:flex; flex-wrap: wrap}
 .desc > span {margin: 16px auto; }
-.desc img {disply: block; width: 100%; height: auto; border: 1px solid #8888; box-shadow: 1px 1px 8px #8888}
+.desc img {display: block; width: 100%; height: auto; border: 1px solid #8888; box-shadow: 1px 1px 8px #8888}
 `}</style>
 
 So, instead of making the images same width, we can make them same height and let the width be calculated automatically to preserve the original aspect ration:[^h]
+
+[^h]: The given definition assumes a horizontal writing mode. To accommodate vertical writing modes as well, use `inline-size` instead of `width` and `block-size` instead of `height`.
 
 ```css
 ::view-transition-old(description),
@@ -386,7 +388,6 @@ So, instead of making the images same width, we can make them same height and le
 
 This adjustment helps align the images more accurately, preventing unwanted scaling effects. It works effectively in our case because both images contain the same text and the same number of lines.
 
-[^h]: The given definition assumes a horizontal writing mode. To accommodate vertical writing modes as well, use `inline-size` instead of `width` and `block-size` instead of `height`.
 
 ### Aligning the Aspect Ratios During Animations
 
