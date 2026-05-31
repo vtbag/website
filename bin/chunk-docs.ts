@@ -55,6 +55,7 @@ type Section = {
   headingTrail: string[];
   blocks: Block[];
   size: number;
+  parent?: Section;
 };
 
 type ChunkFile = {
@@ -70,6 +71,9 @@ type ChunkFile = {
     charCount: number;
     split: boolean;
     oversize: boolean;
+    next?: string;
+    previous?: string;
+    parent?: string;
   };
 };
 
@@ -719,6 +723,8 @@ function buildFiles(files: string[]): void {
   let totalChunks = 0;
   let processedDocs = 0;
 
+  const fileMap = new Map<string, ChunkFile>();
+
   for (const file of files) {
     const rel = path.relative(DOCS_DIR, file).replace(/\\/g, '/');
     if (onlyValues.length > 0 && !onlyValues.includes(rel)) continue;
@@ -749,7 +755,29 @@ function buildFiles(files: string[]): void {
     }
     let docChunkCount = 0;
 
+    let lastChunk: ChunkFile | undefined = undefined;
+    let lastSection: Section | undefined = undefined;
+
+    for (let i = 0; i < sections.length; ++i) {
+      const section = sections[i]!;
+      if (section.size === 0) continue;
+      for (let j = i + 1; j < sections.length; ++j) {
+        const next = sections[j]!;
+        if (next.size === 0) continue;
+        if (section.headingTrail.length < next.headingTrail.length
+          && section.headingTrail.every((value, index) => value === next.headingTrail[index])) {
+          next.parent = section;
+        } else {
+          break;
+        };
+      }
+    }
     for (const section of sections) {
+      if (section.size === 0) continue;
+
+      if (lastSection?.parent !== section.parent) {
+        lastChunk = undefined;
+      }
       const sectionChunks = buildSectionChunks(section.blocks);
       const split = sectionChunks.length > 1;
 
@@ -757,9 +785,10 @@ function buildFiles(files: string[]): void {
         const sequence = index + 1;
         const headingsPrefix = section.headingTrail.map((heading, depth) => `${'#'.repeat(depth + 1)} ${heading}`).join('\n');
         const text = `${headingsPrefix}\n\n${chunk.text}`.trim();
-        const page = split ? `${pageUrl}?s=${sequence}` : pageUrl;
+        const page = split && sequence > 1 ? `${pageUrl}?s=${sequence}` : pageUrl;
         const chunkUrl = section.sectionSlug === 'top' ? page : `${page}#${section.sectionSlug}`;
-
+        section;
+        lastChunk && (lastChunk.metadata.next = chunkUrl);
         const id = `${docStem}::${section.sectionSlug}::${sequence}`;
         const json: ChunkFile = {
           id,
@@ -774,9 +803,11 @@ function buildFiles(files: string[]): void {
             charCount: text.length,
             split,
             oversize: chunk.oversize,
+            previous: lastChunk?.metadata.chunkUrl!,
+            parent: section.parent ? section.parent.sectionSlug === 'top' ? pageUrl : `${pageUrl}#${section.parent.sectionSlug}` : undefined!,
           },
         };
-
+        lastChunk = json;
         if (chunk.oversize) {
           warnings.push(`oversize chunk: ${id} (${text.length} chars)`);
         }
@@ -788,12 +819,16 @@ function buildFiles(files: string[]): void {
           `${sanitizeFilename(section.sectionSlug)}${sequenceSuffix}.json`,
         );
 
-        writeJson(outFile, json);
+        fileMap.set(outFile, json);
         docChunkCount += 1;
         totalChunks += 1;
       });
+      lastSection = section;
     }
-
+    fileMap.forEach((json, outFile) => {
+      writeJson(outFile, json);
+    });
+    fileMap.clear();
     manifestItems.push({ sourcePath: rel, pageUrl, chunks: docChunkCount });
   }
 
@@ -835,7 +870,6 @@ try {
     || file.endsWith("/BasicC2.mdx")
     || file.endsWith("/BasicMC2.mdx")
   ));
-  console.log(allFiles);
   buildFiles(allFiles);
 } finally {
   removeDemoSymlink();
