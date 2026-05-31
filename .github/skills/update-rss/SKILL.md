@@ -24,6 +24,7 @@ This workflow is **fully scripted except for one critical decision**: classifyin
 
 ### Pre-flight check
 0. Ask the user whether git is up to date. Stop the whole process immediately if the user says no. This is critical because the workflow relies on commit history for timestamps.
+0.1. For each run, read the current `lastBuildDate` from `HEAD` (`git show HEAD:public/rss.xml | grep -n "lastBuildDate"`) and use that value as the baseline for this run only. Never reuse a date remembered from a former run.
 
 ### Step 1: Build (automated)
 1. Run `npm run build` to update `public/rss.xml`. Stop if the build fails.
