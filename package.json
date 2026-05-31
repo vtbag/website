@@ -7,6 +7,7 @@
     "build": "./bin/build",
     "preview": "astro preview",
     "chunk": "node bin/chunk-docs.ts --clean",
+    "merge:chunks": "./bin/merge-chunks-filtered.sh",
     "sync": "node --env-file=.dev.vars --env-file=.env bin/chunks/sync.ts",
     "test": "npx playwright test",
     "test:chunks": "node --test tests/chunk-docs.test.ts",
