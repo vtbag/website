@@ -10,6 +10,7 @@ const CONFIG = {
   accountId: process.env.ACCOUNT_ID!,
   apiToken: process.env.API_TOKEN!,
   namespace: process.env.CF_AI_SEARCH_NAMESPACE || "default",
+  kvNamespaceId: process.env.CF_KV_NAMESPACE_ID!,
   instanceName: "flat-sky-3b86",
   chunksRoot: "./vtbag.dev",
   concurrency: 5,
@@ -109,11 +110,12 @@ async function listAllRemoteItems(): Promise<RemoteItem[]> {
 
 async function uploadItem(chunk: LocalChunk): Promise<void> {
   const boundary = `----FormBoundary${Date.now()}`;
-  const filename = chunk.localId.replace(/\/$/, "").replace(/\/\?s=/,".").replace(/https:\/\/vtbag.dev\//, '').replace(/[\/\?\#]/g, ".") + ".md"; // flatten path for filename
+  const filename = chunk.localId.replace(/\/$/, "").replace(/\/\?s=/, ".").replace(/https:\/\/vtbag.dev\//, '').replace(/[\/\?\#]/g, ".") + ".md"; // flatten path for filename
 
   const metadata = {
     chunk_url: chunk.localId,
     checksum: chunk.checksum,
+    adjacent: `${chunk.metadata.previous || ""} | ${chunk.metadata.parent || ""} | ${chunk.metadata.next || ""}`,
     //   ...chunk.metadata,
   };
 
@@ -170,7 +172,6 @@ function readChunkFile(filePath: string): LocalChunk {
 
   const localId = parsed.metadata.chunkUrl;
 
-  //  const localId = path.relative(rootDir, filePath).replace(/\\/g, "/");
   const checksum = computeChecksum(parsed.text);
 
   return {
@@ -300,9 +301,10 @@ async function sync() {
   if (plan.toDelete.length > 0) {
     console.log("\nDeleting removed chunks...");
     await runWithConcurrency(
-      plan.toDelete.map((item) => async () => {
+      plan.toDelete.map((item, index) => async () => {
         await deleteItem(item.id);
-        console.log(`  DELETED: ${item.metadata.chunk_url}`);
+        await kvDelete(item.metadata.chunk_url!);          // ← add
+        console.log(`${index + 1}  DELETED: ${item.metadata.chunk_url}`);
       }),
       CONFIG.concurrency
     );
@@ -312,10 +314,11 @@ async function sync() {
   if (plan.toUpdate.length > 0) {
     console.log("\nUpdating changed chunks...");
     await runWithConcurrency(
-      plan.toUpdate.map(({ local, remote }) => async () => {
+      plan.toUpdate.map(({ local, remote }, index) => async () => {
         await deleteItem(remote.id);
         await uploadItem(local);
-        console.log(`  UPDATED: ${local.localId}`);
+        await kvPut(local.localId, local.text);        // ← add
+        console.log(`${index + 1}  UPDATED: ${local.localId}`);
       }),
       CONFIG.concurrency
     );
@@ -325,9 +328,10 @@ async function sync() {
   if (plan.toCreate.length > 0) {
     console.log("\nCreating new chunks...");
     await runWithConcurrency(
-      plan.toCreate.map((chunk) => async () => {
+      plan.toCreate.map((chunk, index) => async () => {
         await uploadItem(chunk);
-        console.log(`  CREATED: ${chunk.localId}`);
+        await kvPut(chunk.localId, chunk.text);        // ← add
+        console.log(`${index + 1}  CREATED: ${chunk.localId}`);
       }),
       CONFIG.concurrency
     );
@@ -360,6 +364,34 @@ async function dryRun() {
     plan.toDelete.forEach((r) => console.log(`    - ${r.metadata.local_id} (item: ${r.id})`));
   }
 }
+
+// ─── KV Helpers 
+
+async function kvPut(key: string, value: string): Promise<void> {
+  const url = `https://api.cloudflare.com/client/v4/accounts/${CONFIG.accountId}/storage/kv/namespaces/${CONFIG.kvNamespaceId}/values/${encodeURIComponent(key)}`;
+  const resp = await fetch(url, {
+    method: "PUT",
+    headers: { Authorization: `Bearer ${CONFIG.apiToken}` },
+    body: value,
+  });
+  const data = await resp.json() as any;
+  if (!data.success) {
+    throw new Error(`KV PUT error: ${JSON.stringify(data.errors)}`);
+  }
+}
+
+async function kvDelete(key: string): Promise<void> {
+  const url = `https://api.cloudflare.com/client/v4/accounts/${CONFIG.accountId}/storage/kv/namespaces/${CONFIG.kvNamespaceId}/values/${encodeURIComponent(key)}`;
+  const resp = await fetch(url, {
+    method: "DELETE",
+    headers: { Authorization: `Bearer ${CONFIG.apiToken}` },
+  });
+  const data = await resp.json() as any;
+  if (!data.success) {
+    throw new Error(`KV DELETE error: ${JSON.stringify(data.errors)}`);
+  }
+}
+
 
 // ─── CLI entry point ────────────────────────────────────────────────────────
 
