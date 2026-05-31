@@ -2,6 +2,7 @@ Sitemap: https://vtbag.dev/sitemap-index.xml
 User-agent: * 
 Content-Signal: ai-train=no, search=yes
 Allow: /
+Disallow: /cdn-cgi/
 Disallow: /auto/
 Disallow: /backdrop-demo/
 Disallow: /basics/hide-and-seek/list-*
