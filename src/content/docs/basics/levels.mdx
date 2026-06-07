@@ -9,18 +9,19 @@ head:
 ---
 The (preliminary) View Transition API's specification comes in two parts: 
 
-
 * Level 1: *CSS View Transitions Module Level 1* (Editor's Draft) [https://drafts.csswg.org/css-view-transitions-1/](https://drafts.csswg.org/css-view-transitions-1/)
 
 * Level 2: *CSS View Transitions Module Level 2* (Editor's Draft) [https://drafts.csswg.org/css-view-transitions-2/](https://drafts.csswg.org/css-view-transitions-2/)
 
-Splitting the specification into two parts allows browser vendors to roll out the API incrementally.
+Nowadays, the Level 1 document is frozen, while the Level 2 document is still in development. 
+
+Splitting the specification into two parts allowed browser vendors to roll out the API incrementally.
 
 You might often hear that 
 * Level 1 is _same-document_ view transitions and 
 * Level 2 defines _cross-document_ view transitions
 
-It is a neat, memorable way to explain it.  Half‑true, slightly wrong, but sticky enough to spread. Just do not forget: the real implications still hide in the details.
+It is a neat, memorable way to explain it.  Half-true, slightly wrong, but sticky enough to spread. Just do not forget: the real implications still hide in the details.
 
 I prefer to think of Level 1 as the core and Level 2 as the extensions.
 
@@ -57,7 +58,7 @@ Part two indeed adds extensions for cross-document view transitions, but also fe
 
 The new features defined in Level 2 of the view transition API are in deed written as extensions to the Level 1 spec. They can easily be merged into one specification. But the interesting part here is not the document structure but the implication from incremental releasing of the two parts.
 
-Up to now, all vendors have implemented and released Level 1 first before they went on to Level2. For Chrome and Edge there was a period of over 12 month before level 2 got released. For Safari, it had been 3 month. Firefox just released Level 1 of the API as it is part of Interop 2025. It's unclear when Level 2 will be released.
+Up to now, all vendors have implemented and released Level 1 first before they went on to Level 2. For Chrome and Edge there was a period of over 12 month before Level 2 got released. For Safari, it had been 3 month. Firefox released Level 1 of the API last year, as it was part of Interop 2025. It's unclear when Level 2 will be released.
 
 For the Chromium based browsers, this was not a problem as when they released Level 1 support there where no other browsers that understood Level 2. When Safari came out, this was different, but it did not take that lon for them to deliver Level 2 after that.
 
