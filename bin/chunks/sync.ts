@@ -77,6 +77,7 @@ async function apiRequest(
   const data = await resp.json() as any;
 
   if (!data.success) {
+    console.error("API error details:", JSON.stringify({url, fetchOptions, response: {status: resp.status, statusText: resp.statusText, body: data}}, null, 2));
     throw new Error(
       `API error ${resp.status}: ${JSON.stringify(data.errors)}`
     );
@@ -361,7 +362,7 @@ async function dryRun() {
   }
   if (plan.toDelete.length > 0) {
     console.log("\n  Would DELETE:");
-    plan.toDelete.forEach((r) => console.log(`    - ${r.metadata.local_id} (item: ${r.id})`));
+    plan.toDelete.forEach((r) => console.log(`    - ${r.metadata.chunk_url} (item: ${r.id})`));
   }
 }
 
