@@ -370,7 +370,7 @@ The above selector selects all groups that have both view transition classes:
 
 The view transition class names for a group and all its children are defined when the group is last encountered [during capturing](/basics/pseudos/#view-transition-names). A group that is present in the new state will have the class names defined in the new state styles. Only groups that were only present in the old state will have the view transition class names defined on the old state styling. This holds for both, same-document and cross-document view transitions.
 
-Does that sound a bit complicated? Good news: the most common case is also the simplest: the `*` can be omitted in selectors that use view transition class names. With a single class, the card example from above then looks like this:
+Does that sound a bit complicated? Good news: the most common case is also the simplest: the `*` can be omitted in selectors that use view transition class names. With a single class, the `nav-link` example from above then looks like this:
 
 ```css
 ::view-transition-group(.nav-link) {
