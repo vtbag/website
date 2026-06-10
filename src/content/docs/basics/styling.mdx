@@ -327,7 +327,50 @@ If multiple class names are used to identify a pseudo element, all must match. T
 }
 ```
 
-Or shorter, without the star:
+
+This is how you assign the classes
+
+```css
+#navbar a {
+  view-transition-class: nav-link; /* one class */
+}
+#prev,
+#next {
+  view-transition-class: nav-link some-other-class; /* multiple classes, space separated */
+}
+```
+
+This might best be combined with [dynamically added view transition names](/tips/auto-names/).
+
+As in normal pseudo-element selectors without view transition classes, you can also use a view transition name instead of the star to address the pseudo element for that name. 
+
+```css
+::view-transition-group(card5.card) {
+  /* ... */
+}
+```
+This will select the view transition group pseudo for the view transition name `card5`, but only if the element also has the `.card` view transition class.
+Like with CSS classes, you can even have multiple view transition classes one selector. 
+
+```css
+::view-transition-group(*.card.special) {
+  /* ... */
+}
+```
+Make sure you have no whitespace in such a selector. 
+
+The above selector selects all groups that have both view transition classes: 
+
+```css
+  view-transition-class: card;  /* won't be selected, view transition class special is missing */
+  view-transition-class: special;  /* won't be selected, view transition class card is missing */
+  view-transition-class: special card; /* will be selected, order does not matter */
+  view-transition-class: card something special /* also fine, element might have additional classes */
+```
+
+The view transition class names for a group and all its children are defined when the group is last encountered [during capturing](/basics/pseudos/#view-transition-names). A group that is present in the new state will have the class names defined in the new state styles. Only groups that were only present in the old state will have the view transition class names defined on the old state styling. This holds for both, same-document and cross-document view transitions.
+
+Does that sound a bit complicated? Good news: the most common case is also the simplest: the `*` can be omitted in selectors that use view transition class names. With a single class, the card example from above then looks like this:
 
 ```css
 ::view-transition-group(.nav-link) {
@@ -335,19 +378,6 @@ Or shorter, without the star:
 }
 ```
 
-This is an example on how to assign the class:
-
-```css
-#navbar a {
-  view-transition-class: nav-link;
-}
-#prev,
-#next {
-  view-transition-class: nav-link some-other-class;
-}
-```
-
-This might best be combined with dynamically (per script) added view transition names or tooling where you declaratively assign view transition names.
 
 ### &hellip;with Types
 

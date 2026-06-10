@@ -478,6 +478,7 @@ When it creates a `::view-transition-group-children` pseudo element, the View Tr
 
 You define the nesting by setting the `view-transition-group` property on an element. The `view-transition-group` property only works on an element that also has a `view-transition-name`, as it determines how the new group is inserted into the tree of view transition groups. Special values for `view-transition-group` are `normal`, `nearest`, and `contain`. You can also use the name of another group as a value to declare the new group being a child of the referenced group.
 
+The parent group of a new group pseudo element is determined when the group is first created. I.e. for groups that are defined in the old state, the styling of the new state won't affect the parent-child relationship of the groups. This holds for both, same-document and cross-document view transitions. 
 
 If you do not explicitly set the `view-transition-group` property of an element, it defaults to `normal`.
 
