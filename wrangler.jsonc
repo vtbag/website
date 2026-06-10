@@ -3,36 +3,52 @@
   "name": "ai-chat",
   "main": "src/vitras/chat.ts",
   "compatibility_date": "2026-04-22",
-  
+
   "workers_dev": false,
   "preview_urls": false,
 
-  "route": "vtbag.dev/api/chat",
-  
-  "ai_search": [
+  "route": "vtbag.dev/api/vitras",
+
+  "ai_search_namespaces": [
     {
       "binding": "MY_SEARCH",
-      "instance_name": "flat-sky-3b86",
+      "namespace": "default",
       "remote": true
     }
   ],
   "ai": {
     "binding": "AI",
-    "remote": true
+    "remote": true,
   },
+
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "JOURNAL_DO",
+        "class_name": "Journal_DO",
+      },
+    ],
+  },
+
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["Journal_DO"]
+    }
+  ],
 
   "kv_namespaces": [
     {
       "binding": "CHUNK_KV",
-      "id": "eda256522f38460e8ca622cd6cead733"
-    }
+      "id": "eda256522f38460e8ca622cd6cead733",
+    },
   ],
 
   "vars": {
     "INSTANCE_ID": "crimson-hall-5fc7",
     "GATEWAY_ID": "default",
     "ACCOUNT_ID": "93976b094538bc1a55f9c7bc9100f75e",
-    "LOCAL": "true"
+    "LOCAL": "true",
   },
   "observability": {
     "enabled": true,
@@ -41,12 +57,12 @@
       "enabled": true,
       "head_sampling_rate": 1,
       "persist": true,
-      "invocation_logs": true
+      "invocation_logs": true,
     },
     "traces": {
       "enabled": true,
       "persist": true,
-      "head_sampling_rate": 1
-    }
-  }
+      "head_sampling_rate": 1,
+    },
+  },
 }

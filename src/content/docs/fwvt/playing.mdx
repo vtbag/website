@@ -65,7 +65,7 @@ and a deployment at
 :::note[Edited]
 Since I first published this episode, I made changes to the demo so it also works with Firefox.
 
-1. `mayStartViewTransition()` is now called with  [`useTypePolyfill='always'`](/tools/utensil-drawer/#usetypespolyfill-always--never), and the postcss-active-view-transition-type [PostCSS plugin](/tools/utensil-drawer/#the-postcss-active-view-transition-type-postcss-plugin)  was added to the project. This allows you to use view transition types even with browsers that do not yet support this Level 2 feature.
+1. `mayStartViewTransition()` is now called with  [`useTypePolyfill='always'`](/tools/utensil-drawer/#usetypespolyfill-always--auto--never), and the postcss-active-view-transition-type [PostCSS plugin](/tools/utensil-drawer/#the-postcss-active-view-transition-type-postcss-plugin)  was added to the project. This allows you to use view transition types even with browsers that do not yet support this Level 2 feature.
 
 2. The `lift-and-shift` view transition type is only set [_after_ `setVectors()`]() ran. This prevents timing issues where browsers differ in the way they initialize `@keyframes` with custom-properties during view transitions. 
 :::
@@ -208,7 +208,7 @@ The `chaining` behavior of `mayStartViewTransition` function works like this:
 
 Also, due to the `speedUpWhenChained` values used in the example above, clicking during an animation speeds it up by 33% each time.
 
-You are curious about [`useTypesPolyfill: "always"`](/tools/utensil-drawer/#usetypespolyfill-always--never)? This has to do with the view transition type pattern that I recommend to structure view transition CSS rules. It has its own section [further down the page](#scoping-with-active-types).
+You are curious about [`useTypesPolyfill: "always"`](/tools/utensil-drawer/#usetypespolyfill-always--auto--never)? This has to do with the view transition type pattern that I recommend to structure view transition CSS rules. It has its own section [further down the page](#scoping-with-active-types).
 
 ## Curved Group Animations
 
@@ -488,7 +488,7 @@ Most view transition examples tell you to use the `animation` shorthand property
 
 When you use the shorthand property, you have to define a duration, and likely explicitly specify `both` for the fill mode. Otherwise, you get `0s` and `none` as defaults. You end up ignoring the well-crafted [inheritance rules](/basics/styling/#inherited-animation-properties) in the spec for `animation-duration`, `animation-delay`, and `animation-fill-mode`. Normally, these cascade down from the group to the image-pair, and then to the old and new image _"...so that by default, the animation timing set on a `::view-transition-group()` will dictate the animation timing of all its descendants"_.
 
-That is why the `view-transition.css` file of this demo uses individual `animation-*` [longhand properties](/basics/styling/#longhand-and-shorthand-properties) instead of the `animation` shorthand property. This allows us to set the duration of all animations in one place, on the group, and have it cascade down to all image pairs and images:
+That is why the `view-transition.css` file of this demo uses individual `animation-*` [longhand properties](/basics/styling/#longhand-vs-shorthand-properties) instead of the `animation` shorthand property. This allows us to set the duration of all animations in one place, on the group, and have it cascade down to all image pairs and images:
 
 ```css ins={2,3}
 ::view-transition-image-pair(.disk) {
@@ -663,7 +663,7 @@ Since I was so used to view transition types in Chrome, Edge, and Safari, I only
 
 So there will be Firefox versions that support same-page view transitions but no view transition types. And there are still older versions of the other browsers with the same constellation. The good news is: **The Bag provides a solution!**  
 
-The [`useTypesPolyfill: 'always'`](/tools/utensil-drawer/#usetypespolyfill-always--never) extension of the `mayStartViewTransition()` function provided by the Bag's `utensil-drawer`, together with the [`postcss-active-view-transition-types`](/tools/utensil-drawer/#the-postcss-active-view-transition-type-postcss-plugin) plugin, adds a polyfill that lets you use the `:active-view-transition-type()` pseudo-classes as if they were already built in.
+The [`useTypesPolyfill: 'always'`](/tools/utensil-drawer/#usetypespolyfill-always--auto--never) extension of the `mayStartViewTransition()` function provided by the Bag's `utensil-drawer`, together with the [`postcss-active-view-transition-types`](/tools/utensil-drawer/#the-postcss-active-view-transition-type-postcss-plugin) plugin, adds a polyfill that lets you use the `:active-view-transition-type()` pseudo-classes as if they were already built in.
 :::
 
 For more on type scoping pattern, check the [CSS Tips & Tricks](/tips/css/#scoping-with-types) section.

@@ -557,13 +557,13 @@ When examining the `::view-transition-groups` in order, the elements at the star
 
 Before the view transition starts, the pseudo elements are rendered on top of the current page.
 
-The first pseudo-element that is rendered for a view transition is `::view-transition`. It has the size of the viewport including scrollbars, and retractable UI parts on mobile. The spec refers to this as the _snapshot containing block_. The `::view-transition` pseudo-element is fully transparent by default. It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set `pointer-events: none` on it).
+The first pseudo-element that is rendered for a view transition is `::view-transition`. For a global view transition, it has the size of the viewport including scrollbars, and retractable UI parts on mobile. For a scoped view transition, it has the position and size of the view transition root. The spec refers to this as the _snapshot containing block_. The `::view-transition` pseudo-element is fully transparent by default. It works like a glass pane that prevents the user from interacting with elements below it (as long as you don't set `pointer-events: none` on it).
 
 The transition groups are rendered [in the order they were created](#creation-of-pseudo-elements), which is the same as the order in which they appear as children of the `::view-transition` pseudo-element. Groups at the beginning of the list are rendered first, with later groups painted on top.
 
 Within the image pair, the old image is painted first and the new image is painted on top of it.
 
-There is a clear separation between regular DOM elements and the view transition pseudo-elements. The pseudo-elements form their own stacking context, known as the _view transition layer_. This one is special as it sits in front of all other elements of the page. No regular page elements can be forced into or above the view transition layer, not even with high `z-index` values.
+There is a clear separation between regular DOM elements and the view transition pseudo-elements. The pseudo-elements form their own stacking context, known as the _view transition layer_. This one is special as it sits in front of all other elements of the page. No regular page elements can be forced into or above the view transition layer, not even with high `z-index` values. For scoped view transitions, this is only true for the elements inside the view transition root, but not for elements outside of it: here you can have regular page elements that are rendered in front of the view transition layer of a scoped view transition.
 
 One advantage of using images and a separate _view transition layer_ is that animations are not restricted by the original DOM tree structure. However, this can lead to unexpected side effects if you apply `view-transition-name` attributes as an afterthought.
 

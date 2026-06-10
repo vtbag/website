@@ -33,7 +33,7 @@ Moving [view transition images](/basics/pseudos/#old-and-new-image-pseudos) into
   ></iframe>
 </a>
 
-<a name="demo"></a>
+<a id="demo"></a>
 During a view transition, elements that were clipped in the DOM often lose their
 clipping properties. [Look at this demo](/basics/hide-and-seek/problem/), where
 all list items have view transition names. The `overflow: scroll` property
@@ -199,7 +199,7 @@ The latest pseudo-element addition to the View Transition API points to somethin
   src="/basics/hide-and-seek/list-nested/"
 ></iframe>
 
-In the early versions of the View Transition API, the transition groups form a flat list of children of the `::view-transition` pseudo element. [_Nested_ view transition groups](/basics/pseudos/#nested-view-transition-groups) are already defined in the [Level 2 spec](/basics/api/#w3c-drafts), but are not yet widely supported by browsers.
+In the early versions of the View Transition API, the transition groups form a flat list of children of the `::view-transition` pseudo element. [_Nested_ view transition groups](/basics/pseudos/#nested-view-transition-groups) are already defined in the [Level 2 spec](/basics/api/#w3c-drafts-preliminary-specs), but are not yet widely supported by browsers.
 
 Nested view transition groups introduce the ability to clip images not only within their own group but also using their parent or any ancestor further up the hierarchy. The example to the right is built with nested view transition groups. If it doesn't look right, check whether your [browser has support](/basics/test-page/) for them.
 
@@ -311,7 +311,7 @@ While this method works well for rotations, it's impractical the number of eleme
 Another way to simulate `overflow: hidden` or nested view transition groups is to introduce new pseudo-elements that can hide unwanted images.
 
 <SidePicture>
-It might sound a bit weird, to fight unwanted images with even more images, but the idea is simple: put an [additional curtain](/basics/pseudos/#the-theater-curtain) in front of your stage to hide what you don't want the audience to see.
+It might sound a bit weird, to fight unwanted images with even more images, but the idea is simple: put an [additional curtain](/basics/pseudos/#the-theatre-curtain) in front of your stage to hide what you don't want the audience to see.
 
 In some cases it might be sufficient to have some rectangles coloured in your site's background color, add a `view-transition-name`, and move their pseudo-images into place as part of the view transition. These rectangles might also have children like paragraphs or buttons, which will then show up on top.
 
@@ -507,4 +507,4 @@ The overall effect is that the list items appear to float behind the scrollbar.
 
 ## List Example Revisited
 
-Using the stencil approach on the [original list example](#demo) from the beginning of this article now yields a [much better result](/basics/hide-and-seek/solution/).
+Using the stencil approach on the [original list example](/basics/hide-and-seek/problem/) from the beginning of this article now yields a [much better result](/basics/hide-and-seek/solution/).

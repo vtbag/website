@@ -53,7 +53,7 @@ One day, when it grows up, this will be an eclectic collection of snippets for v
     href="#type-declarations"
   />
   <Utensil
-    title="Hardened Start"
+    title="mayStartViewTransition()"
     stable={false}
     description="Wrapper with a non-animating fallback for browsers without native support. Respects the reduced motion preference and supports optional, automatic chaining of view transitions."
     href="#maystartviewtransition"
@@ -620,7 +620,7 @@ Want to use `:active-view-transition-type()` and `:active-view-transition` pseud
 
 The `postcss-active-view-transition-type` plugin addresses view transition types for **same-document** view transitions. **Cross-document** view transitions are also Level 2, so they do not need additional support.
 
-This PostCSS plugin rewrites the pseudo-class selectors `:active-view-transition-type()` and `:active-view-transition` to selectors that work with the Bag's [polyfill for view transition types](#usetypespolyfill-always--never). Plugin and polyfill together let you use
+This PostCSS plugin rewrites the pseudo-class selectors `:active-view-transition-type()` and `:active-view-transition` to selectors that work with the Bag's [polyfill for view transition types](/tools/utensil-drawer/#usetypespolyfill-always--auto--never). Plugin and polyfill together let you use
 
 - pseudo-class selectors for view transition types in your stylesheets,
 - as well as view transition types with [`mayStartViewTransition({types:...})`](#maystartviewtransition),
