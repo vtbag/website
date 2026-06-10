@@ -8,14 +8,27 @@
     <link>https://vtbag.dev</link>
     <description>Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 14:43:14 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 18:24:32 GMT</lastBuildDate>
     
+  <item>
+    <title><![CDATA[Where to Place CSS for Cross-Document View Transitions?]]></title>
+    <link>https://vtbag.dev/tips/css/</link>
+    <guid isPermaLink="true">https://vtbag.dev/tips/css/</guid>
+    
+    <pubDate>Wed, 10 Jun 2026 18:22:33 GMT</pubDate>
+    <description><![CDATA[Your CSS rules are ignored by the View Transition API? Maybe you put them in the wrong place.]]></description>
+    <enclosure
+        url="/css-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
   <item>
     <title><![CDATA[Styling View Transitions]]></title>
     <link>https://vtbag.dev/basics/styling/</link>
     <guid isPermaLink="true">https://vtbag.dev/basics/styling/</guid>
     
-    <pubDate>Wed, 10 Jun 2026 14:23:53 GMT</pubDate>
+    <pubDate>Wed, 10 Jun 2026 18:20:48 GMT</pubDate>
     <description><![CDATA[Styling view transitions including :active-view-transition-type and view-transition-class]]></description>
     <enclosure
         url="/styling-og.png"
@@ -240,19 +253,6 @@
     <description><![CDATA[Explore current methods for automatically generating view transition names.]]></description>
     <enclosure
         url="/auto-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[Where to Place CSS for Cross-Document View Transitions?]]></title>
-    <link>https://vtbag.dev/tips/css/</link>
-    <guid isPermaLink="true">https://vtbag.dev/tips/css/</guid>
-    
-    <pubDate>Sun, 31 May 2026 18:33:53 GMT</pubDate>
-    <description><![CDATA[Your CSS rules are ignored by the View Transition API? Maybe you put them in the wrong place.]]></description>
-    <enclosure
-        url="/css-og.png"
         type="image/jpeg"
       />
   </item>

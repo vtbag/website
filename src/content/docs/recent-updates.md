@@ -5,15 +5,50 @@ description: Last update dates of all articles on vtbag.dev
 
 This list shows last update dates for all articles on vtbag.dev. The list also reflects minor updates, such as fixing typos or improving formatting. If you are interested in major updates only, check the [RSS feed](https://vtbag.dev/rss.xml).
 
-- [API Levels and Implications](https://vtbag.dev/basics/levels/)\
-What are those levels of the View Transition API, and what does that mean for me as a dev?\
-<small>First published Mon, 14 Jul 2025 18:10:35 GMT</small>\
-<small>Last updated Sun, 07 Jun 2026 21:45:56 GMT</small>
+- [Where to Place CSS for Cross-Document View Transitions?](https://vtbag.dev/tips/css/)\
+Your CSS rules are ignored by the View Transition API? Maybe you put them in the wrong place.\
+<small>First published Tue, 20 Aug 2024 20:10:17 GMT</small>\
+<small>Last updated Wed, 10 Jun 2026 18:22:33 GMT</small>
 
 - [Styling View Transitions](https://vtbag.dev/basics/styling/)\
 Styling view transitions including :active-view-transition-type and view-transition-class\
 <small>First published Wed, 23 Oct 2024 12:29:56 GMT</small>\
-<small>Last updated Sun, 07 Jun 2026 21:45:56 GMT</small>
+<small>Last updated Wed, 10 Jun 2026 18:20:48 GMT</small>
+
+- [View Transition Names and Generated Pseudo-Elements](https://vtbag.dev/basics/pseudos/)\
+What are those pseudo-elements of the View Transition API and how can I style and animate them?\
+<small>First published Thu, 19 Sep 2024 15:17:21 GMT</small>\
+<small>Last updated Wed, 10 Jun 2026 14:23:53 GMT</small>
+
+- [Playing Hide and Seek](https://vtbag.dev/basics/hide-and-seek/)\
+How to control stacking and clipping of view transition images.\
+<small>First published Mon, 18 Nov 2024 14:35:52 GMT</small>\
+<small>Last updated Wed, 10 Jun 2026 11:15:15 GMT</small>
+
+- [API Levels and Implications](https://vtbag.dev/basics/levels/)\
+What are those levels of the View Transition API, and what does that mean for me as a dev?\
+<small>First published Mon, 14 Jul 2025 18:10:35 GMT</small>\
+<small>Last updated Wed, 10 Jun 2026 11:15:15 GMT</small>
+
+- [Playing Tower of Hanoi](https://vtbag.dev/fwvt/playing/)\
+Fun With View Transitions, Episode 7: Tips, tricks, and fresh ideas to spark your own view transition magic!\
+<small>First published Mon, 30 Jun 2025 22:46:08 GMT</small>\
+<small>Last updated Wed, 10 Jun 2026 11:15:15 GMT</small>
+
+- [Retain Control While Transitioning](https://vtbag.dev/tips/interactivity/)\
+Normally, you cannot interact with a page while view transition animations are running. Here is why that happens, and how to fix it.\
+<small>First published Tue, 13 May 2025 09:17:09 GMT</small>\
+<small>Last updated Wed, 10 Jun 2026 11:15:15 GMT</small>
+
+- [The Utensil Drawer](https://vtbag.dev/tools/utensil-drawer/)\
+A growing collection of lightweight utilities to help you craft polished view transitions.\
+<small>First published Mon, 25 Nov 2024 15:37:59 GMT</small>\
+<small>Last updated Wed, 10 Jun 2026 11:15:15 GMT</small>
+
+- [Recent updates](https://vtbag.dev/recent-updates/)\
+Last update dates of all articles on vtbag.dev\
+<small>First published Tue, 28 Apr 2026 15:06:01 GMT</small>\
+<small>Last updated Wed, 10 Jun 2026 11:15:15 GMT</small>
 
 - [@vtbag: Overview](https://vtbag.dev/vtbag/)\
 What are those Bags of Tricks?\
@@ -25,19 +60,9 @@ Mastering the fundamentals is key to creating seamless animations with the View 
 <small>First published Thu, 19 Sep 2024 15:17:21 GMT</small>\
 <small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
 
-- [Playing Hide and Seek](https://vtbag.dev/basics/hide-and-seek/)\
-How to control stacking and clipping of view transition images.\
-<small>First published Mon, 18 Nov 2024 14:35:52 GMT</small>\
-<small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
-
 - [View Transition JavaScript API](https://vtbag.dev/basics/javascript/)\
 How to interact with view transitions using JavaScript\
 <small>First published Wed, 08 Jan 2025 19:30:16 GMT</small>\
-<small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
-
-- [View Transition Names and Generated Pseudo-Elements](https://vtbag.dev/basics/pseudos/)\
-What are those pseudo-elements of the View Transition API and how can I style and animate them?\
-<small>First published Thu, 19 Sep 2024 15:17:21 GMT</small>\
 <small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
 
 - [Check and Control the Image Animations!](https://vtbag.dev/fwvt/customizing/)\
@@ -53,11 +78,6 @@ How to enable browser-native cross-document view transitions on your multi-page 
 - [On a Trip to the Text Morphology Clinic](https://vtbag.dev/fwvt/healing/)\
 Join Dr. Bag on patient rounds as we explore text-morph animations crafted with the View Transition API. Discover common issues, explore diagnostic techniques, and apply effective treatments.\
 <small>First published Fri, 07 Feb 2025 20:56:44 GMT</small>\
-<small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
-
-- [Playing Tower of Hanoi](https://vtbag.dev/fwvt/playing/)\
-Fun With View Transitions, Episode 7: Tips, tricks, and fresh ideas to spark your own view transition magic!\
-<small>First published Mon, 30 Jun 2025 22:46:08 GMT</small>\
 <small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
 
 - [Add Native View Transitions to Your Starlight Site](https://vtbag.dev/fwvt/twinkling/)\
@@ -80,11 +100,6 @@ Explore current methods for automatically generating view transition names.\
 <small>First published Sat, 08 Feb 2025 09:55:50 GMT</small>\
 <small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
 
-- [Where to Place CSS for Cross-Document View Transitions?](https://vtbag.dev/tips/css/)\
-Your CSS rules are ignored by the View Transition API? Maybe you put them in the wrong place.\
-<small>First published Tue, 20 Aug 2024 20:10:17 GMT</small>\
-<small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
-
 - [Pseudo-Smooth-Scrolling](https://vtbag.dev/tips/pseudo-smooth-scrolling/)\
 Instant scrolling on a page with view transition might lead to an unexpected smooth-scrolling effect. \
 <small>First published Fri, 04 Oct 2024 20:56:41 GMT</small>\
@@ -104,16 +119,6 @@ Most of the time, View Transitions just work. This page is for the exceptions: t
 @vtbag/inspection-chamber allows you to examine, judge & optimize all aspects of your view transitions\
 <small>First published Fri, 12 Jul 2024 10:52:37 GMT</small>\
 <small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
-
-- [The Utensil Drawer](https://vtbag.dev/tools/utensil-drawer/)\
-A growing collection of lightweight utilities to help you craft polished view transitions.\
-<small>First published Mon, 25 Nov 2024 15:37:59 GMT</small>\
-<small>Last updated Sun, 31 May 2026 18:33:53 GMT</small>
-
-- [Recent updates](https://vtbag.dev/recent-updates/)\
-Last update dates of all articles on vtbag.dev\
-<small>First published Tue, 28 Apr 2026 15:06:01 GMT</small>\
-<small>Last updated Mon, 25 May 2026 10:06:33 GMT</small>
 
 - [The View Transition API](https://vtbag.dev/basics/api/)\
 Basics information about the View Transition browser API\
@@ -154,11 +159,6 @@ Let's add the morph animations that have made the View Transition API so renowne
 How generative AI is used on vtbag.dev\
 <small>First published Sun, 10 Aug 2025 19:57:52 GMT</small>\
 <small>Last updated Sat, 02 May 2026 17:07:03 GMT</small>
-
-- [Retain Control While Transitioning](https://vtbag.dev/tips/interactivity/)\
-Normally, you cannot interact with a page while view transition animations are running. Here is why that happens, and how to fix it.\
-<small>First published Tue, 13 May 2025 09:17:09 GMT</small>\
-<small>Last updated Wed, 04 Mar 2026 14:12:00 GMT</small>
 
 - [Flickering during Cross-Fade Animations?](https://vtbag.dev/tips/over-exposure/)\
 Why custom fade animations for view transitions might flash.\
