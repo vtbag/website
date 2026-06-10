@@ -188,11 +188,11 @@ function toMarkdownLink(label: string, target: string): string {
 }
 
 function pathToPageUrl(filePath: string): string {
-  const rel = "/" + path.relative(DOCS_DIR, filePath).replace(/\\/g, '/');
+  const rel = path.relative(DOCS_DIR, filePath).replace(/\\/g, '/');
   const noExt = rel.replace(/\.(mdx|md)$/i, '');
   const route = noExt.replace(/\/index$/i, '');
   if (!route) return `${SITE_URL}/`;
-  return `${SITE_URL}${route}/`;
+  return `${SITE_URL}/${route}/`;
 }
 
 function pathToDocStem(filePath: string): string {
