@@ -8,21 +8,8 @@
     <link>https://vtbag.dev</link>
     <description>Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 14:25:09 GMT</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 14:43:14 GMT</lastBuildDate>
     
-  <item>
-    <title><![CDATA[View Transition Names and Generated Pseudo-Elements]]></title>
-    <link>https://vtbag.dev/basics/pseudos/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/pseudos/</guid>
-    
-    <pubDate>Wed, 10 Jun 2026 14:23:53 GMT</pubDate>
-    <description><![CDATA[What are those pseudo-elements of the View Transition API and how can I style and animate them?]]></description>
-    <enclosure
-        url="/pseudos-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
   <item>
     <title><![CDATA[Styling View Transitions]]></title>
     <link>https://vtbag.dev/basics/styling/</link>
@@ -32,6 +19,19 @@
     <description><![CDATA[Styling view transitions including :active-view-transition-type and view-transition-class]]></description>
     <enclosure
         url="/styling-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[View Transition Names and Generated Pseudo-Elements]]></title>
+    <link>https://vtbag.dev/basics/pseudos/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/pseudos/</guid>
+    
+    <pubDate>Wed, 10 Jun 2026 14:23:53 GMT</pubDate>
+    <description><![CDATA[What are those pseudo-elements of the View Transition API and how can I style and animate them?]]></description>
+    <enclosure
+        url="/pseudos-og.png"
         type="image/jpeg"
       />
   </item>
