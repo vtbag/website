@@ -357,7 +357,9 @@ Like with CSS classes, you can even have multiple view transition classes one se
   /* ... */
 }
 ```
-Make sure you have no whitespace in such a selector. 
+Make sure you don't have whitespace before or after the dots in such a selector. 
+
+As usual in CSS, there is always only a single relevant declaration to set a property. The `view-transition-class` property is no exception. If you want to set multiple classes, you have to set them in a single declaration. Accumulating classes in multiple declarations will not work.
 
 The above selector selects all groups that have both view transition classes: 
 
@@ -367,9 +369,7 @@ The above selector selects all groups that have both view transition classes:
   view-transition-class: special card; /* will be selected, order does not matter */
   view-transition-class: card something special /* also fine, element might have additional classes */
 ```
-
-The view transition class names for a group and all its children are defined when the group is last encountered [during capturing](/basics/pseudos/#view-transition-names). A group that is present in the new state will have the class names defined in the new state styles. Only groups that were only present in the old state will have the view transition class names defined on the old state styling. This holds for both, same-document and cross-document view transitions.
-
+ 
 Does that sound a bit complicated? Good news: the most common case is also the simplest: the `*` can be omitted in selectors that use view transition class names. With a single class, the `nav-link` example from above then looks like this:
 
 ```css
@@ -377,6 +377,10 @@ Does that sound a bit complicated? Good news: the most common case is also the s
   /* ... */
 }
 ```
+
+#### Class Names come Mainly from the New State
+The view transition class names for a group and all its children are defined when the group is last encountered [during capturing](/basics/pseudos/#view-transition-names). A group that is present in the new state will have the class names defined in the new state styles. Only groups that were only present in the old state will have the view transition class names defined on the old state styling. This holds for both, same-document and cross-document view transitions.
+
 
 
 ### &hellip;with Types
