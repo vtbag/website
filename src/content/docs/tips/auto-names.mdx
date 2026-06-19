@@ -51,11 +51,11 @@ Here are your options right now:
 `<script src="/declarative-names.js" data-vtbag-decl="selector"/>`, which works cross-browser for same-document and cross-document view transitions.
 
 
-I would **not recommend the first three** approaches just yet. As of today, they don't work reliably across all browsers. But I'm curious and looking forward to what the future has in store.
+I would **not recommend the first three** approaches just yet for cross-browser, general use, i.e. same-document and cross-document view transitions. `view-transition-name: match-element` will work for same-document view transitions, but cross-document behavior differs between browsers. As of today, all those approaches don't work reliably in the same way across all browsers or are not supported at all. `view-transition-name: auto` is still mentioned in the View Transition API's spec, but ignored like an accident by all browsers but Safari. `attr(id type(<custom-ident>))` is not yet supported widley beyond Chromium browsers. I'll continue to be curious and looking forward to what the future has in store.
 
-### Auto Generated Names
+### Generated Names
 
-The only reliable mechanism for automatically generated view transition names across browsers is `match-element` (_only for same-document view transitions_) 
+The only reliable mechanism for automatically generated view transition names across browsers is `match-element` _as long as your use case is same-document view transitions_. 
 
 It generates unique view transition names for each element that has this value set. The generated names are stable as long as the same elements are matched. Because different documents have different elements the names will change on cross-document navigation and even on page reload. Therefore you can't use it for shared element animations across documents.
 
@@ -85,9 +85,9 @@ Chrome's dynamically generated names use something that looks like a random stri
 -ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-63051
 -ua-auto-F5E19860A59EF9D0C4AAFAA1378C6862-63058
 ```
-Generation in Chrome works well for same-document and cross-document view transitions. 
+Technically, generation in Chrome works well for same-document and cross-document view transitions. But since names of the old document will never match a name of the new document, you can't use it for shared element animations across documents. For each named element of the old document you will get a exit animation, and you will get an entry animation for each named element of the new document.
 
-Browsers typically conceal the random values by mapping them back to `match-element` or `auto` on some interfaces. 
+Also note, that browsers typically conceal the random values by mapping them back to `match-element` or `auto` on some interfaces. 
 
 
 ### Using attr() For View Transition Names
