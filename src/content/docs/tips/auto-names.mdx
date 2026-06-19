@@ -51,7 +51,15 @@ Here are your options right now:
 `<script src="/declarative-names.js" data-vtbag-decl="selector"/>`, which works cross-browser for same-document and cross-document view transitions.
 
 
-I would **not recommend the first three** approaches just yet for cross-browser, general use, i.e. same-document and cross-document view transitions. `view-transition-name: match-element` will work for same-document view transitions, but cross-document behavior differs between browsers. As of today, all those approaches don't work reliably in the same way across all browsers or are not supported at all. `view-transition-name: auto` is still mentioned in the View Transition API's spec, but ignored like an accident by all browsers but Safari. `attr(id type(<custom-ident>))` is not yet supported widley beyond Chromium browsers. I'll continue to be curious and looking forward to what the future has in store.
+I would **not recommend the first three** approaches just yet for cross-browser, general use, i.e. same-document and cross-document view transitions. 
+
+`view-transition-name: match-element` will work for same-document view transitions, but cross-document behavior differs between browsers. As of today, all those approaches don't work reliably in the same way across all browsers or are not supported at all. 
+
+`view-transition-name: auto` is still mentioned in the View Transition API's spec, but ignored like an accident by all browsers but Safari. 
+
+`attr(id type(<custom-ident>))` is not yet supported widley beyond Chromium browsers. 
+
+I'll continue to be curious and looking forward to what the future has in store.
 
 ### Generated Names
 
