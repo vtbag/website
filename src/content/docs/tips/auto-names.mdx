@@ -100,14 +100,23 @@ Also note, that browsers typically conceal the random values by mapping them bac
 
 ### Using attr() For View Transition Names
 
-Chrome offers [`view-transition-name: attr(id type(<custom-ident>))`](/basics/pseudos/#using-id-as-view-transition-name) as an alternative way to set view transition names.
+Chrome offers [`view-transition-name: attr(<attribute-name> <type>?, <fallback-value>?)`](/basics/pseudos/#using-id-as-view-transition-name) as an alternative way to set view transition names.
 Currently, this typed `attr()` function is _far from being baseline on all browsers_.
 
 
+If you already have unique values in an attribute like `id`, and they are [valid identifiers for view transition names](/basics/pseudos/#escaping), `attr()` can copy those values as view transition names. This way, you get unique view transition names without having to come up with them yourself. 
 
-You might wonder why copying another attribute's value counts as a solution here. After all, you only get automatic view transition names if you have already manually set all those `id` attributes.  Well, yes. At least it is less to type.
+This way, with a suitable CSS selector, you can assign multiple view transition names at once:
+```css
+selector[id] {
+  view-transition-name: attr(id type(<custom-ident>))
+}
+```
+Obviously, the fallback value doesn't make much sense in this case, because it would typically lead to non-unique view transition names. 
 
-But it does also offer more flexibility: Once the `id`s are in place, you can control when to use them as view transition names using your CSS selectors. For example, you could choose to set names only on certain list elements:
+You might wonder why copying another attribute's value counts as a solution here. After all, you only get automatic view transition names if you have already manually set all those `id` attributes to unique values.  Well, yes. At least it is less to type if you can define multiple view transition names with a single CSS rule.
+
+Another benefit of this approach is that it offers more flexibility: Once the `id`s are in place, you can control when to use them as view transition names using your CSS selectors. For example, you could choose to set names only on certain list elements:
 
 
 ```css
@@ -116,6 +125,7 @@ ul li:nth-child(even) {
 }
 ```
 
+And there is yet another important use case: When you want to use view transitions to animate dynamically generated content from third party systems, you often do not have full control over the provided content, but often some identifying attribute from the underlying data. For example a CMS or product catalog might generate some unique attribute for each item, and you can use that as a source for view transition names.
 
 ### Setting Names Using JavaScript
 

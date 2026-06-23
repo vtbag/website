@@ -458,7 +458,7 @@ Or you use third-party scripts like the [Turn Signal](/tools/turn-signal/) for d
 This is generally true for CSS, but it can happen more often in the context of view transitions: If the browser does not recognize a selector, it ignores the entire rule. This if true even when known and unknown selectors are combined in a single rule, like this:
 ```css
 .bar, 
-:active-view-transition .foo, {
+:active-view-transition .foo {
   property: value;
 }
 ```
@@ -467,7 +467,7 @@ If the browser does not recognize the `:active-view-transition` pseudo-class, it
 .bar {
   property: value;
 }
-:active-view-transition .foo, {
+:active-view-transition .foo {
   property: value;
 }
 ```

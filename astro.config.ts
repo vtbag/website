@@ -324,6 +324,7 @@ function sidebar() {
         { label: "Preserved State", link: "/crossing/vanilla/1/" },
         { label: "Preserved State (exp.)", link: "/crossing/over-the-top/1/" },
         { label: "Google Demo, but with link-types plumbing", link: "/navigation-types/" },
+        { label: "Rocket Demo (at vtbot's website)", link: "https://events-3bg.pages.dev/jotter/styling/#outlines-for-testing" },
         { label: "Turn Signal Directions", link: "/signal-demo/bag/" },
         { label: "Image Viewer Demo", link: "/viewer-demo/" },
         { label: "🌟 Fishpond Demo", link: "/link-demo/" },

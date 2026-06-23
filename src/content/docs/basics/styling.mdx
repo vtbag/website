@@ -98,7 +98,7 @@ While the typical task will be redefining animations when styling view transitio
 }
 ```
 
-You can also style other DOM elements that are not created by the View Transition API, but keep in mind that those elements are typically [hidden behind the view transition pseudo-elements](/basics/pseudos/#the-theatre-curtain) during a view transition.
+With the [`:active-view-transition`](#active-view-transition) pseudo-class, you can apply styles for the duration of a view transition even to DOM elements that are not created by the View Transition API. Keep in mind that those elements are typically [hidden behind the view transition pseudo-elements](/basics/pseudos/#the-theatre-curtain) during a view transition.
 
 ## The User Agent Stylesheet
 
@@ -444,6 +444,7 @@ Directly prepend the pseudo-class to a pseudo-element selector&hellip;
 }
 ```
 
+#### Active View Transition
 There is an additional pseudo-class that does not take type parameters.
 
 ```css
