@@ -473,11 +473,11 @@
 
       const effects = [
         `        
-        filter: saturate(2.5) brightness(1.2) hue-rotate(340deg) blur(1px);
+        filter: saturate(2.5) brightness(1.2) hue-rotate(340deg);
         transform: skewX(-3deg);
       `,
         `
-        filter: saturate(0.2) brightness(1.2) hue-rotate(190deg) blur(1px);
+        filter: saturate(0.2) brightness(1.2) hue-rotate(190deg);
         transform: skewX(3deg);
       `,
         `  
@@ -485,7 +485,7 @@
         transform: scaleY(0.5) scaleX(1.5) skewX(3deg);
       `,
         `
-        filter: saturate(3) hue-rotate(90deg) brightness(1.3) contrast(1.2) blur(1px);
+        filter: saturate(3) hue-rotate(90deg) brightness(1.3) contrast(1.2);
         transform: skewX(-3deg);
       `,
       ];
@@ -510,6 +510,7 @@
         x: 0,
         y: 0,
         moving: false,
+        pointerId: -1,
       };
 
       resetForge();
@@ -589,7 +590,6 @@
         let slot = 0;
         for (let i = 0; i < 4; i++) {
           slot = ~~(Math.random() * level.items.length);
-          console.log(levelState.level, slot, level.items[slot]);
           while (level.items[slot]!.depth <= levelState.level) {
             slot = ~~(Math.random() * level.items.length);
           }
@@ -648,11 +648,14 @@
       element?.addEventListener("pointerdown", startMove);
       document.documentElement.addEventListener("pointermove", move);
       document.documentElement.addEventListener("pointerup", stopMove);
+      document.documentElement.addEventListener("pointercancel", stopMove);
 
       function startMove(event: PointerEvent) {
+        if (moveState.moving) return;
         moveState.x = event.clientX;
         moveState.y = event.clientY;
         moveState.moving = true;
+        moveState.pointerId = event.pointerId;
         styles.replaceSync(`
       ::view-transition-group(element) { 
         top: 0;
@@ -670,8 +673,9 @@
       }
 
       function stopMove(event: PointerEvent) {
-        if (event.target !== document.documentElement) return;
+        if (!moveState.moving || event.pointerId !== moveState.pointerId) return;
         moveState.moving = false;
+        moveState.pointerId = -1;
         const current = levelState.elements.length - 1;
         const node = levelState.elements[current]!;
         if (
@@ -755,7 +759,7 @@
       }
 
       function move(event: PointerEvent) {
-        if (!moveState.moving) return;
+        if (!moveState.moving || event.pointerId !== moveState.pointerId) return;
 
         const width = chambers[0]!.getBoundingClientRect().width;
         const quarter = width / 4;
