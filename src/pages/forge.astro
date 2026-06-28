@@ -1,0 +1,912 @@
+---
+
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Phase Forge | vtbag.dev</title>
+    <style is:global>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        view-transition-name: none;
+        color-scheme: light dark;
+      }
+      main {
+        height: 100vh;
+      }
+      :active-view-transition-type(basic) {
+        .lab-grid {
+          view-transition-name: grid;
+        }
+        header {
+          view-transition-name: header;
+        }
+        #message {
+          view-transition-name: message;
+        }
+        .breadcrumbs {
+          view-transition-name: breadcrumbs;
+        }
+      }
+      :active-view-transition-type(drag) {
+        #active-item {
+          view-transition-name: element;
+          view-transition-class: element;
+
+          .element-image {
+            view-transition-name: element-image;
+            view-transition-class: element;
+          }
+        }
+        &::view-transition-group(.element) {
+          animation-duration: 250ms;
+        }
+        &::view-transition-group(.element),
+        &::view-transition-old(.element),
+        &::view-transition-new(.element) {
+          animation-play-state: paused;
+          cursor: grabbing;
+          touch-action: none;
+          user-select: none;
+          animation-timing-function: linear;
+        }
+      }
+
+      :active-view-transition-type(breadcrumbs) {
+        .element-card {
+          view-transition-name: var(--vtn);
+          view-transition-class: card;
+        }
+        &::view-transition-new(.card):only-child {
+          transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          @starting-style {
+            top: 100%;
+          }
+        }
+        &::view-transition-old(.card):only-child {
+          transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          top: 100%;
+          @starting-style {
+            top: 0;
+          }
+        }
+      }
+
+      :active-view-transition-type(next) {
+        #action-button {
+          view-transition-name: action-button;
+        }
+        #active-item {
+          view-transition-name: element;
+        }
+      }
+      :active-view-transition-type(shuffle) {
+        span.text {
+          view-transition-name: span;
+        }
+        #final-item {
+          view-transition-name: final-item;
+        }
+        #active-item {
+          view-transition-name: element;
+        }
+        .reactor-center {
+          view-transition-name: center;
+        }
+        #action-button {
+          view-transition-name: action-button;
+        }
+        &::view-transition-old(element) {
+          animation-name: out;
+          animation-duration: 125ms;
+        }
+        &::view-transition-new(element) {
+          animation-name: in;
+          animation-duration: 125ms;
+          animation-delay: 125ms;
+        }
+        &::view-transition-new(final-item),
+        &::view-transition-old(final-item) {
+          height: 100%;
+          width: auto;
+        }
+      }
+
+      @keyframes out {
+        to {
+          transform: rotateY(90deg);
+        }
+      }
+
+      @keyframes in {
+        from {
+          transform: rotateY(90deg);
+        }
+      }
+
+      :active-view-transition-type(back) {
+        #action-button {
+          view-transition-name: action-button;
+        }
+        ::view-transition-old(element):only-child {
+          animation-name: out;
+        }
+      }
+      main {
+        background-color: light-dark(#f5f5f5, #0b0f19);
+        color: light-dark(#1f2937, #f3f4f6);
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+          Arial, sans-serif;
+        min-height: 80vmin;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+
+      /* Dashboard Header */
+      header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+      h1 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: light-dark(#4b5563, #9ca3af);
+        margin-bottom: 0.25rem;
+      }
+      p {
+        color: light-dark(#6b7280, #4b5563);
+        font-size: 0.875rem;
+      }
+
+      aside .element-card {
+        margin: 0 auto;
+      }
+      .lab-grid {
+        top: -6vmin;
+        display: grid;
+        grid-template-columns: min(240px, 30vmin) min(240px, 30vmin);
+        grid-template-rows: min(240px, 30vmin) min(240px, 30vmin);
+        gap: min(120px, 10vmin);
+        position: relative;
+        padding: 2rem;
+        box-shadow: inset 0 0 50px
+          light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.05));
+        border-radius: 24px;
+      }
+
+      .chamber {
+        background: light-dark(rgba(255, 255, 255, 0.8), rgba(17, 24, 39, 0.7));
+        border: 1px solid
+          light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.05));
+        border-radius: 24px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        transition:
+          border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+          box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: default;
+      }
+
+      .chamber:hover .chamber-bg-icon {
+        transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        opacity: 0.5;
+      }
+      .chamber.selected[data-type="heat"] {
+        border-color: light-dark(
+          rgba(239, 68, 68, 0.6),
+          rgba(239, 68, 68, 0.4)
+        );
+        box-shadow: 0 0 30px
+          light-dark(rgba(239, 68, 68, 0.25), rgba(239, 68, 68, 0.15));
+      }
+      .chamber.selected[data-type="freeze"] {
+        border-color: light-dark(
+          rgba(59, 130, 246, 0.6),
+          rgba(59, 130, 246, 0.4)
+        );
+        box-shadow: 0 0 30px
+          light-dark(rgba(59, 130, 246, 0.25), rgba(59, 130, 246, 0.15));
+      }
+      .chamber.selected[data-type="compress"] {
+        border-color: light-dark(
+          rgba(16, 185, 129, 0.6),
+          rgba(16, 185, 129, 0.4)
+        );
+        box-shadow: 0 0 30px
+          light-dark(rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.15));
+      }
+      .chamber.selected[data-type="radiate"] {
+        border-color: light-dark(
+          rgba(139, 92, 246, 0.6),
+          rgba(139, 92, 246, 0.4)
+        );
+        box-shadow: 0 0 30px
+          light-dark(rgba(139, 92, 246, 0.25), rgba(139, 92, 246, 0.15));
+      }
+
+      .chamber-title {
+        font-size: 2vmin;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: light-dark(#9ca3af, #6b7280);
+      }
+
+      .chamber-bg-icon {
+        font-size: 8vmin;
+        opacity: 0.33;
+        user-select: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .reactor-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: min(160px, 17vmin);
+        height: min(160px, 17vmin);
+        background: radial-gradient(
+          circle,
+          light-dark(rgba(249, 250, 251, 0.8), rgba(31, 41, 55, 0.8)) 0%,
+          light-dark(rgba(243, 244, 246, 0.9), rgba(17, 24, 39, 0.9)) 100%
+        );
+        border: 2px dashed
+          light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1;
+      }
+
+      .element-card {
+        background: light-dark(
+          rgba(255, 255, 255, 0.9),
+          rgba(255, 255, 255, 0.03)
+        );
+        /* backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px); */
+        border: 1px solid
+          light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+        border-radius: 12px;
+        width: 16vmin;
+        height: 16vmin;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 10px 25px
+          light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+        cursor: grab;
+        position: relative;
+        touch-action: none;
+        user-select: none;
+        padding: 0.5rem;
+      }
+
+      .element-image {
+        font-size: 8vmin;
+        line-height: 1;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      }
+
+      .element-name {
+        display: block;
+        font-size: 1.5vmin;
+        font-weight: 500;
+        color: light-dark(#1f2937, #e5e7eb);
+        text-align: center;
+        text-wrap-style: balance;
+      }
+
+      .chamber-slot {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .breadcrumbs {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+        .element-card {
+          cursor: default;
+          width: 16vmin;
+          height: 16vmin;
+          .element-image {
+            font-size: 6vmin;
+          }
+        }
+      }
+      .instructions {
+        text-align: center;
+        margin-bottom: 1rem;
+        font-size: 2vmin;
+        font-weight: 800;
+        color: light-dark(#4b5563, #9ca3af);
+      }
+      #final-item {
+        font-weight: 900;
+        color: light-dark(#c56e0b, #facc15);
+        &::before {
+          content: "[";
+          margin-right: 0.5rem;
+        }
+        &::after {
+          content: "]";
+          margin-left: 0.5rem;
+        }
+      }
+      #message {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 2vmin;
+        font-weight: 800;
+        color: light-dark(#10b981, #34d399);
+        &.error {
+          color: light-dark(#ef4444, #f87171);
+        }
+      }
+
+      .corner-controls {
+        position: fixed;
+        left: max(1rem, env(safe-area-inset-left));
+        bottom: max(1rem, env(safe-area-inset-bottom));
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        z-index: 20;
+      }
+
+      .corner-button {
+        appearance: none;
+        border: 1px solid
+          light-dark(rgba(0, 0, 0, 0.12), rgba(255, 255, 255, 0.12));
+        border-radius: 999px;
+        padding: 0.85rem 1.1rem;
+        min-width: 8.5rem;
+        background: light-dark(
+          rgba(255, 255, 255, 0.82),
+          rgba(17, 24, 39, 0.72)
+        );
+        /* backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px); */
+        color: light-dark(#1f2937, #f3f4f6);
+        box-shadow: 0 12px 30px
+          light-dark(rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.35));
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        line-height: 1;
+        text-transform: uppercase;
+        transition:
+          transform 0.2s ease,
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          background-color 0.2s ease;
+      }
+
+      .corner-button:hove {
+        transform: translateY(-1px);
+        border-color: light-dark(
+          rgba(0, 0, 0, 0.18),
+          rgba(255, 255, 255, 0.18)
+        );
+        box-shadow: 0 16px 36px
+          light-dark(rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.42));
+      }
+
+      .corner-button:active {
+        transform: translateY(0);
+      }
+
+      .corner-button--accent {
+        background: linear-gradient(
+          135deg,
+          light-dark(rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.88)),
+          light-dark(rgba(251, 191, 36, 0.86), rgba(234, 88, 12, 0.84))
+        );
+        color: #111827;
+      }
+
+      .corner-button--accent:hover {
+        border-color: rgba(245, 158, 11, 0.35);
+      }
+
+      .corner-button--ghost {
+        background: light-dark(
+          rgba(255, 255, 255, 0.66),
+          rgba(15, 23, 42, 0.5)
+        );
+      }
+    </style>
+    <script>
+      import { mayStartViewTransition } from "@vtbag/utensil-drawer/may-start-view-transition";
+      import confetti from "canvas-confetti";
+      import data from "./game-data.json";
+
+      const levelNumber = document.querySelector<HTMLSpanElement>("#level")!;
+      const message = document.querySelector<HTMLParagraphElement>("#message")!;
+      const targetName =
+        document.querySelector<HTMLSpanElement>("#final-item")!;
+      const center = document.querySelector<HTMLDivElement>(".reactor-center")!;
+      const element = document.querySelector<HTMLDivElement>("#active-item")!;
+      const elementImage =
+        element.querySelector<HTMLSpanElement>(".element-image")!;
+      const elementName =
+        element.querySelector<HTMLSpanElement>(".element-name")!;
+      const resetButton =
+        document.querySelector<HTMLButtonElement>("#reset-button")!;
+      const actionButton =
+        document.querySelector<HTMLButtonElement>("#action-button")!;
+      const chambers = document.querySelectorAll<HTMLDivElement>(".chamber")!;
+      const breadcrumbs =
+        document.querySelector<HTMLDivElement>(".breadcrumbs")!;
+
+      const effects = [
+        `        
+        filter: saturate(2.5) brightness(1.2) hue-rotate(340deg) blur(1px);
+        transform: skewX(-3deg);
+      `,
+        `
+        filter: saturate(0.2) brightness(1.2) hue-rotate(190deg) blur(1px);
+        transform: skewX(3deg);
+      `,
+        `  
+        filter: saturate(3) brightness(1.2) contrast(1.3);
+        transform: scaleY(0.5) scaleX(1.5) skewX(3deg);
+      `,
+        `
+        filter: saturate(3) hue-rotate(90deg) brightness(1.3) contrast(1.2) blur(1px);
+        transform: skewX(-3deg);
+      `,
+      ];
+      const shadows = [
+        `box-shadow: inset 0 0 30px rgba(255, 0,0, 0.6), 0 0 20px rgba(255, 230, 200, 0.8);`,
+        `box-shadow: inset 0 0 30px rgba(0, 210, 255, 0.6), 0 0 20px rgba(135, 206, 250, 0.8);`,
+        `box-shadow: inset 0 0 30px rgba(0, 210, 255, 0.6), 0 0 20px rgba(135, 206, 250, 0.8);`,
+        `box-shadow: inset 0 0 35px rgba(0, 210, 255, 0.6), 0 0 60px rgba(135, 206, 250, 0.8);`,
+      ];
+      let styles = new CSSStyleSheet();
+      document.adoptedStyleSheets.push(styles);
+
+      const levelState = {
+        level: 0,
+        tree: 0,
+        index: 0,
+        random: Math.floor(Math.random() * data.length),
+        elements: [data[0]!.items[0]!],
+      };
+
+      const moveState = {
+        x: 0,
+        y: 0,
+        moving: false,
+      };
+
+      resetForge();
+
+      resetButton.addEventListener("click", resetForge);
+      actionButton.addEventListener("click", (event) => {
+        if ((event.target as HTMLButtonElement).innerText === "NEXT LEVEL") {
+          mayStartViewTransition(
+            {
+              update: () => {
+                ++levelState.level;
+                initializeLevel();
+                actionButton.innerText = "SHUFFLE";
+                resetButton.insertAdjacentElement("beforebegin", actionButton);
+              },
+              types: ["next"],
+            },
+            { useTypesPolyfill: "always", collisionBehavior: "chaining" },
+          );
+        } else if (
+          (event.target as HTMLButtonElement).innerText === "SHUFFLE"
+        ) {
+          levelState.random = Math.floor(Math.random() * data.length);
+          initializeLevel();
+        } else /* BACK */ {
+          const last = breadcrumbs.lastElementChild as HTMLDivElement | null;
+          if (!last) return;
+          write("");
+          element.style.viewTransitionName = "gone";
+          last.style.viewTransitionName = "element";
+          mayStartViewTransition(
+            {
+              update: () => {
+                last.style.viewTransitionName = "";
+                element.style.viewTransitionName = "element";
+                levelState.elements.pop();
+                levelState.elements.length > 1 ||
+                  (actionButton.innerText = "SHUFFLE");
+                updateElement();
+                updateBreadcrumbs();
+              },
+              types: ["breadcrumbs", "back"],
+            },
+            { useTypesPolyfill: "always", collisionBehavior: "chaining" },
+          ).ready.then(() => (element.style.viewTransitionName = ""));
+        }
+      });
+
+      function updateElement() {
+        const node = levelState.elements[levelState.elements.length - 1]!;
+        elementImage.innerText = node.icon;
+        elementName.innerText = node.name;
+      }
+
+      async function resetForge() {
+        levelState.level = 1;
+        await initializeLevel();
+      }
+
+      async function initializeLevel() {
+        message.textContent = "";
+        levelNumber.innerText = levelState.level.toString();
+        levelState.tree = (levelState.level + levelState.random) % data.length;
+        while (data[levelState.tree]!.maxDepth < levelState.level) {
+          ++levelState.tree;
+          if (
+            levelState.tree ===
+            (levelState.level + levelState.random) % data.length
+          ) {
+            message.textContent = "No more levels available. Congratulations!";
+            message.classList.add("success");
+            return;
+          }
+        }
+        levelState.elements.length = 0;
+        const level = data[levelState.tree]!;
+        let slot = 0;
+        for (let i = 0; i < 4; i++) {
+          slot = ~~(Math.random() * level.items.length);
+          console.log(levelState.level, slot, level.items[slot]);
+          while (level.items[slot]!.depth <= levelState.level) {
+            slot = ~~(Math.random() * level.items.length);
+          }
+          mayStartViewTransition(
+            {
+              update: () => {
+                resetButton.insertAdjacentElement("beforebegin", actionButton);
+                actionButton.innerText = "SHUFFLE";
+                updateBreadcrumbs();
+                targetName.innerText = level.items[slot]!.name;
+                elementImage.innerText = level.items[slot]!.icon;
+                elementName.innerText = targetName.innerText;
+              },
+              types: ["shuffle"],
+            },
+            { useTypesPolyfill: "always", collisionBehavior: "chaining" },
+          );
+
+          await new Promise((resolve) => setTimeout(resolve, 500));
+        }
+        let start = data[levelState.tree]!.items[slot]!;
+        for (let i = 0; i < levelState.level; ++i) {
+          start = data[levelState.tree]!.items[start.parent]!;
+        }
+        levelState.elements.push(start);
+        mayStartViewTransition(
+          {
+            update: () => {
+              updateElement();
+            },
+            types: ["shuffle"],
+          },
+          { useTypesPolyfill: "always", collisionBehavior: "chaining" },
+        );
+      }
+      function updateBreadcrumbs() {
+        const breadcrumbs =
+          document.querySelector<HTMLDivElement>(".breadcrumbs")!;
+        breadcrumbs.innerHTML = "";
+        levelState.elements.slice(-4, -1).forEach((node) => {
+          const card = document.createElement("div");
+          card.classList.add("element-card");
+          const image = document.createElement("span");
+          image.classList.add("element-image");
+          image.innerText = node.icon;
+          const name = document.createElement("span");
+          name.classList.add("element-name");
+          name.innerText = node.name;
+          card.appendChild(image);
+          card.appendChild(name);
+          card.style.setProperty("--vtn", CSS.escape(node.name));
+          breadcrumbs.appendChild(card);
+        });
+      }
+
+      element?.addEventListener("pointerdown", startMove);
+      document.documentElement.addEventListener("pointermove", move);
+      document.documentElement.addEventListener("pointerup", stopMove);
+
+      function startMove(event: PointerEvent) {
+        moveState.x = event.clientX;
+        moveState.y = event.clientY;
+        moveState.moving = true;
+        styles.replaceSync(`
+      ::view-transition-group(element) { 
+        top: 0;
+        left: 0;
+      }`);
+        mayStartViewTransition(
+          {
+            types: ["drag"],
+          },
+          { useTypesPolyfill: "always", collisionBehavior: "chaining" },
+        );
+        levelState.elements.push(
+          levelState.elements[levelState.elements.length - 1]!,
+        );
+      }
+
+      function stopMove(event: PointerEvent) {
+        if (event.target !== document.documentElement) return;
+        moveState.moving = false;
+        const current = levelState.elements.length - 1;
+        const node = levelState.elements[current]!;
+        if (
+          node.name === "Invalid Reaction" ||
+          node.name === levelState.elements[current - 1]?.name
+        ) {
+          levelState.elements.pop();
+          updateElement();
+        }
+        document.getAnimations().forEach((animation) => animation.play());
+        styles.replaceSync(`
+      ::view-transition-group(.element) { 
+        top: 0px;
+        left: 0px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }`);
+        chambers.forEach((chamber) => chamber.classList.remove("selected"));
+        if (
+          node.reactions[0] === -1 &&
+          node.reactions[1] === -1 &&
+          node.reactions[2] === -1 &&
+          node.reactions[3] === -1
+        ) {
+          write("No more moves. Try to go back!", true);
+        } else {
+          write("");
+        }
+        if (elementName.innerText === targetName.innerText) {
+          write("Congratulations! You've completed the level!");
+
+          const defaults = {
+            spread: 360,
+            ticks: 150,
+            gravity: 0,
+            decay: 0.94,
+            startVelocity: 30,
+            colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
+          };
+
+          function shoot() {
+            confetti({
+              ...defaults,
+              particleCount: 40,
+              scalar: 1.2,
+              shapes: ["star"],
+            });
+
+            confetti({
+              ...defaults,
+              particleCount: 10,
+              scalar: 0.75,
+              shapes: ["circle"],
+            });
+          }
+
+          setTimeout(shoot, 0);
+          setTimeout(shoot, 100);
+          setTimeout(shoot, 200);
+          mayStartViewTransition(
+            {
+              update: () => {
+                actionButton.innerText = "NEXT LEVEL";
+                center.insertAdjacentElement("afterbegin", actionButton);
+              },
+              types: ["next"],
+            },
+            { useTypesPolyfill: "always", collisionBehavior: "chaining" },
+          );
+        }
+        mayStartViewTransition(
+          {
+            update: () => {
+              updateBreadcrumbs();
+              actionButton.innerText === "SHUFFLE" &&
+                (actionButton.innerText = "BACK");
+            },
+            types: ["breadcrumbs"],
+          },
+          { useTypesPolyfill: "always", collisionBehavior: "chaining" },
+        );
+      }
+
+      function move(event: PointerEvent) {
+        if (!moveState.moving) return;
+
+        const width = chambers[0]!.getBoundingClientRect().width;
+        const quarter = width / 4;
+        let top = event.clientY - moveState.y;
+        let left = event.clientX - moveState.x;
+        const distance = Math.sqrt(top * top + left * left) / width;
+        if (distance > 1.2) {
+          top /= distance / 1.2;
+          left /= distance / 1.2;
+        }
+        const current = levelState.elements.length - 1;
+        const where =
+          top > quarter && left > quarter
+            ? 3
+            : top > quarter && left < -quarter
+              ? 2
+              : top < -quarter && left > quarter
+                ? 1
+                : top < -quarter && left < -quarter
+                  ? 0
+                  : -1;
+
+        chambers.forEach((chamber) => chamber.classList.remove("selected"));
+        if (where !== -1) {
+          chambers[where]!.classList.add("selected");
+        }
+        const next = levelState.elements[current - 1]?.reactions[where] ?? -1;
+        if (next !== -1) {
+          levelState.elements[current] = data[levelState.tree]!.items[next]!;
+          updateElement();
+        } else {
+          levelState.elements[current] =
+            where === -1
+              ? levelState.elements[current - 1]!
+              : {
+                  icon: "⛔",
+                  name: "Invalid Reaction",
+                  reactions: [],
+                  depth: 0,
+                  parent: -1,
+                };
+          updateElement();
+        }
+        styles.replaceSync(`
+      ::view-transition-group(element-image),
+      ::view-transition-group(element) { 
+        top: ${top}px;
+        left: ${left}px;
+      }
+      ::view-transition-new(element) {${effects[where] ?? ""}}
+      ::view-transition-new(element-image) {${effects[where] ?? ""}}
+      ::view-transition-new(element) {${shadows[where] ?? ""}}
+      ::view-transition-image-pair(.element) {
+      scale: ${Math.min(2, 1 + distance / 2)};
+      }`);
+
+        document.getAnimations().forEach((animation) => {
+          if (
+            animation.effect?.pseudoElement?.startsWith(
+              "::view-transition-new(element",
+            ) ||
+            animation.effect?.pseudoElement?.startsWith(
+              "::view-transition-old(element",
+            )
+          ) {
+            animation.currentTime = Math.min(248, (distance - 0.5) * 240);
+          }
+        });
+      }
+
+      function write(text: string, error = false) {
+        if (message.innerText === text) return;
+        mayStartViewTransition(
+          {
+            update: () => {
+              message.textContent = text;
+              message.classList.toggle("error", error);
+            },
+            types: ["basic"],
+          },
+          {
+            collisionBehavior: "chaining",
+            useTypesPolyfill: "always",
+          },
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Phase Forge</h1>
+        <p>Quantum Phase Synthesis & State Isolation</p>
+        <p class="instructions">
+          Level <span id="level"></span><br />Drag the center element into the
+          correct chamber<br /><span class="text"
+            >to finally create an item named</span
+          >
+          <span id="final-item">Cryo-Trapped Strongly Coupled Plasma</span>
+        </p>
+        <p id="message" class="error"></p>
+      </header>
+      <section class="lab-grid">
+        <div class="chamber" data-type="heat">
+          <span class="chamber-title">Furnace Chamber</span>
+          <div class="chamber-bg-icon">🔥</div>
+          <div class="chamber-slot"></div>
+        </div>
+
+        <div class="chamber" data-type="freeze">
+          <span class="chamber-title">Freezing Chamber</span>
+          <div class="chamber-bg-icon">❄️</div>
+          <div class="chamber-slot"></div>
+        </div>
+
+        <div class="reactor-center">
+          <div class="element-card" id="active-item">
+            <span class="element-image">💧</span>
+            <span class="element-name">Water</span>
+          </div>
+        </div>
+
+        <div class="chamber" data-type="compress">
+          <span class="chamber-title">Pressure Chamber</span>
+          <div class="chamber-bg-icon">🗜</div>
+          <div class="chamber-slot"></div>
+        </div>
+
+        <div class="chamber" data-type="radiate">
+          <span class="chamber-title">Radiation Chamber</span>
+          <div class="chamber-bg-icon">☢️</div>
+          <div class="chamber-slot"></div>
+        </div>
+      </section>
+      <div class="breadcrumbs"></div>
+    </main>
+    <div class="corner-controls" aria-label="Forge controls">
+      <button
+        class="corner-button corner-button--ghost"
+        id="action-button"
+        type="button"
+      >
+        SHUFFLE
+      </button>
+      <button
+        class="corner-button corner-button--accent"
+        id="reset-button"
+        type="button"
+      >
+        Reset
+      </button>
+    </div>
+  </body>
+</html>
