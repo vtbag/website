@@ -1,0 +1,77 @@
+
+---
+import "./style.css"
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Phase Forge | vtbag.dev</title>
+    <script src="./main.ts"></script>
+  </head>
+  <body>
+    <main>
+      <header>
+        <h1>Phase Forge</h1>
+        <p>Quantum Phase Synthesis & State Isolation</p>
+        <p class="instructions">
+          Level <span id="level"></span><br />Drag the center element into the
+          correct chamber<br /><span class="text"
+            >to finally create an item named</span
+          >
+          <span id="final-item">Searching</span>
+        </p>
+        <p id="message" class="error"></p>
+      </header>
+      <section class="lab-grid">
+        <div class="chamber" data-type="heat">
+          <span class="chamber-title">Furnace Chamber</span>
+          <div class="chamber-bg-icon">🔥</div>
+          <div class="chamber-slot"></div>
+        </div>
+
+        <div class="chamber" data-type="freeze">
+          <span class="chamber-title">Freezing Chamber</span>
+          <div class="chamber-bg-icon">❄️</div>
+          <div class="chamber-slot"></div>
+        </div>
+
+        <div class="reactor-center">
+          <div class="element-card" id="active-item">
+            <span class="element-image"></span>
+            <span class="element-name"></span>
+          </div>
+        </div>
+
+        <div class="chamber" data-type="compress">
+          <span class="chamber-title">Pressure Chamber</span>
+          <div class="chamber-bg-icon">🗜</div>
+          <div class="chamber-slot"></div>
+        </div>
+
+        <div class="chamber" data-type="radiate">
+          <span class="chamber-title">Radiation Chamber</span>
+          <div class="chamber-bg-icon">☢️</div>
+          <div class="chamber-slot"></div>
+        </div>
+      </section>
+      <div class="breadcrumbs"></div>
+    </main>
+    <div class="corner-controls" aria-label="Forge controls">
+      <button
+        class="corner-button corner-button--ghost"
+        id="action-button"
+        type="button"
+      >
+        SHUFFLE
+      </button>
+      <button
+        class="corner-button corner-button--accent"
+        id="reset-button"
+        type="button"
+      >
+        Reset
+      </button>
+    </div>
+  </body>
+</html>
