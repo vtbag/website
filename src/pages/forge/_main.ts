@@ -131,6 +131,7 @@ function passiveUpdateElement() {
 }
 
 async function initializeLevel() {
+  styles.replaceSync(``);
   write("");
   disableGame();
   levelState.tree = (levelState.level + levelState.random) % data.length;
@@ -264,7 +265,7 @@ function stopMove(event: PointerEvent) {
       ::view-transition-group(.element) { 
         top: 0px;
         left: 0px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       }`);
   }
   updateBreadcrumbs();
@@ -279,7 +280,7 @@ function stopMove(event: PointerEvent) {
     write("No more moves. Try to go back!", true);
   }
   if (elementName.innerText === targetName.innerText) {
-    write("Congratulations! You've completed the level!");
+    write("Congratulations! You've completed this level!");
     quickShot();
     actionButtonText("NEXT LEVEL");
     actionButtonRelocate(center);
@@ -308,32 +309,14 @@ function move(event: PointerEvent) {
 
 function work() {
 
-  let top = moveState.top;
-  let left = moveState.left;
 
-  const width = chambers[0]!.getBoundingClientRect().width;
-  const quarter = width / 4;
-  const distance = Math.sqrt(top * top + left * left) / width;
-  if (distance > 1.2) {
-    top /= distance / 1.2;
-    left /= distance / 1.2;
-  }
-  const current = levelState.elements.length - 1;
-  const where =
-    top > quarter && left > quarter
-      ? 3
-      : top > quarter && left < -quarter
-        ? 2
-        : top < -quarter && left > quarter
-          ? 1
-          : top < -quarter && left < -quarter
-            ? 0
-            : -1;
+  const { where, distance, top, left } = geometry(moveState.top, moveState.left);
 
   chambers.forEach((chamber) => chamber.classList.remove("selected"));
   if (where !== -1) {
     chambers[where]!.classList.add("selected");
   }
+  const current = levelState.elements.length - 1;
   const next = levelState.elements[current - 1]?.reactions[where] ?? -1;
   if (next !== -1) {
     levelState.elements[current] = data[levelState.tree]!.items[next]!;
@@ -351,9 +334,26 @@ function work() {
         };
     passiveUpdateElement();
   }
+  drag(top, left, where, distance);
+  scrub(distance);
+}
+
+function scrub(distance: number) {
+  document.getAnimations().forEach((animation) => {
+    if (animation.effect?.pseudoElement?.startsWith(
+      "::view-transition-new(element"
+    ) ||
+      animation.effect?.pseudoElement?.startsWith(
+        "::view-transition-old(element"
+      )) {
+      animation.currentTime = Math.min(248, (distance - 0.5) * 240);
+    }
+  });
+}
+
+function drag(top: number, left: number, where: number, distance: number) {
   styles.replaceSync(`
-      ::view-transition-group(element-image),
-      ::view-transition-group(element) { 
+      ::view-transition-group(.element) { 
         top: ${top}px;
         left: ${left}px;
       }
@@ -363,19 +363,26 @@ function work() {
       ::view-transition-image-pair(.element) {
       scale: ${Math.min(2, 1 + distance / 2)};
       }`);
+}
 
-  document.getAnimations().forEach((animation) => {
-    if (
-      animation.effect?.pseudoElement?.startsWith(
-        "::view-transition-new(element",
-      ) ||
-      animation.effect?.pseudoElement?.startsWith(
-        "::view-transition-old(element",
-      )
-    ) {
-      animation.currentTime = Math.min(248, (distance - 0.5) * 240);
-    }
-  });
+function geometry(top: number, left: number) {
+  const width = chambers[0]!.getBoundingClientRect().width;
+  const quarter = width / 4;
+  const distance = Math.sqrt(top * top + left * left) / width;
+  if (distance > 1.2) {
+    top /= distance / 1.2;
+    left /= distance / 1.2;
+  }
+  const where = top > quarter && left > quarter
+    ? 3
+    : top > quarter && left < -quarter
+      ? 2
+      : top < -quarter && left > quarter
+        ? 1
+        : top < -quarter && left < -quarter
+          ? 0
+          : -1;
+  return { where, distance, top, left };
 }
 
 function disableGame() {
