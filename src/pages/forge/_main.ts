@@ -45,7 +45,7 @@ const shadows = [
   `box-shadow: inset 0 0 30px rgba(0, 210, 255, 0.6), 0 0 20px rgba(135, 206, 250, 0.8);`,
   `box-shadow: inset 0 0 35px rgba(0, 210, 255, 0.6), 0 0 60px rgba(135, 206, 250, 0.8);`,
 ];
-let styles = new CSSStyleSheet();
+const styles = new CSSStyleSheet();
 document.adoptedStyleSheets.push(styles);
 
 const levelState = {
@@ -225,7 +225,13 @@ function startMove(event: PointerEvent) {
       types: ["drag"],
     },
     { useTypesPolyfill: "always", collisionBehavior: "chaining", respectReducedMotion: false },
-  );
+  ).finished.then(() => {
+    styles.replaceSync(`
+      ::view-transition-group(.element) { 
+        top: 0px;
+        left: 0px;
+      }`);
+  });
   levelState.elements.push(
     levelState.elements[levelState.elements.length - 1]!,
   );
