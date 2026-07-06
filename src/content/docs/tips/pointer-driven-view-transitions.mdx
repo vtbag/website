@@ -1,0 +1,42 @@
+---
+title: Pointer Driven View Transitions
+description: "Learn how to create interactive view transitions that adapt in real time to pointer movement."
+draft: true
+head:
+  - tag: meta
+    attrs:
+      property: "og:image"
+      content: "/pointer-driven-og.png"
+  - tag: meta
+    attrs:
+      property: "draft"
+      content: "true"
+---
+Wouldn't it be cool to have images of whatever complex DOM subtrees of your current page that you can bend and move around as you like? 
+
+One way to look at the view transition api is this: The API generates snapshots that you can use for animations _&hellip;in whatever way you want_. 
+
+
+**In a nutshell**
+* You name the DOM elements you want snapshots for.
+* The View Transition API generates the images for your DOM nodes, no matter how complex the subtree is. And they come in two flavors: bitmaps plus captured CSS properties for the  old image and replaced elements for the new images.
+* Those images are rendered in a layer above everything else. It is easy to move your images freely across the viewport. Even more fun with element-scoped view transitions.
+* The magic lasts as long as there exists at least some animation on one of the generated pseudo elements. Doesn't have to be a CSS animation, CSS transitions and WAAPI animations work as well. You can even provide a promise to the API to wait for.
+* If you want, you can cancel unnecessary default animations in your stylesheet. or you keep them and scrub through their timeline by assigning to the currentTime property of their animations.
+
+## Benefits of Animating Images instead of DOM Subtrees 
+Moving real subtrees through the DOM for animations might quickly become a complex task when the elements are nested in the general layout. . Moving images that render above the normal elements is much easier. Libraries for taking screenshots of DOM elements exist, but they are usually  not very accurate. New techniques like 
+
+Ok, that was a lot of information. To see what is possible with this approach, take a look at the [Forge](https://vtbag.dev/forge) project. It is a small web application that allows you to drag and drop elements into a forge and combine them into new elements. The Forge uses the View Transition API to animate the elements as they are dragged around.
+
+Here are the details step by step.
+
+## Drag-Driven View Transitions
+
+Grab and drag your transition pseudo-elements. 
+
+The natural way to find out how to forge new elements in the example is to just try it out. We want to visually move the element from the centre into one of the forges to see what happens. 
+
+This is very similar to the typical drag and drop code:
+```ts title="Drag and Drop"
+```

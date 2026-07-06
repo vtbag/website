@@ -21,30 +21,6 @@ const chambers = document.querySelectorAll<HTMLDivElement>(".chamber")!;
 const breadcrumbs =
   document.querySelector<HTMLDivElement>(".breadcrumbs")!;
 
-const effects = [
-  `        
-        filter: saturate(2.5) brightness(1.2) hue-rotate(340deg);
-        transform: skewX(-3deg);
-      `,
-  `
-        filter: saturate(0.2) brightness(1.2) hue-rotate(190deg);
-        transform: skewX(3deg);
-      `,
-  `  
-        filter: saturate(3) brightness(1.2) contrast(1.3);
-        transform: scaleY(0.5) scaleX(1.5) skewX(3deg);
-      `,
-  `
-        filter: saturate(3) hue-rotate(90deg) brightness(1.3) contrast(1.2);
-        transform: skewX(-3deg);
-      `,
-];
-const shadows = [
-  `box-shadow: inset 0 0 30px rgba(255, 0,0, 0.6), 0 0 20px rgba(255, 230, 200, 0.8);`,
-  `box-shadow: inset 0 0 30px rgba(0, 210, 255, 0.6), 0 0 20px rgba(135, 206, 250, 0.8);`,
-  `box-shadow: inset 0 0 30px rgba(0, 210, 255, 0.6), 0 0 20px rgba(135, 206, 250, 0.8);`,
-  `box-shadow: inset 0 0 35px rgba(0, 210, 255, 0.6), 0 0 60px rgba(135, 206, 250, 0.8);`,
-];
 const styles = new CSSStyleSheet();
 document.adoptedStyleSheets.push(styles);
 
@@ -65,6 +41,7 @@ const moveState = {
   moving: false,
   pointerId: -1,
   raf: 0,
+  lastWhere: -2,
 };
 
 resetForge();
@@ -114,9 +91,10 @@ function turnElement(icon?: string, name?: string) {
   mayStartViewTransition(
     {
       update: () => {
-        const node = levelState.elements[levelState.elements.length - 1]!;
-        elementImage.innerText = icon || node.icon;
-        elementName.innerText = name || node.name;
+        const last = levelState.elements.length - 1;
+        const node = levelState.elements[last];
+        elementImage.innerText = icon || node?.icon || elementImage.innerText;
+        elementName.innerText = name || node?.name || elementName.innerText;
 
       },
       types: ["shuffle"],
@@ -126,12 +104,11 @@ function turnElement(icon?: string, name?: string) {
 }
 function passiveUpdateElement() {
   const node = levelState.elements[levelState.elements.length - 1]!;
-  elementImage.innerText = node.icon;
-  elementName.innerText = node.name;
+  elementImage.textContent = node.icon;
+  elementName.textContent = node.name;
 }
 
 async function initializeLevel() {
-  styles.replaceSync(``);
   write("");
   disableGame();
   levelState.tree = (levelState.level + levelState.random) % data.length;
@@ -152,7 +129,7 @@ async function initializeLevel() {
   levelState.elements.length = 0;
   const level = data[levelState.tree]!;
   let slot = 0;
-  for (let i = 0; i < (reducedMotion() ? 1 : 4); i++) {
+  for (let i = 0; i < (reducedMotion() ? 1 : 1); i++) {
     slot = ~~(Math.random() * level.items.length);
     while (level.items[slot]!.depth <= levelState.level) {
       slot = (slot + 1) % level.items.length;
@@ -216,26 +193,23 @@ function startMove(event: PointerEvent) {
   moveState.y = event.clientY;
   moveState.moving = true;
   moveState.pointerId = event.pointerId;
-  styles.replaceSync(`
-      ::view-transition-group(element) { 
-        top: 0;
-        left: 0;
-      }`);
-  mayStartViewTransition(
+  moveState.lastWhere = -2;
+  drag(0, 0, -1, 0);
+  enableGame();
+  const transition = mayStartViewTransition(
     {
       types: ["drag"],
     },
     { useTypesPolyfill: "always", collisionBehavior: "chaining", respectReducedMotion: false },
-  ).finished.then(() => {
-    styles.replaceSync(`
-      ::view-transition-group(.element) { 
-        top: 0px;
-        left: 0px;
-      }`);
-  });
-  levelState.elements.push(
-    levelState.elements[levelState.elements.length - 1]!,
   );
+  transition.ready.then(() => [...document.getAnimations()]
+    .filter(animation => animation.effect?.pseudoElement?.startsWith("::view-transition"))
+    .forEach((animation) => animation.pause()));
+  transition.finished.finally(() => {
+    styles.replaceSync("");
+    turnElement();
+  });
+  levelState.elements.push(levelState.elements[levelState.elements.length - 1]!);
 }
 
 function stopMove(event: PointerEvent) {
@@ -244,30 +218,28 @@ function stopMove(event: PointerEvent) {
   moveState.moving = false;
   moveState.pointerId = -1;
   disableGame();
-  const current = levelState.elements.length - 1;
-  const node = levelState.elements[current]!;
+  let current = levelState.elements.length - 1;
+  let node = levelState.elements[current]!;
   if (
     node.name === "Invalid Reaction" ||
     node.name === levelState.elements[current - 1]?.name
   ) {
     levelState.elements.pop();
-    passiveUpdateElement();
+    --current;
+    node = levelState.elements[current]!;
   }
-  document.getAnimations().forEach((animation) => animation.play());
-  if (reducedMotion()) {
-    styles.replaceSync(`
-      ::view-transition-group(.element) { 
-        top: 0px;
-        left: 0px;
-      }`);
-  } else {
-    styles.replaceSync(`
-      ::view-transition-group(.element) { 
-        top: 0px;
-        left: 0px;
-        transition: top 0.3s cubic-bezier(0.4, 0, 0.2, 1), left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      }`);
+  document.documentElement.classList.add("back");
+  if (!reducedMotion()) {
+    styles.replaceSync(``);
   }
+  drag(0, 0, -1, 0);
+
+ document.getAnimations().forEach((animation) => animation.play());
+  setTimeout(() => {
+    document.getAnimations().forEach((animation) => animation.finish());
+    document.documentElement.classList.remove("back");
+  }, 300);
+
   updateBreadcrumbs();
   chambers.forEach((chamber) => chamber.classList.remove("selected"));
   write("");
@@ -308,61 +280,62 @@ function move(event: PointerEvent) {
 }
 
 function work() {
-
-
   const { where, distance, top, left } = geometry(moveState.top, moveState.left);
-
   chambers.forEach((chamber) => chamber.classList.remove("selected"));
   if (where !== -1) {
     chambers[where]!.classList.add("selected");
   }
   const current = levelState.elements.length - 1;
   const next = levelState.elements[current - 1]?.reactions[where] ?? -1;
-  if (next !== -1) {
-    levelState.elements[current] = data[levelState.tree]!.items[next]!;
-    passiveUpdateElement();
-  } else {
-    levelState.elements[current] =
-      where === -1
+  levelState.elements[current] =
+    next !== -1
+      ? data[levelState.tree]!.items[next]!
+      : where === -1
         ? levelState.elements[current - 1]!
         : {
           icon: "⛔",
           name: "Invalid Reaction",
-          reactions: [],
+          reactions: [-1, -1, -1, -1],
           depth: 0,
           parent: -1,
         };
-    passiveUpdateElement();
-  }
+  passiveUpdateElement();
+
   drag(top, left, where, distance);
-  scrub(distance);
+  const time = (distance - 0.33) * 409;
+  document.documentElement.style.setProperty("--extend", "" + Math.max(0, Math.min(1, time / 250)));
+  scrub([
+    "::view-transition-new(element)",
+    "::view-transition-old(element)",
+    "::view-transition-new(element-image)",
+    "::view-transition-old(element-image)",
+  ], time);
 }
 
-function scrub(distance: number) {
+function scrub(pseudoElement: string | string[], time: number) {
   document.getAnimations().forEach((animation) => {
-    if (animation.effect?.pseudoElement?.startsWith(
-      "::view-transition-new(element"
-    ) ||
-      animation.effect?.pseudoElement?.startsWith(
-        "::view-transition-old(element"
-      )) {
-      animation.currentTime = Math.min(248, (distance - 0.5) * 240);
+    if (Array.isArray(pseudoElement)) {
+      if (pseudoElement.includes(animation.effect?.pseudoElement ?? "")) {
+        animation.currentTime = time;
+      }
+    } else {
+      if (animation.effect?.pseudoElement === pseudoElement) {
+        animation.currentTime = time;
+      }
     }
   });
 }
 
 function drag(top: number, left: number, where: number, distance: number) {
-  styles.replaceSync(`
-      ::view-transition-group(.element) { 
-        top: ${top}px;
-        left: ${left}px;
-      }
-      ::view-transition-new(element) {${effects[where] ?? ""}}
-      ::view-transition-new(element-image) {${effects[where] ?? ""}}
-      ::view-transition-new(element) {${shadows[where] ?? ""}}
-      ::view-transition-image-pair(.element) {
-      scale: ${Math.min(2, 1 + distance / 2)};
-      }`);
+  document.documentElement.style.setProperty("--top", `${top}px`);
+  document.documentElement.style.setProperty("--left", `${left}px`);
+  document.documentElement.style.setProperty("--scale", `${Math.min(2, 1 + distance * 0.5)}`);
+
+  document.documentElement.dataset.where = where === 0 ? "furnace" : where === 1 ? "freezing" : where === 2 ? "pressure" : where === 3 ? "radiation" : "";
+  if (where !== moveState.lastWhere) {
+    console.log("where", where, "lastWhere", moveState.lastWhere);
+    moveState.lastWhere = where;
+  }
 }
 
 function geometry(top: number, left: number) {
