@@ -12,31 +12,90 @@ head:
       property: "draft"
       content: "true"
 ---
-Wouldn't it be cool to have images of whatever complex DOM subtrees of your current page that you can bend and move around as you like? 
+Wouldn't it be cool to have images of whatever complex DOM subtrees that you can bend and move around as you like? Even though it is not advertised in the books, this is exactly what you get when you use the API to generate its pseudo-elements and widely ignore the default animations. 
 
-One way to look at the view transition api is this: The API generates snapshots that you can use for animations _&hellip;in whatever way you want_. 
+To see what is possible with this approach, take a look at the [Forge](https://vtbag.dev/forge) project. Try to drag the element from the center into the right chamber to forge new items.
+
+## Going the Fast Lane
+For the impatient, here are the bits and pieces you need to know for pointer driven view transitions:
+- How to generate the images
+- How to capture pointer movement to drive the animations
+- How to dynamically update styles based on pointer movement
 
 
-**In a nutshell**
-* You name the DOM elements you want snapshots for.
-* The View Transition API generates the images for your DOM nodes, no matter how complex the subtree is. And they come in two flavors: bitmaps plus captured CSS properties for the  old image and replaced elements for the new images.
-* Those images are rendered in a layer above everything else. It is easy to move your images freely across the viewport. Even more fun with element-scoped view transitions.
-* The magic lasts as long as there exists at least some animation on one of the generated pseudo elements. Doesn't have to be a CSS animation, CSS transitions and WAAPI animations work as well. You can even provide a promise to the API to wait for.
-* If you want, you can cancel unnecessary default animations in your stylesheet. or you keep them and scrub through their timeline by assigning to the currentTime property of their animations.
+### How to Generate the Images
 
-## Benefits of Animating Images instead of DOM Subtrees 
-Moving real subtrees through the DOM for animations might quickly become a complex task when the elements are nested in the general layout. . Moving images that render above the normal elements is much easier. Libraries for taking screenshots of DOM elements exist, but they are usually  not very accurate. New techniques like 
-
-Ok, that was a lot of information. To see what is possible with this approach, take a look at the [Forge](https://vtbag.dev/forge) project. It is a small web application that allows you to drag and drop elements into a forge and combine them into new elements. The Forge uses the View Transition API to animate the elements as they are dragged around.
-
-Here are the details step by step.
-
-## Drag-Driven View Transitions
-
-Grab and drag your transition pseudo-elements. 
-
-The natural way to find out how to forge new elements in the example is to just try it out. We want to visually move the element from the centre into one of the forges to see what happens. 
-
-This is very similar to the typical drag and drop code:
-```ts title="Drag and Drop"
+Tag the roots of the DOM subtrees you want to animate with a [view-transition-name](/basics/pseudos/#view-transition-names) CSS property.
+```css title="Tagging the elements" {2}
+card.active {
+  view-transition-name: card;
+}
 ```
+Then call [`document.startViewTransition()`](/basics/javascript/#startviewtransition) without parameters and immediately pause all view transition animations right at the beginning.
+```ts title={Generating and freezing the images} {1,5}
+document.startViewTransition?.()
+  .ready.then(() =>
+    [...document.getAnimations()]
+      .filter((a) => a.effect?.pseudoElement?.startsWith("::view-transition"))
+      .forEach((a) => {a.pause(), a.currentTime = 0}));
+```
+This will freeze the pseudo elements in their initial state, where the old image is fully visible and the new image is fully transparent. You can then use the pseudo elements for your own animations.
+
+### How to Capture Pointer Movement
+
+Grabbing and dragging view transition pseudo elements is a bit more involved. We want to start the animation when the card is clicked and we then want to drag the _pseudo-elements_ of the card around until the pointer is released. 
+```ts title="Drag and Drop" {9,14}
+const doc = document.documentElement;
+const card = doc.querySelector(".card");
+card.addEventListener("pointerdown", (event: PointerEvent) => {
+  moveState.startX = event.clientX;
+  moveState.startY = event.clientY;
+  // start view transition and freeze the pseudo elements
+  ...
+})
+doc.addEventListener("pointermove", (event: PointerEvent) => {
+  const left = event.clientX - moveState.startX;
+  const top = event.clientY - moveState.startY;
+  ...
+});
+doc.addEventListener("pointerup", (event: PointerEvent) => {
+  ...
+  document.getAnimations().forEach((animation) => animation.play());
+  ...
+});  
+```
+This is the important part: As you can't set event listeners on pseudo elements, we need to capture the pointer movement on the document.
+
+At the end we release the default animations created by the API. Once they come to an end, the browser will automatically remove the pseudo elements and the view transition is over.
+
+### Continuously Updating Styles Based on Pointer Movement
+Again, moving pseudos around is less straightforward than moving normal DOM elements. You can't set the style property on pseudo elements directly. Here is a simple approach with CSS pseudo-properties:
+```ts title="Continuously Updating Styles (JavaScript)"
+// with in the pointermove event listener
+doc.style.setProperty("--top", `${top}px`);
+doc.style.setProperty("--left", `${left}px`);
+```
+```css title="Continuously Updating Styles (CSS)"
+::view-transition-group(card) {
+  top: var(--top);
+  left: var(--left);
+}
+```
+This does the trick: The View Transition API positions the group pseudo-element at `top = 0`, `left = 0` and uses a transformation to position it at the place of the originating element. By changing the `top` and `left` properties of the group pseudo-element, we can move it around as we like.
+
+Putting it all together yields this codepen.io demo.
+
+## The More in Depth Explanation
+So while the old image feels much like a photography of the element, the new image is more like a live video stream. 
+
+As quickly as the pseudo elements appeared, as quickly they will be gone again. The default animations inserted by the API will end after 250ms. Once the last animation ends, the API will remove the pseudo-elements and the view transition is over.
+
+So we should freeze time as soon as the pseudos are generated:
+All view transition pseudo-elements have names that start with `::view-transition`. So the code above exactly pauses the default animations created by the API as soon as the view transition pseudo tree is set up. Setting current time to 0 ensures that the pseudo elements are frozen in their initial state, where the old image is fully visible and the new image is fully transparent. 
+
+Because `startViewTransition()` is called without an update callback, the API won't change the DOM  between the capturing of the old and new images. If you do not temper with the underlying image, the new images will be identical to the old images. This also renders the default animations as no-ops: 
+- [Group animations](/basics/styling/#group--morph-animation) leave position and transforms of the image unchanged.
+- The [cross fade animations](/basics/styling/#cross-fade-of-the-images) won't change any pixels as the blend between identical images.
+- [Group children animations](/basics/styling/#group-children-animation), if any, will keep the borders as they are.
+
+Rendering blocking during capture is barely noticeable. The old images are captured in the next frame after the call to `startViewTransition()` and the new images are generated in the frame after that. So the pseudo elements are available for animations after two frames.

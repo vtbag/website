@@ -162,28 +162,24 @@ The typical cross-fade effect of view transitions is implemented by animations d
 ::view-transition-old(x) {
   animation-name:
     -ua-view-transition-fade-out,
-    -ua-mix-blend-mode-plus-lighter;
+    -ua-mix-blend-mode-plus-lighter; /* only if the image pair has both images */
 }
 ::view-transition-new(x) {
   animation-name:
     -ua-view-transition-fade-in,
-    -ua-mix-blend-mode-plus-lighter;
+    -ua-mix-blend-mode-plus-lighter; /* only if the image pair has both images */
 }
 @keyframes -ua-view-transition-fade-out {
-  0% {
-    opacity: 1;
-  }
-  100% {
+  /* implicitly: from {opacity: 1}, if not set otherwise*/
+  to {
     opacity: 0;
   }
 }
 @keyframes -ua-view-transition-fade-in {
-  0% {
+  from {
     opacity: 0;
   }
-  100% {
-    opacity: 1;
-  }
+  /* implicitly: to {opacity: 1}, if not set otherwise*/
 }
 @keyframes -ua-mix-blend-mode-plus-lighter {
   0% {

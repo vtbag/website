@@ -21,9 +21,6 @@ const chambers = document.querySelectorAll<HTMLDivElement>(".chamber")!;
 const breadcrumbs =
   document.querySelector<HTMLDivElement>(".breadcrumbs")!;
 
-const styles = new CSSStyleSheet();
-document.adoptedStyleSheets.push(styles);
-
 const levelState = {
   level: 0,
   tree: 0,
@@ -41,7 +38,7 @@ const moveState = {
   moving: false,
   pointerId: -1,
   raf: 0,
-  lastWhere: -2,
+  lastWhere: -1,
 };
 
 resetForge();
@@ -103,7 +100,8 @@ function turnElement(icon?: string, name?: string) {
   );
 }
 function passiveUpdateElement() {
-  const node = levelState.elements[levelState.elements.length - 1]!;
+  const node = levelState.elements[levelState.elements.length - 1];
+  if (!node) return;
   elementImage.textContent = node.icon;
   elementName.textContent = node.name;
 }
@@ -193,9 +191,7 @@ function startMove(event: PointerEvent) {
   moveState.y = event.clientY;
   moveState.moving = true;
   moveState.pointerId = event.pointerId;
-  moveState.lastWhere = -2;
   drag(0, 0, -1, 0);
-  enableGame();
   const transition = mayStartViewTransition(
     {
       types: ["drag"],
@@ -206,7 +202,6 @@ function startMove(event: PointerEvent) {
     .filter(animation => animation.effect?.pseudoElement?.startsWith("::view-transition"))
     .forEach((animation) => animation.pause()));
   transition.finished.finally(() => {
-    styles.replaceSync("");
     turnElement();
   });
   levelState.elements.push(levelState.elements[levelState.elements.length - 1]!);
@@ -228,13 +223,10 @@ function stopMove(event: PointerEvent) {
     --current;
     node = levelState.elements[current]!;
   }
-  document.documentElement.classList.add("back");
-  if (!reducedMotion()) {
-    styles.replaceSync(``);
-  }
+  if (!reducedMotion()) document.documentElement.classList.add("back");
   drag(0, 0, -1, 0);
 
- document.getAnimations().forEach((animation) => animation.play());
+  document.getAnimations().forEach((animation) => animation.play());
   setTimeout(() => {
     document.getAnimations().forEach((animation) => animation.finish());
     document.documentElement.classList.remove("back");
@@ -331,11 +323,8 @@ function drag(top: number, left: number, where: number, distance: number) {
   document.documentElement.style.setProperty("--left", `${left}px`);
   document.documentElement.style.setProperty("--scale", `${Math.min(2, 1 + distance * 0.5)}`);
 
-  document.documentElement.dataset.where = where === 0 ? "furnace" : where === 1 ? "freezing" : where === 2 ? "pressure" : where === 3 ? "radiation" : "";
-  if (where !== moveState.lastWhere) {
-    console.log("where", where, "lastWhere", moveState.lastWhere);
-    moveState.lastWhere = where;
-  }
+  document.documentElement.dataset.where = ["furnace", "freezing", "pressure", "radiation"][where] ?? "";
+
 }
 
 function geometry(top: number, left: number) {
@@ -346,7 +335,7 @@ function geometry(top: number, left: number) {
     top /= distance / 1.2;
     left /= distance / 1.2;
   }
-  const where = top > quarter && left > quarter
+  let where = top > quarter && left > quarter
     ? 3
     : top > quarter && left < -quarter
       ? 2
@@ -355,6 +344,27 @@ function geometry(top: number, left: number) {
         : top < -quarter && left < -quarter
           ? 0
           : -1;
+  const center = where === -1 && top * top + left * left < 2 * quarter * quarter;
+  if (moveState.lastWhere !== -1 && !center) where = moveState.lastWhere;
+  moveState.lastWhere = where;
+  switch (where) {
+    case 0:
+      top = Math.min(top, -quarter);
+      left = Math.min(left, -quarter);
+      break;
+    case 1:
+      top = Math.min(top, -quarter);
+      left = Math.max(left, quarter);
+      break;
+    case 2:
+      top = Math.max(top, quarter);
+      left = Math.min(left, -quarter);
+      break;
+    case 3:
+      top = Math.max(top, quarter);
+      left = Math.max(left, quarter);
+      break;
+  }
   return { where, distance, top, left };
 }
 

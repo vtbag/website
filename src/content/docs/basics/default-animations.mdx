@@ -21,6 +21,10 @@ Additional technical details:
 
 * The browser's default exit and entry animations do more than just transition opacity. They also set the `mix-blend-mode` to `plus-lighter`, but only when both an old and new image are present in the image pair. Combined with the `isolation: isolate` setting of the image-pair, this ensures that during a cross-fade, the pixels of two identical images will sum to the original color and opacity. Without this, the images might exhibit an [overexposure-like effect](/tips/over-exposure/) during animations.
 
+    :::tip 
+    When you combine the fade effects with non overlapping movement of the old and new images, you might want to reconsider the `plus-lighter` setting, as it can lead to unexpected visual results. In such cases, you can override the default behavior by setting `mix-blend-mode: normal` on the image pair.
+    :::
+
 * In the description of morph animations above, *position* was used for simplicity. In reality, the group animation accounts for both the element's position and any applied CSS transformations, such as those defined by `matrix3d` or specialized forms like `rotate`. When you read *position* in the following text, it always means *&hellip;and the applied transformations*. And did I mention backdropFilter, yet? So the current set is `width`, `height`, `transform` and `backdropFilter`.
 
 

@@ -90,10 +90,13 @@ When the View Transition API adds its default fade animations to the pseudo-elem
 
 This blend mode adds the alpha channels (= the opacity) of both images. As long as the alphas add up to one, there will be no transparent pixels in a crossover of two opaque images and no background will shine through. An in-place cross-fade of identical images will not produce any noticeable effects.
 
-Additionally, the browser's built-in stylesheet automatically assigns the `isolation` CSS property with the value `isolate` to all image pairs. This ensures that blending is confined to the images themselves, unaffected by the background.
+Additionally, the browser's built-in stylesheet automatically assigns the `isolation` CSS property with the value `isolate` to all image pairs with both images. This ensures that blending is confined to the images themselves, unaffected by the background.
 
-The `-ua-mix-blend-mode-plus-lighter` animation is only added by the browser if the image-pair has both, an old and a new image. Single children (:only-child) in image pairs blend in normal mode. While you can not reference the `-ua-mix-blend-mode-plus-lighter` keyframes definition from your user CSS, you can copy the definition above with your own keyframes name to use it.
+The `-ua-mix-blend-mode-plus-lighter` animation is only added by the browser if the image-pair has both, an old and a new image. Single children (:only-child) in image pairs blend in normal mode.
 
+When you define an animation that fades the images but does not overlap them, e.g. by moving and fading the old image out of the viewport while the new image slides and fades in, you might want to reconsider the `plus-lighter` setting, as it can lead to unexpected visual results. In such cases, you can cancel the plus-lighter mode by explicitly omitting `-ua-mix-blend-mode-plus-lighter` in the `animation-name` value. Or you simply define your own keyframes for your `slide-and-fade` animation without `mix-blend-mode` or with `mix-blend-mode: normal`.
+
+```css
 ## Avoid `reverse` with Asymmetric Timings
 
 Resist the urge to define your fadeIn as a `reverse` fadeOut:
