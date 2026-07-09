@@ -58,8 +58,12 @@ main {
   &[data-where="furnace"]::view-transition-old(element),
   &[data-where="furnace"]::view-transition-new(element) {
     box-shadow:
-      inset 0 0 calc(30px * var(--extend)) rgba(255, 230, 200, 0.8),
-      0 0 calc(20px * var(--extend)) rgba(255, 0, 0, 0.6);
+      inset 0 0 calc(30px * var(--extend))
+        light-dark(rgba(180, 70, 0, 0.45), rgba(255, 230, 200, 0.8)),
+      0 0 calc(24px * var(--extend))
+        light-dark(rgba(220, 38, 38, 0.75), rgba(255, 0, 0, 0.6)),
+      0 0 0 calc(1px * var(--extend))
+        light-dark(rgba(120, 53, 15, 0.45), transparent);
   }
   &[data-where="furnace"]::view-transition-old(.element),
   &[data-where="furnace"]::view-transition-new(.element) {
@@ -71,8 +75,12 @@ main {
   &[data-where="freezing"]::view-transition-old(element),
   &[data-where="freezing"]::view-transition-new(element) {
     box-shadow:
-      inset 0 0 calc(10px * var(--extend)) rgba(0, 210, 255, 0.8),
-      inset 0 0 calc(50px * var(--extend)) rgba(135, 206, 250, 0.6);
+      inset 0 0 calc(12px * var(--extend))
+        light-dark(rgba(14, 116, 144, 0.5), rgba(0, 210, 255, 0.8)),
+      inset 0 0 calc(54px * var(--extend))
+        light-dark(rgba(37, 99, 235, 0.45), rgba(135, 206, 250, 0.6)),
+      0 0 0 calc(1px * var(--extend))
+        light-dark(rgba(30, 64, 175, 0.35), transparent);
   }
   &[data-where="freezing"]::view-transition-old(.element),
   &[data-where="freezing"]::view-transition-new(.element) {
@@ -84,8 +92,12 @@ main {
   &[data-where="pressure"]::view-transition-old(element),
   &[data-where="pressure"]::view-transition-new(element) {
     box-shadow:
-      inset 0 0 calc(10px * var(--extend)) rgba(40, 7, 223, 0.9),
-      0 0 calc(10px * var(--extend)) rgba(144, 126, 248, 0.8);
+      inset 0 0 calc(12px * var(--extend))
+        light-dark(rgba(49, 46, 129, 0.65), rgba(40, 7, 223, 0.9)),
+      0 0 calc(16px * var(--extend))
+        light-dark(rgba(79, 70, 229, 0.6), rgba(144, 126, 248, 0.8)),
+      0 0 0 calc(1px * var(--extend))
+        light-dark(rgba(67, 56, 202, 0.4), transparent);
   }
   &[data-where="pressure"]::view-transition-old(.element),
   &[data-where="pressure"]::view-transition-new(.element) {
@@ -98,8 +110,12 @@ main {
   &[data-where="radiation"]::view-transition-old(element),
   &[data-where="radiation"]::view-transition-new(element) {
     box-shadow:
-      inset 0 0 calc(35px * var(--extend)) rgba(224, 239, 9, 0.9),
-      0 0 calc(60px * var(--extend)) rgba(9, 239, 185, 0.8);
+      inset 0 0 calc(35px * var(--extend))
+        light-dark(rgba(161, 98, 7, 0.6), rgba(224, 239, 9, 0.9)),
+      0 0 calc(64px * var(--extend))
+        light-dark(rgba(13, 148, 136, 0.65), rgba(9, 239, 185, 0.8)),
+      0 0 0 calc(1px * var(--extend))
+        light-dark(rgba(6, 95, 70, 0.4), transparent);
   }
   &[data-where="radiation"]::view-transition-old(.element),
   &[data-where="radiation"]::view-transition-new(.element) {
@@ -327,10 +343,10 @@ p {
 }
 
 .element-card {
-  background: light-dark(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.03));
+  background: light-dark(rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.03));
   /* backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px); */
-  border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.03), rgba(255, 255, 255, 0.03));
   border-radius: 12px;
   width: 16vmin;
   height: 16vmin;
@@ -339,7 +355,7 @@ p {
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  box-shadow: 0 10px 25px light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
+  box-shadow: 0 10px 25px light-dark(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3));
   cursor: grab;
   position: relative;
   touch-action: none;

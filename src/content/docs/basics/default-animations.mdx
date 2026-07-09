@@ -29,7 +29,7 @@ Additional technical details:
 
 
 
-* The `::view-transition-group` pseudo element is invisible. And so will be animations applied to it, yes? Good point. There are only two visible images. The old and the new image. Neither `::view-transition-image-pair` nor `::view-transition-group` are visible with the default styling. The effect of the group animation indirect. Moving the group also moves the images inside it. Changing the group's width also adjusts the image sizes, as the default styling keeps them the same width and scales the height to maintain the original aspect ratio.
+* The `::view-transition-group` pseudo element is invisible. And so will be animations applied to it, yes? Good point. There are only two visible images. The old and the new image. Neither `::view-transition-image-pair` nor `::view-transition-group` or `::view-transition-group-children` or `::view-transition` are visible with the default styling. The effect of the group animation indirect. Moving the group also moves the images inside it. Changing the group's width also adjusts the image sizes, as the default styling keeps them the same width and scales the height to maintain the original aspect ratio.
 
 By default, both types of animations, entry/exit and group/morph, occur simultaneously, though they may not always be noticeable. For example, if elements sharing the same view transition name have identical size and position before and after the transition, the group animation will result in no visible change. Similarly, if the old and new images are identical, only the group animation will be apparent, with the exit and entry animations having no visible effect.
 
