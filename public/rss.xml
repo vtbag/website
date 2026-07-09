@@ -8,8 +8,86 @@
     <link>https://vtbag.dev</link>
     <description>Tools, Tips, and Tricks to Enhance your Dev Skills with the View Transition API!</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 18:24:32 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jul 2026 13:58:49 GMT</lastBuildDate>
     
+  <item>
+    <title><![CDATA[Default View Transition Animations]]></title>
+    <link>https://vtbag.dev/basics/default-animations/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/default-animations/</guid>
+    
+    <pubDate>Thu, 09 Jul 2026 13:55:15 GMT</pubDate>
+    <description><![CDATA[Mastering the fundamentals is key to creating seamless animations with the View Transition API. Here's a quick guide to get you started.]]></description>
+    <enclosure
+        url="/anim-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[View Transition JavaScript API]]></title>
+    <link>https://vtbag.dev/basics/javascript/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/javascript/</guid>
+    
+    <pubDate>Thu, 09 Jul 2026 13:55:15 GMT</pubDate>
+    <description><![CDATA[How to interact with view transitions using JavaScript]]></description>
+    <enclosure
+        url="/javascript-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[Styling View Transitions]]></title>
+    <link>https://vtbag.dev/basics/styling/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/styling/</guid>
+    
+    <pubDate>Wed, 08 Jul 2026 20:17:32 GMT</pubDate>
+    <description><![CDATA[Styling view transitions including :active-view-transition-type and view-transition-class]]></description>
+    <enclosure
+        url="/styling-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[Flickering during Cross-Fade Animations?]]></title>
+    <link>https://vtbag.dev/tips/over-exposure/</link>
+    <guid isPermaLink="true">https://vtbag.dev/tips/over-exposure/</guid>
+    
+    <pubDate>Wed, 08 Jul 2026 20:17:32 GMT</pubDate>
+    <description><![CDATA[Why custom fade animations for view transitions might flash.]]></description>
+    <enclosure
+        url="/over-exposure-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[The View Transition API]]></title>
+    <link>https://vtbag.dev/basics/api/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/api/</guid>
+    
+    <pubDate>Tue, 30 Jun 2026 08:46:16 GMT</pubDate>
+    <description><![CDATA[Basics information about the View Transition browser API]]></description>
+    <enclosure
+        url="/api-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[Automatically Assigned View Transition Names]]></title>
+    <link>https://vtbag.dev/tips/auto-names/</link>
+    <guid isPermaLink="true">https://vtbag.dev/tips/auto-names/</guid>
+    
+    <pubDate>Tue, 23 Jun 2026 22:40:07 GMT</pubDate>
+    <description><![CDATA[Explore current methods for automatically generating view transition names.]]></description>
+    <enclosure
+        url="/auto-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
   <item>
     <title><![CDATA[Where to Place CSS for Cross-Document View Transitions?]]></title>
     <link>https://vtbag.dev/tips/css/</link>
@@ -24,19 +102,6 @@
   </item>
 
   <item>
-    <title><![CDATA[Styling View Transitions]]></title>
-    <link>https://vtbag.dev/basics/styling/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/styling/</guid>
-    
-    <pubDate>Wed, 10 Jun 2026 18:20:48 GMT</pubDate>
-    <description><![CDATA[Styling view transitions including :active-view-transition-type and view-transition-class]]></description>
-    <enclosure
-        url="/styling-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
     <title><![CDATA[View Transition Names and Generated Pseudo-Elements]]></title>
     <link>https://vtbag.dev/basics/pseudos/</link>
     <guid isPermaLink="true">https://vtbag.dev/basics/pseudos/</guid>
@@ -45,6 +110,19 @@
     <description><![CDATA[What are those pseudo-elements of the View Transition API and how can I style and animate them?]]></description>
     <enclosure
         url="/pseudos-og.png"
+        type="image/jpeg"
+      />
+  </item>
+
+  <item>
+    <title><![CDATA[Recent updates]]></title>
+    <link>https://vtbag.dev/recent-updates/</link>
+    <guid isPermaLink="true">https://vtbag.dev/recent-updates/</guid>
+    
+    <pubDate>Wed, 10 Jun 2026 11:15:15 GMT</pubDate>
+    <description><![CDATA[Last update dates of all articles on vtbag.dev]]></description>
+    <enclosure
+        url="https://vtbag.dev/social.png"
         type="image/jpeg"
       />
   </item>
@@ -115,19 +193,6 @@
   </item>
 
   <item>
-    <title><![CDATA[Recent updates]]></title>
-    <link>https://vtbag.dev/recent-updates/</link>
-    <guid isPermaLink="true">https://vtbag.dev/recent-updates/</guid>
-    
-    <pubDate>Wed, 10 Jun 2026 11:15:15 GMT</pubDate>
-    <description><![CDATA[Last update dates of all articles on vtbag.dev]]></description>
-    <enclosure
-        url="https://vtbag.dev/social.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
     <title><![CDATA[@vtbag: Overview]]></title>
     <link>https://vtbag.dev/vtbag/</link>
     <guid isPermaLink="true">https://vtbag.dev/vtbag/</guid>
@@ -141,27 +206,14 @@
   </item>
 
   <item>
-    <title><![CDATA[Default View Transition Animations]]></title>
-    <link>https://vtbag.dev/basics/default-animations/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/default-animations/</guid>
+    <title><![CDATA[View Transitions: What Could Possibly Go Wrong?]]></title>
+    <link>https://vtbag.dev/tips/view-transition-fails-and-fixes/</link>
+    <guid isPermaLink="true">https://vtbag.dev/tips/view-transition-fails-and-fixes/</guid>
     
     <pubDate>Sun, 31 May 2026 18:33:53 GMT</pubDate>
-    <description><![CDATA[Mastering the fundamentals is key to creating seamless animations with the View Transition API. Here's a quick guide to get you started.]]></description>
+    <description><![CDATA[Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.]]></description>
     <enclosure
-        url="/anim-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[View Transition JavaScript API]]></title>
-    <link>https://vtbag.dev/basics/javascript/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/javascript/</guid>
-    
-    <pubDate>Sun, 31 May 2026 18:33:53 GMT</pubDate>
-    <description><![CDATA[How to interact with view transitions using JavaScript]]></description>
-    <enclosure
-        url="/javascript-og.png"
+        url="https://vtbag.dev/social.png"
         type="image/jpeg"
       />
   </item>
@@ -245,19 +297,6 @@
   </item>
 
   <item>
-    <title><![CDATA[Automatically Assigned View Transition Names]]></title>
-    <link>https://vtbag.dev/tips/auto-names/</link>
-    <guid isPermaLink="true">https://vtbag.dev/tips/auto-names/</guid>
-    
-    <pubDate>Sun, 31 May 2026 18:33:53 GMT</pubDate>
-    <description><![CDATA[Explore current methods for automatically generating view transition names.]]></description>
-    <enclosure
-        url="/auto-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
     <title><![CDATA[Pseudo-Smooth-Scrolling]]></title>
     <link>https://vtbag.dev/tips/pseudo-smooth-scrolling/</link>
     <guid isPermaLink="true">https://vtbag.dev/tips/pseudo-smooth-scrolling/</guid>
@@ -266,19 +305,6 @@
     <description><![CDATA[Instant scrolling on a page with view transition might lead to an unexpected smooth-scrolling effect. ]]></description>
     <enclosure
         url="/pseudo-smooth-scrolling-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[View Transitions: What Could Possibly Go Wrong?]]></title>
-    <link>https://vtbag.dev/tips/view-transition-fails-and-fixes/</link>
-    <guid isPermaLink="true">https://vtbag.dev/tips/view-transition-fails-and-fixes/</guid>
-    
-    <pubDate>Sun, 31 May 2026 18:33:53 GMT</pubDate>
-    <description><![CDATA[Most of the time, View Transitions just work. This page is for the exceptions: the quirks, the caveats, the things that quietly cancel your animations. Learn how to detect them and bring transitions back to life.]]></description>
-    <enclosure
-        url="https://vtbag.dev/social.png"
         type="image/jpeg"
       />
   </item>
@@ -310,14 +336,14 @@
   </item>
 
   <item>
-    <title><![CDATA[The View Transition API]]></title>
-    <link>https://vtbag.dev/basics/api/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/api/</guid>
+    <title><![CDATA[Test Your Browser's View Transition Capabilities]]></title>
+    <link>https://vtbag.dev/basics/test-page/</link>
+    <guid isPermaLink="true">https://vtbag.dev/basics/test-page/</guid>
     
-    <pubDate>Mon, 25 May 2026 09:17:34 GMT</pubDate>
-    <description><![CDATA[Basics information about the View Transition browser API]]></description>
+    <pubDate>Fri, 22 May 2026 14:32:02 GMT</pubDate>
+    <description><![CDATA[Check what part of the View Transition API is supported by your browser]]></description>
     <enclosure
-        url="/api-og.png"
+        url="/test-page-og.png"
         type="image/jpeg"
       />
   </item>
@@ -331,19 +357,6 @@
     <description><![CDATA[Basic examples on how to use the View Transition API for same-document and cross-document view transitions.]]></description>
     <enclosure
         url="/examples-og.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[Test Your Browser's View Transition Capabilities]]></title>
-    <link>https://vtbag.dev/basics/test-page/</link>
-    <guid isPermaLink="true">https://vtbag.dev/basics/test-page/</guid>
-    
-    <pubDate>Fri, 22 May 2026 14:32:02 GMT</pubDate>
-    <description><![CDATA[Check what part of the View Transition API is supported by your browser]]></description>
-    <enclosure
-        url="/test-page-og.png"
         type="image/jpeg"
       />
   </item>
@@ -409,19 +422,6 @@
     <description><![CDATA[How generative AI is used on vtbag.dev]]></description>
     <enclosure
         url="https://vtbag.dev/social.png"
-        type="image/jpeg"
-      />
-  </item>
-
-  <item>
-    <title><![CDATA[Flickering during Cross-Fade Animations?]]></title>
-    <link>https://vtbag.dev/tips/over-exposure/</link>
-    <guid isPermaLink="true">https://vtbag.dev/tips/over-exposure/</guid>
-    
-    <pubDate>Wed, 21 Jan 2026 14:21:35 GMT</pubDate>
-    <description><![CDATA[Why custom fade animations for view transitions might flash.]]></description>
-    <enclosure
-        url="/over-exposure-og.png"
         type="image/jpeg"
       />
   </item>
