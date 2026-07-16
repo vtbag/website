@@ -1,0 +1,55 @@
+:root {
+  view-transition-name: none;
+}
+.column-count,
+.task-card {
+  view-transition-name: match-element;
+}
+::view-transition-group(*) {
+  animation-duration: 0.4s;
+}
+::view-transition-group(active-card) {
+  transition: none;
+}
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-new(.card):only-child {
+  animation-name: card-insert;
+}
+::view-transition-old(.card):only-child {
+  animation-name: card-remove;
+}
+:active-view-transition-type(move, finishing) {
+  .task-card {
+    view-transition-name: match-element;
+  }
+  &::view-transition-group(active-card) {
+    top: var(--top);
+    left: var(--left);
+    z-index: 1;
+  }
+}
+:active-view-transition-type(move, finishing) {
+  cursor: grabbing;
+}
+:active-view-transition-type(finishing) {
+  cursor: auto;
+}
+
+@keyframes card-insert {
+  from {
+    transform: translateY(-100%);
+    scale: 0;
+  }
+}
+@keyframes card-remove {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}

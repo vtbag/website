@@ -1,0 +1,95 @@
+---
+import './style.css';
+import './view-transition.css';
+---
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="shortcut icon" href="/bag4.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Board Demo | vtbag.dev</title>
+    <meta name="description" content="A tech demo featuring pointer driven view transitions on a Kanban-style task board." />
+    <link rel="canonical" href="https://vtbag.dev/kanban-demo/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://vtbag.dev/kanban-demo/" />
+    <meta property="og:title" content="Task Board Demo | vtbag.dev" />
+    <meta property="og:description" content="A tech demo featuring pointer driven view transitions on a Kanban-style task board." />
+    <meta property="og:image" content="https://vtbag.dev/kanban-demo-og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://vtbag.dev/kanban-demo-og.png" />
+    <meta name="twitter:title" content="Task Board Demo | vtbag.dev" />
+    <meta name="twitter:description" content="A tech demo featuring pointer driven view transitions on a Kanban-style task board." />
+    <script src="./_card.ts"/>
+  </head>
+  <body>
+    <div id="app">
+      <header class="board-header">
+        <h1 class="board-title">Task Board Demo</h1>
+        <p class="board-subtitle">A tech demo featuring pointer driven view transitions.</p>
+      </header>
+
+      <main class="board">
+        <section class="column" data-column="backlog">
+          <header class="column-header">
+            <h2 class="column-title">Backlog</h2>
+            <span class="column-count" data-count>0</span>
+          </header>
+          <div class="column-cards" data-cards></div>
+        </section>
+
+        <section class="column" data-column="planned">
+          <header class="column-header">
+            <h2 class="column-title">Planned</h2>
+            <span class="column-count" data-count>0</span>
+          </header>
+          <div class="column-cards" data-cards></div>
+        </section>
+
+        <section class="column" data-column="in-progress">
+          <header class="column-header">
+            <h2 class="column-title">In Progress</h2>
+            <span class="column-count" data-count>0</span>
+          </header>
+          <div class="column-cards" data-cards></div>
+        </section>
+
+        <section class="column" data-column="done">
+          <header class="column-header">
+            <h2 class="column-title">Done</h2>
+            <span class="column-count" data-count>0</span>
+          </header>
+          <div class="column-cards" data-cards></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="card-template">
+      <article class="task-card" data-color="slate">
+        <div class="task-card-accent"></div>
+        <div class="task-card-body">
+          <div class="task-card-top">
+            <span class="task-id" data-field="id">#0000</span>
+            <span class="task-priority" data-field="priority">🟡 Medium</span>
+          </div>
+          <h3 class="task-title" data-field="title">Task title</h3>
+          <div class="task-card-meta">
+            <div class="task-assignee">
+              <span class="avatar" data-field="avatar">AB</span>
+              <span class="assignee-name" data-field="assignee">Alex Brooks</span>
+            </div>
+            <time class="task-due" data-field="due">—</time>
+          </div>
+          <div class="task-card-bottom">
+            <span class="task-category" data-field="category">Frontend</span>
+            <div class="task-checklist">
+              <span class="checklist-fraction" data-field="fraction">0/5</span>
+              <div class="checklist-bar">
+                <div class="checklist-bar-fill" data-field="bar"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </template>
+  </body>
+</html>

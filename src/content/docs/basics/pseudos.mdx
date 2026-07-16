@@ -246,13 +246,16 @@ The special value `none` removes a potentially set view transition name.
 
 Other special names are [`match-element`](#auto-generated-names-match-element) and [`auto`](#auto-generated-names-auto), and all names beginning with `-ua-` as in _user-agent_, as this is a reserved namespace for browser generated view transition names.
 
-:::note
-Setting an element's view-transition-name has a few [lesser-known effects on rendering](https://drafts.csswg.org/css-view-transitions-1/#named-and-transitioning):
+### Rendering Effects of View Transition Names
 
-- It creates a stacking context.
-- It flattens child elements in 3D space, similar to `transform-style: flat`.
-- It establishes a backdrop root.
-  :::
+Mainly for feasibility and performance reasons, setting a view transition name on an element has some [lesser-known effects on rendering](https://drafts.csswg.org/css-view-transitions-1/#named-and-transitioning) of that element and its subtree. 
+
+The most important one is that each element with a valid view transition name **creates its own stacking context**. This changes the ways in which you can order elements for rendering.  
+
+Additionally, all child elements are flattened in 3D space, similar to `transform-style: flat`.
+
+Setting a view transition name on an element also establishes a backdrop root for the element. 
+
 
 ### Escaping
 
