@@ -216,7 +216,7 @@ function stop(event: PointerEvent) {
   const oldColumn = moveState.card!.closest('.column') as HTMLElement;
   mayStartViewTransition({
     update: moveActiveCardToTargetPosition,
-    types: ["finishing"]
+    types: ["settle"]
   }, { collisionBehavior: "skipOld", useTypesPolyfill: "always" });
 
   function moveActiveCardToLastDragPosition(event: PointerEvent) {
@@ -228,6 +228,9 @@ function stop(event: PointerEvent) {
     moveState.card!.style.width = `${moveState.cardRect!.width}px`;
     moveState.card!.style.height = `${moveState.cardRect!.height}px`;
     moveState.card!.style.zIndex = '1';
+    document.documentElement.style.removeProperty("--top");
+    document.documentElement.style.removeProperty("--left");
+
   }
 
   function moveActiveCardToTargetPosition() {
@@ -239,8 +242,6 @@ function stop(event: PointerEvent) {
     updateCardCounts();
     moveState.card!.style = '';
     moveState.card!.style.viewTransitionName = `active-card`;
-    document.documentElement.style.removeProperty("--top");
-    document.documentElement.style.removeProperty("--left");
 
     moveState.targetColumn = null;
     moveState.targetCard = null;
