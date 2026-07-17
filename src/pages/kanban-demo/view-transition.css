@@ -12,7 +12,7 @@
 .column-count,
 .task-card {
   view-transition-name: match-element;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 :active-view-transition-type(move) {
