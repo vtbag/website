@@ -150,6 +150,7 @@ document.addEventListener('pointerdown', event => {
   const card: HTMLElement | null = (event.target as HTMLElement).closest('.task-card');
   if (!card) return;
 
+  event.preventDefault();
   initMoveState(card, event);
   setViewTransitionNames();
   drag(0, 0);
@@ -193,6 +194,7 @@ document.addEventListener('pointerdown', event => {
 
 document.addEventListener('pointermove', event => {
   if (!moveState.isMoving || event.pointerId !== moveState.pointerId) return;
+  event.preventDefault();
   const top = event.clientY - moveState.initialY;
   const left = event.clientX - moveState.initialX;
   moveState.raf || (moveState.raf = requestAnimationFrame(() => {
@@ -210,6 +212,7 @@ document.addEventListener('pointercancel', stop);
 function stop(event: PointerEvent) {
   if (!moveState.isMoving || event.pointerId !== moveState.pointerId)
     return;
+  event.preventDefault();
   updateMoveState();
   unmarkLandingZones();
   moveActiveCardToLastDragPosition(event);
