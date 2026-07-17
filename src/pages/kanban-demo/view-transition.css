@@ -5,6 +5,8 @@
 :root {
   view-transition-name: none;
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;  
   scrollbar-gutter: stable;
 }
 .column-count,
