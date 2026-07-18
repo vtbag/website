@@ -328,6 +328,7 @@ function autoScroll(lastPointerY: number) {
     dy = maxSpeed * (1 - (vh - lastPointerY) / edge);
   }
   dy !== 0 && window.scrollBy(0, dy);
+  moveState.cardRects.forEach(c => c.rect.y -= dy);
 }
 
 // --------------------------------------------
