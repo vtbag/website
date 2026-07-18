@@ -201,6 +201,7 @@ document.addEventListener('pointermove', event => {
     moveState.raf = 0;
     drag(top, left);
     markLandingZones(event);
+    autoScroll(event.clientY);
   }));
 
 });
@@ -313,6 +314,20 @@ function hovered(event: PointerEvent): HTMLElement | null {
 function drag(top: number, left: number) {
   document.documentElement.style.setProperty("--top", `${top}px`);
   document.documentElement.style.setProperty("--left", `${left}px`);
+}
+
+function autoScroll(lastPointerY: number) {
+  const edge = 80; // px trigger zone
+  const maxSpeed = 18; // px/frame
+  const vh = window.innerHeight;
+
+  let dy = 0;
+  if (lastPointerY < edge) {
+    dy = -maxSpeed * (1 - lastPointerY / edge);
+  } else if (lastPointerY > vh - edge) {
+    dy = maxSpeed * (1 - (vh - lastPointerY) / edge);
+  }
+  dy !== 0 && window.scrollBy(0, dy);
 }
 
 // --------------------------------------------
