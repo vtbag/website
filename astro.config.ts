@@ -1,8 +1,10 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeExternalLinks from "rehype-external-links";
+import {
+  createExternalLinksPlugin,
+} from "./src/markdown/satteri-hast-plugins";
+
+import { satteri } from '@astrojs/markdown-satteri';
 import {
   viewTransitions,
   remarkEndOfMarkdown,
@@ -29,26 +31,15 @@ export default defineConfig({
         dark: "github-dark",
       },
     },
-    rehypePlugins: [
-      rehypeSlug,
-      [
-        rehypeAutolinkHeadings,
-        {
-          behavior: "wrap",
-        },
-      ],
-      [
-        rehypeExternalLinks,
-        {
+    processor: satteri({
+      mdastPlugins: [remarkEndOfMarkdown],
+      hastPlugins: [
+        createExternalLinksPlugin({
           target: "_blank",
-          content: {
-            type: "text",
-            value: "↗",
-          },
-        },
+          marker: "↗",
+        }),
       ],
-    ],
-    remarkPlugins: [remarkEndOfMarkdown],
+    }),
   },
 
   trailingSlash: "always",
@@ -227,7 +218,7 @@ function sidebar() {
     {
       label: "@vtbag",
       link: "/vtbag/",
-    },
+    }, 
     {
       label: "Basic Information",
       items: [
