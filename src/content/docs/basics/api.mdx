@@ -8,7 +8,16 @@ head:
       content: "/api-og.png"
 ---
 
-The View Transition API is a rather new API. In this section you can find&hellip;
+The View Transition API is a rather new browser API. It gives you three cool things:
+- [Pseudo-elements](/basics/pseudos/) that let you simultaneously show elements from the old and from the new DOM.
+- Automatically generated cross-fade and morph [animations](/basics/default-animations/) that let you animate between the old and new images.
+- [Continuous synchronization](/basics/default-animations/#view-transition-super-power) of content and some styles from the captured elements of the new DOM to their pseudo-elements, so that dynamic content changes become visible at once, and morph animations react to updates of the new elements' position in real time.
+
+There are two ways to trigger a view transition: 
+- You can call [`startViewTransition()`](/basics/javascript/#startviewtransition) on the document or an element for global respectively scoped, same-document view transitions.
+- You can enable cross-document view transitions with the `@view-transition` CSS at-rule.
+
+In this section you can find&hellip;
 
 * &hellip;some [basic examples](/basics/examples/) of same-document and cross document view transitions.
 * &hellip;information about the [structure of the pseudo-elements](/basics/pseudos/) of the API.

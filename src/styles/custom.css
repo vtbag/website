@@ -93,7 +93,9 @@ section.footnotes {
 }
 
 a {
-  text-decoration: underline dotted;
+  text-decoration: underline ;
+  text-decoration-color: var(--sl-color-accent-low);
+  text-decoration-thickness: 2px;
 }
 :is(nav, footer, h1, h2, h3, h4, h5, h6) a {
   text-decoration: none;
@@ -156,11 +158,6 @@ starlight-menu-button button {
 
 h1 {
   display: inline-block;
-}
-::view-transition-old(title-heading),
-::view-transition-new(title-heading) {
-  height: 100%;
-  width: 100%;
 }
 .hero .action {
   color: var(--sl-color-accent-high);
@@ -231,3 +228,4 @@ main kbd {
 a.site-title {
   text-decoration: none;
 }
+

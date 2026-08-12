@@ -25,19 +25,27 @@ Additional technical details:
     When you combine the fade effects with non overlapping movement of the old and new images, you might want to reconsider the `plus-lighter` setting, as it can lead to unexpected visual results. In such cases, you can override the default behavior by setting `mix-blend-mode: normal` on the image pair.
     :::
 
-* In the description of morph animations above, *position* was used for simplicity. In reality, the group animation accounts for both the element's position and any applied CSS transformations, such as those defined by `matrix3d` or specialized forms like `rotate`. When you read *position* in the following text, it always means *&hellip;and the applied transformations*. And did I mention backdropFilter, yet? So the current set is `width`, `height`, `transform` and `backdropFilter`.
+* In the description of morph animations above, *position* was used for simplicity. In reality, the group animation accounts for both the element's position and any applied CSS transformations, such as those defined by `matrix3d` or specialized forms like `rotate`. 
+  
+  When you read *position* in the following text, it always means *&hellip;and the applied transformations*. And did I mention backdropFilter, yet? So the current set is `width`, `height`, `transform` and `backdropFilter`.
 
 
 
-* The `::view-transition-group` pseudo element is invisible. And so will be animations applied to it, yes? Good point. There are only two visible images. The old and the new image. Neither `::view-transition-image-pair` nor `::view-transition-group` or `::view-transition-group-children` or `::view-transition` are visible with the default styling. The effect of the group animation indirect. Moving the group also moves the images inside it. Changing the group's width also adjusts the image sizes, as the default styling keeps them the same width and scales the height to maintain the original aspect ratio.
+* The `::view-transition-group` pseudo element is invisible. And so will be animations applied to it, yes? Good point. There are only two visible images. The old and the new image. Neither `::view-transition-image-pair` nor `::view-transition-group` or `::view-transition-group-children` or `::view-transition` are visible with the default styling. 
 
-By default, both types of animations, entry/exit and group/morph, occur simultaneously, though they may not always be noticeable. For example, if elements sharing the same view transition name have identical size and position before and after the transition, the group animation will result in no visible change. Similarly, if the old and new images are identical, only the group animation will be apparent, with the exit and entry animations having no visible effect.
+  The effect of the group animation is an indirect one. Moving the group also moves the images inside it. Changing the group's width also adjusts the image sizes, as the default styling keeps them the same width and scales the height to maintain the original aspect ratio.
+
+By default, both types of animations, entry/<wbr/>exit and group/<wbr/>morph animations, occur simultaneously, though they may not always be noticeable. 
+
+For example, if elements sharing the same view transition name have identical size and position before and after the transition, the group animation will result in no visible change. Similarly, if the old and new images are identical, only the group animation will be apparent, with the exit and entry animations having no visible effect.
 
 ## Morphing Animation Details
 
-The above description states that the group animation morphs from the size and position values of the old image to the values of the new image. But how does this work exactly? Morph animations are only defined for groups that have both, the old and the new image. The height, width and position of the group pseudo-element is copied over from the old element. The image pair, the only child of the group, fills the whole group. The old and the new image are inside the image pair, where the new image is rendered above the old image. If the new image is fully transparent at the beginning of the animation, the screen shows the old image in its old position.
+The above description states that the group animation morphs from the size and position values of the old image to the values of the new image. But how does this work exactly? 
 
-During the morph animation, the group moves to the final position of the new image. Doing so, it takes the image-pair and the images within with it. At the same time, the width and height of the group element transitions towards the width and height of the new image. This change in size might force the images inside the image-pair to react with size changes as well.
+Morph animations are only defined for groups that have both, the old and the new image. Initially the group's animation starts with the height, width and position of underlying old element. The image pair, the only child of the group, fills the whole group. The old and the new image are inside the image pair, where the new image is rendered above the old image. As the new image is fully transparent at the beginning of the animation, the screen shows the old image in its old position.
+
+During the morph animation, the group moves to the current position of the new image. Doing so, it takes the image-pair and the images within with it. At the same time, the width and height of the group element transitions towards the current width and height of the new image. This change in size might force the images inside the image-pair to react with size changes as well.
 
 Let's assume we start with an old image with an aspect ratio of 2:3 and morph this into a 3:2 new image.
 
@@ -74,4 +82,30 @@ Finally the last rows shows the combined effect and also hints a bit on the fade
 ### Corollaries
 The captured images for the automatically added `::view-transition-group(root)` on the `<html>` element both have the [size of the viewport](/basics/pseudos/#important-exception) and therefore are independent of the size of the page. The group animation morphs the viewport into an area of same position and size. Thus only the cross-fade animation is observable.
 
-With the default styles from the user-agent stylesheet, when morphing between elements with the same width before and after the transition, the old and new images will maintain their original size during the transition, even if their heights differ significantly. You can observe this in the main content area when navigating between short and tall pages on this site.
+With the default styles from the user-agent stylesheet, when morphing between elements with the same width before and after the transition, the old and new images will maintain their original size during the transition, even if their heights differ significantly. You can observe this in the main content area of this site when navigating between short and tall pages.
+
+### View Transition Super Power
+
+There is one not so well known feature of the View Transition API that is worth mentioning. You might have heard, that the new image isn't a screenshot of its underlying DOM element but a "live"  image or replaced element that follows content changes of the underlying element.
+
+This is only half part of the story. The content of the `::view-transition-new()` pseudo-element is refreshed in each frame while the view transition is running. But there are also some style properties that are continuously copied from the new element to the group of its pseudo-element (if that new element exists). These are:
+```css
+  width: ... /* of the new element */;
+  height: ... /* of the new element */;
+  transform: ... /* that maps the group to the current position of the new element */;
+  writing-mode: ... /* of the new element */;
+  direction: ... /* of the new element */;
+  text-orientation: ... /* of the new element */;
+  mix-blend-mode: ... /* of the new element */;
+  backdrop-filter: ... /* of the new element */;
+  color-scheme: ... /* of the new element */;
+```
+The most interesting property is `transform`. In each frame it gets assigned a value that maps the group from (0, 0) inside its parent to the _current_ visual position and transform of the new element.
+ 
+So if you resize or rotate the element with the view transition name `x` during a view transition, the group animation for the `::view-transition-group(x)` reacts to that change in real time. 
+
+Part of that magic is that the keyframes for the [group animation](/basics/styling/#group--morph-animation) only specify the start of the animation:
+
+The `from` keyframe reflects the position and size of the old element at the time the snapshot was taken. But the end state of the animation is unspecified and is therefore replaced with the updated values of the new pseudo-element in each animation frame. Thus, the animation will always aim to reach the current position and size of the new element at its end.
+
+You can use this behaviour to create some interesting effects where you [style the captured element](/basics/styling/#styling-underlying-captured-elements) to influence the pseudo-element.

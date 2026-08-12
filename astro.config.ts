@@ -5,10 +5,7 @@ import {
 } from "./src/markdown/satteri-hast-plugins";
 
 import { satteri } from '@astrojs/markdown-satteri';
-import {
-  viewTransitions,
-  remarkEndOfMarkdown,
-} from "astro-vtbot/starlight-view-transitions";
+import { viewTransitions, hastMarkEndOfMarkdown } from "astro-vtbot/starlight-view-transitions";
 
 import vtbot from "astro-vtbot";
 import d2 from "astro-d2";
@@ -32,8 +29,8 @@ export default defineConfig({
       },
     },
     processor: satteri({
-      mdastPlugins: [remarkEndOfMarkdown],
       hastPlugins: [
+        hastMarkEndOfMarkdown("hurz"),
         createExternalLinksPlugin({
           target: "_blank",
           marker: "↗",
@@ -51,7 +48,7 @@ export default defineConfig({
       plugins: [
         viewTransitions({
           declarativeNames:
-            ":is(h2, h3):not(.no-vtbag-decl *) = vtbag-h-; :is(starlight-toc span):not(.no-vtbag-decl *) = vtbag-toc~",
+            ":is(h2, h3):not(.no-vtbag-decl *) = vtbag-h-; :is(starlight-toc span):not(.no-vtbag-decl *) = vtbag-toc~; :root:not(:has(.hero)) .site-title img, :root:has(.hero) .hero img = site-logo",
         })
       ],
       components: {
@@ -218,7 +215,7 @@ function sidebar() {
     {
       label: "@vtbag",
       link: "/vtbag/",
-    }, 
+    },
     {
       label: "Basic Information",
       items: [

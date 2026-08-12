@@ -18,23 +18,22 @@ export function createExternalLinksPlugin(
   const rel = options.rel ?? "noopener noreferrer";
   const marker = options.marker ?? "↗";
 
-  return () =>
-    defineHastPlugin({
-      name: "vtbag-external-links",
-      element: {
-        filter: ["a"],
-        visit(node, ctx) {
-          const href = node.properties?.["href"];
-          if (!isExternalHref(href)) return;
+  return defineHastPlugin({
+    name: "vtbag-external-links",
+    element: {
+      filter: ["a"],
+      visit(node, ctx) {
+        const href = node.properties?.["href"];
+        if (!isExternalHref(href)) return;
 
-          ctx.setProperty(node, "target", target);
-          ctx.setProperty(node, "rel", rel);
+        ctx.setProperty(node, "target", target);
+        ctx.setProperty(node, "rel", rel);
 
-          const lastChild = node.children[node.children.length - 1];
-          if (lastChild?.type === "text" && lastChild.value === marker) return;
+        const lastChild = node.children[node.children.length - 1];
+        if (lastChild?.type === "text" && lastChild.value === marker) return;
 
-          ctx.appendChild(node, { type: "text", value: marker });
-        },
+        ctx.appendChild(node, { type: "text", value: marker });
       },
-    });
+    },
+  });
 }

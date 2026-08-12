@@ -84,16 +84,12 @@ const moveState = {
   initialY: 0,
   card: null as HTMLElement | null,
   cardRect: null as DOMRect | null,
-  cardRects: [] as { id: string, rect: DOMRect; }[],
   targetColumn: null as HTMLElement | null,
   targetCard: null as HTMLElement | null,
+  lastExtend: 0,
 };
 
 
-/**
- * Clones the card template, fills it with random values, and prepends it
- * to the top of the given column's card container.
- */
 function createCard(columnSlug: string): void {
   const template = document.getElementById('card-template') as HTMLTemplateElement;
   const card = template.content.firstElementChild!.cloneNode(true) as HTMLElement;
@@ -159,10 +155,7 @@ document.addEventListener('pointerdown', event => {
     types: ["move"],
     update: hideActiveCard
   }, { collisionBehavior: "chaining", useTypesPolyfill: "always" })
-    .ready.then(() => {
-      saveCardRects();
-      pauseActiveCardAnimations();
-    });
+    .ready.then(pauseActiveCardAnimations);
 
 
   function setViewTransitionNames() {
@@ -175,11 +168,6 @@ document.addEventListener('pointerdown', event => {
     moveState.card!.style.height = "0px";
     moveState.card!.style.marginTop = "-0.75rem";
   };
-
-  function saveCardRects() {
-    moveState.cardRects = Array.from(document.querySelectorAll<HTMLElement>('main.board article.task-card'))
-      .map(c => ({ id: c.id, rect: c.getBoundingClientRect() }));
-  }
 
   function pauseActiveCardAnimations() {
     document.getAnimations().forEach(a => {
@@ -224,14 +212,20 @@ function stop(event: PointerEvent) {
   }, { collisionBehavior: "skipOld", useTypesPolyfill: "always" });
 
   function moveActiveCardToLastDragPosition(event: PointerEvent) {
-    moveState.card!.style = '';
-    moveState.card!.style.viewTransitionName = `active-card`;
-    moveState.card!.style.position = 'fixed';
-    moveState.card!.style.top = `${event.clientY - (moveState.initialY - moveState.cardRect!.top)}px`;
-    moveState.card!.style.left = `${event.clientX - (moveState.initialX - moveState.cardRect!.left)}px`;
-    moveState.card!.style.width = `${moveState.cardRect!.width}px`;
-    moveState.card!.style.height = `${moveState.cardRect!.height}px`;
-    moveState.card!.style.zIndex = '1';
+    const card = moveState.card! as HTMLElement;
+    const style = card.style;
+    const top = event.clientY - (moveState.initialY - moveState.cardRect!.top);
+    const left = event.clientX - (moveState.initialX - moveState.cardRect!.left);
+    card.classList.add("active");
+    card.style = '';
+    style.viewTransitionName = `active-card`;
+    style.position = 'fixed';
+    style.top = `${top}px`;
+    style.left = `${left}px`;
+    style.width = `${moveState.cardRect!.width}px`;
+    style.height = `${moveState.cardRect!.height}px`;
+    style.zIndex = '1';
+    style.setProperty("--extend", "" + moveState.lastExtend);
     document.documentElement.style.removeProperty("--top");
     document.documentElement.style.removeProperty("--left");
 
@@ -245,6 +239,7 @@ function stop(event: PointerEvent) {
     }
     updateCardCounts();
     moveState.card!.style = '';
+    moveState.card!.classList.remove("active");
     moveState.card!.style.viewTransitionName = `active-card`;
 
     moveState.targetColumn = null;
@@ -300,20 +295,29 @@ function here(event: { clientX: number, clientY: number; }, selector: string) {
 }
 
 function hovered(event: PointerEvent): HTMLElement | null {
-  const found = moveState.cardRects.find((c) =>
-    event.clientX >= c.rect.left &&
-    event.clientX <= c.rect.right &&
-    event.clientY >= c.rect.top &&
-    event.clientY <= c.rect.bottom
-  );
+  const found = [...document.querySelectorAll<HTMLElement>('main.board article.task-card')]
+    .find(c => {
+      const rect = c.getBoundingClientRect();
+      return event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom;
+    })
+    ;
   return found ? document.getElementById(found.id) : null;
 }
 
 //--------------------------------------------
 
-function drag(top: number, left: number) {
+// between 0 and 1, how far the card is dragged away from its original position
+function calcExtend(top: number, left: number) {
+  return Math.min(1, Math.sqrt(top * top + left * left) / Math.sqrt(window.innerHeight * window.innerHeight + window.innerWidth * window.innerWidth));
+}
+function drag(top: number, left: number, extend: number = calcExtend(top, left)) {
   document.documentElement.style.setProperty("--top", `${top}px`);
   document.documentElement.style.setProperty("--left", `${left}px`);
+  document.documentElement.style.setProperty("--extend", `${extend}`);
+  moveState.lastExtend = extend;
 }
 
 function autoScroll(lastPointerY: number) {
@@ -328,7 +332,6 @@ function autoScroll(lastPointerY: number) {
     dy = maxSpeed * (1 - (vh - lastPointerY) / edge);
   }
   dy !== 0 && window.scrollBy(0, dy);
-  moveState.cardRects.forEach(c => c.rect.y -= dy);
 }
 
 // --------------------------------------------

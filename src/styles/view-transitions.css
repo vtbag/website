@@ -1,3 +1,16 @@
+::view-transition-old(title-heading),
+::view-transition-new(title-heading) {
+  height: 100%;
+  width: 100%;
+}
+::view-transition-group(site-logo) {
+  z-index: 1;
+}
+::view-transition-old(site-logo),
+::view-transition-new(site-logo) {
+  height: auto;
+  width: 100%;
+}
 
 main {
   view-transition-name: main;

@@ -6,7 +6,7 @@
   view-transition-name: none;
   user-select: none;
   -webkit-user-select: none;
-  -webkit-touch-callout: none;  
+  -webkit-touch-callout: none;
   scrollbar-gutter: stable;
 }
 .column-count,
@@ -20,6 +20,10 @@
 }
 :active-view-transition-type(settle) {
   cursor: auto;
+  .task-card.active {
+    filter: saturate(calc(1 + var(--extend) * 4));
+    scale: calc(1 + 0.5 * var(--extend));
+  }
 }
 
 :active-view-transition-type(move) {
@@ -28,7 +32,12 @@
     left: var(--left);
     z-index: 1;
   }
+  &::view-transition-old(active-card) {
+    filter: saturate(calc(1 + var(--extend) * 4));
+    scale: calc(1 + 0.5 * var(--extend));
+  }
 }
+
 
 ::view-transition-new(.card):only-child {
   animation-name: card-insert;

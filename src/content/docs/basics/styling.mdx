@@ -123,10 +123,16 @@ If both, the old image and the new image for `x` exist, the API defines a [morph
     height: <old height>;
     width: <old width>;
   }
+  /* to {
+    backdrop-filter: <new backdrop filter>;
+    transform: <matrix to exactly cover the new element>;
+    height: <new height>;
+    width: <new width>;
+  } */
 }
 ```
 
-The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the size, transform, and position of the _captured element_ of the new image, which may even dynamically change during the view transition. If the captured element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honoured by the generated transform.
+The `transform` is used to move the deck with the new image on top of the old image from the old image's size, transform, and position to the size, transform, and position of the _captured element_ of the new image, which [may even dynamically change](/basics/default-animations/#view-transition-super-power) during the view transition. If the captured element of the view-transition-name has some CSS transformation applied on the old or new page, like rotate or skew, this will also be honoured by the generated transform.
 
 
 ### Group-Children Animation
@@ -491,9 +497,13 @@ Now you might conclude that you also need to prefix your view transition pseudo-
 This might sound weird. The main effect of the View Transition API is to create pseudo-elements for the DOM elements that you have assigned a view transition name to. These pseudo-elements are used to create the animations. So why should you care about styling the original DOM elements? Stay with me, this might become a very useful tool in your toolbox.
 
 OK, some background:
-- Captured elements are the elements in the original DOM that were captured to create the view transition pseudo-elements.
+- _Captured elements_ are the elements in the original DOM that were captured to create the view transition pseudo-elements. 
+
+  Sometimes, they are also called _named elements_, because they are the elements that you assigned a view transition name to. Or they may be called _underlying elements_, because they are the elements that the pseudo-elements are based on.
 - The captured element of the `::view-transition-old(x)` pseudo-element was snapshotted during the early capture phase. It may still exist in the current DOM, but it may also be removed, and it surely is in the case of cross-document view transitions. Conceptually, it is gone.
-- The captured element of the `::view-transition-new(x)` pseudo-element is most likely still in the DOM, but it is not visible during the view transition. You can only see it through the `::view-transition-new(x)` pseudo-element. The nature of `::view-transition-new(x)` as a replaced element, where the content is the captured element, means that whatever you do to the captured element is immediately reflected by the `::view-transition-new(x)` pseudo-element.
+- The captured element of the `::view-transition-new(x)` pseudo-element is most likely still in the DOM, but it is not visible during the view transition. You can only see it through the `::view-transition-new(x)` pseudo-element. 
+
+  The `::view-transition-new(x)` pseudo-element is a replaced element and its replaced content is [continuously updated](/basics/default-animations/#view-transition-super-power) with a snapshot of its captured element. This means that whatever you do to the captured element is immediately reflected by the `::view-transition-new(x)` pseudo-element.
 
 This last observation is why it is so useful to know how to use both tools: styling the `::view-transition-new(x)` pseudo-element and styling its underlying captured element.
 
@@ -521,6 +531,6 @@ If your old and new image are identical, you can remove the old image and the de
 A practical example where you will do this? A view transition with a video player. That way the video continues to play during the whole transition, no frozen images.
 
 **Moving the Captured Element of the New Image:**
-The captured element does not only provide the content for the displaced `::view-transition-new(*)` element, it also provides the target values for the automatically generated[group animation](#group--morph-animation). 
+The captured element does not only provide the content for the displaced `::view-transition-new(*)` element, it also provides the target values for the automatically generated [group animation](#group--morph-animation). 
 
 So if you want to change the target position, size, or transformation of the `::view-transition-group(x)` pseudo-element, you can do this by manipulating the captured element of the new image. This is a powerful tool to change the effect of the morph animation without the need to override the generated keyframes for the group animation.

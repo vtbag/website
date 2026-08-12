@@ -132,9 +132,9 @@ body {
   border-radius: 14px;
   box-shadow: var(--shadow-sm);
   overflow: hidden;
-  transition: border-color 0.25s;
+  transition: box-shadow 0.25s;
   &.landing {
-    border-color: var(--primary);
+    box-shadow: 0 0 4px 8px var(--primary);
   }
 }
 .column-header {
@@ -182,8 +182,9 @@ body {
   box-shadow: var(--shadow-sm);
   overflow: hidden;
   cursor: grab;
+  transition: box-shadow 0.25s;
   &.landing {
-    border-color: var(--primary);
+    box-shadow: 0 0 4px 8px var(--primary);
   }
 }
 .task-card-accent {

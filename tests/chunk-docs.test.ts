@@ -54,8 +54,8 @@ Beta body paragraph.
 
   runChunkDocs({ docsDir, outputDir, only: 'article.mdx' });
 
-  const alpha = readJson(path.join(outputDir, 'article', 'alpha.json'));
-  const beta = readJson(path.join(outputDir, 'article', 'beta.json'));
+  const alpha = readJson(path.join(outputDir, '-article', 'alpha.json'));
+  const beta = readJson(path.join(outputDir, '-article', 'beta.json'));
 
   assert.equal(alpha.metadata.sectionSlug, 'alpha');
   assert.deepEqual(alpha.metadata.headings, ['Fixture Article', 'Alpha']);
@@ -93,11 +93,11 @@ ${rows}
 
   runChunkDocs({ docsDir, outputDir, only: 'tables.mdx' });
 
-  const tableFiles = fs.readdirSync(path.join(outputDir, 'tables')).filter((file) => file.startsWith('big-table'));
+  const tableFiles = fs.readdirSync(path.join(outputDir, '-tables')).filter((file) => file.startsWith('big-table'));
   assert.ok(tableFiles.length > 1, 'expected oversized table to split into multiple chunks');
 
   for (const file of tableFiles) {
-    const json = readJson(path.join(outputDir, 'tables', file));
+    const json = readJson(path.join(outputDir, '-tables', file));
     if (!json.text.includes('| Name | Value |')) continue;
 
     const lines = json.text.split('\n').filter(Boolean);
@@ -129,7 +129,7 @@ ${codeBody}
 
   runChunkDocs({ docsDir, outputDir, only: 'code.mdx' });
 
-  const codeChunk = readJson(path.join(outputDir, 'code', 'big-code.json'));
+  const codeChunk = readJson(path.join(outputDir, '-code', 'big-code.json'));
   assert.match(codeChunk.text, /```ts/);
   assert.match(codeChunk.text, /const value0 = 0;/);
   assert.match(codeChunk.text, /const value259 = 259;/);
@@ -152,7 +152,7 @@ This keeps *emphasis*, **strong**, ~~deleted~~ and \`<head>\` intact.
 
   runChunkDocs({ docsDir, outputDir, only: 'inline-style.mdx' });
 
-  const chunk = readJson(path.join(outputDir, 'inline-style', 'preserve-inline.json'));
+  const chunk = readJson(path.join(outputDir, '-inline-style', 'preserve-inline.json'));
   assert.match(chunk.text, /\*emphasis\*/);
   assert.match(chunk.text, /\*\*strong\*\*/);
   assert.match(chunk.text, /~~deleted~~/);
