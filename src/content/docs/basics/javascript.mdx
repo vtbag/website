@@ -8,12 +8,13 @@ head:
       content: "/javascript-og.png"
 ---
 
-Browser-native cross-document view transitions can be [created entirely with CSS](#cross-document-view-transitions), without the need for JavaScript. However, even for cross-document view transitions, JavaScript becomes essential for advanced functionality. And for same-document view transitions, even the activation is done via JavaScript:
+Browser-native cross-document view transitions can be [created entirely with CSS](#cross-document-view-transitions), without the need for JavaScript. However, even for cross-document view transitions, JavaScript becomes essential for advanced functionality:
 
-- Triggering same-page view transitions with `startViewTransition()`,
-- Dynamically modifying CSS properties like `view-transition-name`,
-- Defining view transition types,
-- Executing code at the start or end of a transition.
+- Triggering same-page view transitions with `startViewTransition()`
+- Dynamically modifying CSS properties like `view-transition-name`
+- Defining view transition types
+- Executing code at the start or end of a transition
+
 
 ## Same-Document View Transitions
 
@@ -21,9 +22,9 @@ Same-document view transitions are amazing! You assign view transition names to 
 
 ### startViewTransition()
 
-You start a same-document view transition with an update callback that transforms the current DOM to the future state. The View Transition API takes care of creating and running animations that smoothly transform the old state into the new one.
+You start a same-document view transition with an update callback that transforms the current DOM to the future state. The View Transition API takes care of creating pseudo-elements and running animations that smoothly transition from the old state to the new one.
 
-It is good practice to care for users that do not want motion effects and for browsers that do not support the API:
+When you call `startViewTransition()`, it is good practice to care for users that do not want motion effects and for browsers that do not support the API:
 
 ```js
 if (
