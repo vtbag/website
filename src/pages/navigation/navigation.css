@@ -1,0 +1,47 @@
+/* enable cross-document view transitions */
+@view-transition {
+  navigation: auto;
+}
+
+/* set the default animation for the view transition */
+::view-transition-old(root) {
+  animation-name: slideOutToLeft;
+}
+::view-transition-new(root) {
+  animation-name: slideInFromRight;
+}
+
+/* on backward history traversal, reverse the animation */
+@navigation (history: back) {
+  ::view-transition-old(root) {
+    animation-name: slideOutToRight;
+  }
+  ::view-transition-new(root) {
+    animation-name: slideInFromLeft;
+  }
+}
+
+@keyframes slideOutToRight {
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+@keyframes slideOutToLeft {
+  to {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+}
